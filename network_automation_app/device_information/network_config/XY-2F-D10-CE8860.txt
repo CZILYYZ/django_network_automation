@@ -1,0 +1,334 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-05-09 15:07:02+08:00
+!Last configuration was saved at 2023-02-01 00:46:12+08:00 by 51en
+#
+clock timezone GMT+8 add 08:00:00
+#
+sysname XY-2F-D10-CE8860
+#
+info-center loghost source LoopBack0
+info-center loghost 172.16.226.32
+#
+device board 1 board-type CE8860-4C-EI
+#
+device card 1/2 card-type CE88-D24S2CQ
+device card 1/1 card-type CE88-D16Q
+device card 1/3 card-type CE88-D16Q
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp ipv6 server disable
+ntp unicast-server 172.16.152.20
+ntp unicast-server 172.16.152.21
+#
+ecc peer-public-key 172.16.131.1
+ public-key-code begin
+  0401B3EB 0BB332D3 60BD19AF 10CA16B9 5E821FB2 F17DB889 D85AAFEF 64759160
+  A93D9932 7335567D 6F1DEA8B 605005AA 47BA9A46 8EA5E0CE 1E267FFB D0C3D3C9
+  2683D001 FC1AB13B 958B5476 307CDA34 D7297410 D9005551 614F42CA AF3CFD20
+  BBB9F328 BCA0FDDD 84922B87 DEED682D 62CAF91B F6E9D1A4 6E69073F 0C7CBEA7
+  8386611D F2
+ public-key-code end
+ peer-public-key end
+#
+ecc peer-public-key 172.16.255.246
+ public-key-code begin
+  0400B3A7 90A8B761 6078B25D 54F59F74 ABB1B3AC 710419B6 378DBEDF 39EE9383
+  6C34CFBC 6555BD06 2D0AC23D 794A0A25 28A03700 85B632C3 A73C655F 0491744E
+  37CE4000 E8F9437B DAD1F30B 1969581C 53142EF8 8D652331 BF5AD433 9720C9C7
+  ACDB4F95 2A98BC12 7AFEF8E3 2CA8B9E9 38154891 59751050 BDEA7F41 8C28692D
+  3CE9C7E1 FC
+ public-key-code end
+ peer-public-key end
+#
+telnet server disable
+telnet ipv6 server disable
+#
+sflow collector 2 ip 172.16.208.32
+#
+diffserv domain default
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51nb password irreversible-cipher $1c$J!u'<lypGD$g4^9YoiwRAU9Q%A-r+!L%.cq1D%K(9:',YDSvE$)$
+ local-user 51nb service-type ssh
+ local-user 51nb level 3
+ local-user 51en password irreversible-cipher $1c$ynEPH\}77~$Vq"HB0c]5<Q2}]S!5;&-!{]a1W5HCAj;5OCXGm7K$
+ local-user 51en service-type terminal ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk1
+ undo portswitch
+ description dT:XY-2F-C09&C10-CE8860:()Eth-trunk2
+ ip address 172.16.255.245 255.255.255.252
+#
+interface Eth-Trunk2
+ undo portswitch
+ description dT:XY-2F-C05&C06-CE8860:()Eth-trunk1
+ ip address 172.16.254.197 255.255.255.252
+ mode lacp-dynamic
+#
+interface Eth-Trunk3
+ undo portswitch
+ description dT:XY-2F-D03&D04-CE8860:()Eth-trunk1
+ ip address 172.16.254.213 255.255.255.252
+ mode lacp-dynamic
+#
+interface Eth-Trunk4
+ undo portswitch
+ description dT:XY-2F-G06&G07-CE8860:()Eth-trunk12
+ ip address 172.16.254.217 255.255.255.252
+ mode lacp-static
+#
+interface Eth-Trunk126
+ undo portswitch
+ description uT:XY-2F-E06-CE12812:()Eth-trunk220
+ ip address 172.16.255.238 255.255.255.252
+#
+interface Eth-Trunk127
+ undo portswitch
+ description uT:XY-2F-E05-CE12812:()Eth-trunk220
+ ip address 172.16.255.230 255.255.255.252
+#
+interface 25GE1/2/1
+#
+interface 25GE1/2/2
+#
+interface 25GE1/2/3
+#
+interface 25GE1/2/4
+#
+interface 25GE1/2/5
+#
+interface 25GE1/2/6
+#
+interface 25GE1/2/7
+#
+interface 25GE1/2/8
+#
+interface 25GE1/2/9
+#
+interface 25GE1/2/10
+#
+interface 25GE1/2/11
+#
+interface 25GE1/2/12
+#
+interface 25GE1/2/13
+#
+interface 25GE1/2/14
+#
+interface 25GE1/2/15
+#
+interface 25GE1/2/16
+#
+interface 25GE1/2/17
+#
+interface 25GE1/2/18
+#
+interface 25GE1/2/19
+#
+interface 25GE1/2/20
+#
+interface 25GE1/2/21
+#
+interface 25GE1/2/22
+#
+interface 25GE1/2/23
+#
+interface 25GE1/2/24
+#
+interface 40GE1/1/1
+ description dT:XY-2F-C09&C10-CE8860:(local)40GE1/0/4
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/1/2
+ description dT:XY-2F-C09&C10-CE8860:(local)40GE2/0/4
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/1/3
+ description dT:XY-2F-C05&C06-CE8860:(local)40GE1/0/4
+ eth-trunk 2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/1/4
+ description dT:XY-2F-C05&C06-CE8860:(local)40GE2/0/4
+ eth-trunk 2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/1/5
+ description dT:XY-2F-D03&D04-CE8860:(local)40GE1/0/4
+ eth-trunk 3
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/1/6
+ description dT:XY-2F-D03&D04-CE8860:(local)40GE2/0/4
+ eth-trunk 3
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/1/7
+ description dT:XY-2F-G06&G07-CE8860:(local)40GE1/0/6
+ eth-trunk 4
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/1/8
+ description dT:XY-2F-G06&G07-CE8860:(local)40GE2/0/6
+ eth-trunk 4
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/1/9
+#
+interface 40GE1/1/10
+#
+interface 40GE1/1/11
+#
+interface 40GE1/1/12
+#
+interface 40GE1/1/13
+#
+interface 40GE1/1/14
+#
+interface 40GE1/1/15
+ description uT:XY-2F-E06-CE12812:(local)40GE10/0/22
+ eth-trunk 126
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/1/16
+ description uT:XY-2F-E05-CE12812:(local)40GE10/0/22
+ eth-trunk 127
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/3/1
+#
+interface 40GE1/3/2
+#
+interface 40GE1/3/3
+#
+interface 40GE1/3/4
+#
+interface 40GE1/3/5
+#
+interface 40GE1/3/6
+#
+interface 40GE1/3/7
+#
+interface 40GE1/3/8
+#
+interface 40GE1/3/9
+#
+interface 40GE1/3/10
+#
+interface 40GE1/3/11
+#
+interface 40GE1/3/12
+#
+interface 40GE1/3/13
+#
+interface 40GE1/3/14
+#
+interface 40GE1/3/15
+ description uT:XY-2F-E06-CE12812:(local)40GE11/0/22
+ eth-trunk 126
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/3/16
+ description uT:XY-2F-E05-CE12812:(local)40GE11/0/22
+ eth-trunk 127
+ device transceiver 40GBASE-FIBER
+#
+interface 100GE1/2/1
+#
+interface 100GE1/2/2
+#
+interface LoopBack0
+ ip address 51.51.51.31 255.255.255.255
+#
+interface NULL0
+#
+bgp 65535
+ router-id 51.51.51.31
+ peer 172.16.254.198 as-number 65535
+ peer 172.16.254.214 as-number 65535
+ peer 172.16.255.229 as-number 65535
+ peer 172.16.255.237 as-number 65535
+ peer 172.16.255.246 as-number 65535
+ #
+ ipv4-family unicast
+  aggregate 172.16.240.0 255.255.248.0 detail-suppressed  
+  aggregate 172.26.240.0 255.255.248.0 detail-suppressed  
+  network 51.51.51.31 255.255.255.255
+  import-route direct
+  maximum load-balancing 2  
+  peer 172.16.254.198 enable
+  peer 172.16.254.198 reflect-client
+  peer 172.16.254.198 next-hop-local
+  peer 172.16.254.214 enable
+  peer 172.16.254.214 reflect-client
+  peer 172.16.254.214 next-hop-local
+  peer 172.16.255.229 enable
+  peer 172.16.255.229 next-hop-local
+  peer 172.16.255.237 enable
+  peer 172.16.255.237 next-hop-local
+  peer 172.16.255.246 enable
+  peer 172.16.255.246 reflect-client
+  peer 172.16.255.246 next-hop-local
+#
+snmp-agent
+snmp-agent local-engineid 800007DB039C713A366B61
+snmp-agent community read cipher %^%#|y&9ENkby=MjkCY}_6rG#d"b.g<XB49o0#6jFFo9TNf<6EGW9G](9W,8vbu8O2T5E@LE":xTw4T"cY~2%^%#
+#
+snmp-agent sys-info version v2c v3
+#
+lldp enable
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+ssh client 172.16.131.1 assign ecc-key 172.16.131.1
+ssh client 172.16.255.246 assign ecc-key 172.16.255.246
+#
+user-interface con 0
+ authentication-mode none
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+#
+vm-manager
+#
+ops
+ assistant XYD108860
+  execute 1 command display current-configuration > XY-D10-8860.txt
+  execute 2 command tftp 172.16.9.233 put XY-D10-8860.txt
+  condition timer cron 0 2 * * * *
+#
+return

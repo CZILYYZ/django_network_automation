@@ -1,0 +1,401 @@
+Building configuration...
+
+Current configuration : 9520 bytes
+!
+! Last configuration change at 18:01:35 GMT+8 Thu Feb 23 2023 by 51en
+! NVRAM config last updated at 18:02:08 GMT+8 Thu Feb 23 2023 by 51en
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+!
+hostname FD-1F-G01-3750-99-1
+!
+boot-start-marker
+boot-end-marker
+!
+enable password 7 15080A1D55783C3730
+!
+username 51en privilege 15 password 7 101B581C0B37213C3C567A
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local 
+!
+!
+!
+aaa session-id common
+clock timezone GMT+8 8
+switch 1 provision ws-c3750x-24
+switch 2 provision ws-c3750x-24
+system mtu routing 1500
+ip routing
+ip dhcp smart-relay
+!
+!
+ip domain-name 51.nb
+ip dhcp-server 172.16.55.11
+vtp mode transparent
+!
+track 100 ip sla 11 reachability
+cluster enable 111 0
+cluster member 2 mac-address e089.9de4.6280
+!
+!
+crypto pki trustpoint HTTPS_SS_CERT_KEYPAIR
+ enrollment selfsigned
+ serial-number
+ revocation-check none
+ rsakeypair HTTPS_SS_CERT_KEYPAIR
+!
+!
+crypto pki certificate chain HTTPS_SS_CERT_KEYPAIR
+ certificate self-signed 01
+  3082029E 30820207 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  59311F30 1D060355 04031316 46442D47 30312D33 3735302D 39392D31 2E35312E 
+  6E623136 300F0603 55040513 08314246 33444338 30302306 092A8648 86F70D01 
+  09021616 46442D47 30312D33 3735302D 39392D31 2E35312E 6E62301E 170D3933 
+  30333033 32313536 32325A17 0D323030 31303130 30303030 305A3059 311F301D 
+  06035504 03131646 442D4730 312D3337 35302D39 392D312E 35312E6E 62313630 
+  0F060355 04051308 31424633 44433830 30230609 2A864886 F70D0109 02161646 
+  442D4730 312D3337 35302D39 392D312E 35312E6E 6230819F 300D0609 2A864886 
+  F70D0101 01050003 818D0030 81890281 8100C4F0 AF406F87 836238B9 85EDEE7A 
+  BD2EB30B 9B220734 D9354F03 DD55E5A8 BD892902 D4BA6A9C E91FFC55 8A1A5347 
+  E82EC77F 08197FDA F4B3A3B6 FC914D4F 79CA5268 3592267C 70F1BB3E 5B7F5F57 
+  3CAC34CA 37EC5F9F D13AC324 55C083B0 4BA5CFEA 537411F5 E951FFE8 81AB21FC 
+  F7136EB1 AC6CB6BA D218072D 266528FC 66C90203 010001A3 76307430 0F060355 
+  1D130101 FF040530 030101FF 30210603 551D1104 1A301882 1646442D 4730312D 
+  33373530 2D39392D 312E3531 2E6E6230 1F060355 1D230418 30168014 E2BC729C 
+  C7DD9CF9 35CA452C FA279EE1 1510D159 301D0603 551D0E04 160414E2 BC729CC7 
+  DD9CF935 CA452CFA 279EE115 10D15930 0D06092A 864886F7 0D010104 05000381 
+  81000680 837418B6 C42F28E7 6276A63C 6798726A FB193C4F 2F671B1C CBD125A5 
+  23B2124A 8E0B2BF7 A5D85180 1B950369 FBE71985 3D4E5816 67F26238 0CE05FE8 
+  025284E0 078C38A5 AABFD247 8A8DF62D 638E3FE0 7F80B4E2 BCC1594D C96D4F55 
+  985B82F5 8615946F 340713EE 28B77B8E BBC09FFA 67B10972 A01109C1 0958F311 F1E5
+  quit
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 99-101 
+!
+vlan 102
+ name zhijianxitong
+!
+vlan 103
+ name zhinengyuyin
+!
+vlan 104 
+!
+vlan 111
+ name 111
+!
+vlan 112
+ name 112
+!
+vlan 113
+ name 113
+!
+vlan 254 
+!
+vlan 999
+ name to-USG6370
+!
+ip ssh time-out 5
+ip ssh version 2
+ip scp server enable
+lldp run
+!
+!
+interface Port-channel11
+ description dT:FD-1F-G01-2960-99-252:(local)Po1     
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel12
+ description dT:FD-1F-G01-zhijian-2960:(local)Po1    
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel13
+ description dT:FD-1F-G16-2960-DSF:(local)Po1        
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel14
+ description dT:FD1F--H45-S5720(105.2):Eth-Trunk10   
+ no switchport
+ ip address 10.247.105.1 255.255.255.252
+!
+interface Port-channel15
+ description dT:FD1F-H45-S5720(99.249):Eth-Trunk10   
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ spanning-tree bpdufilter enable
+!
+interface FastEthernet0
+ no ip address
+ no ip route-cache cef
+ no ip route-cache
+ shutdown
+!
+interface GigabitEthernet1/0/1
+ description dT:FD-1F-G01-2960-99-252:(local)GE1/0/23      
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 11 mode active
+!
+interface GigabitEthernet1/0/2
+ description dT:FD-1F-G01-zhijian-2960:(local)GE2/0/23     
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 12 mode active
+!
+interface GigabitEthernet1/0/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 13 mode active
+!
+interface GigabitEthernet1/0/4
+ description dT:FD-1F-G16-2960-DSF:(local)GE2/0/48         
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 13 mode active
+!
+interface GigabitEthernet1/0/5
+ description dT:FD1F--H45-S5720(105.2):(local)GE1/0/27     
+ no switchport
+ no ip address
+ channel-group 14 mode on
+!
+interface GigabitEthernet1/0/6
+ description dT:FD1F--H45-S5720(105.2):(local)GE2/0/27     
+ no switchport
+ no ip address
+ channel-group 14 mode on
+!
+interface GigabitEthernet1/0/7
+!
+interface GigabitEthernet1/0/8
+!
+interface GigabitEthernet1/0/9
+!
+interface GigabitEthernet1/0/10
+!
+interface GigabitEthernet1/0/11
+!
+interface GigabitEthernet1/0/12
+!
+interface GigabitEthernet1/0/13
+!
+interface GigabitEthernet1/0/14
+!
+interface GigabitEthernet1/0/15
+!
+interface GigabitEthernet1/0/16
+!
+interface GigabitEthernet1/0/17
+!
+interface GigabitEthernet1/0/18
+!
+interface GigabitEthernet1/0/19
+!
+interface GigabitEthernet1/0/20
+!
+interface GigabitEthernet1/0/21
+!
+interface GigabitEthernet1/0/22
+!
+interface GigabitEthernet1/0/23
+!
+interface GigabitEthernet1/0/24
+ description uT:FD-1F-F16-USG6300(63.20):GE1/0/1           
+ switchport access vlan 999
+ switchport mode access
+!
+interface GigabitEthernet1/1/1
+!
+interface GigabitEthernet1/1/2
+!
+interface GigabitEthernet1/1/3
+!
+interface GigabitEthernet1/1/4
+!
+interface TenGigabitEthernet1/1/1
+!
+interface TenGigabitEthernet1/1/2
+!
+interface GigabitEthernet2/0/1
+ description dT:FD-1F-G01-2960-99-252:(local)GE1/0/24      
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 11 mode active
+!
+interface GigabitEthernet2/0/2
+ description dT:FD-1F-G01-zhijian-2960:(local)GE 2/0/24    
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 12 mode active
+!
+interface GigabitEthernet2/0/3
+ description dT:FD-1F-G16-2960-DSF:(local)GE2/0/47         
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 13 mode active
+!
+interface GigabitEthernet2/0/4
+!
+interface GigabitEthernet2/0/5
+ description dT:FD1F--H45-S5720(105.2):(local)GE1/0/28     
+ no switchport
+ no ip address
+ channel-group 14 mode on
+!
+interface GigabitEthernet2/0/6
+ description dT:FD1F--H45-S5720(105.2):(local)GE2/0/28     
+ no switchport
+ no ip address
+ channel-group 14 mode on
+!
+interface GigabitEthernet2/0/7
+ description dT:FD1F-H45-S5720(99.249):(local)GE1/0/28     
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 15 mode on
+!
+interface GigabitEthernet2/0/8
+!
+interface GigabitEthernet2/0/9
+!
+interface GigabitEthernet2/0/10
+!
+interface GigabitEthernet2/0/11
+!
+interface GigabitEthernet2/0/12
+!
+interface GigabitEthernet2/0/13
+!
+interface GigabitEthernet2/0/14
+!
+interface GigabitEthernet2/0/15
+!
+interface GigabitEthernet2/0/16
+!
+interface GigabitEthernet2/0/17
+!
+interface GigabitEthernet2/0/18
+!
+interface GigabitEthernet2/0/19
+!
+interface GigabitEthernet2/0/20
+!
+interface GigabitEthernet2/0/21
+!
+interface GigabitEthernet2/0/22
+!
+interface GigabitEthernet2/0/23
+!
+interface GigabitEthernet2/0/24
+ description uT:FD-1F-F16-USG6300(63.19):GE1/0/1           
+ switchport access vlan 999
+ switchport mode access
+!
+interface GigabitEthernet2/1/1
+!
+interface GigabitEthernet2/1/2
+!
+interface GigabitEthernet2/1/3
+!
+interface GigabitEthernet2/1/4
+!
+interface TenGigabitEthernet2/1/1
+!
+interface TenGigabitEthernet2/1/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan99
+ ip address 10.247.99.1 255.255.255.0
+!
+interface Vlan100
+ ip address 10.247.100.1 255.255.255.0
+!
+interface Vlan101
+ ip address 10.247.101.1 255.255.255.0
+ ip helper-address 172.16.55.11
+!
+interface Vlan102
+ ip address 10.247.102.1 255.255.255.0
+ ip helper-address 172.16.55.11
+!
+interface Vlan103
+ ip address 10.247.103.1 255.255.255.0
+ ip helper-address 172.16.55.11
+!
+interface Vlan104
+ ip address 10.247.104.1 255.255.255.0
+ ip helper-address 172.16.55.11
+!
+interface Vlan254
+ ip address 10.247.254.1 255.255.255.0
+!
+interface Vlan999
+ ip address 10.247.0.10 255.255.255.248
+!
+ip classless
+ip route 10.11.1.0 255.255.255.0 10.247.105.2 track 100
+ip route 0.0.0.0 0.0.0.0 10.247.0.9
+ip route 3.3.3.0 255.255.255.252 10.247.105.2
+ip route 10.0.78.58 255.255.255.255 10.247.0.9
+ip route 10.0.78.61 255.255.255.255 10.247.0.9
+ip route 10.0.89.5 255.255.255.255 10.247.0.9
+ip route 10.11.1.0 255.255.255.0 10.247.105.2
+ip route 10.247.105.128 255.255.255.128 10.247.105.2
+ip route 172.16.37.38 255.255.255.255 10.247.0.9
+no ip http server
+no ip http secure-server
+!
+!
+ip sla 1
+ icmp-echo 2.2.2.25
+ frequency 5
+ip sla schedule 1 life forever start-time now
+ip sla 2
+ icmp-echo 2.2.2.41
+ frequency 5
+ip sla schedule 2 life forever start-time now
+ip sla 11
+ icmp-echo 3.3.3.1
+ timeout 1000
+ frequency 3
+ip sla schedule 11 life forever start-time now
+ip sla 100
+ icmp-echo 3.3.3.1
+kron occurrence save at 20:11 recurring
+ policy-list saveconfig
+!
+kron policy-list saveconfig
+ cli show run | redirect  ftp://hyp:hyphyp@172.16.9.233/FD-G01-3750-99-1
+!
+logging 172.16.226.32
+snmp-server community 51zhangdan RO
+!
+no vstack
+!
+line con 0
+line vty 0 4
+ transport input all
+line vty 5 15
+!
+end

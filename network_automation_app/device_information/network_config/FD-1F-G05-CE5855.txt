@@ -1,0 +1,571 @@
+!Software Version V200R001C00SPC700
+!Last configuration was updated at 2022-04-15 17:29:34+00:00 by 51en
+!Last configuration was saved at 2023-02-01 02:02:32+00:00 by 51en
+#
+sysname FD-1F-G05-CE5855
+#
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.226.32
+#
+device board 1 board-type CE5855-48T4S2Q-EI
+device board 2 board-type CE5855-48T4S2Q-EI
+#
+drop-profile default
+#
+vlan batch 10 to 98 152 200 to 201 255
+#
+telnet server disable
+telnet ipv6 server disable
+#
+diffserv domain default
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51nb password irreversible-cipher $1c$#DE{5oj=e)$7LMd8`mcNT(Ey6NAx(]1^=kgW>N9"@/_A_2+G1C5$
+ local-user 51nb service-type ssh
+ local-user 51nb level 3
+ local-user 51en password irreversible-cipher $1c$}I#m6hubb/$x=\#*W{JZLqa;Q+YBI}OK'\UGz6.IR1c$"':BY<3$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 10
+ #
+ stack member 2 domain 10
+ stack member 2 priority 10
+#
+interface Vlanif10
+ ip address 10.247.10.3 255.255.255.0
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk1
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface Eth-Trunk2
+ description uT:FD-1F-F10-CE8860-10.1:()Eth-trunk42
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+#
+interface Eth-Trunk11
+ description to-inspurGPU-test-10.107-bond12
+ port default vlan 93
+ stp edged-port enable
+ mode lacp-dynamic
+#
+interface Eth-Trunk12
+ description dT:H45-F94ZG82-bond0
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk13
+ port default vlan 15
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description to-G05-R630-KVM-10.53-bond12
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk15
+ description to-ESXI-10-54_eth0_1
+ port default vlan 30
+ mode lacp-dynamic
+#
+interface Eth-Trunk16
+ description to-docker-10.55
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk17
+ description to-kvm-10.56
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk18
+ description to-docker-10.57-bond12
+ port default vlan 30
+ mode lacp-dynamic
+#
+interface Eth-Trunk19
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk20
+ description dT:G05-F92SG82-bond0
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk21
+ description to-G05-R630-10-61-eth0_1
+ port default vlan 30
+#
+interface Eth-Trunk22
+ description to-G05-R630-10.57-bond34
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk23
+ description to-G05-R730-10-62-eth0_1
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk24
+ description dT:G05-BRSTW72-bond0
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk25
+ description to-ESXI-10-54_eth2_3
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk26
+ description to-G05-R630-KVM-10.53-bond34
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk27
+ description to-G05-R630-10-61-bond1
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk28
+ description G05-BRQ4X72:bound0
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk29
+ description G05-CLBQW72:bound0
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk30
+ description dT:7G3M5K2
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Stack-Port1/1
+#
+interface Stack-Port1/2
+#
+interface Stack-Port2/1
+#
+interface Stack-Port2/2
+#
+interface GE1/0/1
+ description to-inspurGPU-test-10.107-eth0
+ eth-trunk 11
+#
+interface GE1/0/2
+ eth-trunk 12
+#
+interface GE1/0/3
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/4
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/5
+ port default vlan 10
+#
+interface GE1/0/6
+ port default vlan 15
+#
+interface GE1/0/7
+ description to-G05-R630-kvm-10.53-eth0
+ eth-trunk 14
+#
+interface GE1/0/8
+ eth-trunk 15
+#
+interface GE1/0/9
+ eth-trunk 15
+#
+interface GE1/0/10
+ eth-trunk 16
+#
+interface GE1/0/11
+ eth-trunk 17
+#
+interface GE1/0/12
+ eth-trunk 18
+#
+interface GE1/0/13
+ eth-trunk 19
+#
+interface GE1/0/14
+ eth-trunk 19
+#
+interface GE1/0/15
+ port default vlan 30
+ stp edged-port enable
+#
+interface GE1/0/16
+ eth-trunk 20
+#
+interface GE1/0/17
+ description to-G05-R730-k8s-10.62-eth0
+ eth-trunk 23
+#
+interface GE1/0/18
+#
+interface GE1/0/19
+ description to-G05-R630-10-61-eth1
+ eth-trunk 27
+#
+interface GE1/0/20
+ shutdown
+ eth-trunk 21
+#
+interface GE1/0/21
+ eth-trunk 22
+#
+interface GE1/0/22
+ eth-trunk 24
+#
+interface GE1/0/23
+ shutdown
+ eth-trunk 26
+#
+interface GE1/0/24
+ eth-trunk 28
+#
+interface GE1/0/25
+ eth-trunk 29
+#
+interface GE1/0/26
+ eth-trunk 30
+#
+interface GE1/0/27
+#
+interface GE1/0/28
+#
+interface GE1/0/29
+#
+interface GE1/0/30
+#
+interface GE1/0/31
+#
+interface GE1/0/32
+#
+interface GE1/0/33
+#
+interface GE1/0/34
+#
+interface GE1/0/35
+#
+interface GE1/0/36
+#
+interface GE1/0/37
+#
+interface GE1/0/38
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/39
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/40
+ port default vlan 10
+#
+interface GE1/0/41
+ port default vlan 10
+#
+interface GE1/0/42
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/43
+ description to-inspurGPU-test-10.107-mgmt
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/44
+ description dT:clbqw72
+ port default vlan 10
+#
+interface GE1/0/45
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/46
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/47
+ eth-trunk 1
+#
+interface GE1/0/48
+ dual-active detect mode direct
+#
+interface GE2/0/1
+ description dT:BRQ4X72
+ port default vlan 10
+#
+interface GE2/0/2
+ eth-trunk 12
+#
+interface GE2/0/3
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE2/0/4
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE2/0/5
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE2/0/6
+ port default vlan 15
+#
+interface GE2/0/7
+ description to-G05-R630-kvm-10.53-eth1
+ eth-trunk 14
+#
+interface GE2/0/8
+ eth-trunk 25
+#
+interface GE2/0/9
+ eth-trunk 25
+#
+interface GE2/0/10
+ eth-trunk 16
+#
+interface GE2/0/11
+ eth-trunk 17
+#
+interface GE2/0/12
+ eth-trunk 18
+#
+interface GE2/0/13
+ eth-trunk 19
+#
+interface GE2/0/14
+ eth-trunk 19
+#
+interface GE2/0/15
+ eth-trunk 20
+#
+interface GE2/0/16
+ port default vlan 10
+#
+interface GE2/0/17
+ description to-G05-R730-k8s-10.62-eth1
+ eth-trunk 23
+#
+interface GE2/0/18
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE2/0/19
+ description to-G05-R630-10-61-eth2
+ eth-trunk 27
+#
+interface GE2/0/20
+ shutdown
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE2/0/21
+ eth-trunk 22
+#
+interface GE2/0/22
+ eth-trunk 24
+#
+interface GE2/0/23
+ shutdown
+ eth-trunk 26
+#
+interface GE2/0/24
+ eth-trunk 28
+#
+interface GE2/0/25
+ eth-trunk 29
+#
+interface GE2/0/26
+ eth-trunk 30
+#
+interface GE2/0/27
+#
+interface GE2/0/28
+#
+interface GE2/0/29
+#
+interface GE2/0/30
+#
+interface GE2/0/31
+#
+interface GE2/0/32
+#
+interface GE2/0/33
+#
+interface GE2/0/34
+#
+interface GE2/0/35
+#
+interface GE2/0/36
+#
+interface GE2/0/37
+#
+interface GE2/0/38
+#
+interface GE2/0/39
+#
+interface GE2/0/40
+#
+interface GE2/0/41
+ description dT:7G3M5K2
+ port default vlan 10
+#
+interface GE2/0/42
+ description to-R730-DYPPF52-mgmt
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/43
+ description to-R630-41MSF52-mgmt
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/44
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/45
+ port default vlan 10
+#
+interface GE2/0/46
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/47
+ eth-trunk 1
+#
+interface GE2/0/48
+ dual-active detect mode direct
+#
+interface 10GE1/0/1
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE1/0/2
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE1/0/3
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE1/0/4
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/1
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/2
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/3
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/4
+ device transceiver 10GBASE-FIBER
+#
+interface 40GE1/0/1
+ description uT:FD-1F-F10-CE8860-10.1:(local)40GE2/3/2
+ eth-trunk 2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/2
+ port mode stack 
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/1
+ description uT:FD-1F-F10-CE8860-10.1:(local)40GE1/3/2
+ eth-trunk 2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/2
+ port mode stack 
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 10.247.10.1
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03446A2E49ECF1
+snmp-agent community read cipher %^%#:l8h1f(J=Sl2"K-A(Bh>hgdg:Sny'%9(Y4Tf)7I4LfO#LW>sS8->Y*V)1G&K]0:oInQ6]Ns17rJ9zG}1%^%#
+#
+snmp-agent sys-info version all
+#
+lldp enable
+#
+stelnet server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ user privilege level 3
+ protocol inbound ssh
+#
+vm-manager
+#
+ops
+ assistant auto_save
+  execute 1 command display current-configuration > FD-G05-5855-10-3.txt
+  execute 2 command tftp 172.16.9.233 put FD-G05-5855-10-3.txt
+  condition timer cron 0 2 * * * *
+#
+return

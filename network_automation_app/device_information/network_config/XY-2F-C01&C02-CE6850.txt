@@ -1,0 +1,781 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-04-15 11:26:15+08:00
+!Last configuration was saved at 2023-02-01 00:48:57+08:00 by 51en
+#
+clock timezone GMT+8 add 08:00:00
+#
+sysname XY-2F-C01&C02-CE6850
+#
+info-center loghost source LoopBack0
+info-center loghost 172.16.226.32
+#
+system resource standard
+#
+device board 1 board-type CE6850-48T6Q-HI
+device board 2 board-type CE6850-48T6Q-HI
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp ipv6 server disable
+ntp unicast-server 172.16.152.20
+ntp unicast-server 172.16.152.21
+#
+vlan batch 196 to 203 224 to 225 227 to 228
+#
+ecc peer-public-key 172.16.255.2
+ public-key-code begin
+  0400C553 99C1BB50 31408C55 A147F999 0548F769 45FEF8D2 C839FAD8 3E015983
+  66771E54 845A693E 17BE8FDC 7746545E A6DDD028 D72AFBEF 6382A26E CFCE8D45
+  48B02C00 5334D471 77BC3D52 7E3DDD75 02179C4C C3644DE9 4E596B8B D564347D
+  37E9EC86 9BA2EFD6 D984CF58 D6AA3776 59CBBB97 2CA25A9D CEAA24CF BA9B53C7
+  46489E66 3F
+ public-key-code end
+ peer-public-key end
+#
+telnet server disable
+telnet ipv6 server disable
+#
+sflow collector 2 ip 172.16.208.32
+#
+diffserv domain default
+#
+bfd
+#
+vlan 227
+ name da-hbase
+#
+bridge-domain 10196
+ l2 binding vlan 196
+ vxlan vni 10196
+#
+bridge-domain 10197
+ l2 binding vlan 197
+ vxlan vni 10197
+#
+bridge-domain 10198
+ l2 binding vlan 198
+ vxlan vni 10198
+#
+bridge-domain 10199
+ l2 binding vlan 199
+ vxlan vni 10199
+#
+bridge-domain 10200
+ statistics enable
+ l2 binding vlan 200
+ vxlan vni 10200
+#
+bridge-domain 10201
+ l2 binding vlan 201
+ vxlan vni 10201
+#
+bridge-domain 10202
+ l2 binding vlan 202
+ vxlan vni 10202
+#
+bridge-domain 10203
+ l2 binding vlan 203
+ vxlan vni 10203
+#
+bridge-domain 10224
+ l2 binding vlan 224
+ vxlan vni 10224
+#
+bridge-domain 10225
+ l2 binding vlan 225
+ vxlan vni 10225
+#
+bridge-domain 10227
+ l2 binding vlan 227
+ vxlan vni 10227
+#
+bridge-domain 10228
+ l2 binding vlan 228
+ vxlan vni 10228
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51xing password irreversible-cipher $1c$n%7XKvn\I+$.C~4;)R{_>1y"p.3CG_<!cR#M3qM6A3L\ALP_%(E$
+ local-user 51xing service-type none
+ local-user 51xing level 3
+ local-user 51xingyi password irreversible-cipher $1c$K~ul"*pbIT$3@2[&5hZ0>vV}EL{%0STJ*Dc<By#xI$f<zKC\8&A$
+ local-user 51xingyi service-type ssh
+ local-user 51xingyi level 3
+ local-user 51nb password irreversible-cipher $1c$kD5yXs`V)M$!%-g:-NR&AFOcf=;]H+UG,;O$^y]+1rC2c%gMd00$
+ local-user 51nb service-type ssh
+ local-user 51nb level 3
+ local-user 51en password irreversible-cipher $1c$@'wAJ!0E+P$5i1N4@}&Z27x/,AW,};N`{HF2hCA!8YlR>)&Z;q4$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 10
+ stack member 1 priority 250
+ #
+ stack member 2 domain 10
+ stack member 2 priority 10
+#
+interface MEth0/0/0
+ ip address 192.168.1.1 255.255.255.0
+#
+interface Eth-Trunk10
+ undo portswitch
+ description uT:XY-2F-E05-CE12812:()Eth-trunk170
+ ip address 172.16.255.202 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk11
+ description to-C01-R630-mysql-193.30-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk12
+ description to-C01-1288HV5-hbase-193.106-bond
+ port default vlan 227
+ mode lacp-dynamic
+#
+interface Eth-Trunk13
+ description to-C01-1288HV5-hbase-193.103-bond
+ port default vlan 227
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description to-C01-1288HV5-hbase-193.113-bond
+ port default vlan 227
+ mode lacp-dynamic
+#
+interface Eth-Trunk15
+ description to-C01-R630-hbase-193.60-bond
+ port default vlan 227
+ mode lacp-dynamic
+#
+interface Eth-Trunk16
+ description to-C01-R730XD-193.41-bond
+ port default vlan 200
+ mode lacp-dynamic
+#
+interface Eth-Trunk17
+ description to-C01-R630-mysql-193.45-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk18
+ description to-C01-R630-mysql-193.46-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk19
+ description to-C01-R630-mysql-193.47-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk20
+ description to-C01-R630-mysql-193.48-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk21
+ description to-C01-R630-mysql-193.49-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk22
+ description to-C01-R630-mysql-172.16.197.18-bond1
+ shutdown
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk31
+ description to-C02-R630-mysql-193.31-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk32
+ description dT:C01-HW2T8M2-bound0
+ port default vlan 196
+ mode lacp-dynamic
+#
+interface Eth-Trunk33
+ description dT:C01-CDD6YK2-bound0
+ port default vlan 196
+ mode lacp-dynamic
+#
+interface Eth-Trunk34
+ description description dT:C01-CD97YK2-bound0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk35
+ description dT:C01-DCM8JK2-bound0
+ port default vlan 198
+ mode lacp-dynamic
+#
+interface Eth-Trunk36
+ description dT:C01-DCM8JK2-bound0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk37
+ description to-C02-R630-mysql-193.50-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk38
+ description to-C02-R630-mysql-193.51-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk39
+ description to-C02-R630-mysql-193.52-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk40
+ description to-C02-R630-mysql-193.53-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk41
+ description to-C02-inspur-193.54-bond
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk42
+ description to-C01-R630-hbase-192.163-bond
+ port default vlan 227
+ mode lacp-dynamic
+#
+interface Eth-Trunk43
+ description to-C02-R630-mysql-193.53-bond1
+ port link-type trunk
+ port trunk allow-pass vlan 228
+ mode lacp-dynamic
+#
+interface Eth-Trunk44
+ description C02-CDS3YK2-193.150-bound
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk45
+ description C02-HZM6XJ2-193.151-bound
+ port default vlan 199
+ mode lacp-dynamic
+#
+interface Eth-Trunk100
+ undo portswitch
+ description uT:XY-2F-E06-CE12812:()Eth-trunk170
+ ip address 172.16.255.206 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Stack-Port1/2
+#
+interface Stack-Port2/1
+#
+interface 10GE1/0/1
+ description to-C01-R630-mysql-193.30-eth0
+ eth-trunk 11
+#
+interface 10GE1/0/2
+ description to-C02-R630-mysql-193.31-eth0
+ eth-trunk 31
+#
+interface 10GE1/0/3
+ description to-C01-1288HV5-hbase-193.106-3
+ eth-trunk 12
+#
+interface 10GE1/0/4
+ description to-C02-FX2S-193.37-eth0
+ eth-trunk 32
+#
+interface 10GE1/0/5
+ description to-C01-1288HV5-hbase-193.103-5
+ eth-trunk 13
+#
+interface 10GE1/0/6
+ description to-C02-FX2S-193.38-eth0
+ eth-trunk 33
+#
+interface 10GE1/0/7
+ description to-C01-1288HV5-hbase-193.113-7
+ eth-trunk 14
+#
+interface 10GE1/0/8
+ description to-C02-FX2S-193.39-eth0
+ eth-trunk 34
+#
+interface 10GE1/0/9
+ description to-C01-R630-hbase-193.60-9
+ eth-trunk 15
+#
+interface 10GE1/0/10
+ description to-C02-R730XD-193.43-eth0
+ eth-trunk 35
+#
+interface 10GE1/0/11
+ description to-C01-R730XD-193.41-eth0
+ eth-trunk 16
+#
+interface 10GE1/0/12
+ description to-C02-R730XD-193.44-eth0
+ eth-trunk 36
+#
+interface 10GE1/0/13
+ description to-C01-R630-mysql-193.45-eth0
+ eth-trunk 17
+#
+interface 10GE1/0/14
+ description to-C02-R630-mysql-193.50-eth0
+ eth-trunk 37
+#
+interface 10GE1/0/15
+ description to-C01-R630-mysql-193.46-eth0
+ eth-trunk 18
+#
+interface 10GE1/0/16
+ description to-C02-R630-mysql-193.51-eth0
+ eth-trunk 38
+#
+interface 10GE1/0/17
+ description to-C01-R630-mysql-193.47-eth0
+ eth-trunk 19
+#
+interface 10GE1/0/18
+ description to-C02-R630-mysql-193.52-eth0
+ eth-trunk 39
+#
+interface 10GE1/0/19
+ description to-C01-R630-mysql-193.48-eth0
+ eth-trunk 20
+#
+interface 10GE1/0/20
+ description to-C02-R630-mysql-193.53-eth0
+ eth-trunk 40
+#
+interface 10GE1/0/21
+ description to-C01-R630-mysql-193.49-eth0
+ eth-trunk 21
+#
+interface 10GE1/0/22
+ description to-C02-inspur-193.54-eth0
+ eth-trunk 41
+#
+interface 10GE1/0/23
+ eth-trunk 21
+#
+interface 10GE1/0/24
+ description to-C02-R630-mysql-193.53-eth2
+ eth-trunk 43
+#
+interface 10GE1/0/25
+ description to-C01-R630-hbase-192.163-25
+ eth-trunk 42
+#
+interface 10GE1/0/26
+ shutdown
+ eth-trunk 22
+#
+interface 10GE1/0/27
+#
+interface 10GE1/0/28
+#
+interface 10GE1/0/29
+#
+interface 10GE1/0/30
+ description C02-CDS3YK2-193.150-eth0
+ eth-trunk 44
+#
+interface 10GE1/0/31
+ description C02-HZM6XJ2-193.151-eth0
+ eth-trunk 45
+#
+interface 10GE1/0/32
+#
+interface 10GE1/0/33
+#
+interface 10GE1/0/34
+#
+interface 10GE1/0/35
+ port default vlan 197
+#
+interface 10GE1/0/36
+#
+interface 10GE1/0/37
+#
+interface 10GE1/0/38
+#
+interface 10GE1/0/39
+#
+interface 10GE1/0/40
+#
+interface 10GE1/0/41
+#
+interface 10GE1/0/42
+#
+interface 10GE1/0/43
+#
+interface 10GE1/0/44
+#
+interface 10GE1/0/45
+#
+interface 10GE1/0/46
+#
+interface 10GE1/0/47
+#
+interface 10GE1/0/48
+ dual-active detect mode direct
+#
+interface 10GE2/0/1
+ description to-C01-R630-mysql-193.30-eth1
+ eth-trunk 11
+#
+interface 10GE2/0/2
+ description to-C02-R630-mysql-193.31-eth1
+ eth-trunk 31
+#
+interface 10GE2/0/3
+ description to-C01-1288HV5-hbase-193.106-3
+ eth-trunk 12
+#
+interface 10GE2/0/4
+ description to-C02-FX2S-193.37-eth1
+ eth-trunk 32
+#
+interface 10GE2/0/5
+ description to--C01-1288HV5-hbase-193.103-5
+ eth-trunk 13
+#
+interface 10GE2/0/6
+ description to-C02-FX2S-193.38-eth1
+ eth-trunk 33
+#
+interface 10GE2/0/7
+ description to-C01-1288HV5-hbase-193.113-7
+ eth-trunk 14
+#
+interface 10GE2/0/8
+ description to-C02-FX2S-193.39-eth1
+ eth-trunk 34
+#
+interface 10GE2/0/9
+ description to-C01-R630-hbase-193.60-9
+ eth-trunk 15
+#
+interface 10GE2/0/10
+ description to-C02-R730XD-193.43-eth1
+ eth-trunk 35
+#
+interface 10GE2/0/11
+ description to-C01-R730XD-193.41-eth1
+ eth-trunk 16
+#
+interface 10GE2/0/12
+ description to-C02-R730XD-193.44-eth1
+ eth-trunk 36
+#
+interface 10GE2/0/13
+ description to-C01-R630-mysql-193.45-eth1
+ eth-trunk 17
+#
+interface 10GE2/0/14
+ description to-C02-R630-mysql-193.50-eth1
+ eth-trunk 37
+#
+interface 10GE2/0/15
+ description to-C01-R630-mysql-193.46-eth1
+ eth-trunk 18
+#
+interface 10GE2/0/16
+ description to-C02-R630-mysql-193.51-eth1
+ eth-trunk 38
+#
+interface 10GE2/0/17
+ description to-C01-R630-mysql-193.47-eth1
+ eth-trunk 19
+#
+interface 10GE2/0/18
+ description to-C02-R630-mysql-193.52-eth1
+ eth-trunk 39
+#
+interface 10GE2/0/19
+ description to-C01-R630-mysql-193.48-eth1
+ eth-trunk 20
+#
+interface 10GE2/0/20
+ description to-C02-R630-mysql-193.53-eth1
+ eth-trunk 40
+#
+interface 10GE2/0/21
+ description to-C01-R630-mysql-193.49-eth1
+ eth-trunk 21
+#
+interface 10GE2/0/22
+ description to-C02-inspur-193.54-eth1
+ eth-trunk 41
+#
+interface 10GE2/0/23
+ eth-trunk 21
+#
+interface 10GE2/0/24
+ description to-C02-R630-mysql-193.53-eth3
+ eth-trunk 43
+#
+interface 10GE2/0/25
+ description to-C01-R630-hbase-192.163-25
+ eth-trunk 42
+#
+interface 10GE2/0/26
+ shutdown
+ eth-trunk 22
+#
+interface 10GE2/0/27
+#
+interface 10GE2/0/28
+#
+interface 10GE2/0/29
+#
+interface 10GE2/0/30
+ description C02-CDS3YK2-193.150-eth1
+ eth-trunk 44
+#
+interface 10GE2/0/31
+ description C02-HZM6XJ2-193.151-eth1
+ eth-trunk 45
+#
+interface 10GE2/0/32
+#
+interface 10GE2/0/33
+#
+interface 10GE2/0/34
+#
+interface 10GE2/0/35
+#
+interface 10GE2/0/36
+#
+interface 10GE2/0/37
+#
+interface 10GE2/0/38
+#
+interface 10GE2/0/39
+#
+interface 10GE2/0/40
+#
+interface 10GE2/0/41
+#
+interface 10GE2/0/42
+#
+interface 10GE2/0/43
+#
+interface 10GE2/0/44
+#
+interface 10GE2/0/45
+#
+interface 10GE2/0/46
+#
+interface 10GE2/0/47
+#
+interface 10GE2/0/48
+#
+interface 40GE1/0/1
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/2
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/3
+ description uT:XY-2F-E05-CE12812:(local)40GE11/0/16
+ eth-trunk 10
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/4
+ description uT:XY-2F-E06-CE12812:(local)40GE11/0/17
+ eth-trunk 100
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/5
+#
+interface 40GE1/0/6
+#
+interface 40GE2/0/1
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/2
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/3
+ description uT:XY-2F-E05-CE12812:(local)40GE11/0/17
+ eth-trunk 10
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/4
+ description uT:XY-2F-E06-CE12812:(local)40GE11/0/16
+ eth-trunk 100
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/5
+#
+interface 40GE2/0/6
+#
+interface LoopBack0
+ ip address 51.51.51.28 255.255.255.255
+#
+interface Nve1
+ source 51.51.51.28
+ vni 10196 head-end peer-list 51.51.51.11
+ vni 10196 head-end peer-list 51.51.51.12
+ vni 10196 head-end peer-list 51.51.51.15
+ vni 10196 head-end peer-list 51.51.51.16
+ vni 10196 head-end peer-list 51.51.51.17
+ vni 10196 head-end peer-list 51.51.51.34
+ vni 10196 head-end peer-list 51.51.51.250
+ vni 10197 head-end peer-list 51.51.51.11
+ vni 10197 head-end peer-list 51.51.51.12
+ vni 10197 head-end peer-list 51.51.51.15
+ vni 10197 head-end peer-list 51.51.51.16
+ vni 10197 head-end peer-list 51.51.51.17
+ vni 10197 head-end peer-list 51.51.51.23
+ vni 10197 head-end peer-list 51.51.51.24
+ vni 10197 head-end peer-list 51.51.51.29
+ vni 10197 head-end peer-list 51.51.51.34
+ vni 10197 head-end peer-list 51.51.51.250
+ vni 10198 head-end peer-list 51.51.51.9
+ vni 10198 head-end peer-list 51.51.51.11
+ vni 10198 head-end peer-list 51.51.51.12
+ vni 10198 head-end peer-list 51.51.51.15
+ vni 10198 head-end peer-list 51.51.51.16
+ vni 10198 head-end peer-list 51.51.51.17
+ vni 10198 head-end peer-list 51.51.51.34
+ vni 10198 head-end peer-list 51.51.51.250
+ vni 10199 head-end peer-list 51.51.51.11
+ vni 10199 head-end peer-list 51.51.51.12
+ vni 10199 head-end peer-list 51.51.51.15
+ vni 10199 head-end peer-list 51.51.51.16
+ vni 10199 head-end peer-list 51.51.51.17
+ vni 10199 head-end peer-list 51.51.51.34
+ vni 10199 head-end peer-list 51.51.51.250
+ vni 10200 head-end peer-list 51.51.51.11
+ vni 10200 head-end peer-list 51.51.51.12
+ vni 10200 head-end peer-list 51.51.51.15
+ vni 10200 head-end peer-list 51.51.51.16
+ vni 10200 head-end peer-list 51.51.51.17
+ vni 10200 head-end peer-list 51.51.51.34
+ vni 10200 head-end peer-list 51.51.51.250
+ vni 10201 head-end peer-list 51.51.51.11
+ vni 10201 head-end peer-list 51.51.51.12
+ vni 10201 head-end peer-list 51.51.51.15
+ vni 10201 head-end peer-list 51.51.51.16
+ vni 10201 head-end peer-list 51.51.51.17
+ vni 10201 head-end peer-list 51.51.51.34
+ vni 10201 head-end peer-list 51.51.51.250
+ vni 10202 head-end peer-list 51.51.51.11
+ vni 10202 head-end peer-list 51.51.51.12
+ vni 10202 head-end peer-list 51.51.51.15
+ vni 10202 head-end peer-list 51.51.51.16
+ vni 10202 head-end peer-list 51.51.51.17
+ vni 10202 head-end peer-list 51.51.51.34
+ vni 10202 head-end peer-list 51.51.51.250
+ vni 10203 head-end peer-list 51.51.51.11
+ vni 10203 head-end peer-list 51.51.51.12
+ vni 10203 head-end peer-list 51.51.51.15
+ vni 10203 head-end peer-list 51.51.51.16
+ vni 10203 head-end peer-list 51.51.51.17
+ vni 10203 head-end peer-list 51.51.51.34
+ vni 10203 head-end peer-list 51.51.51.250
+ vni 10224 head-end peer-list 51.51.51.11
+ vni 10224 head-end peer-list 51.51.51.12
+ vni 10224 head-end peer-list 51.51.51.15
+ vni 10224 head-end peer-list 51.51.51.16
+ vni 10224 head-end peer-list 51.51.51.17
+ vni 10224 head-end peer-list 51.51.51.29
+ vni 10224 head-end peer-list 51.51.51.34
+ vni 10224 head-end peer-list 51.51.51.250
+ vni 10225 head-end peer-list 51.51.51.11
+ vni 10225 head-end peer-list 51.51.51.12
+ vni 10225 head-end peer-list 51.51.51.15
+ vni 10225 head-end peer-list 51.51.51.16
+ vni 10225 head-end peer-list 51.51.51.17
+ vni 10225 head-end peer-list 51.51.51.34
+ vni 10225 head-end peer-list 51.51.51.250
+ vni 10227 head-end peer-list 51.51.51.250
+ vni 10228 head-end peer-list 51.51.51.250
+#
+interface NULL0
+#
+ospf 100 router-id 51.51.51.28
+ bfd all-interfaces enable
+ area 0.0.0.1
+  authentication-mode md5 1 cipher %^%#3k49S,\dR+7(6GR=k4v/x"<Z*!R:>;2zY-0H)-v&%^%#
+  network 51.51.51.28 0.0.0.0
+  network 172.16.255.200 0.0.0.3
+  network 172.16.255.204 0.0.0.3
+  stub
+#
+snmp-agent
+snmp-agent local-engineid 800007DB0348FD8EC6F1A1
+snmp-agent community read cipher %^%#r'qX6YWYW<g3+G26@RDH$J/Y=V7Id(2Cf3&'dy#WyeoTYH+;t)2.rf;#C+AK*{OCRN_FF%qyx-U~CoU=%^%#
+#
+snmp-agent sys-info version all
+#
+lldp enable
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh user 51xingyi
+ssh user 51xingyi authentication-type password
+ssh user 51xingyi service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+ssh client 172.16.255.2 assign ecc-key 172.16.255.2
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+#
+vm-manager
+#
+ops
+ assistant auto_save
+  execute 1 command display current-configuration  > XY-6850-C01&C02.txt
+  execute 2 command tftp 172.16.9.233 put XY-6850-C01&C02.txt
+  condition timer cron 0 2 * * * *
+#
+return

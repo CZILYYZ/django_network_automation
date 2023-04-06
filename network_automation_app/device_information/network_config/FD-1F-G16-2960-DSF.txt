@@ -1,0 +1,352 @@
+Building configuration...
+
+Current configuration : 7400 bytes
+!
+! Last configuration change at 22:04:27 GMT Thu Feb 23 2023 by 51en
+! NVRAM config last updated at 22:04:28 GMT Thu Feb 23 2023 by 51en
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec localtime show-timezone year
+service timestamps log datetime msec localtime show-timezone year
+no service password-encryption
+!
+hostname FD-1F-G16-2960-DSF
+!
+boot-start-marker
+boot-end-marker
+!
+enable password zaq12wsx
+!
+username 51en privilege 15 password 0 51en@SWP20
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local 
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone GMT 8 0
+switch 2 provision ws-c2960x-48td-l
+!
+!
+ip domain-name 51.nb
+vtp mode transparent
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 99,103-104,111 
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ description uT:FD-1F-G01-3750-99-1:()Po13
+ switchport mode trunk
+!
+interface Port-channel11
+ description to-G16-R630-icall-99.30-bond
+ switchport access vlan 103
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel12
+ description to-G16-R730-icall-99.31-bond
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel13
+ description to-G16-R730-icall-99.32-bond
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel14
+ description to-G16-R730-icall-99.33-bond
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel15
+ description to-G16-R730-icall-99.34-bond
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel16
+ switchport access vlan 103
+ switchport mode access
+!
+interface Port-channel17
+ description to-G16-R740-icall-99.36-bond12
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel18
+ description to-G16-R740-icall-99.36-bond34
+ switchport mode trunk
+!
+interface Port-channel19
+ description to-G16-R740-icall-99.37-bond12
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel20
+ description to-G16-R740-icall-99.37-bond34
+ switchport mode trunk
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet2/0/1
+ description to-G16-R630-icall-99.30-eth0
+ switchport access vlan 103
+ switchport mode access
+ channel-group 11 mode active
+!
+interface GigabitEthernet2/0/2
+ description to-G16-R630-icall-99.30-eth1
+ switchport mode access
+ channel-group 11 mode active
+!
+interface GigabitEthernet2/0/3
+ description to-G16-R730-icall-99.31-eth0
+ switchport mode access
+ channel-group 12 mode active
+!
+interface GigabitEthernet2/0/4
+ description to-G16-R730-icall-99.31-eth1
+ switchport mode access
+ channel-group 12 mode active
+!
+interface GigabitEthernet2/0/5
+ description to-G16-R730-icall-99.32-eth0
+ switchport mode access
+ channel-group 13 mode active
+!
+interface GigabitEthernet2/0/6
+ description to-G16-R730-icall-99.32-eth1
+ switchport mode access
+ channel-group 13 mode active
+!
+interface GigabitEthernet2/0/7
+ description to-G16-R730-icall-99.33-eth0
+ switchport mode access
+ channel-group 14 mode active
+!
+interface GigabitEthernet2/0/8
+ description to-G16-R730-icall-99.33-eth1
+ switchport mode access
+ channel-group 14 mode active
+!
+interface GigabitEthernet2/0/9
+ description to-G16-R730-icall-99.34-eth0
+ switchport mode access
+ channel-group 15 mode active
+!
+interface GigabitEthernet2/0/10
+ description to-G16-R730-icall-99.34-eth1
+ switchport mode access
+ channel-group 15 mode active
+!
+interface GigabitEthernet2/0/11
+ description to-G16-R730-icall-99.35-eth0
+ switchport access vlan 103
+ switchport mode access
+ channel-group 16 mode active
+!
+interface GigabitEthernet2/0/12
+ description to-G16-R730-icall-99.35-eth1
+ switchport mode access
+ channel-group 16 mode active
+!
+interface GigabitEthernet2/0/13
+ description to-G16-R740-icall-99.36-eth0
+ switchport mode access
+ channel-group 17 mode active
+!
+interface GigabitEthernet2/0/14
+ description to-G16-R740-icall-99.36-eth1
+ switchport mode access
+ channel-group 17 mode active
+!
+interface GigabitEthernet2/0/15
+ description to-G16-R740-icall-99.36-eth2
+ switchport mode trunk
+ channel-group 18 mode active
+!
+interface GigabitEthernet2/0/16
+ description to-G16-R740-icall-99.36-eth3
+ switchport mode trunk
+ channel-group 18 mode active
+!
+interface GigabitEthernet2/0/17
+ description to-G16-R740-icall-99.37-eth0
+ switchport mode access
+ channel-group 19 mode active
+!
+interface GigabitEthernet2/0/18
+ description to-G16-R740-icall-99.37-eth1
+ switchport mode access
+ channel-group 19 mode active
+!
+interface GigabitEthernet2/0/19
+ description to-G16-R740-icall-99.37-eth2
+ switchport mode trunk
+ channel-group 20 mode active
+!
+interface GigabitEthernet2/0/20
+ description to-G16-R740-icall-99.37-eth3
+ switchport mode trunk
+ channel-group 20 mode active
+!
+interface GigabitEthernet2/0/21
+!
+interface GigabitEthernet2/0/22
+!
+interface GigabitEthernet2/0/23
+!
+interface GigabitEthernet2/0/24
+!
+interface GigabitEthernet2/0/25
+!
+interface GigabitEthernet2/0/26
+!
+interface GigabitEthernet2/0/27
+!
+interface GigabitEthernet2/0/28
+!
+interface GigabitEthernet2/0/29
+!
+interface GigabitEthernet2/0/30
+!
+interface GigabitEthernet2/0/31
+!
+interface GigabitEthernet2/0/32
+!
+interface GigabitEthernet2/0/33
+!
+interface GigabitEthernet2/0/34
+!
+interface GigabitEthernet2/0/35
+!
+interface GigabitEthernet2/0/36
+!
+interface GigabitEthernet2/0/37
+!
+interface GigabitEthernet2/0/38
+!
+interface GigabitEthernet2/0/39
+ description to-G16-R740-icall-99.37-mgmt
+ switchport access vlan 99
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/40
+ description to-G16-R740-icall-99.36-mgmt
+ switchport access vlan 99
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/41
+ description to-G16-R730-icall-99.35-mgmt
+ switchport access vlan 99
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/42
+ description to-G16-R630-icall-99.30-mgmt
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/43
+ description to-G16-R730-icall-99.31-mgmt
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/44
+ description to-G16-R730-icall-99.32-mgmt
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/45
+ description to-G16-R730-icall-99.33-mgmt
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/46
+ description to-G16-R730-icall-99.34-mgmt
+ switchport access vlan 99
+ switchport mode access
+ speed 100
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/47
+ description uT:FD-1F-G01-3750-99-1:(local)GE2/0/3
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet2/0/48
+ description uT:FD-1F-G01-3750-99-1:(local)GE1/0/4
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet2/0/49
+!
+interface GigabitEthernet2/0/50
+!
+interface TenGigabitEthernet2/0/1
+!
+interface TenGigabitEthernet2/0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan99
+ ip address 10.247.99.250 255.255.255.0
+!
+ip default-gateway 10.247.99.1
+no ip http server
+no ip http secure-server
+!
+ip scp server enable
+!
+logging host 172.16.226.32
+!
+snmp-server community 51zhangdan RO
+!
+!
+!
+!
+line con 0
+line vty 0 4
+ transport input all
+line vty 5 15
+ transport input all
+!
+end

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+      <span class="text">nornir-hosts一键更新</span>
+      <button id="nornir_hosts" class="button">Click Me</button>
+    </div>
+    <div class="container">
+      <span class="text">网络设备arp_mac采集</span>
+      <button id="arp_mac" class="button">Click Me</button>
+    </div>
+    <div class="container">
+      <span class="text">网络设备巡检</span>
+      <button id="inspection" class="button">Click Me</button>
+    </div>
+    <div class="container">
+      <span class="text">网络设备版本采集</span>
+      <button id="network_version" class="button">Click Me</button>
+    </div>
+    <script>
+    document.getElementById("nornir_hosts").addEventListener("click", function(){
+        window.location.href = "{% url 'nornir_hosts' %}";
+    });
+    document.getElementById("arp_mac").addEventListener("click", function(){
+        window.location.href = "{% url 'mac_arp' %}";
+    });
+    document.getElementById("inspection").addEventListener("click", function(){
+        window.location.href = "{% url 'inspection' %}";
+    });
+    document.getElementById("network_version").addEventListener("click", function(){
+        window.location.href = "{% url 'network_version' %}";
+    });
+    </script>
+    <script type="text/javascript" src="/static/js/search_input.js"></script>
+    <style>
+      .container {
+        display: inline-block;
+        align-items: center;
+        justify-content: flex-start;
+      }
+      .text {
+        padding-right: 10px;
+        font-size: 20px;
+      }
+      .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+    </style>
+{% endblock content %}

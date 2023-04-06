@@ -1,0 +1,260 @@
+Building configuration...
+
+Current configuration : 5967 bytes
+!
+! Last configuration change at 14:24:59 UTC Thu Feb 23 2023 by 51en
+! NVRAM config last updated at 14:24:59 UTC Thu Feb 23 2023 by 51en
+!
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname FD-1F-G01-2960-99-252
+!
+boot-start-marker
+boot-end-marker
+!
+enable password 7 010907150A59111C39
+!
+username 51en privilege 15 password 7 03510A0E082F127B7E5B49
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local 
+!
+!
+!
+!
+!
+!
+aaa session-id common
+switch 1 provision ws-c2960x-24ts-l
+!
+!
+ip domain-name 51.nb
+vtp mode transparent
+!
+!
+crypto pki trustpoint TP-self-signed-2492614016
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2492614016
+ revocation-check none
+ rsakeypair TP-self-signed-2492614016
+!
+!
+crypto pki certificate chain TP-self-signed-2492614016
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32343932 36313430 3136301E 170D3137 30373037 30343339 
+  30365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 34393236 
+  31343031 3630819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  81009791 4CDAE8C3 3BACE3BB CF2736A7 BE545A39 BDD2081A 5AB78EF1 D1F3C705 
+  E42453F5 92E94EB9 FCCF3567 6B5230C8 F758AC3E D932D3C4 80BB1355 DC11D288 
+  34341C72 8737D7B5 EF09F1BE 7FAABDA1 189C2DFE 518635A1 D33A2FA7 8CC62289 
+  3124BD31 C0E1F9B3 B95830F9 DF0E6E3B AB961B39 D3B2F852 189C13B4 FBB48BFB 
+  83530203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 142F2D86 5A38AE36 181BF6A6 CE1CFE6E A643CBF6 3E301D06 
+  03551D0E 04160414 2F2D865A 38AE3618 1BF6A6CE 1CFE6EA6 43CBF63E 300D0609 
+  2A864886 F70D0101 05050003 81810042 A856BEFB A70B69CF D71AEF18 4D89D528 
+  A3A494B2 3E54773C A51F2E8F 7160F848 616C3DE0 6E5A0EC7 3FCD3BA6 1FDA8629 
+  69190A65 D604077F 7DABE9FC 9385DE91 9B824A20 66AB4BDD 9D025DC6 BE80D3D3 
+  CAACF306 2814C99A F90A4B8D 22297E02 AF1A7CF6 CEB2C487 AB3CF5EB B7EA3E31 
+  6A5F1362 9331585B 486BF0DC CFF53B
+  	quit
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 19,99-102,111,254 
+!
+ip scp server enable
+!
+!
+!
+!
+!
+interface Port-channel1
+ description uT:FD-1F-G01-3750-99-1:()Po11
+ switchport mode trunk
+!
+interface Port-channel11
+ description to-G01-ESXI-1
+ switchport mode trunk
+!
+interface Port-channel12
+ description to-G01-ESXI-2
+ switchport mode trunk
+!
+interface Port-channel13
+ switchport mode trunk
+!
+interface Port-channel14
+ switchport mode trunk
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/0/1
+ switchport mode trunk
+ channel-group 11 mode active
+!
+interface GigabitEthernet1/0/2
+ switchport mode trunk
+ channel-group 11 mode active
+!
+interface GigabitEthernet1/0/3
+ switchport mode trunk
+ channel-group 12 mode active
+!
+interface GigabitEthernet1/0/4
+ switchport mode trunk
+ channel-group 12 mode active
+!
+interface GigabitEthernet1/0/5
+ switchport access vlan 102
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/6
+ switchport access vlan 101
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/7
+ switchport access vlan 101
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/8
+ switchport mode trunk
+ spanning-tree portfast
+ channel-group 13 mode active
+!
+interface GigabitEthernet1/0/9
+ switchport mode trunk
+ spanning-tree portfast
+ channel-group 13 mode active
+!
+interface GigabitEthernet1/0/10
+ switchport mode trunk
+ spanning-tree portfast
+ channel-group 13 mode active
+!
+interface GigabitEthernet1/0/11
+ switchport access vlan 101
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/12
+ switchport mode trunk
+ spanning-tree portfast
+ channel-group 14 mode active
+!
+interface GigabitEthernet1/0/13
+ switchport mode trunk
+ spanning-tree portfast
+ channel-group 14 mode active
+!
+interface GigabitEthernet1/0/14
+ switchport mode trunk
+ spanning-tree portfast
+ channel-group 14 mode active
+!
+interface GigabitEthernet1/0/15
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/16
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/17
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/18
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/19
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/20
+ switchport mode trunk
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/21
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/22
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/23
+ description uT:FD-1F-G01-3750-99-1:(local)GE1/0/1
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/24
+ description uT:FD-1F-G01-3750-99-1:(local)GE2/0/1
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/25
+!
+interface GigabitEthernet1/0/26
+!
+interface GigabitEthernet1/0/27
+!
+interface GigabitEthernet1/0/28
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan99
+ ip address 10.247.99.252 255.255.255.0
+!
+ip default-gateway 10.247.99.1
+ip http server
+ip http secure-server
+!
+kron occurrence save at 20:11 recurring
+ policy-list saveconfig
+!
+kron policy-list saveconfig
+ cli show run | redirect  ftp://hyp:hyphyp@172.16.9.233/FD-G01-2960-99-252
+!
+logging host 172.16.226.32
+!
+snmp-server community 51zhangdan RO
+!
+!
+!
+!
+line con 0
+line vty 0 4
+ transport input all
+line vty 5 15
+ transport input ssh
+!
+end

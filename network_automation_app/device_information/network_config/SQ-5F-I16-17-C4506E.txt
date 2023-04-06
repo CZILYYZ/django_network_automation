@@ -1,0 +1,2074 @@
+Building configuration...
+
+Current configuration : 54810 bytes
+!
+! Last configuration change at 14:46:37 GMT Thu Feb 23 2023 by 51en
+! NVRAM config last updated at 14:46:38 GMT Thu Feb 23 2023 by 51en
+!
+version 15.2
+no service pad
+service telnet-zeroidle
+service timestamps debug datetime localtime
+service timestamps log datetime msec localtime show-timezone year
+service password-encryption
+service compress-config
+service unsupported-transceiver
+!
+hostname SQ-5F-I16-17-C4506E
+!
+boot-start-marker
+boot system bootflash:/cat4500es8-universal.SPA.03.08.06.E.152-4.E6.bin
+boot-end-marker
+!
+!
+vrf definition mgmtVrf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+logging buffered informational
+enable password 7 021C054A5A54183254
+!
+username 51en privilege 15 password 7 115C48001932383B34787B
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local 
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone GMT 8 0
+!
+switch virtual domain 100
+ switch mode virtual
+ switch 1 priority 200
+ mac-address use-virtual
+!
+!
+!
+!
+!
+!
+!
+ip domain-name u51.com
+!
+!
+!
+!
+flow record YYZ-test
+ match ipv4 protocol
+ match ipv4 source address
+ match ipv4 destination address
+ match transport source-port
+ match transport destination-port
+ match interface input
+ collect counter bytes long
+ collect counter packets long
+!
+!
+flow exporter YYZ-test
+ destination 172.16.184.31
+ source Vlan128
+ transport udp 9996
+ template data timeout 60
+!
+!
+flow monitor YYZ-test
+ exporter YYZ-test
+ cache timeout active 60
+ record YYZ-test
+!
+power redundancy-mode redundant
+!
+mac access-list extended VSL-BPDU
+ permit any 0180.c200.0000 0000.0000.0003
+mac access-list extended VSL-CDP
+ permit any host 0100.0ccc.cccc
+mac access-list extended VSL-DOT1x
+ permit any any 0x888E
+mac access-list extended VSL-GARP
+ permit any host 0180.c200.0020
+mac access-list extended VSL-LLDP
+ permit any host 0180.c200.000e
+mac access-list extended VSL-MGMT
+ permit any 0022.bdcd.d200 0000.0000.00ff
+ permit 0022.bdcd.d200 0000.0000.00ff any
+mac access-list extended VSL-SSTP
+ permit any host 0100.0ccc.cccd
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+spanning-tree vlan 128 priority 4096
+!
+redundancy
+ mode sso
+!
+vlan internal allocation policy ascending
+!
+vlan 2000
+ name to-CMCC1
+!
+vlan 2002
+ name ctcc
+!
+vlan 2003
+ name unicom
+!
+vlan 2006
+ name up-to-F5
+!
+vlan 2007
+ name to-SQ-3650
+!
+vlan 2010
+ name WZ-BANK
+!
+vlan 2011 
+!
+vlan 2012
+ name to-2#-4F-DA
+!
+vlan 2013
+ name to-SPDB
+!
+vlan 2014 
+!
+vlan 2018
+ name to-SQ-F09-NE20
+!
+vlan 2019
+ name to-SQ-F10-NE20
+!
+vlan 2020
+ name SQCTCC
+!
+vlan 2021
+ name XYCMCC
+!
+vlan 2025
+ name to-7F-E09-12812
+!
+vlan 2026
+ name to-7F-E10-12812
+lldp run
+!
+track 1 ip sla 1 reachability
+ delay down 6
+!
+track 2 ip sla 2 reachability
+ delay down 6
+!
+track 3 ip sla 3 reachability
+ delay down 6
+!
+track 4 ip sla 4 reachability
+!
+track 5 ip sla 5 reachability
+ delay down 6
+!
+track 6 ip sla 6 reachability
+ delay down 6
+!
+!
+class-map match-any VSL-MGMT-PACKETS
+ match access-group name VSL-MGMT
+class-map match-any VSL-DATA-PACKETS
+ match any 
+class-map match-any VSL-L2-CONTROL-PACKETS
+ match access-group name VSL-DOT1x
+ match access-group name VSL-BPDU
+ match access-group name VSL-CDP
+ match access-group name VSL-LLDP
+ match access-group name VSL-SSTP
+ match access-group name VSL-GARP
+class-map match-any VSL-L3-CONTROL-PACKETS
+ match access-group name VSL-IPV4-ROUTING
+ match access-group name VSL-BFD
+ match access-group name VSL-DHCP-CLIENT-TO-SERVER
+ match access-group name VSL-DHCP-SERVER-TO-CLIENT
+ match access-group name VSL-DHCP-SERVER-TO-SERVER
+ match access-group name VSL-IPV6-ROUTING
+class-map match-any VSL-MULTIMEDIA-TRAFFIC
+ match dscp af41 
+ match dscp af42 
+ match dscp af43 
+ match dscp af31 
+ match dscp af32 
+ match dscp af33 
+ match dscp af21 
+ match dscp af22 
+ match dscp af23 
+class-map match-any VSL-VOICE-VIDEO-TRAFFIC
+ match dscp ef 
+ match dscp cs4 
+ match dscp cs5 
+class-map match-any VSL-SIGNALING-NETWORK-MGMT
+ match dscp cs2 
+ match dscp cs3 
+ match dscp cs6 
+ match dscp cs7 
+!
+policy-map VSL-Queuing-Policy
+ class VSL-MGMT-PACKETS
+  bandwidth percent 5 
+ class VSL-L2-CONTROL-PACKETS
+  bandwidth percent 5 
+ class VSL-L3-CONTROL-PACKETS
+  bandwidth percent 5 
+ class VSL-VOICE-VIDEO-TRAFFIC
+  bandwidth percent 30 
+ class VSL-SIGNALING-NETWORK-MGMT
+  bandwidth percent 10 
+ class VSL-MULTIMEDIA-TRAFFIC
+  bandwidth percent 20 
+ class VSL-DATA-PACKETS
+  bandwidth percent 20 
+ class class-default
+  bandwidth percent 5 
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ description to-SQ-3650
+ switchport
+ switchport trunk allowed vlan 128,2007
+ switchport mode trunk
+ shutdown
+!
+interface Port-channel2
+ description dT:SQ-5F-F5-A       
+ switchport
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+!
+interface Port-channel3
+ description dT:SQ-5F-F5-B       
+ switchport
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+!
+interface Port-channel4
+ description dT:SQ-5F-F5-A                      
+ switchport
+ switchport access vlan 2000
+ switchport mode access
+!
+interface Port-channel5
+ description dT:SQ-5F-F5-B                      
+ switchport
+ switchport access vlan 2000
+ switchport mode access
+!
+interface Port-channel6
+ description dT:SQ-5F-I13-2960:()Po1            
+ switchport
+ switchport mode trunk
+!
+interface Port-channel7
+ description dT:SQ-5F-I18-2960:()Po1            
+ switchport
+ switchport mode trunk
+!
+interface Port-channel8
+ description dT:SQ-5F-I19-2960:()Po1            
+ switchport
+ switchport mode trunk
+!
+interface Port-channel9
+ description dT:SQ-5F-I15-2960:()Po1            
+ switchport
+ switchport mode trunk
+!
+interface Port-channel10
+ description VSL
+ switchport
+ switchport mode trunk
+ switchport nonegotiate
+ switch virtual link 1
+!
+interface Port-channel11
+ description dT:SQ-5F-I20-2960:()Po1            
+ switchport
+ switchport mode trunk
+!
+interface Port-channel12
+ description dT:SQ-5F-I21-2960:()Po1            
+ switchport
+ switchport mode trunk
+!
+interface Port-channel13
+ description dT:SQ-5F-I16-4500X:()Po1           
+ switchport
+ switchport mode trunk
+!
+interface Port-channel20
+ description VSL
+ switchport
+ switchport mode trunk
+ switchport nonegotiate
+ switch virtual link 2
+!
+interface Port-channel21
+ description dT:WYHL-172.31.111.105
+ switchport
+ switchport access vlan 2002
+ switchport mode access
+!
+interface Port-channel22
+ description dT:SQ-4F-M05-8800:()Eth-trunk127   
+ switchport
+ switchport mode trunk
+ ip flow monitor YYZ-test input
+ shutdown
+ spanning-tree bpdufilter enable
+!
+interface Port-channel23
+ description dT:USG6550-191.51:()Eth-Trunk1     
+ switchport
+ switchport access vlan 2014
+ switchport mode access
+ shutdown
+!
+interface Port-channel24
+ description dT:USG6550-191.52:()Eth-Trunk1     
+ switchport
+ switchport access vlan 2014
+ switchport mode access
+ shutdown
+!
+interface Port-channel25
+ description uT:SQ-5F-H12-CE8860:()Eth-Trunk127 
+ switchport
+ switchport mode trunk
+ spanning-tree bpdufilter enable
+!
+interface Port-channel26
+ description uT:I16-CE8860
+ switchport
+ switchport mode trunk
+ spanning-tree bpdufilter enable
+!
+interface Port-channel27
+ description dT:I16-CRK6GM2-bond0
+ switchport
+ switchport access vlan 152
+ switchport mode access
+!
+interface Port-channel31
+ no ip address
+!
+interface Port-channel255
+ description to-F09-NE20
+ switchport
+ switchport trunk allowed vlan 2018,2020,2021
+ switchport mode trunk
+ spanning-tree bpdufilter enable
+!
+interface Port-channel256
+ description to-F10-NE20
+ switchport
+ switchport trunk allowed vlan 2019-2021
+ switchport mode trunk
+ spanning-tree bpdufilter enable
+!
+interface FastEthernet1
+ vrf forwarding mgmtVrf
+ no ip address
+ speed auto
+ duplex auto
+!
+interface TenGigabitEthernet1/1/1
+ description VSL-to-Te2/1/1
+ switchport mode trunk
+ switchport nonegotiate
+ no lldp transmit
+ no lldp receive
+ no cdp enable
+ channel-group 10 mode on
+ service-policy output VSL-Queuing-Policy
+!
+interface TenGigabitEthernet1/1/2
+ description VSL-to-Te2/1/2
+ switchport mode trunk
+ switchport nonegotiate
+ no lldp transmit
+ no lldp receive
+ no cdp enable
+ channel-group 10 mode on
+ service-policy output VSL-Queuing-Policy
+!
+interface TenGigabitEthernet1/1/3
+!
+interface TenGigabitEthernet1/1/4
+!
+interface TenGigabitEthernet1/1/5
+!
+interface TenGigabitEthernet1/1/6
+!
+interface TenGigabitEthernet1/1/7
+!
+interface TenGigabitEthernet1/1/8
+!
+interface GigabitEthernet1/2/1
+ shutdown
+!
+interface GigabitEthernet1/2/2
+ shutdown
+!
+interface GigabitEthernet1/2/3
+ shutdown
+!
+interface GigabitEthernet1/2/4
+ shutdown
+!
+interface GigabitEthernet1/2/5
+ shutdown
+!
+interface GigabitEthernet1/2/6
+ shutdown
+!
+interface GigabitEthernet1/2/7
+ shutdown
+!
+interface GigabitEthernet1/2/8
+ shutdown
+!
+interface GigabitEthernet1/2/9
+ shutdown
+!
+interface GigabitEthernet1/2/10
+ shutdown
+!
+interface GigabitEthernet1/2/11
+ shutdown
+!
+interface GigabitEthernet1/2/12
+ shutdown
+!
+interface GigabitEthernet1/2/13
+ shutdown
+!
+interface GigabitEthernet1/2/14
+ shutdown
+!
+interface GigabitEthernet1/2/15
+ shutdown
+!
+interface GigabitEthernet1/2/16
+ shutdown
+!
+interface GigabitEthernet1/2/17
+ no switchport
+ no ip address
+!
+interface GigabitEthernet1/2/18
+!
+interface GigabitEthernet1/2/19
+ shutdown
+!
+interface GigabitEthernet1/2/20
+ shutdown
+!
+interface GigabitEthernet1/2/21
+ description dT:WYHL-2                                 
+ switchport access vlan 2002
+ switchport mode access
+ channel-group 21 mode active
+ spanning-tree bpdufilter enable
+!
+interface GigabitEthernet1/2/22
+ description to-CMCC2-192.168.140.9
+ switchport access vlan 2000
+ switchport mode access
+!
+interface GigabitEthernet1/2/23
+ description dT:WYHL-1                                 
+ switchport access vlan 2002
+ switchport mode access
+ channel-group 21 mode active
+ spanning-tree bpdufilter enable
+!
+interface GigabitEthernet1/2/24
+ description to-CMCC1-192.168.140.1
+ switchport access vlan 2000
+ switchport mode access
+!
+interface TenGigabitEthernet1/3/1
+ description dT:SQ-5F-I13-2960:(local)TE1/0/1          
+ switchport mode trunk
+ channel-group 6 mode active
+!
+interface TenGigabitEthernet1/3/2
+ description dT:SQ-5F-I15-2960:(local)TE1/0/1          
+ switchport mode trunk
+ channel-group 9 mode active
+!
+interface TenGigabitEthernet1/3/3
+ description dT:SQ-5F-I18-2960:(local)TE1/0/1          
+ switchport mode trunk
+ channel-group 7 mode active
+!
+interface TenGigabitEthernet1/3/4
+ description dT:SQ-5F-I19-2960:(local)TE1/0/1          
+ switchport mode trunk
+ channel-group 8 mode active
+!
+interface TenGigabitEthernet1/3/5
+ description dT:SQ-5F-I20-2960:(local)TE1/0/1          
+ switchport mode trunk
+ channel-group 11 mode active
+!
+interface TenGigabitEthernet1/3/6
+ description dT:SQ-5F-I21-2960:(local)TE1/0/1          
+ switchport mode trunk
+ channel-group 12 mode active
+!
+interface TenGigabitEthernet1/3/7
+ switchport trunk allowed vlan 2018,2020,2021
+ switchport mode trunk
+ channel-group 255 mode active
+!
+interface TenGigabitEthernet1/3/8
+ switchport trunk allowed vlan 2019-2021
+ switchport mode trunk
+ channel-group 256 mode active
+!
+interface TenGigabitEthernet1/3/9
+ description dT:SQ-4F-M05-8800 :(local)25GE2/3/2       
+ switchport mode trunk
+ shutdown
+ channel-group 22 mode active
+!
+interface TenGigabitEthernet1/3/10
+ description uT:SQ-5F-H12-CE8860:(local)25GE1/1/22     
+ switchport mode trunk
+ channel-group 25 mode active
+!
+interface TenGigabitEthernet1/3/11
+ description dT:SQ-5F-I16-4500X:(local)TE1/2/8         
+ switchport mode trunk
+ channel-group 13 mode active
+!
+interface TenGigabitEthernet1/3/12
+ description to-I16-3650-Te1/1/4
+ switchport trunk allowed vlan 128,2007
+ switchport mode trunk
+ shutdown
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/4/1
+ description dT:SQ-5F-F5-A:(local)GE1/1  
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+ channel-group 2 mode active
+!
+interface GigabitEthernet1/4/2
+ description dT:SQ-5F-F5-A:(local)GE1/2  
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+ channel-group 2 mode active
+!
+interface GigabitEthernet1/4/3
+ description dT:SQ-5F-F5-B:(local)GE1/1                
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface GigabitEthernet1/4/4
+ description dT:SQ-5F-F5-B:(local)GE1/2                
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface GigabitEthernet1/4/5
+ description dT:SQ-5F-F5-A:(local)GE1/5                
+ switchport access vlan 2000
+ switchport mode access
+ channel-group 4 mode active
+!
+interface GigabitEthernet1/4/6
+ description dT:SQ-5F-F5-A:(local)GE1/6
+ switchport trunk allowed vlan 2002,2010,2013,2020,2021
+ switchport mode trunk
+!
+interface GigabitEthernet1/4/7
+ description dT:SQ-5F-F5-B:(local)GE1/5                
+ switchport access vlan 2000
+ switchport mode access
+ channel-group 5 mode active
+!
+interface GigabitEthernet1/4/8
+ description dT:SQ-5F-F5-B:(local)GE1/6
+ switchport trunk allowed vlan 2002,2010,2013,2020,2021
+ switchport mode trunk
+!
+interface GigabitEthernet1/4/9
+ description dT:SQ-5F-I16-S5720:(local)GE1/0/23        
+ switchport access vlan 128
+ switchport mode access
+ spanning-tree bpdufilter enable
+!
+interface GigabitEthernet1/4/10
+!
+interface GigabitEthernet1/4/11
+ description to-F5-A-MGMT
+ switchport access vlan 128
+ switchport mode access
+!
+interface GigabitEthernet1/4/12
+ description dual-active-fast-hello
+ dual-active fast-hello
+!
+interface GigabitEthernet1/4/13
+ switchport access vlan 128
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet1/4/14
+ switchport access vlan 128
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet1/4/15
+ switchport access vlan 128
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet1/4/16
+ switchport access vlan 129
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet1/4/17
+!
+interface GigabitEthernet1/4/18
+!
+interface GigabitEthernet1/4/19
+!
+interface GigabitEthernet1/4/20
+ switchport access vlan 129
+ switchport mode access
+!
+interface GigabitEthernet1/4/21
+!
+interface GigabitEthernet1/4/22
+!
+interface GigabitEthernet1/4/23
+ description dT:USG6550-191.51:(local)GE1/0/2          
+ switchport access vlan 2014
+ switchport mode access
+ shutdown
+ channel-group 23 mode active
+!
+interface GigabitEthernet1/4/24
+ description dT:USG6550-191.52:(local)GE1/0/2          
+ switchport access vlan 2014
+ switchport mode access
+ shutdown
+ channel-group 24 mode active
+!
+interface GigabitEthernet1/4/25
+ description dT:SQ-5F-F5-A:(local)GE1/7                
+ switchport access vlan 2000
+ switchport mode access
+ channel-group 4 mode active
+!
+interface GigabitEthernet1/4/26
+!
+interface GigabitEthernet1/4/27
+ description to-CMCC2-192.168.140.9
+ switchport access vlan 2000
+ switchport mode access
+!
+interface GigabitEthernet1/4/28
+!
+interface GigabitEthernet1/4/29
+ description dT:WYHL-2                                 
+ switchport access vlan 2002
+ switchport mode access
+ channel-group 21 mode active
+ spanning-tree bpdufilter enable
+!
+interface GigabitEthernet1/4/30
+ switchport access vlan 152
+ switchport mode access
+ channel-group 27 mode active
+!
+interface GigabitEthernet1/4/31
+ switchport access vlan 152
+ switchport mode access
+ channel-group 27 mode active
+!
+interface GigabitEthernet1/4/32
+ switchport access vlan 129
+ switchport mode access
+!
+interface GigabitEthernet1/4/33
+ switchport access vlan 157
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet1/4/34
+ switchport access vlan 128
+ switchport mode access
+!
+interface GigabitEthernet1/4/35
+!
+interface GigabitEthernet1/4/36
+!
+interface GigabitEthernet1/4/37
+ switchport access vlan 128
+ switchport mode access
+!
+interface GigabitEthernet1/4/38
+!
+interface GigabitEthernet1/4/39
+!
+interface GigabitEthernet1/4/40
+!
+interface GigabitEthernet1/4/41
+!
+interface GigabitEthernet1/4/42
+!
+interface GigabitEthernet1/4/43
+!
+interface GigabitEthernet1/4/44
+ switchport mode trunk
+!
+interface GigabitEthernet1/4/45
+ switchport mode trunk
+!
+interface GigabitEthernet1/4/46
+!
+interface GigabitEthernet1/4/47
+!
+interface GigabitEthernet1/4/48
+ description to-WZ-BANK
+ switchport access vlan 2010
+ switchport mode access
+ shutdown
+ spanning-tree portfast edge
+!
+interface TenGigabitEthernet1/5/1
+ description dT:SQ-5F-I13-2960:(local)TE2/0/1          
+ switchport mode trunk
+ channel-group 6 mode active
+!
+interface TenGigabitEthernet1/5/2
+ description dT:SQ-5F-I15-2960:(local)TE2/0/1          
+ switchport mode trunk
+ channel-group 9 mode active
+!
+interface TenGigabitEthernet1/5/3
+ description dT:SQ-5F-I18-2960:(local)TE2/0/1          
+ switchport mode trunk
+ channel-group 7 mode active
+!
+interface TenGigabitEthernet1/5/4
+ description dT:SQ-5F-I19-2960:(local)TE2/0/1          
+ switchport mode trunk
+ channel-group 8 mode active
+!
+interface TenGigabitEthernet1/5/5
+ description dT:SQ-5F-I20-2960:(local)TE2/0/1          
+ switchport mode trunk
+ channel-group 11 mode active
+!
+interface TenGigabitEthernet1/5/6
+ description dT:SQ-5F-I21-2960:(local)TE2/0/1          
+ switchport mode trunk
+ channel-group 12 mode active
+!
+interface TenGigabitEthernet1/5/7
+ switchport trunk allowed vlan 2018,2020,2021
+ switchport mode trunk
+ channel-group 255 mode active
+!
+interface TenGigabitEthernet1/5/8
+ switchport trunk allowed vlan 2019-2021
+ switchport mode trunk
+ channel-group 256 mode active
+!
+interface TenGigabitEthernet1/5/9
+!
+interface TenGigabitEthernet1/5/10
+ description uT:SQ-5F-H12-CE8860:(local)25GE1/1/23     
+ switchport mode trunk
+ channel-group 25 mode active
+!
+interface TenGigabitEthernet1/5/11
+ description dT:SQ-5F-I16-4500X:(local)TE2/2/7         
+ switchport mode trunk
+ channel-group 13 mode active
+!
+interface TenGigabitEthernet1/5/12
+ description dT:SQ-4F-M05-8800 :(local)25GE2/3/1       
+ switchport mode trunk
+ shutdown
+ channel-group 22 mode active
+!
+interface TenGigabitEthernet1/6/1
+ description uT:SQ-5F-H12-CE8860:(local)25GE1/1/20     
+ switchport mode trunk
+ channel-group 25 mode active
+!
+interface TenGigabitEthernet1/6/2
+ description uT:SQ-5F-H12-CE8860:(local)25GE2/1/20     
+ switchport mode trunk
+ channel-group 25 mode active
+!
+interface TenGigabitEthernet1/6/3
+ shutdown
+!
+interface TenGigabitEthernet1/6/4
+ shutdown
+!
+interface TenGigabitEthernet1/6/5
+ switchport mode trunk
+ channel-group 26 mode active
+!
+interface TenGigabitEthernet1/6/6
+ switchport mode trunk
+ channel-group 26 mode active
+!
+interface TenGigabitEthernet1/6/7
+!
+interface TenGigabitEthernet1/6/8
+!
+interface TenGigabitEthernet1/6/9
+!
+interface TenGigabitEthernet1/6/10
+!
+interface TenGigabitEthernet1/6/11
+!
+interface TenGigabitEthernet1/6/12
+!
+interface TenGigabitEthernet2/1/1
+ description VSL-to-Te1/1/1
+ switchport mode trunk
+ switchport nonegotiate
+ no lldp transmit
+ no lldp receive
+ no cdp enable
+ channel-group 20 mode on
+ service-policy output VSL-Queuing-Policy
+!
+interface TenGigabitEthernet2/1/2
+ description VSL-to-Te1/1/2
+ switchport mode trunk
+ switchport nonegotiate
+ no lldp transmit
+ no lldp receive
+ no cdp enable
+ channel-group 20 mode on
+ service-policy output VSL-Queuing-Policy
+!
+interface TenGigabitEthernet2/1/3
+!
+interface TenGigabitEthernet2/1/4
+!
+interface TenGigabitEthernet2/1/5
+!
+interface TenGigabitEthernet2/1/6
+!
+interface TenGigabitEthernet2/1/7
+!
+interface TenGigabitEthernet2/1/8
+!
+interface GigabitEthernet2/2/1
+ shutdown
+!
+interface GigabitEthernet2/2/2
+ shutdown
+!
+interface GigabitEthernet2/2/3
+ shutdown
+!
+interface GigabitEthernet2/2/4
+ shutdown
+!
+interface GigabitEthernet2/2/5
+ shutdown
+!
+interface GigabitEthernet2/2/6
+ shutdown
+!
+interface GigabitEthernet2/2/7
+ shutdown
+!
+interface GigabitEthernet2/2/8
+ shutdown
+!
+interface GigabitEthernet2/2/9
+ shutdown
+!
+interface GigabitEthernet2/2/10
+ shutdown
+!
+interface GigabitEthernet2/2/11
+ shutdown
+!
+interface GigabitEthernet2/2/12
+ shutdown
+!
+interface GigabitEthernet2/2/13
+ shutdown
+!
+interface GigabitEthernet2/2/14
+ shutdown
+!
+interface GigabitEthernet2/2/15
+ shutdown
+!
+interface GigabitEthernet2/2/16
+ shutdown
+!
+interface GigabitEthernet2/2/17
+ shutdown
+!
+interface GigabitEthernet2/2/18
+ no switchport
+ no ip address
+!
+interface GigabitEthernet2/2/19
+ shutdown
+!
+interface GigabitEthernet2/2/20
+ shutdown
+!
+interface GigabitEthernet2/2/21
+ shutdown
+!
+interface GigabitEthernet2/2/22
+!
+interface GigabitEthernet2/2/23
+ description dT:WYHL-2                                 
+ switchport access vlan 2002
+ switchport mode access
+ shutdown
+ channel-group 21 mode active
+ spanning-tree bpdufilter enable
+!
+interface GigabitEthernet2/2/24
+ description to-CMCC2-192.168.140.9
+ switchport access vlan 2000
+ switchport mode access
+ shutdown
+!
+interface TenGigabitEthernet2/3/1
+ description dT:SQ-5F-I13-2960:(local)TE1/0/2          
+ switchport mode trunk
+ channel-group 6 mode active
+!
+interface TenGigabitEthernet2/3/2
+ description dT:SQ-5F-I15-2960:(local)TE1/0/2          
+ switchport mode trunk
+ channel-group 9 mode active
+!
+interface TenGigabitEthernet2/3/3
+ description dT:SQ-5F-I18-2960:(local)TE1/0/2          
+ switchport mode trunk
+ channel-group 7 mode active
+!
+interface TenGigabitEthernet2/3/4
+ description dT:SQ-5F-I19-2960:(local)TE1/0/2          
+ switchport mode trunk
+ channel-group 8 mode active
+!
+interface TenGigabitEthernet2/3/5
+ description dT:SQ-5F-I20-2960:(local)TE1/0/2          
+ switchport mode trunk
+ channel-group 11 mode active
+!
+interface TenGigabitEthernet2/3/6
+ description dT:SQ-5F-I21-2960:(local)TE1/0/2          
+ switchport mode trunk
+ channel-group 12 mode active
+!
+interface TenGigabitEthernet2/3/7
+ switchport trunk allowed vlan 2018,2020,2021
+ switchport mode trunk
+ channel-group 255 mode active
+!
+interface TenGigabitEthernet2/3/8
+ switchport trunk allowed vlan 2019-2021
+ switchport mode trunk
+ channel-group 256 mode active
+!
+interface TenGigabitEthernet2/3/9
+ description dT:SQ-4F-M05-8800 :(local)25GE1/3/2       
+ switchport mode trunk
+ shutdown
+ channel-group 22 mode active
+!
+interface TenGigabitEthernet2/3/10
+ description uT:SQ-5F-H12-CE8860:(local)25GE2/1/22     
+ switchport mode trunk
+ shutdown
+ channel-group 25 mode active
+!
+interface TenGigabitEthernet2/3/11
+ description dT:SQ-5F-I16-4500X:(local)TE1/2/7         
+ switchport mode trunk
+ shutdown
+ channel-group 13 mode active
+!
+interface TenGigabitEthernet2/3/12
+ description to-I16-3650-Te2/1/4
+ switchport trunk allowed vlan 128,2007
+ switchport mode trunk
+ shutdown
+ channel-group 1 mode active
+!
+interface GigabitEthernet2/4/1
+ description dT:SQ-5F-F5-A:(local)GE1/3                
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+ shutdown
+ channel-group 2 mode active
+!
+interface GigabitEthernet2/4/2
+ description dT:SQ-5F-F5-A:(local)GE1/4                
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+ shutdown
+ channel-group 2 mode active
+!
+interface GigabitEthernet2/4/3
+ description dT:SQ-5F-F5-B:(local)GE1/3                
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface GigabitEthernet2/4/4
+ description dT:SQ-5F-F5-B:(local)GE1/4                
+ switchport trunk allowed vlan 2006
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface GigabitEthernet2/4/5
+ description dT:SQ-5F-F5-A:(local)GE1/7                
+ switchport access vlan 2000
+ switchport mode access
+ shutdown
+ channel-group 4 mode active
+!
+interface GigabitEthernet2/4/6
+ description dT:SQ-5F-F5-B:(local)GE1/7                
+ switchport access vlan 2000
+ switchport mode access
+ channel-group 5 mode active
+!
+interface GigabitEthernet2/4/7
+!
+interface GigabitEthernet2/4/8
+!
+interface GigabitEthernet2/4/9
+ switchport access vlan 128
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/10
+ switchport access vlan 128
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/11
+ description to-F5-B-MGMT
+ switchport access vlan 128
+ switchport mode access
+ shutdown
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/12
+ description dual-active-fast-hello
+ dual-active fast-hello
+!
+interface GigabitEthernet2/4/13
+ switchport access vlan 129
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/14
+ switchport access vlan 128
+ switchport mode access
+!
+interface GigabitEthernet2/4/15
+ switchport access vlan 128
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/16
+!
+interface GigabitEthernet2/4/17
+!
+interface GigabitEthernet2/4/18
+!
+interface GigabitEthernet2/4/19
+!
+interface GigabitEthernet2/4/20
+ switchport access vlan 129
+ switchport mode access
+ shutdown
+!
+interface GigabitEthernet2/4/21
+!
+interface GigabitEthernet2/4/22
+!
+interface GigabitEthernet2/4/23
+ description dT:USG6550-191.51:(local)GE1/0/3          
+ switchport access vlan 2014
+ switchport mode access
+ shutdown
+ channel-group 23 mode active
+!
+interface GigabitEthernet2/4/24
+ description dT:USG6550-191.52:(local)GE1/0/3          
+ switchport access vlan 2014
+ switchport mode access
+ shutdown
+ channel-group 24 mode active
+!
+interface GigabitEthernet2/4/25
+!
+interface GigabitEthernet2/4/26
+ switchport access vlan 128
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/27
+!
+interface GigabitEthernet2/4/28
+!
+interface GigabitEthernet2/4/29
+!
+interface GigabitEthernet2/4/30
+!
+interface GigabitEthernet2/4/31
+ switchport access vlan 128
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/32
+ description dT:KVM-172.16.128.251
+ switchport access vlan 128
+ shutdown
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/33
+ switchport access vlan 129
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/34
+!
+interface GigabitEthernet2/4/35
+!
+interface GigabitEthernet2/4/36
+!
+interface GigabitEthernet2/4/37
+!
+interface GigabitEthernet2/4/38
+!
+interface GigabitEthernet2/4/39
+!
+interface GigabitEthernet2/4/40
+!
+interface GigabitEthernet2/4/41
+!
+interface GigabitEthernet2/4/42
+!
+interface GigabitEthernet2/4/43
+!
+interface GigabitEthernet2/4/44
+ switchport access vlan 190
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/45
+ switchport access vlan 128
+ switchport mode access
+ spanning-tree portfast edge
+!
+interface GigabitEthernet2/4/46
+ shutdown
+!
+interface GigabitEthernet2/4/47
+ shutdown
+!
+interface GigabitEthernet2/4/48
+ switchport access vlan 128
+ switchport mode access
+!
+interface TenGigabitEthernet2/5/1
+ description dT:SQ-5F-I13-2960:(local)TE2/0/2          
+ switchport mode trunk
+ channel-group 6 mode active
+!
+interface TenGigabitEthernet2/5/2
+ description dT:SQ-5F-I15-2960:(local)TE2/0/2          
+ switchport mode trunk
+ channel-group 9 mode active
+!
+interface TenGigabitEthernet2/5/3
+ description dT:SQ-5F-I18-2960:(local)TE2/0/2          
+ switchport mode trunk
+ channel-group 7 mode active
+!
+interface TenGigabitEthernet2/5/4
+ description dT:SQ-5F-I19-2960:(local)TE2/0/2          
+ switchport mode trunk
+ channel-group 8 mode active
+!
+interface TenGigabitEthernet2/5/5
+ description dT:SQ-5F-I20-2960:(local)TE2/0/2          
+ switchport mode trunk
+ channel-group 11 mode active
+!
+interface TenGigabitEthernet2/5/6
+ description dT:SQ-5F-I21-2960:(local)TE2/0/2          
+ switchport mode trunk
+ channel-group 12 mode active
+!
+interface TenGigabitEthernet2/5/7
+ switchport trunk allowed vlan 2018,2020,2021
+ switchport mode trunk
+ channel-group 255 mode active
+!
+interface TenGigabitEthernet2/5/8
+ switchport trunk allowed vlan 2019-2021
+ switchport mode trunk
+ channel-group 256 mode active
+!
+interface TenGigabitEthernet2/5/9
+!
+interface TenGigabitEthernet2/5/10
+ description uT:SQ-5F-H12-CE8860:(local)25GE2/1/23     
+ switchport mode trunk
+ shutdown
+ channel-group 25 mode active
+!
+interface TenGigabitEthernet2/5/11
+ description dT:SQ-5F-I16-4500X:(local)TE2/2/8         
+ switchport mode trunk
+ shutdown
+ channel-group 13 mode active
+!
+interface TenGigabitEthernet2/5/12
+ description dT:SQ-4F-M05-8800 :(local)25GE1/3/1       
+ switchport mode trunk
+ shutdown
+ channel-group 22 mode active
+!
+interface TenGigabitEthernet2/6/1
+ description uT:SQ-5F-H12-CE8860:(local)25GE1/1/21     
+ switchport mode trunk
+ shutdown
+ channel-group 25 mode active
+!
+interface TenGigabitEthernet2/6/2
+ description uT:SQ-5F-H12-CE8860:(local)25GE2/1/21     
+ switchport mode trunk
+ shutdown
+ channel-group 25 mode active
+!
+interface TenGigabitEthernet2/6/3
+ shutdown
+!
+interface TenGigabitEthernet2/6/4
+ shutdown
+!
+interface TenGigabitEthernet2/6/5
+!
+interface TenGigabitEthernet2/6/6
+!
+interface TenGigabitEthernet2/6/7
+!
+interface TenGigabitEthernet2/6/8
+!
+interface TenGigabitEthernet2/6/9
+!
+interface TenGigabitEthernet2/6/10
+!
+interface TenGigabitEthernet2/6/11
+!
+interface TenGigabitEthernet2/6/12
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan128
+ description MGMT
+ ip address 172.16.128.1 255.255.255.0
+ no ip proxy-arp
+!
+interface Vlan129
+ ip address 172.16.129.1 255.255.255.0
+ no ip redirects
+!
+interface Vlan130
+ description dT:BoFen-WG
+ ip address 172.16.191.105 255.255.255.252
+!
+interface Vlan132
+ ip address 172.16.132.1 255.255.255.0
+ ip helper-address 172.16.44.35 
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan133
+ ip address 172.16.133.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan134
+ ip address 172.16.134.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan135
+ ip address 172.16.135.1 255.255.255.0
+ ip helper-address 172.16.44.35 
+ no ip redirects
+!
+interface Vlan136
+ ip address 172.16.136.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan137
+ ip address 172.16.137.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan138
+ ip address 172.16.138.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan139
+ ip address 172.16.139.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan140
+ ip address 172.16.140.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan141
+ ip address 172.16.141.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan142
+ ip address 172.16.142.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan143
+ ip address 172.16.143.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan144
+ ip address 172.16.144.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan145
+ ip address 172.16.145.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan146
+ ip address 172.16.146.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan147
+ ip address 172.16.147.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan148
+ ip address 172.16.148.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan149
+ description loginner
+ ip address 172.16.149.1 255.255.255.0
+!
+interface Vlan150
+ ip address 172.16.150.1 255.255.255.0
+!
+interface Vlan151
+ description shenke-crawler
+ ip address 172.16.151.1 255.255.255.0
+!
+interface Vlan152
+ ip address 172.16.152.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan153
+ ip address 172.16.153.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan154
+ ip address 172.16.154.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan155
+ ip address 172.16.155.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan156
+ ip address 172.16.156.1 255.255.255.0
+ ip helper-address 172.16.44.35 
+ no ip redirects
+!
+interface Vlan157
+ ip address 172.16.157.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan158
+ ip address 172.16.158.1 255.255.255.0
+ ip access-group loginner-limit in
+ ip helper-address 172.16.55.11 
+!
+interface Vlan159
+ ip address 172.16.159.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan160
+ ip address 172.16.160.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan161
+ ip address 172.16.161.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan162
+ ip address 172.16.162.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan163
+ ip address 172.16.163.1 255.255.255.0
+ ip helper-address 172.16.44.35 
+!
+interface Vlan166
+ ip address 172.16.166.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan167
+ ip address 172.16.167.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan172
+ ip address 172.16.172.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan173
+ ip address 172.16.173.1 255.255.255.0
+ ip helper-address 172.16.44.35 
+ no ip redirects
+!
+interface Vlan174
+ ip address 172.16.174.1 255.255.255.0
+!
+interface Vlan175
+ ip address 172.16.175.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan176
+ description ops-tool
+ ip address 172.16.176.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan177
+ description ops-tool
+ ip address 172.16.177.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan187
+ ip address 172.16.187.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+!
+interface Vlan188
+ ip address 172.16.188.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan189
+ ip address 172.16.189.1 255.255.255.0
+ ip helper-address 172.16.55.11 
+ no ip redirects
+!
+interface Vlan190
+ description EXSI
+ ip address 172.16.190.1 255.255.255.0
+ ip helper-address 172.16.44.35 
+ no ip redirects
+!
+interface Vlan200
+ no ip address
+!
+interface Vlan2000
+ no ip address
+!
+interface Vlan2006
+ description up-to-F5-172.16.191.1
+ ip address 172.16.191.4 255.255.255.248
+ ip policy route-map pbr
+!
+interface Vlan2012
+ ip address 172.16.191.25 255.255.255.252
+!
+interface Vlan2014
+ description to-USG6550
+ ip address 172.16.191.49 255.255.255.248
+!
+interface Vlan2018
+ description ACCESS-NE20-F09
+ ip address 172.16.191.62 255.255.255.252
+ ip ospf message-digest-key 1 md5 7 124C5439102B5E547B7C
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+!
+interface Vlan2019
+ description ACCESS-NE20-F10
+ ip address 172.16.191.66 255.255.255.252
+ ip ospf message-digest-key 1 md5 7 15475A22060A79747964
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+!
+interface Vlan2025
+ ip address 172.18.191.17 255.255.255.252
+ ip ospf message-digest-key 1 md5 7 101B5817073743595F
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+!
+interface Vlan2026
+ ip address 172.18.191.21 255.255.255.252
+ ip ospf message-digest-key 1 md5 7 115C480B15325A5E57
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+!
+router ospf 1
+ router-id 172.16.128.1
+ area 1 authentication message-digest
+ redistribute static subnets route-map red-static-131
+ passive-interface Vlan128
+ passive-interface Vlan129
+ passive-interface Vlan130
+ passive-interface Vlan132
+ passive-interface Vlan133
+ passive-interface Vlan134
+ passive-interface Vlan135
+ passive-interface Vlan136
+ passive-interface Vlan137
+ passive-interface Vlan138
+ passive-interface Vlan139
+ passive-interface Vlan140
+ passive-interface Vlan141
+ passive-interface Vlan142
+ passive-interface Vlan143
+ passive-interface Vlan144
+ passive-interface Vlan145
+ passive-interface Vlan146
+ passive-interface Vlan147
+ passive-interface Vlan148
+ passive-interface Vlan149
+ passive-interface Vlan150
+ passive-interface Vlan151
+ passive-interface Vlan152
+ passive-interface Vlan153
+ passive-interface Vlan154
+ passive-interface Vlan155
+ passive-interface Vlan156
+ passive-interface Vlan157
+ passive-interface Vlan158
+ passive-interface Vlan159
+ passive-interface Vlan160
+ passive-interface Vlan161
+ passive-interface Vlan162
+ passive-interface Vlan163
+ passive-interface Vlan166
+ passive-interface Vlan167
+ passive-interface Vlan172
+ passive-interface Vlan173
+ passive-interface Vlan174
+ passive-interface Vlan175
+ passive-interface Vlan176
+ passive-interface Vlan177
+ passive-interface Vlan187
+ passive-interface Vlan188
+ passive-interface Vlan189
+ passive-interface Vlan190
+ passive-interface Vlan2006
+ passive-interface Vlan2012
+ passive-interface Vlan2014
+ network 51.1.1.72 0.0.0.3 area 1
+ network 172.16.191.8 0.0.0.3 area 1
+ network 172.16.191.60 0.0.0.3 area 1
+ network 172.16.191.64 0.0.0.3 area 1
+ network 172.16.128.0 0.0.63.255 area 1
+ network 172.18.191.16 0.0.0.3 area 1
+ network 172.18.191.20 0.0.0.3 area 1
+ default-information originate metric 200
+!
+ip forward-protocol nd
+no ip http server
+!
+ip route 192.168.128.56 255.255.255.248 172.16.191.50 track 1
+ip route 9.96.35.204 255.255.255.255 172.16.191.50 track 2
+ip route 9.96.35.212 255.255.255.255 172.16.191.50 track 2
+ip route 10.18.26.16 255.255.255.255 172.16.191.50 111 track 6
+ip route 10.25.2.11 255.255.255.255 172.16.191.50 111 track 6
+ip route 10.25.2.12 255.255.255.255 172.16.191.50 111 track 6
+ip route 10.25.2.13 255.255.255.255 172.16.191.50 111 track 6
+ip route 0.0.0.0 0.0.0.0 172.16.191.2
+ip route 10.24.6.213 255.255.255.255 172.16.191.50
+ip route 10.24.6.217 255.255.255.255 172.16.191.50
+ip route 10.216.216.56 255.255.255.248 172.16.191.50
+ip route 12.16.0.0 255.255.0.0 Null0
+ip route 43.254.52.2 255.255.255.255 172.16.191.1
+ip route 73.162.162.7 255.255.255.255 172.16.191.50 111
+ip route 73.162.162.8 255.255.255.255 172.16.191.50 111
+ip route 73.162.162.10 255.255.255.255 172.16.191.50 111
+ip route 73.162.162.11 255.255.255.255 172.16.191.50 111
+ip route 172.16.97.112 255.255.255.248 172.16.191.50
+ip route 172.16.131.0 255.255.255.0 172.16.128.20
+ip route 172.16.168.0 255.255.255.0 172.16.128.20
+ip route 172.16.169.0 255.255.255.0 172.16.128.20
+ip route 172.16.170.0 255.255.255.0 172.16.128.20
+ip route 172.16.171.0 255.255.255.0 172.16.128.20
+ip route 172.16.180.0 255.255.255.0 172.16.128.20
+ip route 172.16.181.0 255.255.255.0 172.16.128.20
+ip route 172.16.182.0 255.255.255.0 172.16.128.20
+ip route 172.16.183.0 255.255.255.0 172.16.128.20
+ip route 172.16.184.0 255.255.255.0 172.16.128.20
+ip route 172.16.185.0 255.255.255.0 172.16.128.20
+ip route 172.16.186.0 255.255.255.0 172.16.128.20
+ip route 172.16.191.34 255.255.255.255 172.16.191.1
+ip route 172.20.0.56 255.255.255.248 172.16.191.50
+ip route 172.26.180.0 255.255.255.0 172.16.128.20
+ip route 172.26.181.0 255.255.255.0 172.16.128.20
+ip route 172.26.182.0 255.255.255.0 172.16.128.20
+ip route 172.26.183.0 255.255.255.0 172.16.128.20
+ip route 172.26.184.0 255.255.255.0 172.16.128.20
+ip route 172.26.185.0 255.255.255.0 172.16.191.26
+ip route 172.26.186.0 255.255.255.0 172.16.191.26
+ip route 172.31.111.162 255.255.255.255 172.16.191.1
+ip route 177.177.1.8 255.255.255.248 172.16.191.50
+ip route 192.168.128.128 255.255.255.248 172.16.191.50
+ip route 202.162.1.241 255.255.255.255 172.16.191.50
+!
+ip access-list standard test-mxs
+ permit 10.0.12.46
+!
+ip access-list extended FD-to-SQ-in
+ permit ip host 192.168.59.69 172.16.128.0 0.0.63.255
+ permit ip host 172.16.28.75 172.16.128.0 0.0.63.255
+ permit ip host 172.16.28.76 172.16.128.0 0.0.63.255
+ permit ip host 172.16.28.77 172.16.128.0 0.0.63.255
+ permit ip host 172.16.54.47 172.16.128.0 0.0.63.255
+ permit ip host 172.16.54.48 172.16.128.0 0.0.63.255
+ permit ip host 172.16.13.6 172.16.128.0 0.0.63.255
+ permit ip host 172.16.13.7 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.63 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.77 172.16.128.0 0.0.63.255
+ permit ip host 172.16.13.159 172.16.128.0 0.0.63.255
+ permit ip host 172.16.14.67 172.16.128.0 0.0.63.255
+ permit ip host 192.168.59.21 172.16.128.0 0.0.63.255
+ permit ip host 172.16.8.106 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.71 172.16.128.0 0.0.63.255
+ permit ospf any any
+ permit ip 10.0.80.0 0.0.0.255 172.16.128.0 0.0.63.255
+ permit ip 192.168.20.0 0.0.3.255 172.16.128.0 0.0.63.255
+ permit ip 192.168.24.0 0.0.1.255 172.16.128.0 0.0.63.255
+ permit ip 192.168.26.0 0.0.1.255 172.16.128.0 0.0.63.255
+ permit ip 192.168.178.0 0.0.1.255 172.16.128.0 0.0.63.255
+ permit ip 10.0.28.0 0.0.3.255 172.16.128.0 0.0.63.255
+ permit ip host 172.16.9.5 172.16.128.0 0.0.63.255
+ permit ip host 172.16.9.233 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.50 172.16.128.0 0.0.63.255
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.153.9
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.137.8
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.137.10
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.138.73
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.152.16
+ permit ip host 172.16.8.118 172.16.128.0 0.0.63.255
+ permit ip host 172.16.8.119 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.70 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.74 172.16.128.0 0.0.63.255
+ permit ip host 172.16.8.53 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.82 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.83 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.84 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.86 172.16.128.0 0.0.63.255
+ permit ip host 172.16.12.34 172.16.128.0 0.0.63.255
+ permit ip host 172.16.12.204 172.16.128.0 0.0.63.255
+ permit ip host 172.16.12.206 172.16.128.0 0.0.63.255
+ permit ip host 172.16.12.209 172.16.128.0 0.0.63.255
+ permit ip host 172.16.12.213 172.16.128.0 0.0.63.255
+ permit ip host 172.16.57.21 172.16.128.0 0.0.63.255
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.152.137
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.161.8
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.145.35
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.139.162
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.167.10
+ permit ip host 172.16.8.65 host 172.16.190.250
+ permit ip host 172.16.9.165 172.16.128.0 0.0.63.255
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.152.82
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.152.83
+ permit ip host 172.16.11.89 172.16.128.0 0.0.63.255
+ permit ip host 172.16.28.34 172.16.128.0 0.0.63.255
+ permit ip host 172.16.10.8 172.16.128.0 0.0.63.255
+ permit ip host 172.16.13.168 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.42 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.43 172.16.128.0 0.0.63.255
+ permit ip host 172.16.11.44 172.16.128.0 0.0.63.255
+ permit ip any host 172.16.152.143
+ permit ip any host 172.16.152.144
+ permit ip any host 172.16.152.145
+ permit ip host 10.247.255.2 172.16.128.0 0.0.63.255
+ permit ip host 10.247.255.3 172.16.128.0 0.0.63.255
+ permit ip host 172.16.58.200 172.16.128.0 0.0.63.255
+ permit ip host 172.16.58.201 172.16.128.0 0.0.63.255
+ permit ip host 172.16.58.202 172.16.128.0 0.0.63.255
+ permit ip host 172.16.12.130 172.16.128.0 0.0.63.255
+ permit ip host 172.16.29.74 172.16.128.0 0.0.63.255
+ permit ip host 172.16.29.78 172.16.128.0 0.0.63.255
+ permit ip host 172.16.29.82 172.16.128.0 0.0.63.255
+ permit ip host 172.16.12.70 172.16.128.0 0.0.63.255
+ permit ip host 172.16.12.71 172.16.128.0 0.0.63.255
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.139.67
+ permit ip 172.16.0.0 0.0.63.255 host 172.16.146.153
+ permit ip host 172.16.28.71 172.16.128.0 0.0.63.255
+ permit ip 10.0.12.0 0.0.0.255 172.16.128.0 0.0.63.255
+ permit ip any host 172.16.146.137
+ permit ip host 172.16.13.21 172.16.128.0 0.0.63.255
+ deny   ip any any
+ip access-list extended SQ-to-FD-out
+ permit ip 172.16.128.0 0.0.63.255 host 192.168.59.69
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.28.75
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.28.76
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.28.77
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.54.47
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.54.48
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.13.6
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.13.7
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.63
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.77
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.13.159
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.14.67
+ permit ip 172.16.128.0 0.0.63.255 host 192.168.59.21
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.8.106
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.71
+ permit ospf any any
+ permit ip 172.16.128.0 0.0.63.255 10.0.80.0 0.0.0.255
+ permit ip 172.16.128.0 0.0.63.255 192.168.20.0 0.0.3.25
+ permit ip 172.16.128.0 0.0.63.255 192.168.24.0 0.0.1.25
+ permit ip 172.16.128.0 0.0.63.255 192.168.26.0 0.0.1.25
+ permit ip 172.16.128.0 0.0.63.255 192.168.178.0 0.0.1.2
+ permit ip 172.16.128.0 0.0.63.255 10.0.28.0 0.0.3.255
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.9.5
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.9.233
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.50
+ permit ip host 172.16.153.9 172.16.0.0 0.0.63.255
+ permit ip host 172.16.137.8 172.16.0.0 0.0.63.255
+ permit ip host 172.16.137.10 172.16.0.0 0.0.63.255
+ permit ip host 172.16.138.73 172.16.0.0 0.0.63.255
+ permit ip host 172.16.152.16 172.16.0.0 0.0.63.255
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.8.118
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.8.119
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.70
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.74
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.8.53
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.82
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.83
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.84
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.86
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.12.34
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.12.204
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.12.206
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.12.209
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.12.213
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.57.21
+ permit ip host 172.16.152.137 172.16.0.0 0.0.63.255
+ permit ip host 172.16.161.8 172.16.0.0 0.0.63.255
+ permit ip host 172.16.145.35 172.16.0.0 0.0.63.255
+ permit ip host 172.16.139.162 172.16.0.0 0.0.63.255
+ permit ip host 172.16.167.10 172.16.0.0 0.0.63.255
+ permit ip host 172.16.190.250 host 172.16.8.65
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.9.165
+ permit ip host 172.16.152.82 172.16.0.0 0.0.63.255
+ permit ip host 172.16.152.83 172.16.0.0 0.0.63.255
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.89
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.28.34
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.10.8
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.13.168
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.42
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.43
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.11.44
+ permit ip host 172.16.152.143 any
+ permit ip host 172.16.152.144 any
+ permit ip host 172.16.152.145 any
+ permit ip 172.16.128.0 0.0.63.255 host 10.247.255.2
+ permit ip 172.16.128.0 0.0.63.255 host 10.247.255.3
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.58.200
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.58.201
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.58.202
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.12.130
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.29.74
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.29.78
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.29.82
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.12.70
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.12.71
+ permit ip host 172.16.139.67 172.16.0.0 0.0.63.255
+ permit ip host 172.16.146.153 172.16.0.0 0.0.63.255
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.28.71
+ permit ip 172.16.128.0 0.0.63.255 10.0.12.0 0.0.0.255
+ permit ip host 17.16.146.137 any
+ permit ip 172.16.128.0 0.0.63.255 host 172.16.13.21
+ deny   ip any any
+ip access-list extended VSL-BFD
+ permit udp any any eq 3784
+ip access-list extended VSL-DHCP-CLIENT-TO-SERVER
+ permit udp any eq bootpc any eq bootps
+ip access-list extended VSL-DHCP-SERVER-TO-CLIENT
+ permit udp any eq bootps any eq bootpc
+ip access-list extended VSL-DHCP-SERVER-TO-SERVER
+ permit udp any eq bootps any eq bootps
+ip access-list extended VSL-IPV4-ROUTING
+ permit ip any 224.0.0.0 0.0.0.255
+ip access-list extended cap-icmp
+ permit icmp host 172.16.128.3 any
+ permit icmp any host 172.16.128.3
+ip access-list extended db-monitor
+ permit ip 172.16.132.0 0.0.0.255 any
+ permit ip any 172.16.132.0 0.0.0.255
+ip access-list extended loginner-limit
+ permit udp any eq bootpc any eq bootps
+ permit ip any host 172.16.14.75
+ permit tcp 172.16.158.0 0.0.0.255 eq 445 host 172.16.13.41
+ permit tcp 172.16.158.0 0.0.0.255 eq 445 host 172.16.151.11
+ permit tcp 172.16.158.0 0.0.0.255 eq 445 host 172.16.184.119
+ permit tcp 172.16.158.0 0.0.0.255 eq 445 host 172.16.214.109
+ permit tcp 172.16.158.0 0.0.0.255 eq 135 host 172.16.13.41
+ permit tcp 172.16.158.0 0.0.0.255 eq 135 host 172.16.151.11
+ permit tcp 172.16.158.0 0.0.0.255 eq 135 host 172.16.184.119
+ permit tcp 172.16.158.0 0.0.0.255 eq 135 host 172.16.214.109
+ permit tcp 172.16.158.0 0.0.0.255 eq 6020 host 172.16.13.41
+ permit tcp 172.16.158.0 0.0.0.255 eq 6020 host 172.16.151.11
+ permit tcp 172.16.158.0 0.0.0.255 eq 6020 host 172.16.184.119
+ permit tcp 172.16.158.0 0.0.0.255 eq 6020 host 172.16.214.109
+ deny   tcp 172.16.158.0 0.0.0.255 eq 445 any
+ deny   tcp 172.16.158.0 0.0.0.255 eq 135 any
+ deny   tcp 172.16.158.0 0.0.0.255 eq 139 any
+ deny   tcp 172.16.158.0 0.0.0.255 eq 6020 any
+ permit ip 172.16.158.0 0.0.0.255 any
+ip access-list extended mysql
+ip access-list extended pbr
+ permit ip host 172.16.191.5 any
+ip access-list extended test
+!
+ip sla 1
+ icmp-echo 192.168.128.129
+ frequency 5
+ip sla schedule 1 life forever start-time now
+ip sla 2
+ icmp-echo 177.177.1.9
+ frequency 5
+ip sla schedule 2 life forever start-time now
+ip sla 3
+ icmp-echo 172.20.97.113
+ frequency 5
+ip sla schedule 3 life forever start-time now
+ip sla 4
+ icmp-echo 172.20.0.9
+ frequency 10
+ip sla schedule 4 life forever start-time now
+ip sla 5
+ icmp-echo 26.208.247.33
+ frequency 5
+ip sla schedule 5 life forever start-time now
+ip sla 6
+ icmp-echo 172.20.0.57
+ frequency 5
+ip sla schedule 6 life forever start-time now
+kron occurrence save at 22:11 recurring
+ policy-list saveconfig
+!
+kron policy-list saveconfig
+ cli show run | redirect  ftp://hyp:hyphyp@172.16.9.233/SQ-I16-17-C4506E-128.1
+!
+logging trap critical
+logging source-interface Vlan128
+logging host 172.16.152.48
+logging host 172.16.37.38
+access-list 1 permit 115.236.43.146
+access-list 20 permit 172.16.131.0 0.0.0.255
+access-list 20 permit 172.16.168.0 0.0.0.255
+access-list 20 permit 172.16.169.0 0.0.0.255
+access-list 20 permit 172.16.170.0 0.0.0.255
+access-list 20 permit 172.16.171.0 0.0.0.255
+access-list 20 permit 172.16.180.0 0.0.0.255
+access-list 20 permit 172.16.181.0 0.0.0.255
+access-list 20 permit 172.16.183.0 0.0.0.255
+access-list 20 permit 172.16.182.0 0.0.0.255
+access-list 20 permit 172.16.184.0 0.0.0.255
+access-list 20 permit 12.16.0.0 0.0.255.255
+access-list 20 permit 172.26.180.0 0.0.0.255
+access-list 20 permit 172.26.181.0 0.0.0.255
+access-list 20 permit 172.26.182.0 0.0.0.255
+access-list 20 permit 172.26.183.0 0.0.0.255
+access-list 20 permit 172.26.184.0 0.0.0.255
+access-list 20 permit 172.18.128.0 0.0.63.255
+access-list 20 permit 172.16.185.0 0.0.0.255
+access-list 20 permit 172.16.186.0 0.0.0.255
+access-list 20 permit 172.26.185.0 0.0.0.255
+access-list 20 permit 172.26.186.0 0.0.0.255
+access-list 21 permit 172.23.57.129
+access-list 21 permit 72.128.0.192
+access-list 21 permit 72.128.0.193
+access-list 21 permit 10.18.26.16
+access-list 21 permit 10.25.2.11
+access-list 21 permit 10.25.2.13
+access-list 21 permit 10.25.2.12
+access-list 21 permit 73.162.162.8
+access-list 21 permit 73.162.162.11
+access-list 21 permit 73.162.162.10
+access-list 21 permit 12.1.1.72
+access-list 21 permit 12.1.1.73
+access-list 21 permit 73.162.162.7
+access-list 21 permit 10.253.105.209
+access-list 21 permit 172.20.112.153
+access-list 21 permit 72.128.0.154
+access-list 21 permit 172.20.112.154
+access-list 21 permit 72.128.0.155
+access-list 21 permit 72.128.0.156
+access-list 21 permit 172.23.69.164
+access-list 21 permit 9.96.35.20
+access-list 21 permit 72.128.0.191
+access-list 21 permit 172.31.111.162
+access-list 21 permit 31.1.0.154
+access-list 21 permit 9.96.35.204
+access-list 21 permit 26.76.252.38
+access-list 21 permit 196.2.1.81
+access-list 21 permit 10.253.106.5
+access-list 21 permit 9.96.35.212
+access-list 21 permit 172.20.1.21
+access-list 21 permit 172.20.1.22
+access-list 21 permit 72.129.0.113
+access-list 21 permit 10.24.6.213
+access-list 21 permit 10.24.6.217
+access-list 21 permit 196.1.1.22
+access-list 21 permit 172.20.112.23
+access-list 21 permit 192.168.128.56 0.0.0.7
+access-list 21 permit 172.29.49.32 0.0.0.3
+access-list 21 permit 196.1.1.20 0.0.0.3
+access-list 21 permit 198.2.1.64 0.0.0.7
+access-list 21 permit 172.20.0.8 0.0.0.7
+access-list 21 permit 26.208.247.32 0.0.0.7
+access-list 21 permit 172.20.97.112 0.0.0.7
+access-list 21 permit 192.168.128.128 0.0.0.7
+access-list 21 permit 177.177.1.8 0.0.0.7
+access-list 21 permit 199.1.1.64 0.0.0.7
+access-list 21 permit 10.216.216.56 0.0.0.7
+access-list 21 permit 172.167.225.0 0.0.0.7
+access-list 21 permit 172.20.0.48 0.0.0.7
+access-list 21 permit 172.20.0.56 0.0.0.7
+arp 172.16.190.217 c201.3d63.0000 ARPA
+!
+route-map red-static-131 permit 10
+ match ip address 20
+!
+route-map red-static-131 permit 20
+ match ip address 21
+!
+route-map pbr permit 10
+ match ip address pbr
+ set ip next-hop 172.16.191.61 172.16.191.65
+!
+snmp-server community 51zhangdan RO
+!
+!
+!
+!
+ipv6 access-list VSL-IPV6-ROUTING
+ permit ipv6 any FF02::/124
+!
+no vstack
+!
+line con 0
+ password 7 03510A0E082F127B7E5B49
+ logging synchronous
+ stopbits 1
+line vty 0 3
+ password 7 151C01192A0D7D2C023B147A2A2C000D58
+ length 0
+ transport input all
+line vty 4
+ access-class 97 in
+ password 7 05050C1A0F6B1801330D364A3227122472
+ transport input all
+!
+!
+monitor session 1 source vlan 2006
+monitor session 1 destination remote vlan 999 
+monitor session 1 filter address-type unicast 
+monitor session 1 filter packet-type good rx
+monitor session 10 source vlan 132
+monitor session 10 filter address-type unicast 
+monitor session 10 filter packet-type good rx
+monitor session 10 filter ip access-group db-monitor
+monitor session 11 source vlan 132
+monitor session 11 filter address-type unicast 
+monitor session 11 filter packet-type good rx
+monitor session 11 filter ip access-group db-monitor
+monitor session 12 source interface Po2
+monitor session 12 destination interface Gi1/4/35
+monitor session 12 filter packet-type good rx
+!
+module provision switch 1
+ chassis-type 51 base-mac 00F2.8B32.5300
+ slot 1 slot-type 404 base-mac 00F2.8B32.5300
+ slot 2 slot-type 383 base-mac 442B.03B3.C8A4
+ slot 3 slot-type 387 base-mac 80E0.1D26.2BF0
+ slot 4 slot-type 369 base-mac C89C.1D8E.2AC9
+ slot 5 slot-type 387 base-mac 5C83.8FCD.4BE8
+ slot 6 slot-type 387 base-mac 70DB.98EB.D78C
+ !
+module provision switch 2
+ chassis-type 51 base-mac 00F2.8B37.E300
+ slot 1 slot-type 404 base-mac 00F2.8B37.E300
+ slot 2 slot-type 383 base-mac B0FA.EBDC.FC74
+ slot 3 slot-type 387 base-mac 80E0.1DD6.7F14
+ slot 4 slot-type 369 base-mac 30F7.0DEA.8454
+ slot 5 slot-type 387 base-mac 80E0.1DD6.7E18
+ slot 6 slot-type 387 base-mac 70DB.98A7.48B0
+ 
+!
+
+ ntp peer 172.16.152.21
+ !
+end

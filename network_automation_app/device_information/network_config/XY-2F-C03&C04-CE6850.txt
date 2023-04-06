@@ -1,0 +1,1180 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-09-01 11:42:29+08:00 by 51en
+!Last configuration was saved at 2023-02-01 00:49:55+08:00 by 51en
+#
+clock timezone GMT+8 add 08:00:00
+#
+sysname XY-2F-C03&C04-CE6850
+#
+info-center loghost source LoopBack0
+info-center loghost 172.16.226.32
+#
+system resource standard
+#
+device board 1 board-type CE6850-48T6Q-HI
+device board 2 board-type CE6850-48T6Q-HI
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp ipv6 server disable
+ntp unicast-server 172.16.152.20
+ntp unicast-server 172.16.152.21
+#
+vlan batch 100 197 to 198 204 to 224 226 229 248 to 250 252 to 254
+#
+rsa peer-public-key 172.16.209.12
+ public-key-code begin
+ 30820108
+  02820101
+    00BAF3A1 3751C81E F590EAA5 68689134 BCD13630 3DC29AB0 AA915C47 505C1EB8
+    2697FDA8 21A9FCD0 11BAEFAC 2AB16CD8 0328847B 1BB6075A 5054665A 01AF344E
+    ADA71DD4 7D836D68 9CB98DDE 13C23640 ABC88C1F A5A199BD 41449342 DF70CD6F
+    2429320C D4B0233A 0C6F4663 3CAD11FD A13C4558 156BBD11 A1DDE81F D4B3E38F
+    192C36E0 BE992C58 71D4D3F1 4AE7CD34 19C9C905 7CC92FF1 EDAD8DF8 2D6C2859
+    8C3F9B11 06DFF400 325049C0 60AA0813 1330ECAE A0FF9F38 F764695A FD18FEED
+    0688490F 16D62EA4 82EBB290 1056861D 58092185 4E03DB01 3DFE4A6F 00585FF4
+    2C92E0B8 82320523 6FF7A453 64A17A05 89ECDE33 F30A1174 3CFFCAB3 0B5FF538
+    8D
+  0201
+    23
+ public-key-code end
+ peer-public-key end
+#
+ecc peer-public-key 172.16.229.2
+ public-key-code begin
+  048AEB6F 9C7F7BB1 A793F764 1B8819A6 DA8AD365 431BD609 1C5A4CB1 8A6DA767
+  9666D0F4 A1F7084D 01D93EB3 5CB73B01 920CAD1C 86718DCC C22AD55A 0C6C879F
+  F5
+ public-key-code end
+ peer-public-key end
+#
+ecc peer-public-key 172.16.229.3
+ public-key-code begin
+  04875FF8 9D718331 CDED02E7 6CF520A9 E87510BB 7C4F7D23 49D6D14D 940987E0
+  53384A98 DBE5B5BC 07360712 85BF53E2 14D90B99 D6EB314E 2E42B72F CEFF33B6
+  D3
+ public-key-code end
+ peer-public-key end
+#
+ecc peer-public-key 172.16.209.123
+ public-key-code begin
+  0457030F 5EAC2EB6 9223AF88 3DF32F7B 23A0CD5C 04F468AA A7FF3BE9 235DF135
+  DD69B0B6 63169B69 4F4E0452 33B84DFD 6AAD6FE8 7A838177 BC4DDFE9 C62E800D
+  46
+ public-key-code end
+ peer-public-key end
+#
+telnet server disable
+telnet ipv6 server disable
+#
+sflow collector 2 ip 172.16.208.32
+#
+diffserv domain default
+#
+bfd
+#
+vlan 224
+ name mysql
+#
+bridge-domain 10197
+ l2 binding vlan 197
+ vxlan vni 10197
+#
+bridge-domain 10198
+ l2 binding vlan 198
+ vxlan vni 10198
+#
+bridge-domain 10204
+ l2 binding vlan 204
+ vxlan vni 10204
+#
+bridge-domain 10205
+ l2 binding vlan 205
+ vxlan vni 10205
+#
+bridge-domain 10206
+ l2 binding vlan 206
+ vxlan vni 10206
+#
+bridge-domain 10207
+ l2 binding vlan 207
+ vxlan vni 10207
+#
+bridge-domain 10208
+ l2 binding vlan 208
+ vxlan vni 10208
+#
+bridge-domain 10209
+ l2 binding vlan 209
+ vxlan vni 10209
+#
+bridge-domain 10210
+ l2 binding vlan 210
+ vxlan vni 10210
+#
+bridge-domain 10211
+ l2 binding vlan 211
+ vxlan vni 10211
+#
+bridge-domain 10212
+ l2 binding vlan 212
+ vxlan vni 10212
+#
+bridge-domain 10213
+ l2 binding vlan 213
+ vxlan vni 10213
+#
+bridge-domain 10214
+ l2 binding vlan 214
+ vxlan vni 10214
+#
+bridge-domain 10215
+ l2 binding vlan 215
+ vxlan vni 10215
+#
+bridge-domain 10216
+ l2 binding vlan 216
+ vxlan vni 10216
+#
+bridge-domain 10217
+ l2 binding vlan 217
+ vxlan vni 10217
+#
+bridge-domain 10218
+ l2 binding vlan 218
+ vxlan vni 10218
+#
+bridge-domain 10219
+ l2 binding vlan 219
+ vxlan vni 10219
+#
+bridge-domain 10220
+ l2 binding vlan 220
+ vxlan vni 10220
+#
+bridge-domain 10221
+ l2 binding vlan 221
+ vxlan vni 10221
+#
+bridge-domain 10222
+ l2 binding vlan 222
+ vxlan vni 10222
+#
+bridge-domain 10223
+ l2 binding vlan 223
+ vxlan vni 10223
+#
+bridge-domain 10224
+ l2 binding vlan 224
+ vxlan vni 10224
+#
+bridge-domain 10226
+ l2 binding vlan 226
+ vxlan vni 10226
+#
+bridge-domain 10229
+ vxlan vni 10229
+#
+bridge-domain 10248
+ l2 binding vlan 248
+ vxlan vni 10248
+#
+bridge-domain 10252
+ l2 binding vlan 252
+ vxlan vni 10252
+#
+bridge-domain 10253
+ l2 binding vlan 253
+ vxlan vni 10253
+#
+acl number 2000
+ rule 5 permit source 172.16.255.29 0
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51xingyi password irreversible-cipher $1c$6|Q;>;8jl'$;qsT8|*wX.=.F+>6}US!mP"t+]i-$Rpi|g@,3Y&Y$
+ local-user 51xingyi service-type ssh
+ local-user 51xingyi level 3
+ local-user 51nb password irreversible-cipher $1c$mMYD(i2OL:$YL/MJ;rMJADbj<Qe9MD!GYgnQD<]BSKftR6W~\cT$
+ local-user 51nb service-type ssh
+ local-user 51nb level 3
+ local-user 51en password irreversible-cipher $1c$(Y)tR8/0h;$:lVRXV'7MXoz2C7aju>CL/|hNfJl9&0y3U04;%F;$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 10
+ stack member 1 priority 250
+ #
+ stack member 2 domain 10
+ stack member 2 priority 10
+#
+interface Vlanif100
+ shutdown
+ ip address 172.16.255.29 255.255.255.248
+#
+interface Vlanif229
+ ip address 172.16.229.1 255.255.255.128
+#
+interface MEth0/0/0
+ ip address 192.168.1.1 255.255.255.0
+#
+interface Eth-Trunk10
+ undo portswitch
+ description uT:XY-2F-E05-CE12812:()Eth-trunk180
+ ip address 172.16.255.210 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk11
+ undo portswitch
+ description to-C03-R630-lvs-250-66
+ ip address 172.16.250.65 255.255.255.252
+ ospf authentication-mode md5 1 cipher %^%#V\&-~${i3):f{3V'ZQX"ZR{o&m<D'2LBUg=ebtp.%^%#
+ ospf timer hello 1
+ mode lacp-dynamic
+#
+interface Eth-Trunk12
+ description to-D02-R730-weedfs-192.194-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk13
+ description to-C03-R630-ES-193.58-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description to-C03-R630-ES-193.59-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk15
+ description to-C03-R630-ES-193.60-bond
+ port default vlan 224
+ mode lacp-dynamic
+#
+interface Eth-Trunk16
+ description to-C03-R730XD-monitor-193.65-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk17
+ description to-C03-1288HV5-kvm-193.79-bond12
+ port default vlan 205
+ mode lacp-dynamic
+#
+interface Eth-Trunk18
+ description to-C03-1288HV5-kvm-193.79-bond34
+ port default vlan 205
+ mode lacp-dynamic
+#
+interface Eth-Trunk19
+ description to-C03-1288HV5-kvm-193.80-bond12
+ port default vlan 205
+ mode lacp-dynamic
+#
+interface Eth-Trunk20
+ description to-C03-1288HV5-kvm-193.80-bond34
+ port default vlan 205
+ mode lacp-dynamic
+#
+interface Eth-Trunk21
+ description to-C03-1288HV5-kvm-193.81-bond12
+ port default vlan 205
+ mode lacp-dynamic
+#
+interface Eth-Trunk22
+ description to-C03-1288HV5-kvm-193.81-bond34
+ port default vlan 205
+ mode lacp-dynamic
+#
+interface Eth-Trunk23
+ description to-C03-1288HV5-kafka-193.82-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk24
+ description to-C03-1288HV5-kafka-193.83-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk25
+ description dT:H09H5K2-C03-193.84-bond0
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk31
+ undo portswitch
+ description to-C04-R630-lvs-193.56-bond
+ ip address 172.16.250.69 255.255.255.252
+ ospf authentication-mode md5 1 cipher %^%#iQ,8#g"||"aRIi4!5o<#0t2K%QaBaRjEV!PZA5|@%^%#
+ ospf timer hello 1
+ mode lacp-dynamic
+#
+interface Eth-Trunk32
+ description to-C04-R630-ES-193.61-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk33
+ description to-C04-R630-ES-193.62-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk34
+ description to-D02-R730-weedfs-192.195-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk35
+ description to-C04-R630-ES-193.64-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk36
+ description to-C04-R730XD-monitor-193.66-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk37
+ description dT:C04-D2N3HP2-bond0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk38
+ description to-D02-R630-kvm-192.192-bond12
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk39
+ description to-D02-R630-kvm-192.192-bond34
+ port default vlan 205
+ mode lacp-dynamic
+#
+interface Eth-Trunk40
+ description to-C04-1288HV5-kvm-193.86-bond34
+ port default vlan 205
+ mode lacp-dynamic
+#
+interface Eth-Trunk41
+ description to-C04-1288HV5-kafka-193.87-bond
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk42
+ description dT:C04-J0ML7J2-193.88-bond0
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk43
+ description dT:C04-H08M5K2-193.89-bond0
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk44
+ description C03-JOMYGJ2-193.152-bound
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk45
+ description C03-JO34HJ2-193.153-bound
+ port default vlan 198
+ mode lacp-dynamic
+#
+interface Eth-Trunk46
+ description C03-JOP1XJ2-193.154-DPDK-LVS-1(229.2)-bond0
+ port default vlan 229
+#
+interface Eth-Trunk47
+ description C03-JOFYGJ2-193.155-bound
+ port default vlan 226
+ mode lacp-dynamic
+#
+interface Eth-Trunk48
+ description dT:C03-DCLBJK2-194.33-bond0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk49
+ description dT:C03-J0P2HJ2-194.34-bond0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk50
+ description dT:C03-7GB80K2-194.35-bond0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk51
+ description dT:C03-J0P5XJ2-194.36-bond0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk52
+ description dT:C03-J0P9XJ2-194.37-bond0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk53
+ description dT:C03-J0P7XJ2-194.38-bond0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk54
+ description dT:C03-J0PC7J2-194.39-bond0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk55
+ description dT:C03-J0PB7J2-194.40-bond0
+ port default vlan 197
+ mode lacp-dynamic
+#
+interface Eth-Trunk56
+ description dT:C04-JKCX7C2-DPVS-2(229.3)-bond0
+ port default vlan 229
+#
+interface Eth-Trunk100
+ undo portswitch
+ description uT:XY-2F-E06-CE12812:()Eth-trunk180
+ ip address 172.16.255.214 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Stack-Port1/2
+#
+interface Stack-Port2/1
+#
+interface 10GE1/0/1
+ description to-C03-R630-lvs-193.55-eth0
+ eth-trunk 11
+#
+interface 10GE1/0/2
+ description to-C04-R630-lvs-193.56-eth0
+ eth-trunk 31
+#
+interface 10GE1/0/3
+ description to-C03-R630-ES-193.57-eth0
+ eth-trunk 12
+#
+interface 10GE1/0/4
+ description to-C04-R630-ES-193.61-eth0
+ eth-trunk 32
+#
+interface 10GE1/0/5
+ description to-C03-R630-ES-193.58-eth0
+ eth-trunk 13
+#
+interface 10GE1/0/6
+ description to-C04-R630-ES-193.62-eth0
+ eth-trunk 33
+#
+interface 10GE1/0/7
+ description to-C03-R630-ES-193.59-eth0
+ eth-trunk 14
+#
+interface 10GE1/0/8
+ description to-C04-R630-ES-193.63-eth0
+ eth-trunk 34
+#
+interface 10GE1/0/9
+ description to-C03-R630-ES-193.60-eth0
+ eth-trunk 15
+#
+interface 10GE1/0/10
+ description to-C04-R630-ES-193.64-eth0
+ eth-trunk 35
+#
+interface 10GE1/0/11
+ description to-C03-R730XD-monitor-193.65-eth0
+ eth-trunk 16
+#
+interface 10GE1/0/12
+ description to-C04-R730XD-monitor-193.66-eth0
+ eth-trunk 36
+#
+interface 10GE1/0/13
+ description to-C03-1288HV5-kvm-193.79-eth0
+ eth-trunk 15
+#
+interface 10GE1/0/14
+ description to-C04-1288HV5-kvm-193.85-eth0
+ eth-trunk 37
+#
+interface 10GE1/0/15
+ description to-C03-1288HV5-kvm-193.79-eth2
+ eth-trunk 18
+#
+interface 10GE1/0/16
+ description to-C04-1288HV5-kvm-193.85-eth2
+ eth-trunk 38
+#
+interface 10GE1/0/17
+ eth-trunk 19
+#
+interface 10GE1/0/18
+ description to-C04-1288HV5-kvm-193.86-eth0
+ eth-trunk 39
+#
+interface 10GE1/0/19
+ eth-trunk 20
+#
+interface 10GE1/0/20
+ description to-C04-1288HV5-kvm-193.86-eth2
+ eth-trunk 40
+#
+interface 10GE1/0/21
+ description to-C03-1288HV5-kvm-193.81-eth0
+ eth-trunk 21
+#
+interface 10GE1/0/22
+ description to-C04-1288HV5-kafka-193.87-eth0
+ eth-trunk 41
+#
+interface 10GE1/0/23
+ description to-C03-1288HV5-kvm-193.81-eth2
+ eth-trunk 22
+#
+interface 10GE1/0/24
+ description to-C04-1288HV5-durid-193.88-eth0
+ eth-trunk 42
+#
+interface 10GE1/0/25
+ description to-C03-1288HV5-kafka-193.82-eth0
+ eth-trunk 23
+#
+interface 10GE1/0/26
+ description to-C04-1288HV5-durid-193.89-eth0
+ eth-trunk 43
+#
+interface 10GE1/0/27
+ description to-C03-1288HV5-kafka-193.83-eth0
+ eth-trunk 24
+#
+interface 10GE1/0/28
+#
+interface 10GE1/0/29
+ description to-C03-1288HV5-durid-193.84-eth0
+ eth-trunk 25
+#
+interface 10GE1/0/30
+ description C03-JOMYGJ2-193.152-eth0
+ eth-trunk 44
+#
+interface 10GE1/0/31
+ description C03-JO34HJ2-193.153-eth0
+ eth-trunk 45
+#
+interface 10GE1/0/32
+ description C03-JOP1XJ2-193.154-eth0
+ eth-trunk 46
+#
+interface 10GE1/0/33
+ description C03-JOFYGJ2-193.155-eth0
+ eth-trunk 47
+#
+interface 10GE1/0/34
+ description dT:C03-DCLBJK2-194.33-eth0
+ eth-trunk 48
+#
+interface 10GE1/0/35
+ description dT:C03-J0P2HJ2-194.34-eth0
+ eth-trunk 49
+#
+interface 10GE1/0/36
+ description dT:C03-7GB80K2-194.35-eth0
+ eth-trunk 50
+#
+interface 10GE1/0/37
+ description dT:C03-J0P5XJ2-194.36-eth0
+ eth-trunk 51
+#
+interface 10GE1/0/38
+ description dT:C03-J0P9XJ2-194.37-eth0
+ eth-trunk 52
+#
+interface 10GE1/0/39
+ description dT:C03-J0P7XJ2-194.38-eth0
+ eth-trunk 53
+#
+interface 10GE1/0/40
+ description dT:C03-J0PC7J2-194.39-eth0
+ eth-trunk 54
+#
+interface 10GE1/0/41
+ description dT:C03-J0PB7J2-194.40-eth0
+ eth-trunk 55
+#
+interface 10GE1/0/42
+ eth-trunk 46
+#
+interface 10GE1/0/43
+ eth-trunk 56
+#
+interface 10GE1/0/44
+ eth-trunk 56
+#
+interface 10GE1/0/45
+#
+interface 10GE1/0/46
+#
+interface 10GE1/0/47
+#
+interface 10GE1/0/48
+ dual-active detect mode direct
+#
+interface 10GE2/0/1
+ description to-C03-R630-lvs-193.55-eth1
+ eth-trunk 11
+#
+interface 10GE2/0/2
+ description to-C04-R630-lvs-193.56-eth1
+ eth-trunk 31
+#
+interface 10GE2/0/3
+ description to-C03-R630-ES-193.57-eth1
+ eth-trunk 12
+#
+interface 10GE2/0/4
+ description to-C04-R630-ES-193.61-eth1
+ eth-trunk 32
+#
+interface 10GE2/0/5
+ description to-C03-R630-ES-193.58-eth1
+ eth-trunk 13
+#
+interface 10GE2/0/6
+ description to-C04-R630-ES-193.62-eth1
+ eth-trunk 33
+#
+interface 10GE2/0/7
+ description to-C03-R630-ES-193.59-eth1
+ eth-trunk 14
+#
+interface 10GE2/0/8
+ description to-C04-R630-ES-193.63-eth1
+ eth-trunk 34
+#
+interface 10GE2/0/9
+ description to-C03-R630-ES-193.60-eth1
+ eth-trunk 15
+#
+interface 10GE2/0/10
+ description to-C04-R630-ES-193.64-eth1
+ eth-trunk 35
+#
+interface 10GE2/0/11
+ description to-C03-R730XD-monitor-193.65-eth1
+ eth-trunk 16
+#
+interface 10GE2/0/12
+ description to-C04-R730XD-monitor-193.66-eth1
+ eth-trunk 36
+#
+interface 10GE2/0/13
+ description to-C03-1288HV5-kvm-193.79-eth1
+ eth-trunk 15
+#
+interface 10GE2/0/14
+ description to-C04-1288HV5-kvm-193.85-eth1
+ eth-trunk 37
+#
+interface 10GE2/0/15
+ description to-C03-1288HV5-kvm-193.79-eth3
+ eth-trunk 18
+#
+interface 10GE2/0/16
+ description to-C04-1288HV5-kvm-193.85-eth3
+ eth-trunk 38
+#
+interface 10GE2/0/17
+ eth-trunk 19
+#
+interface 10GE2/0/18
+ description to-C04-1288HV5-kvm-193.86-eth1
+ eth-trunk 39
+#
+interface 10GE2/0/19
+ eth-trunk 20
+#
+interface 10GE2/0/20
+ description to-C04-1288HV5-kvm-193.86-eth3
+ eth-trunk 40
+#
+interface 10GE2/0/21
+ description to-C03-1288HV5-kvm-193.81-eth1
+ eth-trunk 21
+#
+interface 10GE2/0/22
+ description to-C04-1288HV5-kafka-193.87-eth1
+ eth-trunk 41
+#
+interface 10GE2/0/23
+ description to-C03-1288HV5-kvm-193.81-eth3
+ eth-trunk 22
+#
+interface 10GE2/0/24
+ description to-C04-1288HV5-durid-193.88-eth1
+ eth-trunk 42
+#
+interface 10GE2/0/25
+ description to-C03-1288HV5-kafka-193.82-eth1
+ eth-trunk 23
+#
+interface 10GE2/0/26
+ description to-C04-1288HV5-durid-193.89-eth1
+ eth-trunk 43
+#
+interface 10GE2/0/27
+ description to-C03-1288HV5-kafka-193.83-eth1
+ eth-trunk 24
+#
+interface 10GE2/0/28
+#
+interface 10GE2/0/29
+ description to-C03-1288HV5-durid-193.84-eth1
+ eth-trunk 25
+#
+interface 10GE2/0/30
+ description C03-JOMYGJ2-193.152-eth1
+ eth-trunk 44
+#
+interface 10GE2/0/31
+ description C03-JO34HJ2-193.153-eth1
+ eth-trunk 45
+#
+interface 10GE2/0/32
+ description C03-JOP1XJ2-193.154-eth1
+ eth-trunk 46
+#
+interface 10GE2/0/33
+ description C03-JOFYGJ2-193.155-eth1
+ eth-trunk 47
+#
+interface 10GE2/0/34
+ description dT:C03-DCLBJK2-194.33-eth1
+ eth-trunk 48
+#
+interface 10GE2/0/35
+ description dT:C03-J0P2HJ2-194.34-eth1
+ eth-trunk 49
+#
+interface 10GE2/0/36
+ description dT:C03-7GB80K2-194.35-eth1
+ eth-trunk 50
+#
+interface 10GE2/0/37
+ description dT:C03-J0P5XJ2-194.36-eth1
+ eth-trunk 51
+#
+interface 10GE2/0/38
+ description dT:C03-J0P9XJ2-194.37-eth1
+ eth-trunk 52
+#
+interface 10GE2/0/39
+ description dT:C03-J0P7XJ2-194.38-eth1
+ eth-trunk 53
+#
+interface 10GE2/0/40
+ description dT:C03-J0PC7J2-194.39-eth1
+ eth-trunk 54
+#
+interface 10GE2/0/41
+ description dT:C03-J0PB7J2-194.40-eth1
+ eth-trunk 55
+#
+interface 10GE2/0/42
+ eth-trunk 46
+#
+interface 10GE2/0/43
+ eth-trunk 56
+#
+interface 10GE2/0/44
+ eth-trunk 56
+#
+interface 10GE2/0/45
+#
+interface 10GE2/0/46
+#
+interface 10GE2/0/47
+#
+interface 10GE2/0/48
+ dual-active detect mode direct
+#
+interface 40GE1/0/1
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/2
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/3
+ description uT:XY-2F-E05-CE12812:(local)40GE11/0/18
+ eth-trunk 10
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/4
+ description uT:XY-2F-E06-CE12812:(local)40GE11/0/18
+ eth-trunk 100
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/5
+#
+interface 40GE1/0/6
+#
+interface 40GE2/0/1
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/2
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/3
+ description uT:XY-2F-E05-CE12812:(local)40GE11/0/19
+ eth-trunk 10
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/4
+ description uT:XY-2F-E06-CE12812:(local)40GE11/0/19
+ eth-trunk 100
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/5
+#
+interface 40GE2/0/6
+#
+interface LoopBack0
+ ip address 51.51.51.29 255.255.255.255
+#
+interface Nve1
+ source 51.51.51.29
+ vni 10197 head-end peer-list 51.51.51.11
+ vni 10197 head-end peer-list 51.51.51.12
+ vni 10197 head-end peer-list 51.51.51.15
+ vni 10197 head-end peer-list 51.51.51.16
+ vni 10197 head-end peer-list 51.51.51.17
+ vni 10197 head-end peer-list 51.51.51.23
+ vni 10197 head-end peer-list 51.51.51.24
+ vni 10197 head-end peer-list 51.51.51.28
+ vni 10197 head-end peer-list 51.51.51.34
+ vni 10197 head-end peer-list 51.51.51.250
+ vni 10198 head-end peer-list 51.51.51.9
+ vni 10198 head-end peer-list 51.51.51.11
+ vni 10198 head-end peer-list 51.51.51.12
+ vni 10198 head-end peer-list 51.51.51.15
+ vni 10198 head-end peer-list 51.51.51.16
+ vni 10198 head-end peer-list 51.51.51.17
+ vni 10198 head-end peer-list 51.51.51.34
+ vni 10198 head-end peer-list 51.51.51.250
+ vni 10204 head-end peer-list 51.51.51.9
+ vni 10204 head-end peer-list 51.51.51.10
+ vni 10204 head-end peer-list 51.51.51.18
+ vni 10204 head-end peer-list 51.51.51.21
+ vni 10204 head-end peer-list 51.51.51.22
+ vni 10204 head-end peer-list 51.51.51.23
+ vni 10204 head-end peer-list 51.51.51.24
+ vni 10204 head-end peer-list 51.51.51.250
+ vni 10205 head-end peer-list 51.51.51.9
+ vni 10205 head-end peer-list 51.51.51.10
+ vni 10205 head-end peer-list 51.51.51.18
+ vni 10205 head-end peer-list 51.51.51.21
+ vni 10205 head-end peer-list 51.51.51.22
+ vni 10205 head-end peer-list 51.51.51.23
+ vni 10205 head-end peer-list 51.51.51.24
+ vni 10205 head-end peer-list 51.51.51.250
+ vni 10206 head-end peer-list 51.51.51.9
+ vni 10206 head-end peer-list 51.51.51.10
+ vni 10206 head-end peer-list 51.51.51.18
+ vni 10206 head-end peer-list 51.51.51.21
+ vni 10206 head-end peer-list 51.51.51.22
+ vni 10206 head-end peer-list 51.51.51.23
+ vni 10206 head-end peer-list 51.51.51.24
+ vni 10206 head-end peer-list 51.51.51.250
+ vni 10207 head-end peer-list 51.51.51.9
+ vni 10207 head-end peer-list 51.51.51.10
+ vni 10207 head-end peer-list 51.51.51.18
+ vni 10207 head-end peer-list 51.51.51.21
+ vni 10207 head-end peer-list 51.51.51.22
+ vni 10207 head-end peer-list 51.51.51.23
+ vni 10207 head-end peer-list 51.51.51.24
+ vni 10207 head-end peer-list 51.51.51.250
+ vni 10208 head-end peer-list 51.51.51.9
+ vni 10208 head-end peer-list 51.51.51.10
+ vni 10208 head-end peer-list 51.51.51.18
+ vni 10208 head-end peer-list 51.51.51.21
+ vni 10208 head-end peer-list 51.51.51.22
+ vni 10208 head-end peer-list 51.51.51.23
+ vni 10208 head-end peer-list 51.51.51.24
+ vni 10208 head-end peer-list 51.51.51.250
+ vni 10209 head-end peer-list 51.51.51.9
+ vni 10209 head-end peer-list 51.51.51.10
+ vni 10209 head-end peer-list 51.51.51.18
+ vni 10209 head-end peer-list 51.51.51.21
+ vni 10209 head-end peer-list 51.51.51.22
+ vni 10209 head-end peer-list 51.51.51.23
+ vni 10209 head-end peer-list 51.51.51.24
+ vni 10209 head-end peer-list 51.51.51.250
+ vni 10210 head-end peer-list 51.51.51.9
+ vni 10210 head-end peer-list 51.51.51.10
+ vni 10210 head-end peer-list 51.51.51.18
+ vni 10210 head-end peer-list 51.51.51.21
+ vni 10210 head-end peer-list 51.51.51.22
+ vni 10210 head-end peer-list 51.51.51.23
+ vni 10210 head-end peer-list 51.51.51.24
+ vni 10210 head-end peer-list 51.51.51.250
+ vni 10211 head-end peer-list 51.51.51.9
+ vni 10211 head-end peer-list 51.51.51.10
+ vni 10211 head-end peer-list 51.51.51.18
+ vni 10211 head-end peer-list 51.51.51.21
+ vni 10211 head-end peer-list 51.51.51.22
+ vni 10211 head-end peer-list 51.51.51.23
+ vni 10211 head-end peer-list 51.51.51.24
+ vni 10211 head-end peer-list 51.51.51.250
+ vni 10212 head-end peer-list 51.51.51.9
+ vni 10212 head-end peer-list 51.51.51.10
+ vni 10212 head-end peer-list 51.51.51.12
+ vni 10212 head-end peer-list 51.51.51.18
+ vni 10212 head-end peer-list 51.51.51.21
+ vni 10212 head-end peer-list 51.51.51.22
+ vni 10212 head-end peer-list 51.51.51.23
+ vni 10212 head-end peer-list 51.51.51.24
+ vni 10212 head-end peer-list 51.51.51.250
+ vni 10213 head-end peer-list 51.51.51.9
+ vni 10213 head-end peer-list 51.51.51.10
+ vni 10213 head-end peer-list 51.51.51.18
+ vni 10213 head-end peer-list 51.51.51.21
+ vni 10213 head-end peer-list 51.51.51.22
+ vni 10213 head-end peer-list 51.51.51.23
+ vni 10213 head-end peer-list 51.51.51.24
+ vni 10213 head-end peer-list 51.51.51.250
+ vni 10214 head-end peer-list 51.51.51.9
+ vni 10214 head-end peer-list 51.51.51.10
+ vni 10214 head-end peer-list 51.51.51.18
+ vni 10214 head-end peer-list 51.51.51.21
+ vni 10214 head-end peer-list 51.51.51.22
+ vni 10214 head-end peer-list 51.51.51.23
+ vni 10214 head-end peer-list 51.51.51.24
+ vni 10214 head-end peer-list 51.51.51.250
+ vni 10215 head-end peer-list 51.51.51.9
+ vni 10215 head-end peer-list 51.51.51.10
+ vni 10215 head-end peer-list 51.51.51.18
+ vni 10215 head-end peer-list 51.51.51.21
+ vni 10215 head-end peer-list 51.51.51.22
+ vni 10215 head-end peer-list 51.51.51.23
+ vni 10215 head-end peer-list 51.51.51.24
+ vni 10215 head-end peer-list 51.51.51.250
+ vni 10216 head-end peer-list 51.51.51.9
+ vni 10216 head-end peer-list 51.51.51.10
+ vni 10216 head-end peer-list 51.51.51.18
+ vni 10216 head-end peer-list 51.51.51.21
+ vni 10216 head-end peer-list 51.51.51.22
+ vni 10216 head-end peer-list 51.51.51.23
+ vni 10216 head-end peer-list 51.51.51.24
+ vni 10216 head-end peer-list 51.51.51.250
+ vni 10217 head-end peer-list 51.51.51.9
+ vni 10217 head-end peer-list 51.51.51.10
+ vni 10217 head-end peer-list 51.51.51.18
+ vni 10217 head-end peer-list 51.51.51.21
+ vni 10217 head-end peer-list 51.51.51.22
+ vni 10217 head-end peer-list 51.51.51.23
+ vni 10217 head-end peer-list 51.51.51.24
+ vni 10217 head-end peer-list 51.51.51.250
+ vni 10218 head-end peer-list 51.51.51.9
+ vni 10218 head-end peer-list 51.51.51.10
+ vni 10218 head-end peer-list 51.51.51.18
+ vni 10218 head-end peer-list 51.51.51.21
+ vni 10218 head-end peer-list 51.51.51.22
+ vni 10218 head-end peer-list 51.51.51.23
+ vni 10218 head-end peer-list 51.51.51.24
+ vni 10218 head-end peer-list 51.51.51.250
+ vni 10219 head-end peer-list 51.51.51.9
+ vni 10219 head-end peer-list 51.51.51.10
+ vni 10219 head-end peer-list 51.51.51.18
+ vni 10219 head-end peer-list 51.51.51.21
+ vni 10219 head-end peer-list 51.51.51.22
+ vni 10219 head-end peer-list 51.51.51.23
+ vni 10219 head-end peer-list 51.51.51.24
+ vni 10219 head-end peer-list 51.51.51.250
+ vni 10220 head-end peer-list 51.51.51.9
+ vni 10220 head-end peer-list 51.51.51.10
+ vni 10220 head-end peer-list 51.51.51.18
+ vni 10220 head-end peer-list 51.51.51.21
+ vni 10220 head-end peer-list 51.51.51.22
+ vni 10220 head-end peer-list 51.51.51.23
+ vni 10220 head-end peer-list 51.51.51.24
+ vni 10220 head-end peer-list 51.51.51.250
+ vni 10221 head-end peer-list 51.51.51.9
+ vni 10221 head-end peer-list 51.51.51.10
+ vni 10221 head-end peer-list 51.51.51.18
+ vni 10221 head-end peer-list 51.51.51.21
+ vni 10221 head-end peer-list 51.51.51.22
+ vni 10221 head-end peer-list 51.51.51.23
+ vni 10221 head-end peer-list 51.51.51.24
+ vni 10221 head-end peer-list 51.51.51.250
+ vni 10222 head-end peer-list 51.51.51.9
+ vni 10222 head-end peer-list 51.51.51.10
+ vni 10222 head-end peer-list 51.51.51.18
+ vni 10222 head-end peer-list 51.51.51.21
+ vni 10222 head-end peer-list 51.51.51.22
+ vni 10222 head-end peer-list 51.51.51.23
+ vni 10222 head-end peer-list 51.51.51.24
+ vni 10222 head-end peer-list 51.51.51.250
+ vni 10223 head-end peer-list 51.51.51.9
+ vni 10223 head-end peer-list 51.51.51.10
+ vni 10223 head-end peer-list 51.51.51.18
+ vni 10223 head-end peer-list 51.51.51.21
+ vni 10223 head-end peer-list 51.51.51.22
+ vni 10223 head-end peer-list 51.51.51.23
+ vni 10223 head-end peer-list 51.51.51.24
+ vni 10223 head-end peer-list 51.51.51.250
+ vni 10224 head-end peer-list 51.51.51.9
+ vni 10224 head-end peer-list 51.51.51.10
+ vni 10224 head-end peer-list 51.51.51.15
+ vni 10224 head-end peer-list 51.51.51.18
+ vni 10224 head-end peer-list 51.51.51.21
+ vni 10224 head-end peer-list 51.51.51.22
+ vni 10224 head-end peer-list 51.51.51.23
+ vni 10224 head-end peer-list 51.51.51.24
+ vni 10224 head-end peer-list 51.51.51.28
+ vni 10224 head-end peer-list 51.51.51.34
+ vni 10224 head-end peer-list 51.51.51.250
+ vni 10226 head-end peer-list 51.51.51.9
+ vni 10226 head-end peer-list 51.51.51.10
+ vni 10226 head-end peer-list 51.51.51.12
+ vni 10226 head-end peer-list 51.51.51.18
+ vni 10226 head-end peer-list 51.51.51.21
+ vni 10226 head-end peer-list 51.51.51.22
+ vni 10226 head-end peer-list 51.51.51.23
+ vni 10226 head-end peer-list 51.51.51.24
+ vni 10226 head-end peer-list 51.51.51.250
+ vni 10229 head-end peer-list 51.51.51.250
+ vni 10248 head-end peer-list 51.51.51.9
+ vni 10248 head-end peer-list 51.51.51.10
+ vni 10248 head-end peer-list 51.51.51.18
+ vni 10248 head-end peer-list 51.51.51.21
+ vni 10248 head-end peer-list 51.51.51.22
+ vni 10248 head-end peer-list 51.51.51.23
+ vni 10248 head-end peer-list 51.51.51.24
+ vni 10248 head-end peer-list 51.51.51.250
+ vni 10252 head-end peer-list 51.51.51.9
+ vni 10252 head-end peer-list 51.51.51.10
+ vni 10252 head-end peer-list 51.51.51.18
+ vni 10252 head-end peer-list 51.51.51.21
+ vni 10252 head-end peer-list 51.51.51.22
+ vni 10252 head-end peer-list 51.51.51.23
+ vni 10252 head-end peer-list 51.51.51.24
+ vni 10252 head-end peer-list 51.51.51.250
+ vni 10253 head-end peer-list 51.51.51.9
+ vni 10253 head-end peer-list 51.51.51.10
+ vni 10253 head-end peer-list 51.51.51.18
+ vni 10253 head-end peer-list 51.51.51.21
+ vni 10253 head-end peer-list 51.51.51.22
+ vni 10253 head-end peer-list 51.51.51.23
+ vni 10253 head-end peer-list 51.51.51.24
+ vni 10253 head-end peer-list 51.51.51.250
+#
+interface NULL0
+#
+bgp 65535
+ router-id 172.16.255.29
+ peer 172.16.229.2 as-number 65535
+ peer 172.16.229.2 description DPVS-LVS-1
+ peer 172.16.229.3 as-number 65535
+ peer 172.16.229.3 description DPVS-LVS-2
+ #
+ ipv4-family unicast
+  maximum load-balancing ibgp 2  
+  peer 172.16.229.2 enable
+  peer 172.16.229.2 next-hop-local
+  peer 172.16.229.3 enable
+  peer 172.16.229.3 next-hop-local
+#
+ospf 100 router-id 51.51.51.29
+ bfd all-interfaces enable
+ area 0.0.0.1
+  authentication-mode md5 1 cipher %^%#$h4M$uRMTM"1\>AOz.YANz@QI%VGPIEr4m8g,u7G%^%#
+  network 51.51.51.29 0.0.0.0
+  network 172.16.229.0 0.0.0.127
+  network 172.16.250.64 0.0.0.3
+  network 172.16.250.68 0.0.0.3
+  network 172.16.255.24 0.0.0.7
+  network 172.16.255.208 0.0.0.3
+  network 172.16.255.212 0.0.0.3
+  stub
+#
+route-policy LVS permit node 5
+ if-match acl 2000
+#
+route-policy LVS deny node 20
+#
+snmp-agent
+snmp-agent local-engineid 800007DB034CF95DF06CE1
+snmp-agent community read cipher %^%#tN]eIk((_5~S,F#DX&$@k`dr0lerLQ|(D,(kf]Q4wSQm;|,!&#hM.B=:<]^V;vaX+K-WJOo.L.8:mve+%^%#
+#
+snmp-agent sys-info version all
+#
+lldp enable
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh user 51xingyi
+ssh user 51xingyi authentication-type password
+ssh user 51xingyi service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+ssh client 172.16.209.12 assign rsa-key 172.16.209.12
+ssh client 172.16.209.123 assign ecc-key 172.16.209.123
+ssh client 172.16.229.2 assign ecc-key 172.16.229.2
+ssh client 172.16.229.3 assign ecc-key 172.16.229.3
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+#
+vm-manager
+#
+ops
+ assistant auto_save
+  execute 1 command display current-configuration  > XY-6850-C03&C04.txt
+  execute 2 command tftp 172.16.9.233 put XY-6850-C03&C04.txt
+  condition timer cron 0 2 * * * *
+#
+return

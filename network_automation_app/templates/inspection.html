@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Excel表格如下：</h1>
+    <ul class="nav nav-tabs">
+        {% for sheet_name in tables %}
+            <li class="nav-item">
+                <a class="nav-link {% if forloop.first %}active{% endif %}"
+                   data-toggle="tab"
+                   href="#{{ sheet_name }}"
+                   role="tab"
+                   aria-controls="{{ sheet_name }}"
+                   aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                    {{ sheet_name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="tab-content">
+        {% for sheet_name, table in tables.items %}
+            <div class="tab-pane fade {% if forloop.first %}show active{% endif %}"
+                 id="{{ sheet_name }}"
+                 role="tabpanel"
+                 aria-labelledby="{{ sheet_name }}-tab">
+                <table class="table table-bordered">
+                    {% for row in table %}
+                        <tr>
+                            {% for cell in row %}
+                                {% if cell.merged %}
+                                    {% if cell.coordinate == cell.start_coordinate %}
+                                        <td rowspan="{{ cell.size['height'] }}" colspan="{{ cell.size['width'] }}">
+                                            {{ cell.value }}
+                                        </td>
+                                    {% endif %}
+                                {% else %}
+                                    <td>{{ cell.value }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

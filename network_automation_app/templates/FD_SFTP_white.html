@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="mt-2">原白名单地址:</h4>
+            <textarea class="form-control" rows="1" name="FD_SFTP_white1"></textarea>
+        </div>
+        <div class="col-md-6">
+            <h4 class="mt-2">现白名单地址/新增地址:</h4>
+            <textarea class="form-control" rows="1" name="FD_SFTP_white2"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="mt-2">删除白名单地址:</h4>
+            <textarea class="form-control" rows="1" name="FD_SFTP_white3"></textarea>
+        </div>
+    </div>
+        <button type="submit" class="mt-3 btn btn-primary">点击更改</button>
+        <script type="text/javascript" src="/static/js/search_input.js"></script>
+        <script type="text/javascript" src="/static/js/select_all.js"></script>
+    </form>
+{% endblock content %}

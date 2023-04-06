@@ -1,0 +1,264 @@
+!Software Version V200R008C00SPC500
+#
+sysname FD-1F-A06-5720-bank
+#
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.226.32
+#
+vlan batch 100 111 599 to 605 2010 2024 to 2025 2028
+#
+lldp enable
+#
+undo management-plane isolate enable
+#
+diffserv domain default
+#
+ip vpn-instance mgmt
+ ipv4-family
+#
+drop-profile default
+#
+vlan 111
+ description 111
+vlan 599
+ name mgmt
+vlan 600
+ name to-SPDB
+vlan 603
+ name police
+#
+aaa
+ authentication-scheme default
+ authorization-scheme default
+ accounting-scheme default
+ domain default
+ domain default_admin
+ local-user 51en password irreversible-cipher %^%#j-PLDzPY-=;tW>HV+m~O-^:@D^.UxV=z""C%l\G/Re!m~><&<CHy~XYK-Qx;%^%#
+ local-user 51en privilege level 15
+ local-user 51en service-type ssh
+ local-user 51nb password irreversible-cipher %^%#$aJfD!v/YPYB@zH#66ABNd{|G\vM-:7lfHQmQTxL68.5#}7m-P}j`=)<VF6P%^%#
+ local-user 51nb privilege level 15
+ local-user 51nb service-type telnet terminal ssh
+ local-user admin password irreversible-cipher %^%#z<N}64oKkXTQL"C^>+w)r+2$*t98y:GrJ"KC$5HC~3!iSc4"fS7Yc3@Hh1[>%^%#
+ local-user admin service-type http
+#
+isis 1
+#
+interface Vlanif1
+#
+interface Vlanif599
+ ip address 172.16.63.65 255.255.255.248
+#
+interface Vlanif604
+ ip address 172.20.0.73 255.255.255.248
+#
+interface Vlanif2025
+ shutdown
+ ip address 172.167.225.5 255.255.255.248
+#
+interface MEth0/0/1
+#
+interface Eth-Trunk0
+ description uT:FD-1F-A06-USG6550-bank(63.11):Eth-Trunk1
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp
+#
+interface Eth-Trunk1
+ description uT:FD-1F-A06-USG6550-bank(63.12):Eth-Trunk1
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp
+#
+interface GigabitEthernet0/0/1
+#
+interface GigabitEthernet0/0/2
+#
+interface GigabitEthernet0/0/3
+#
+interface GigabitEthernet0/0/4
+#
+interface GigabitEthernet0/0/5
+#
+interface GigabitEthernet0/0/6
+#
+interface GigabitEthernet0/0/7
+#
+interface GigabitEthernet0/0/8
+#
+interface GigabitEthernet0/0/9
+#
+interface GigabitEthernet0/0/10
+#
+interface GigabitEthernet0/0/11
+#
+interface GigabitEthernet0/0/12
+#
+interface GigabitEthernet0/0/13
+#
+interface GigabitEthernet0/0/14
+#
+interface GigabitEthernet0/0/15
+#
+interface GigabitEthernet0/0/16
+#
+interface GigabitEthernet0/0/17
+#
+interface GigabitEthernet0/0/18
+#
+interface GigabitEthernet0/0/19
+#
+interface GigabitEthernet0/0/20
+#
+interface GigabitEthernet0/0/21
+#
+interface GigabitEthernet0/0/22
+#
+interface GigabitEthernet0/0/23
+#
+interface GigabitEthernet0/0/24
+#
+interface GigabitEthernet0/0/25
+#
+interface GigabitEthernet0/0/26
+#
+interface GigabitEthernet0/0/27
+ description uT:FD-1F-A06-USG6550-bank(63.11):GE1/0/2
+ eth-trunk 0
+#
+interface GigabitEthernet0/0/28
+ description uT:FD-1F-A06-USG6550-bank(63.12):GE1/0/2
+ eth-trunk 1
+#
+interface GigabitEthernet1/0/1
+ description To:SPDB
+ port default vlan 600
+#
+interface GigabitEthernet1/0/2
+ undo negotiation auto
+ speed 100
+ description To:GD-bank
+ shutdown
+ port default vlan 602
+#
+interface GigabitEthernet1/0/3
+ description To:CZ-bank
+ port default vlan 601
+#
+interface GigabitEthernet1/0/4
+ description To:police
+ port default vlan 603
+#
+interface GigabitEthernet1/0/5
+ undo portswitch
+ description dT:NongHang
+ ip address 192.168.242.154 255.255.255.252
+#
+interface GigabitEthernet1/0/6
+ description to-TJ-bank
+ port default vlan 2025
+#
+interface GigabitEthernet1/0/7
+ description to-bank-of-bx-bank
+ port default vlan 2028
+#
+interface GigabitEthernet1/0/8
+ description to-ICBC
+ port default vlan 2024
+#
+interface GigabitEthernet1/0/9
+ description dT:WZ-Bank
+ port default vlan 2010
+#
+interface GigabitEthernet1/0/10
+ undo negotiation auto
+ speed 100
+ description dT:QingHai-NH
+ port default vlan 605
+#
+interface GigabitEthernet1/0/11
+#
+interface GigabitEthernet1/0/12
+#
+interface GigabitEthernet1/0/13
+#
+interface GigabitEthernet1/0/14
+#
+interface GigabitEthernet1/0/15
+#
+interface GigabitEthernet1/0/16
+#
+interface GigabitEthernet1/0/17
+#
+interface GigabitEthernet1/0/18
+#
+interface GigabitEthernet1/0/19
+#
+interface GigabitEthernet1/0/20
+#
+interface GigabitEthernet1/0/21
+#
+interface GigabitEthernet1/0/22
+#
+interface GigabitEthernet1/0/23
+ port default vlan 100
+#
+interface GigabitEthernet1/0/24
+#
+interface GigabitEthernet1/0/25
+#
+interface GigabitEthernet1/0/26
+#
+interface GigabitEthernet1/0/27
+ description uT:FD-1F-A06-USG6550-bank(63.11):GE1/0/3
+ eth-trunk 0
+#
+interface GigabitEthernet1/0/28
+ description uT:FD-1F-A06-USG6550-bank(63.12):GE1/0/3
+ eth-trunk 1
+#
+interface XGigabitEthernet0/0/1
+#
+interface XGigabitEthernet0/0/2
+#
+interface XGigabitEthernet0/0/3
+#
+interface XGigabitEthernet0/0/4
+#
+interface XGigabitEthernet1/0/1
+#
+interface XGigabitEthernet1/0/2
+#
+interface XGigabitEthernet1/0/3
+#
+interface XGigabitEthernet1/0/4
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 172.16.63.66
+ip route-static 192.168.202.200 255.255.255.255 192.168.242.153
+ip route-static vpn-instance mgmt 0.0.0.0 0.0.0.0 172.16.8.1
+#
+snmp-agent
+snmp-agent local-engineid 800007DB0304B0E724AD20
+snmp-agent community read cipher %^%#SI][4q&NDTg[/ETadNH)=<UF-l~P[Tbggs&Dm4`<lM+>2DpMsNLX''Lj18U=y|hBOr.\5=>T|})+EK)~%^%#
+snmp-agent community read cipher %^%#rfll!r7D]6heau!xc\"-"RhI-PWa>F@>.OHV5D6Gs_,R8EcEp+R&>$);wK:VK%'$(@)GdD!ES8PANk$(%^%#
+snmp-agent sys-info version all
+#
+stelnet server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+#
+TFTP client-source -a 172.16.63.65
+#
+user-interface con 0
+ authentication-mode password
+ set authentication password cipher $1a$-Up+Z&=0G3$C{@HJo$j_/RWsoUmp'9Vq"ZmHLU{KYh4W*96ZL[$$
+user-interface vty 0 4
+ authentication-mode aaa
+ user privilege level 15
+ protocol inbound all
+user-interface vty 16 20
+#
+return

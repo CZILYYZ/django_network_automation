@@ -1,0 +1,570 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-05-07 17:05:00+08:00 by 51en
+!Last configuration was saved at 2023-02-01 00:42:14+08:00 by 51en
+#
+clock timezone GMT+8 add 08:00:00
+#
+sysname SQ-5F-I16-CE8860
+#
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.152.48 local-time
+#
+device board 1 board-type CE8860-4C-EI
+#
+device card 1/1 card-type CE88-D16Q
+device card 1/2 card-type CE88-D24S2CQ
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp server disable
+ntp ipv6 server disable
+ntp unicast-server 172.16.152.20
+ntp unicast-server 172.16.152.21
+#
+vlan batch 2019 to 2021
+#
+telnet server disable
+telnet ipv6 server disable
+#
+sflow source ip 51.51.51.2
+#
+sflow collector 2 ip 172.16.183.143
+#
+diffserv domain default
+#
+ip vpn-instance SQCTCC
+ ipv4-family
+  route-distinguisher 1000:1
+  vpn-target 1000:1 export-extcommunity
+  vpn-target 1000:1 import-extcommunity
+#
+ip vpn-instance XYCMCC
+ ipv4-family
+  route-distinguisher 1003:1
+  vpn-target 1003:1 export-extcommunity
+  vpn-target 1003:1 import-extcommunity
+#
+ip vpn-instance huaweiyun-test
+ ipv4-family
+  route-distinguisher 1006:1
+  vpn-target 1006:1 export-extcommunity
+  vpn-target 1006:1 import-extcommunity
+#
+bfd
+#
+vlan 2019
+ name to-4506
+#
+vlan 2020
+ name SQCTCC
+#
+vlan 2021
+ name XYCMCC
+#
+mpls
+#
+mpls ldp
+ lsr-id 51.51.51.2
+ #
+ ipv4-family
+#
+mpls ldp remote-peer 51.51.51.1
+ remote-ip 51.51.51.1
+#
+mpls ldp remote-peer 51.1.1.14
+ remote-ip 51.1.1.14
+#
+mpls ldp remote-peer 51.1.1.6
+ remote-ip 51.1.1.6
+#
+mpls ldp remote-peer 51.1.1.34
+ remote-ip 51.1.1.34
+#
+mpls ldp remote-peer 51.1.1.37
+ remote-ip 51.1.1.37
+#
+acl name SQ-route basic
+ rule 0 permit source 172.16.128.0 0.0.63.255
+ rule 2 permit source 172.26.128.0 0.0.63.255
+ rule 5 permit source 10.253.105.209 0
+ rule 10 permit source 10.253.106.5 0
+ rule 15 permit source 198.2.1.64 0.0.0.7
+ rule 20 permit source 192.168.128.56 0.0.0.7
+ rule 25 permit source 72.128.0.154 0
+ rule 30 permit source 72.128.0.155 0
+ rule 35 permit source 72.128.0.156 0
+ rule 40 permit source 172.23.57.129 0
+ rule 45 permit source 172.23.69.164 0
+ rule 50 permit source 9.96.35.204 0
+ rule 55 permit source 72.128.0.191 0
+ rule 60 permit source 72.128.0.192 0
+ rule 65 permit source 72.128.0.193 0
+ rule 70 permit source 172.18.128.0 0.0.63.255
+ rule 75 permit source 172.28.128.0 0.0.63.255
+ rule 80 permit source 51.51.51.128 0.0.0.31
+ rule 85 permit source 172.20.0.8 0.0.0.7
+ rule 95 permit source 172.24.64.0 0.0.63.255
+ rule 100 permit source 26.208.247.32 0.0.0.7
+ rule 105 permit source 72.129.0.113 0
+ rule 110 permit source 172.20.97.112 0.0.0.7
+ rule 115 permit source 192.168.128.128 0.0.0.7
+ rule 120 permit source 177.177.1.8 0.0.0.7
+ rule 125 permit source 196.2.1.81 0
+ rule 130 permit source 199.1.1.64 0.0.0.7
+ rule 135 permit source 10.216.216.56 0.0.0.7
+ rule 140 permit source 172.167.225.0 0.0.0.7
+ rule 150 permit source 172.19.64.0 0.0.63.255
+ rule 170 permit source 9.96.35.212 0
+ rule 175 permit source 172.52.1.0 0.0.0.255
+ rule 180 permit source 172.20.1.21 0
+ rule 185 permit source 172.20.1.22 0
+ rule 190 permit source 172.20.0.48 0.0.0.7
+ rule 195 permit source 172.20.0.56 0.0.0.7
+#
+acl name bank-route advance
+ rule 10 permit ip source 9.96.35.204 0
+ rule 15 permit ip source 172.20.112.23 0
+ rule 20 permit ip source 172.20.112.153 0
+ rule 25 permit ip source 172.20.112.154 0
+ rule 30 permit ip source 172.29.49.32 0.0.0.3
+ rule 35 permit ip source 12.1.1.72 0
+ rule 40 permit ip source 12.1.1.73 0
+ rule 45 permit ip source 26.76.252.38 0
+ rule 50 permit ip source 192.168.128.56 0.0.0.7
+ rule 55 permit ip source 10.24.6.213 0
+ rule 60 permit ip source 10.24.6.217 0
+ rule 65 permit ip source 10.18.26.16 0
+ rule 70 permit ip source 10.25.2.13 0
+ rule 75 permit ip source 10.25.2.11 0
+ rule 80 permit ip source 10.25.2.12 0
+#
+acl name huaweiyun advance
+ rule 5 permit ip source 10.228.0.0 0.0.255.255
+ rule 10 permit ip source 10.229.0.0 0.0.255.255
+#
+acl name test-network advance
+ rule 15 permit ip source 172.52.2.10 0
+ rule 25 permit ip source 172.52.0.14 0
+ rule 35 permit ip source 172.52.1.15 0
+ rule 45 permit ip source 10.247.0.0 0.0.255.255
+ rule 55 permit ip source 10.230.0.0 0.0.255.255
+ rule 65 permit ip source 10.0.52.0 0.0.0.255
+ rule 75 permit ip source 51.51.51.0 0.0.0.255
+ rule 90 permit ip source 10.231.0.0 0.0.255.255
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51nb password irreversible-cipher $1c$(61Q%1H6$G$0F(YEsSJE*+"{E/SH1P';#jrM+j^x!<D&m*5QSN$$
+ local-user 51nb service-type none
+ local-user 51en password irreversible-cipher $1c$1N6)Z\pisJ$!,U.6B[m8E_+7I<ws^jJ/7XP+BGti(M_WxRss8nI$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk121
+ undo portswitch
+ description dT:I16-4506:()Po26
+ mode lacp-static
+#
+interface Eth-Trunk121.2019
+ ip address 172.16.191.65 255.255.255.252
+ dot1q termination vid 2019
+ ospf network-type p2p
+ ospf timer hello 1
+#
+interface Eth-Trunk121.2020
+ ip binding vpn-instance SQCTCC
+ ip address 172.16.191.77 255.255.255.248
+ dot1q termination vid 2020
+#
+interface Eth-Trunk121.2021
+ ip binding vpn-instance XYCMCC
+ ip address 172.16.191.85 255.255.255.248
+ dot1q termination vid 2021
+#
+interface 25GE1/2/1
+ undo portswitch
+ description uT:XY-2F-E06-CE8860:(CL-2046127-CMCC)25GE1/2/2
+ ip address 51.1.1.5 255.255.255.252
+ mpls
+ mpls ldp
+ sflow sampling collector 2
+ sflow sampling rate 32768
+ sflow sampling inbound
+ sflow sampling outbound
+ sflow counter collector 2
+ sflow counter interval 120
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/2
+ undo portswitch
+ description uT:FD-1F-C17-NE20E:(F1611160024-CTC)25GE1/3/2
+ ip address 51.1.1.33 255.255.255.252
+ mpls
+ mpls ldp
+ sflow sampling collector 2
+ sflow sampling rate 32768
+ sflow sampling inbound
+ sflow sampling outbound
+ sflow counter collector 2
+ sflow counter interval 120
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/3
+ undo portswitch
+ description uT:XY-2F-E06-CE8860:(F1807050140-CTC)25GE1/2/3
+ ip address 51.1.1.38 255.255.255.252
+ mpls
+ mpls ldp
+ sflow sampling collector 2
+ sflow sampling rate 32768
+ sflow sampling inbound
+ sflow sampling outbound
+ sflow counter collector 2
+ sflow counter interval 120
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/4
+ undo portswitch
+ description uT:FD-B08-NE20-1:(CL-1874585-CMCC)25GE1/3/2
+ shutdown
+ ip address 51.1.1.9 255.255.255.252
+ mpls
+ mpls ldp
+ sflow sampling collector 2
+ sflow sampling rate 32768
+ sflow sampling inbound
+ sflow sampling outbound
+ sflow counter collector 2
+ sflow counter interval 120
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/5
+ eth-trunk 121
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/6
+ eth-trunk 121
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/7
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/8
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/9
+ device transceiver 10GBASE-FIBER
+#
+interface 25GE1/2/10
+ device transceiver 10GBASE-FIBER
+#
+interface 25GE1/2/11
+ device transceiver 10GBASE-FIBER
+#
+interface 25GE1/2/12
+ device transceiver 10GBASE-FIBER
+#
+interface 25GE1/2/13
+ device transceiver 10GBASE-FIBER
+#
+interface 25GE1/2/14
+ device transceiver 10GBASE-FIBER
+#
+interface 25GE1/2/15
+#
+interface 25GE1/2/16
+#
+interface 25GE1/2/17
+ port mode 10G
+#
+interface 25GE1/2/18
+ port mode 10G
+#
+interface 25GE1/2/19
+ undo portswitch
+ description uT:XY-E06-CE8860:(bofen)25GE1/2/19
+ shutdown
+ ip address 51.1.1.58 255.255.255.252
+ mpls
+ mpls ldp
+ sflow sampling collector 2
+ sflow sampling rate 32768
+ sflow sampling inbound
+ sflow sampling outbound
+ sflow counter collector 2
+ sflow counter interval 120
+ port-status fast-detect enable
+ carrier down-hold-time 200  
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/20
+ undo portswitch
+ description uT:XY-E06-CE8860:(bofen)25GE1/2/20
+ shutdown
+ ip address 51.1.1.62 255.255.255.252
+ mpls
+ mpls ldp
+ sflow sampling collector 2
+ sflow sampling rate 32768
+ sflow sampling inbound
+ sflow sampling outbound
+ sflow counter collector 2
+ sflow counter interval 120
+ port-status fast-detect enable
+ carrier down-hold-time 200  
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/21
+ undo portswitch
+ description uT:XY-E06-CE8860:(bofen)25GE1/2/21
+ shutdown
+ ip address 51.1.1.66 255.255.255.252
+ mpls
+ mpls ldp
+ sflow sampling collector 2
+ sflow sampling rate 32768
+ sflow sampling inbound
+ sflow sampling outbound
+ sflow counter collector 2
+ sflow counter interval 120
+ port-status fast-detect enable
+ carrier down-hold-time 200  
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/22
+ undo portswitch
+ description uT:XY-E06-CE8860:(bofen)25GE1/2/22
+ shutdown
+ ip address 51.1.1.70 255.255.255.252
+ mpls
+ mpls ldp
+ sflow sampling collector 2
+ sflow sampling rate 32768
+ sflow sampling inbound
+ sflow sampling outbound
+ sflow counter collector 2
+ sflow counter interval 120
+ port-status fast-detect enable
+ carrier down-hold-time 200  
+ device transceiver 10GBASE-FIBER
+ port mode 10G
+#
+interface 25GE1/2/23
+ port mode 10G
+#
+interface 25GE1/2/24
+ port mode 10G
+#
+interface 40GE1/1/1
+#
+interface 40GE1/1/2
+#
+interface 40GE1/1/3
+#
+interface 40GE1/1/4
+#
+interface 40GE1/1/5
+#
+interface 40GE1/1/6
+#
+interface 40GE1/1/7
+#
+interface 40GE1/1/8
+#
+interface 40GE1/1/9
+#
+interface 40GE1/1/10
+#
+interface 40GE1/1/11
+#
+interface 40GE1/1/12
+#
+interface 40GE1/1/13
+#
+interface 40GE1/1/14
+#
+interface 40GE1/1/15
+#
+interface 40GE1/1/16
+#
+interface 100GE1/2/1
+#
+interface 100GE1/2/2
+#
+interface LoopBack0
+ ip address 51.51.51.2 255.255.255.255
+#
+interface NULL0
+#
+bgp 65534
+ peer 51.1.1.6 as-number 65535
+ peer 51.1.1.6 password cipher %^%#G|]vDt9!:>X2uY7V##/T[ulY.g,:;*Dk4FQjxeK.%^%#
+ peer 51.1.1.6 bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 10
+ peer 51.1.1.6 bfd enable
+ peer 51.1.1.34 as-number 65533
+ peer 51.1.1.34 password cipher %^%#LClxG<y"3Bm7gp4=C$p@E#)6~"^*~/GMw%.n%X[4%^%#
+ peer 51.1.1.34 bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 10
+ peer 51.1.1.34 bfd enable
+ peer 51.1.1.37 as-number 65535
+ peer 51.1.1.37 password cipher %^%#"8z9=[2CfP}G<|@;^|%6k5PR#BO>qJyu1(&HV_q5%^%#
+ peer 51.1.1.37 bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 10
+ peer 51.1.1.37 bfd enable
+ #
+ ipv4-family unicast
+  aggregate 10.254.0.0 255.255.0.0 detail-suppressed  
+  aggregate 11.254.0.0 255.255.0.0 detail-suppressed  
+  aggregate 172.16.128.0 255.255.192.0 detail-suppressed  
+  aggregate 172.18.128.0 255.255.192.0 detail-suppressed  
+  aggregate 172.19.64.0 255.255.192.0 detail-suppressed  
+  aggregate 172.24.64.0 255.255.192.0 detail-suppressed  
+  aggregate 172.26.128.0 255.255.192.0 detail-suppressed  
+  aggregate 172.28.128.0 255.255.192.0 detail-suppressed  
+  aggregate 172.51.1.0 255.255.255.0 detail-suppressed  
+  aggregate 172.52.1.0 255.255.255.0 detail-suppressed  
+  import-route ospf 100 route-policy SQ-red
+  maximum load-balancing 4  
+  peer 51.1.1.6 enable
+  peer 51.1.1.34 enable
+  peer 51.1.1.37 enable
+ #
+ ipv4-family vpnv4
+  policy vpn-target
+  peer 51.1.1.6 enable
+  peer 51.1.1.34 enable
+  peer 51.1.1.37 enable
+ #
+ ipv4-family vpn-instance SQCTCC
+  import-route direct
+  import-route static
+ #
+ ipv4-family vpn-instance XYCMCC
+  network 0.0.0.0
+  import-route direct
+ #
+ ipv4-family vpn-instance huaweiyun-test
+  import-route direct
+  import-route static
+#
+ospf 100 router-id 51.51.51.2
+ bfd all-interfaces enable
+ filter-policy route-policy ospf-filter-tag-202 import
+ import-route bgp route-policy ospf-red
+ area 0.0.0.1
+  authentication-mode md5 1 cipher %^%#zVO%6m_IF7Z_@4G^'K8NO$Pl%<bwi2|<$VXN|\:H%^%#
+  network 51.1.1.20 0.0.0.3
+  network 51.51.51.2 0.0.0.0
+  network 172.16.191.64 0.0.0.3
+#
+route-policy SQ-red deny node 10
+ if-match tag 102
+#
+route-policy SQ-red deny node 12
+ if-match tag 202
+#
+route-policy SQ-red deny node 14
+ if-match tag 302
+#
+route-policy SQ-red permit node 20
+#
+route-policy bgp-deny-test deny node 5
+ if-match acl test-network
+#
+route-policy bgp-deny-test permit node 20
+#
+route-policy bgp-permit-test permit node 5
+ if-match acl test-network
+#
+route-policy bgp-permit-test deny node 20
+#
+route-policy bgp-pre-2 deny node 10
+ if-match acl SQ-route
+#
+route-policy bgp-pre-2 permit node 20
+ apply preference 145
+#
+route-policy filter-all deny node 10
+#
+route-policy ospf-filter-tag-202 deny node 10
+ if-match tag 202
+#
+route-policy ospf-filter-tag-202 permit node 20
+#
+route-policy ospf-red permit node 5
+ if-match acl bank-route
+ apply tag 202
+#
+route-policy ospf-red permit node 15
+ if-match acl huaweiyun
+ apply tag 302
+#
+route-policy ospf-red permit node 20
+ apply tag 102
+#
+ip route-static 43.254.52.2 255.255.255.255 172.16.191.62
+ip route-static 172.16.208.169 255.255.255.255 51.1.1.57
+ip route-static vpn-instance SQCTCC 115.238.29.64 255.255.255.192 172.16.191.73
+ip route-static vpn-instance XYCMCC 0.0.0.0 0.0.0.0 172.16.191.81
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03F47960378F91
+#
+snmp-agent sys-info version all
+#
+lldp enable
+#
+stelnet ipv4 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ user privilege level 3
+#
+vm-manager
+#
+ops
+ assistant auto_save
+  execute 1 command display current-configuration > SQ-F10-CE8860-BGP.txt
+  execute 2 command tftp 172.16.9.233 put SQ-F10-CE8860-BGP.txt
+  condition timer cron * 20 * * * *
+#
+return

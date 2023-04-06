@@ -1,0 +1,276 @@
+!Software Version V200R010C00SPC600
+#
+sysname FD-1F-H45-S5720(105.2)
+#
+info-center loghost 172.16.152.48
+#
+vlan batch 100 200 300 400 600
+#
+authentication-profile name default_authen_profile
+authentication-profile name dot1x_authen_profile
+authentication-profile name mac_authen_profile
+authentication-profile name portal_authen_profile
+authentication-profile name dot1xmac_authen_profile
+authentication-profile name multi_authen_profile
+#
+lldp enable
+#
+clock timezone utc add 00:00:00
+#
+diffserv domain default
+#
+radius-server template default
+#
+acl number 2001  
+ rule 5 permit 
+#
+free-rule-template name default_free_rule
+#
+portal-access-profile name portal_access_profile
+#
+drop-profile default
+#
+vlan 100
+ name mstp-cmcc
+vlan 200
+ name mstp-cncc
+vlan 300
+ name mst-ctc
+vlan 400
+ name internet
+vlan 600
+ name internal-server
+#
+aaa
+ authentication-scheme default
+ authentication-scheme radius
+  authentication-mode radius
+ authorization-scheme default
+ accounting-scheme default
+ domain default
+  authentication-scheme radius
+  radius-server default
+ domain default_admin
+  authentication-scheme default
+ local-user 51en password irreversible-cipher $1a$]M$@R_-"#$$G78FY;GUy$T/[`)<K'pGP'RVLb3cO+@-p]M.mU5)$
+ local-user 51en privilege level 15
+ local-user 51en service-type ssh
+ local-user 51nb password irreversible-cipher $1a$Br7s9,hz)A$Si)0-lm{i88ZbQCy(EgF_YmX*cgC4C.(U.3/ox0W$
+ local-user 51nb privilege level 15
+ local-user 51nb service-type ssh
+ local-user admin password irreversible-cipher $1a$c+K.=W1fa&$.k)QW'$8B>!sa;B&9@;V^Smv!h1/j+a>eV/uyMEN$
+ local-user admin privilege level 15
+ local-user admin service-type terminal http
+ local-user jason password irreversible-cipher $1a$-NR;<}$~.;$;%$9<3G7!B[o<&-Ncz~1Jt]}V\m7R93v634(2}"M$
+ local-user jason privilege level 15
+#
+ntp-service server disable
+ntp-service ipv6 server disable
+ntp-service unicast-server 172.16.152.21
+#
+interface Vlanif1
+#
+interface Vlanif200
+#
+interface Vlanif300
+ ip address 172.30.2.10 255.255.255.128
+#
+interface Vlanif400
+#
+interface Vlanif600
+ ip address 10.247.105.129 255.255.255.128
+#
+interface MEth0/0/1
+#
+interface Eth-Trunk10
+ undo portswitch
+ description uT:FD-1F-G01-3750-99-1:()Po14
+ ip address 10.247.105.2 255.255.255.252
+#
+interface GigabitEthernet1/0/1
+ port default vlan 100
+#
+interface GigabitEthernet1/0/2
+ port default vlan 200
+#
+interface GigabitEthernet1/0/3
+ port default vlan 300
+#
+interface GigabitEthernet1/0/4
+#
+interface GigabitEthernet1/0/5
+ port default vlan 600
+#
+interface GigabitEthernet1/0/6
+ undo negotiation auto
+ speed 10
+#
+interface GigabitEthernet1/0/7
+ undo negotiation auto
+ speed 100
+ undo portswitch
+ description dT:KunSan-KeFu-JSHT
+ ip address 3.3.3.2 255.255.255.252
+#
+interface GigabitEthernet1/0/8
+#
+interface GigabitEthernet1/0/9
+#
+interface GigabitEthernet1/0/10
+#
+interface GigabitEthernet1/0/11
+#
+interface GigabitEthernet1/0/12
+#
+interface GigabitEthernet1/0/13
+ port default vlan 100
+#
+interface GigabitEthernet1/0/14
+ port default vlan 200
+#
+interface GigabitEthernet1/0/15
+ port default vlan 300
+#
+interface GigabitEthernet1/0/16
+#
+interface GigabitEthernet1/0/17
+#
+interface GigabitEthernet1/0/18
+#
+interface GigabitEthernet1/0/19
+#
+interface GigabitEthernet1/0/20
+ port default vlan 400
+#
+interface GigabitEthernet1/0/21
+#
+interface GigabitEthernet1/0/22
+#
+interface GigabitEthernet1/0/23
+ port default vlan 600
+#
+interface GigabitEthernet1/0/24
+ port default vlan 600
+#
+interface GigabitEthernet1/0/25
+#
+interface GigabitEthernet1/0/26
+#
+interface GigabitEthernet1/0/27
+ description uT:FD-1F-G01-3750-99-1:(local)GE1/0/5
+ eth-trunk 10
+#
+interface GigabitEthernet1/0/28
+ description uT:FD-1F-G01-3750-99-1:(local)GE2/0/5
+ eth-trunk 10
+#
+interface GigabitEthernet2/0/1
+#
+interface GigabitEthernet2/0/2
+#
+interface GigabitEthernet2/0/3
+#
+interface GigabitEthernet2/0/4
+#
+interface GigabitEthernet2/0/5
+#
+interface GigabitEthernet2/0/6
+ undo negotiation auto
+ speed 100
+#
+interface GigabitEthernet2/0/7
+#
+interface GigabitEthernet2/0/8
+#
+interface GigabitEthernet2/0/9
+#
+interface GigabitEthernet2/0/10
+#
+interface GigabitEthernet2/0/11
+#
+interface GigabitEthernet2/0/12
+#
+interface GigabitEthernet2/0/13
+#
+interface GigabitEthernet2/0/14
+#
+interface GigabitEthernet2/0/15
+#
+interface GigabitEthernet2/0/16
+#
+interface GigabitEthernet2/0/17
+#
+interface GigabitEthernet2/0/18
+#
+interface GigabitEthernet2/0/19
+#
+interface GigabitEthernet2/0/20
+#
+interface GigabitEthernet2/0/21
+#
+interface GigabitEthernet2/0/22
+#
+interface GigabitEthernet2/0/23
+#
+interface GigabitEthernet2/0/24
+#
+interface GigabitEthernet2/0/25
+#
+interface GigabitEthernet2/0/26
+#
+interface GigabitEthernet2/0/27
+ description uT:FD-1F-G01-3750-99-1:(local)GE1/0/6
+ eth-trunk 10
+#
+interface GigabitEthernet2/0/28
+ description uT:FD-1F-G01-3750-99-1:(local)GE2/0/6
+ eth-trunk 10
+#
+interface XGigabitEthernet1/0/1
+#
+interface XGigabitEthernet1/0/2
+#
+interface XGigabitEthernet1/0/3
+#
+interface XGigabitEthernet1/0/4
+#
+interface XGigabitEthernet2/0/1
+#
+interface XGigabitEthernet2/0/2
+#
+interface XGigabitEthernet2/0/3
+#
+interface XGigabitEthernet2/0/4
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 10.247.105.1
+ip route-static 10.0.52.0 255.255.255.0 10.247.105.1
+ip route-static 10.0.89.5 255.255.255.255 10.247.105.1
+ip route-static 10.11.1.0 255.255.255.0 3.3.3.1
+ip route-static 172.16.37.38 255.255.255.255 10.247.105.1
+ip route-static 192.168.179.0 255.255.255.0 10.247.105.1
+ip route-static 192.168.200.0 255.255.255.0 10.247.105.1
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03707990AD97F0
+snmp-agent community read cipher %^%#oPN=NX-`V6L6MY)62x4Zo6~fGDu^RIua"'<m$g0D-]kp-&)pB@AdFVC7\K";,<3v!Lj7F:f*5f-C!_uS%^%#
+snmp-agent sys-info version v2c v3
+#
+stelnet server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+#
+user-interface con 0
+ authentication-mode aaa
+user-interface vty 0 4
+ authentication-mode aaa
+ user privilege level 3
+user-interface vty 16 20
+#
+dot1x-access-profile name dot1x_access_profile
+#
+mac-access-profile name mac_access_profile
+#
+return

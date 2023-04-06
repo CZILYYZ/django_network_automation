@@ -1,0 +1,7 @@
+---
+username: 51en
+password: '51en@SWP20'
+connection_options:
+  netmiko:
+    extras:
+      secret: 'zaq12wsx'

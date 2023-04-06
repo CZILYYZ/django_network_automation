@@ -1,0 +1,619 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-05-16 12:37:21+00:00 by 51en
+!Last configuration was saved at 2023-02-01 02:09:09+00:00 by 51en
+#
+sysname FD-1F-G12-CE5855
+#
+system resource standard
+#
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.226.32
+#
+device board 1 board-type CE5855-48T4S2Q-EI
+device board 2 board-type CE5855-48T4S2Q-EI
+#
+drop-profile default
+#
+vlan batch 10 to 98 152 200 to 201 254 to 255
+#
+dhcp enable
+#
+telnet server disable
+telnet ipv6 server disable
+#
+qos car car_total cir 100000 kbps
+#
+diffserv domain default
+#
+acl number 2001
+ rule 5 permit source 10.220.216.70 0
+#
+acl number 2002
+ rule 5 permit source 10.220.216.75 0
+#
+traffic classifier class1 type or
+ if-match acl 2001
+#
+traffic classifier class2 type or
+ if-match acl 2002
+#
+traffic behavior behavior1
+ statistics enable
+ car car_total share
+ car cir 100000 kbps green pass yellow discard red discard
+#
+traffic behavior behavior2
+ statistics enable
+ car cir 100000 kbps green pass yellow discard red discard
+ car car_total share
+#
+traffic policy test
+ classifier class1 behavior behavior1 precedence 5
+ classifier class2 behavior behavior2 precedence 10
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51en password irreversible-cipher $1c$pW(NJGW1/W$J*O[.~y8n5%F^P6(!~7+,{%^-/;5qUW`UZ>+T$82$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ local-user 51nb password irreversible-cipher $1c$sGEa,:7*&O$DFeg.GiN,+*}cDDpg2tX_9-kAAVU5R_X%O14I!!@$
+ local-user 51nb service-type ssh
+ local-user 51nb level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 10
+ stack member 1 priority 255
+ #
+ stack member 2 domain 10
+ stack member 2 priority 10
+#
+interface Vlanif10
+ ip address 10.247.10.6 255.255.255.0
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk1
+ description uT:FD-1F-F10-CE8860-10.1:()Eth-Trunk44
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+#
+interface Eth-Trunk11
+ description to-G12-R630-kvm-10.84-bond12
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk12
+ description to-G12-R630-kvm-10.84-bond34
+ port default vlan 43
+ mode lacp-dynamic
+#
+interface Eth-Trunk13
+ description to-G12-R630-kvm-10.85-bond12
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description to-G12-R630-kvm-10.85-bond34
+ port default vlan 43
+ mode lacp-dynamic
+#
+interface Eth-Trunk15
+ description to-G12-R630-kvm-10.86-bond12
+ port default vlan 48
+ mode lacp-dynamic
+ traffic-policy test inbound 
+#
+interface Eth-Trunk16
+ description to-G12-R630-kvm-10.86-bond34
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk17
+ description to-G12-R720-snort-10.87-bond
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk18
+ description to-G12-R630-kvm-10.87-bond34
+ shutdown
+ port link-type trunk
+ port trunk pvid vlan 15
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk19
+ description to-G12-R630-CNMP-10.88-bond
+ port default vlan 16
+ mode lacp-dynamic
+#
+interface Eth-Trunk20
+ description to-G12-inspur-gpu-10.89-bond
+ port default vlan 17
+ mode lacp-dynamic
+#
+interface Eth-Trunk21
+ description to-G12-R630-kvm-10.90-bond12
+ port default vlan 43
+ mode lacp-dynamic
+#
+interface Eth-Trunk22
+ description to-G12-R630-kvm-10.90-bond34
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk23
+ description to-G12-1288HV5-kvm-10.91-bond12
+ port default vlan 43
+ mode lacp-dynamic
+#
+interface Eth-Trunk24
+ description to-G12-1288HV5-kvm-10.91-bond34
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk25
+ description to-G12-R630-kvm-10.92-bond12
+ port default vlan 30
+ mode lacp-dynamic
+#
+interface Eth-Trunk26
+ description to-G12-R630-kvm-10.92-bond34
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk27
+ description to-G12-R630-kvm-10.93-bond12
+ port default vlan 43
+ mode lacp-dynamic
+#
+interface Eth-Trunk28
+ description to-G12-R630-kvm-10.93-bond34
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk29
+ description to-G12-1288HV5-kvm-10.105-bond12
+ port default vlan 43
+ mode lacp-dynamic
+#
+interface Eth-Trunk30
+ description to-G12-1288HV5-kvm-10.105-bond34
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk31
+ description dT:G12-J9908C2-bond0
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Stack-Port1/1
+#
+interface Stack-Port1/2
+#
+interface Stack-Port2/1
+#
+interface Stack-Port2/2
+#
+interface GE1/0/1
+ description to-G12-R630-kvm-10.84-eth0
+ eth-trunk 11
+#
+interface GE1/0/2
+ description to-G12-R630-kvm-10.84-eth2
+ eth-trunk 12
+#
+interface GE1/0/3
+ description to-G12-R630-kvm-10.85-eth0
+ eth-trunk 13
+#
+interface GE1/0/4
+ description to-G12-R630-kvm-10.85-eth2
+ eth-trunk 14
+#
+interface GE1/0/5
+ description to-G12-R630-kvm-10.86-eth0
+ eth-trunk 15
+#
+interface GE1/0/6
+ description to-G12-R630-kvm-10.86-eth2
+ shutdown
+ eth-trunk 16
+#
+interface GE1/0/7
+ description to-G12-R630-snort-10.87-eth0
+ eth-trunk 17
+#
+interface GE1/0/8
+ description to-G12-R630-kvm-10.87-eth2
+ shutdown
+ eth-trunk 18
+#
+interface GE1/0/9
+ description to-G12-R630-CNMP-10.88-eth0
+ eth-trunk 19
+#
+interface GE1/0/10
+ description to-G12-inspur-gpu-10.89-eth0
+ port default vlan 17
+#
+interface GE1/0/11
+ description to-G12-inspur-gpu-10.89-eth2
+ port default vlan 17
+#
+interface GE1/0/12
+ description to-G12-R630-kvm-10.90-eth0
+ eth-trunk 21
+#
+interface GE1/0/13
+ description to-G12-R630-kvm-10.90-eth2
+ eth-trunk 22
+#
+interface GE1/0/14
+ description to-G12-1288HV5-kvm-10.91-eth0
+ eth-trunk 23
+#
+interface GE1/0/15
+ description to-G12-1288HV5-kvm-10.91-eth2
+ eth-trunk 24
+#
+interface GE1/0/16
+ description to-G12-R630-kvm-10.92-eth0
+ eth-trunk 25
+#
+interface GE1/0/17
+ description to-G12-R630-kvm-10.92-eth2
+ eth-trunk 26
+#
+interface GE1/0/18
+#
+interface GE1/0/19
+ description to-G12-R730-jira-10.94-eth0
+ eth-trunk 31
+#
+interface GE1/0/20
+ description to-G12-R630-kvm-10.93-eth0
+ eth-trunk 27
+#
+interface GE1/0/21
+ description to-G12-R630-kvm-10.93-eth2
+ eth-trunk 28
+#
+interface GE1/0/22
+ description to-G12-1288HV5-kvm-10.105-eth0
+ eth-trunk 29
+#
+interface GE1/0/23
+ description to-G12-1288HV5-kvm-10.105-eth2
+ eth-trunk 30
+#
+interface GE1/0/24
+ port default vlan 10
+#
+interface GE1/0/25
+#
+interface GE1/0/26
+#
+interface GE1/0/27
+#
+interface GE1/0/28
+#
+interface GE1/0/29
+#
+interface GE1/0/30
+#
+interface GE1/0/31
+#
+interface GE1/0/32
+#
+interface GE1/0/33
+#
+interface GE1/0/34
+#
+interface GE1/0/35
+#
+interface GE1/0/36
+#
+interface GE1/0/37
+#
+interface GE1/0/38
+#
+interface GE1/0/39
+#
+interface GE1/0/40
+#
+interface GE1/0/41
+ description to-G12-R630-kvm-10.93-mgmt
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/42
+ description to-G12-R630-kvm-10.92-mgmt
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/43
+#
+interface GE1/0/44
+ description to-G12-R630-kvm-10.90-mgmt
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/45
+ description to-G12-R730-jira-10.94-mgmt
+ port default vlan 10
+#
+interface GE1/0/46
+ description to-G12-1288HV5-kvm-10.105-mgmt
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/47
+ description to-G12-1288HV5-kvm-10.91-mgmt
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/48
+ dual-active detect mode direct
+#
+interface GE2/0/1
+ description to-G12-R630-kvm-10.84-eth1
+ eth-trunk 11
+#
+interface GE2/0/2
+ description to-G12-R630-kvm-10.84-eth3
+ eth-trunk 12
+#
+interface GE2/0/3
+ description to-G12-R630-kvm-10.85-eth1
+ eth-trunk 13
+#
+interface GE2/0/4
+ description to-G12-R630-kvm-10.85-eth3
+ eth-trunk 14
+#
+interface GE2/0/5
+ description to-G12-R630-kvm-10.86-eth1
+ eth-trunk 15
+#
+interface GE2/0/6
+ description to-G12-R630-kvm-10.86-eth3
+ shutdown
+ eth-trunk 16
+#
+interface GE2/0/7
+ description to-G12-R630-snort-10.87-eth1
+ eth-trunk 17
+#
+interface GE2/0/8
+ description to-G12-R630-kvm-10.87-eth3
+ shutdown
+ eth-trunk 18
+#
+interface GE2/0/9
+ description to-G12-R630-CNMP-10.88-eth1
+ eth-trunk 19
+#
+interface GE2/0/10
+ description to-G12-inspur-gpu-10.89-eth1
+ port default vlan 17
+#
+interface GE2/0/11
+ description to-G12-inspur-gpu-10.89-eth3
+ port default vlan 17
+#
+interface GE2/0/12
+ description to-G12-R630-kvm-10.90-eth1
+ eth-trunk 21
+#
+interface GE2/0/13
+ description to-G12-R630-kvm-10.90-eth3
+ eth-trunk 22
+#
+interface GE2/0/14
+ description to-G12-1288HV5-kvm-10.91-eth1
+ eth-trunk 23
+#
+interface GE2/0/15
+ description to-G12-1288HV5-kvm-10.91-eth3
+ eth-trunk 24
+#
+interface GE2/0/16
+ description to-G12-R630-kvm-10.92-eth1
+ eth-trunk 25
+#
+interface GE2/0/17
+ description to-G12-R630-kvm-10.92-eth3
+ eth-trunk 26
+#
+interface GE2/0/18
+#
+interface GE2/0/19
+ description to-G12-R730-jira-10.94-eth1
+ eth-trunk 31
+#
+interface GE2/0/20
+ description to-G12-R630-kvm-10.93-eth1
+ eth-trunk 27
+#
+interface GE2/0/21
+ description to-G12-R630-kvm-10.93-eth3
+ eth-trunk 28
+#
+interface GE2/0/22
+ description to-G12-1288HV5-kvm-10.105-eth1
+ eth-trunk 29
+#
+interface GE2/0/23
+ description to-G12-1288HV5-kvm-10.105-eth3
+ eth-trunk 30
+#
+interface GE2/0/24
+#
+interface GE2/0/25
+#
+interface GE2/0/26
+#
+interface GE2/0/27
+#
+interface GE2/0/28
+#
+interface GE2/0/29
+#
+interface GE2/0/30
+#
+interface GE2/0/31
+#
+interface GE2/0/32
+#
+interface GE2/0/33
+#
+interface GE2/0/34
+#
+interface GE2/0/35
+#
+interface GE2/0/36
+#
+interface GE2/0/37
+#
+interface GE2/0/38
+#
+interface GE2/0/39
+ port default vlan 10
+#
+interface GE2/0/40
+ port default vlan 10
+#
+interface GE2/0/41
+ description to-G12-R630-kvm-10.87-mgmt
+ port default vlan 10
+#
+interface GE2/0/42
+ description to-G12-R630-kvm-10.86-mgmt
+ port default vlan 10
+#
+interface GE2/0/43
+ port default vlan 10
+#
+interface GE2/0/44
+ port default vlan 10
+#
+interface GE2/0/45
+#
+interface GE2/0/46
+#
+interface GE2/0/47
+#
+interface GE2/0/48
+ dual-active detect mode direct
+#
+interface 10GE1/0/1
+#
+interface 10GE1/0/2
+#
+interface 10GE1/0/3
+ port mode stack 
+ stack-port 1/1
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE1/0/4
+ port mode stack 
+ stack-port 1/1
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/1
+#
+interface 10GE2/0/2
+#
+interface 10GE2/0/3
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/4
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 40GE1/0/1
+ description uT:FD-1F-F10-CE8860-10.1:()40GE1/3/4
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/2
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/1
+ description uT:FD-1F-F10-CE8860-10.1:()40GE2/3/4
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/2
+ port mode stack 
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 10.247.10.1
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03ACF9704225A1
+snmp-agent community read cipher %^%#brT171zXv'X/_4(@;luC10<C:m@w8@:ni#QBmRZW:xTcFB:9PVXBCz"~'K>"%-^zTymk&'v+LOL;_kv$%^%#
+#
+snmp-agent sys-info version all
+#
+lldp enable
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh user 51fudi
+ssh user 51fudi authentication-type password
+ssh user 51fudi service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+#
+vm-manager
+#
+ops
+ assistant auto_save
+  execute 1 command display current-configuration > FD-G12-5855-10-6.txt
+  execute 2 command tftp 172.16.9.233 put FD-G12-5855-10-6.txt
+  condition timer cron 0 2 * * * *
+#
+return

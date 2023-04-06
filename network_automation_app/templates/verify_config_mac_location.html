@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>接入交换机</th>
+                <th>端口号</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in result %}
+            <tr>
+                <td>{{ file.sw }}</td>
+                <td>{{ file.port }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 50%;
+    }
+    th, td {
+        text-align: left;
+        padding: 8px;
+        font-size: 16px; /* 设置字体大小 */
+        letter-spacing: 1px; /* 设置字间距 */
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    /* 设置行间距 */
+    tbody tr:not(:last-child) {
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock content %}

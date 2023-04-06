@@ -1,0 +1,593 @@
+#NS11.1 Build 56.19
+# Last modified Fri Feb 24 14:45:47 2023
+set ns config -IPAddress 172.16.193.2 -netmask 255.255.255.0
+enable ns feature LB CS CMP CF OSPF REWRITE RESPONDER AppFlow
+enable ns mode L3 USIP MBF USNIP SRADV PMTUD
+set system parameter -maxClient 40 -doppler ENABLED
+set system user nsroot 118937020b114f6b058e7a68547769b498c0258130eb79c60 -encrypted
+add system user backupuser 189d95eda4f07f1631554d8d71fffe22587f88f204af481f3 -encrypted -externalAuth DISABLED -timeout 900
+add system user xiefan 1d08bb5d437f0c4b98231303f6395aeee1a6d6d9642bda802 -encrypted -timeout 300 -maxsession 2
+add system user yangyizhi 18d0bc24f3d328b471a4506e570819aefbcaf704fd6db1124 -encrypted -timeout 900
+add system user 51en 142f307b68e5e094636cde6095a7c82a387ef1fd89e92d6dd -encrypted -timeout 900
+set rsskeytype -rsstype ASYMMETRIC
+set lacp -sysPriority 32768 -mac ac:1f:6b:18:29:df
+set ns hostName MPX-2
+set interface 0/1 -haMonitor OFF -haHeartbeat OFF -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype "Intel 8247X" -ifnum 0/1
+set interface 1/1 -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype "Intel 8247X" -ifnum 1/1
+set interface 1/2 -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype "Intel 8247X" -ifnum 1/2
+set interface 1/3 -haMonitor OFF -haHeartbeat OFF -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype "Intel 8247X" -ifnum 1/3
+set interface 1/4 -haMonitor OFF -haHeartbeat OFF -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype "Intel 8247X" -ifnum 1/4
+set interface 1/5 -haMonitor OFF -haHeartbeat OFF -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype "Intel 8247X" -ifnum 1/5
+set interface 1/6 -haMonitor OFF -haHeartbeat OFF -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype "Intel 8247X" -ifnum 1/6
+set interface 10/1 -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype "Intel 10G" -ifnum 10/1
+set interface 10/2 -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype "Intel 10G" -ifnum 10/2
+set interface LO/1 -haMonitor OFF -haHeartbeat OFF -throughput 0 -bandwidthHigh 0 -bandwidthNormal 0 -intftype Loopback -ifnum LO/1
+add vlan 11 -aliasName lint-to-E05-128
+add vlan 12 -aliasName link-to-E06-128
+add vlan 22 -aliasName link-to-E5-XY-CMCC
+add vlan 23 -aliasName link-to-E6-XY-CMCC
+add vlan 193 -aliasName NS_OOB
+add vlan 1001 -aliasName link-to-68-up
+add ns ip6 fe80::ae1f:6bff:fe18:29df/64 -scope link-local -type NSIP -vlan 1 -vServer DISABLED -mgmtAccess ENABLED -dynamicRouting ENABLED
+set HA node -failSafe ON
+add HA node 1 172.16.193.3
+add ns ip 172.16.255.58 255.255.255.252 -vServer DISABLED -mgmtAccess ENABLED -dynamicRouting ENABLED
+add ns ip 172.16.255.62 255.255.255.252 -vServer DISABLED -mgmtAccess ENABLED -dynamicRouting ENABLED
+add ns ip 172.16.255.26 255.255.255.252 -vServer DISABLED -mgmtAccess ENABLED
+add ns ip 172.16.255.86 255.255.255.252 -vServer DISABLED -mgmtAccess ENABLED
+add ns ip 172.16.255.90 255.255.255.252 -vServer DISABLED -mgmtAccess ENABLED
+add ns ip 117.148.143.80 255.255.255.255 -type VIP -snmp DISABLED
+add ns ip 115.238.29.8 255.255.255.128 -type VIP -snmp DISABLED
+add ns ip 115.238.29.9 255.255.255.128 -type VIP -snmp DISABLED
+add ns ip 115.238.29.12 255.255.255.128 -type VIP -mgmtAccess ENABLED
+add ns ip 115.238.29.14 255.255.255.255 -type VIP -mgmtAccess ENABLED -state DISABLED
+bind vlan 11 -ifnum 10/2 -tagged
+bind vlan 11 -IPAddress 172.16.255.58 255.255.255.252
+bind vlan 12 -ifnum 10/1 -tagged
+bind vlan 12 -IPAddress 172.16.255.62 255.255.255.252
+bind vlan 22 -ifnum 10/2 -tagged
+bind vlan 22 -IPAddress 172.16.255.86 255.255.255.252
+bind vlan 23 -ifnum 10/1 -tagged
+bind vlan 23 -IPAddress 172.16.255.90 255.255.255.252
+bind vlan 1001 -ifnum 1/2 -tagged
+bind vlan 1001 -IPAddress 172.16.255.26 255.255.255.252
+set nd6RAvariables -vlan 1
+add ipset CTC
+bind ipset CTC 115.238.29.8
+bind ipset CTC 115.238.29.9
+add netProfile XY-CTC -srcIP 115.238.29.8 -overrideLsn ENABLED
+add netProfile SQ-CMCC -srcIP 117.148.143.80
+add netProfile appflow -srcIP 172.16.255.26
+add netProfile XY-CTC-2 -srcIP 115.238.29.9
+add netProfile dorp_internet
+add netProfile GNH-internet -srcIP 115.238.29.12 -overrideLsn ENABLED
+add snmp community 51zhangdan ALL
+set snmp alarm APPFW-BUFFER-OVERFLOW -timeout 1
+set snmp alarm APPFW-COOKIE -timeout 1
+set snmp alarm APPFW-CSRF-TAG -timeout 1
+set snmp alarm APPFW-DENY-URL -timeout 1
+set snmp alarm APPFW-FIELD-CONSISTENCY -timeout 1
+set snmp alarm APPFW-FIELD-FORMAT -timeout 1
+set snmp alarm APPFW-POLICY-HIT -timeout 1
+set snmp alarm APPFW-REFERER-HEADER -timeout 1
+set snmp alarm APPFW-SAFE-COMMERCE -timeout 1
+set snmp alarm APPFW-SAFE-OBJECT -timeout 1
+set snmp alarm APPFW-SQL -timeout 1
+set snmp alarm APPFW-START-URL -timeout 1
+set snmp alarm APPFW-VIOLATIONS-TYPE -timeout 1
+set snmp alarm APPFW-XML-ATTACHMENT -timeout 1
+set snmp alarm APPFW-XML-DOS -timeout 1
+set snmp alarm APPFW-XML-SCHEMA-COMPILE -timeout 1
+set snmp alarm APPFW-XML-SOAP-FAULT -timeout 1
+set snmp alarm APPFW-XML-SQL -timeout 1
+set snmp alarm APPFW-XML-VALIDATION -timeout 1
+set snmp alarm APPFW-XML-WSI -timeout 1
+set snmp alarm APPFW-XML-XSS -timeout 1
+set snmp alarm APPFW-XSS -timeout 1
+set snmp alarm CLUSTER-BACKPLANE-HB-MISSING -time 86400 -timeout 86400
+set snmp alarm CLUSTER-NODE-HEALTH -time 86400 -timeout 86400
+set snmp alarm CLUSTER-NODE-QUORUM -time 86400 -timeout 86400
+set snmp alarm CLUSTER-VERSION-MISMATCH -time 86400 -timeout 86400
+set snmp alarm COMPACT-FLASH-ERRORS -time 86400 -timeout 86400
+set snmp alarm CONFIG-CHANGE -timeout 86400
+set snmp alarm CONFIG-SAVE -timeout 86400
+set snmp alarm HA-BAD-SECONDARY-STATE -time 86400 -timeout 86400
+set snmp alarm HA-NO-HEARTBEATS -time 86400 -timeout 86400
+set snmp alarm HA-SYNC-FAILURE -time 86400 -timeout 86400
+set snmp alarm HA-VERSION-MISMATCH -time 86400 -timeout 86400
+set snmp alarm HARD-DISK-DRIVE-ERRORS -time 86400 -timeout 86400
+set snmp alarm HA-STATE-CHANGE -timeout 86400
+set snmp alarm HA-STICKY-PRIMARY -timeout 86400
+set snmp alarm PORT-ALLOC-FAILED -time 3600 -timeout 3600
+set snmp alarm SYNFLOOD -timeout 1
+add snmp trap generic 172.16.204.252 -communityName public -allPartitions ENABLED
+add snmp trap generic 172.16.190.223 -communityName 51zhangdan -allPartitions ENABLED
+add snmp trap specific 172.16.204.252 -communityName public -allPartitions ENABLED
+add snmp trap specific 172.16.190.223 -communityName 51zhangdan -allPartitions ENABLED
+bind policy patset ns_vpn_client_useragents AGEE -index 1 -charset ASCII
+bind policy patset ns_vpn_client_useragents CitrixReceiver -index 2 -charset ASCII
+bind policy patset ns_vpn_client_useragents AGMacClient -index 3 -charset ASCII
+bind policy patset ns_vpn_client_useragents "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:18.0) Gecko/20100101 Firefox/18.0" -index 4 -charset ASCII
+bind policy patset ns_vpn_client_useragents "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:22.0) Gecko/20100101 Firefox/22.0" -index 5 -charset ASCII
+bind policy patset ns_aaa_activesync_useragents Apple-iPhone -index 1 -charset ASCII
+bind policy patset ns_aaa_activesync_useragents Apple-iPad -index 2 -charset ASCII
+bind policy patset ns_aaa_activesync_useragents SAMSUNG-GT -index 3 -charset ASCII
+bind policy patset ns_aaa_activesync_useragents "SAMSUNG GT" -index 4 -charset ASCII
+bind policy patset ns_aaa_activesync_useragents AirWatch -index 5 -charset ASCII
+bind policy patset ns_aaa_activesync_useragents "TouchDown(MSRPC)" -index 6 -charset ASCII
+add filter action sftp-acl drop
+set ns tcpProfile nstcp_default_WAN_profile -sendBuffsize 20971520
+set dns profile default-dns-profile -cacheRecords DISABLED
+add stream selector qps http.REQ.URL
+add ns limitIdentifier qps -threshold 300000 -mode REQUEST_RATE -limitType SMOOTH -selectorName Top_CLIENTS
+add ns limitIdentifier TCP443ClientTPSLimitID -threshold 10000 -mode CONNECTION -selectorName Top_CLIENTS -maxBandwidth 30000
+set locationParameter -context custom -q1label ispname
+add server 172.16.253.240 172.16.253.240
+add server 115.238.29.1 115.238.29.1
+add server 172.16.200.100 172.16.200.100
+add server 172.16.254.188 172.16.254.188
+add server 172.16.254.189 172.16.254.189
+add server 115.238.29.10 115.238.29.10
+add server 172.16.255.25 172.16.255.25
+add server 172.16.255.85 172.16.255.85
+add server 172.16.233.100 172.16.233.100
+add server 172.16.223.100 172.16.223.100
+add server 115.238.29.9 115.238.29.9
+add server 115.238.29.8 115.238.29.8
+add server 115.238.29.5 115.238.29.5
+add server 117.148.143.64 117.148.143.64
+add server 117.148.143.80 117.148.143.80
+add server 172.16.251.3 172.16.251.3
+add server 172.16.210.104 172.16.210.104
+add server 172.16.210.103 172.16.210.103
+add server 172.16.251.1 172.16.251.1
+add server 172.16.248.200 172.16.248.200
+add server 172.16.248.201 172.16.248.201
+add server 172.16.248.202 172.16.248.202
+add server 172.16.248.203 172.16.248.203
+add server 172.21.0.9 172.21.0.9
+add server 172.16.9.233 172.16.9.233
+add server 172.16.9.232 172.16.9.232
+add server 172.16.183.8 172.16.183.8
+add server 172.16.183.7 172.16.183.7
+add server 172.16.208.44 172.16.208.44
+add server 172.16.208.56 172.16.208.56
+add server 2.3.4.5 2.3.4.5
+add server 172.16.215.119 172.16.215.119
+add server 172.16.209.15 172.16.209.15
+add server 127.0.0.1 127.0.0.1
+add server 172.16.255.62 172.16.255.62
+add server 172.16.208.135 172.16.208.135
+add server 172.16.209.21 172.16.209.21
+add server 172.16.255.89 172.16.255.89
+add server 172.16.212.213 172.16.212.213
+add server 10.102.29.1 10.102.29.1
+add server 172.16.152.152 172.16.152.152
+add server 172.16.152.173 172.16.152.173
+add server 172.16.152.174 172.16.152.174
+add server 172.16.152.176 172.16.152.176
+add server 172.16.152.179 172.16.152.179
+add server 172.16.152.180 172.16.152.180
+add server 172.16.208.128 172.16.208.128
+add server 172.16.208.79 172.16.208.79
+add server 172.16.209.103 172.16.209.103
+add server 172.16.226.28 172.16.226.28
+add server 172.16.197.107 172.16.197.107
+add server 172.16.197.24 172.16.197.24
+add server 172.16.197.104 172.16.197.104
+add server 115.238.29.13 115.238.29.13
+add server 172.21.9.114 172.21.9.114
+add server 172.21.9.113 172.21.9.113
+add server 172.21.9.115 172.21.9.115
+add server 172.21.9.188 172.21.9.188
+add server 172.21.9.189 172.21.9.189
+add server 172.21.9.190 172.21.9.190
+add server 172.21.9.191 172.21.9.191
+add server 172.16.197.100 172.16.197.100
+add server 172.16.208.130 172.16.208.130
+add service XY-CTC 172.16.255.25 ANY * -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip NO -useproxyport NO -sp OFF -cltTimeout 120 -svrTimeout 120 -CKA NO -TCPB NO -CMP NO -monThreshold 1 -netProfile XY-CTC
+add service SQ-CMCC 172.16.255.85 ANY * -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip NO -useproxyport NO -sp OFF -cltTimeout 120 -svrTimeout 120 -CKA NO -TCPB NO -CMP NO -netProfile SQ-CMCC
+add service 172.16.251.1-80 172.16.251.1 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP NO
+add service 172.16.251.1-443 172.16.251.1 HTTP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport NO -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP NO
+add service 172.16.248.201-80 172.16.248.201 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP NO
+add service 172.16.248.203-80 172.16.248.203 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP NO
+add service 172.16.248.201-443 172.16.248.201 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.248.203-443 172.16.248.203 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.248.200-80 172.16.248.200 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.16.248.200-443 172.16.248.200 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.248.202-80 172.16.248.202 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.16.248.202-443 172.16.248.202 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service rb-443 172.16.210.104 ANY 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport NO -sp OFF -cltTimeout 120 -svrTimeout 120 -CKA NO -TCPB NO -CMP NO
+add service "monitor-test- 6850-status" 172.21.0.9 ANY * -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport NO -sp OFF -cltTimeout 120 -svrTimeout 120 -CKA NO -TCPB NO -CMP NO
+add service jmail-172.16.183.8 172.16.183.8 TCP 1125 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service jmail-172.16.183.7 172.16.183.7 TCP 1125 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service test 172.16.215.119 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES -monThreshold 1
+add service 172.16.209.15 172.16.209.15 ANY 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport NO -sp OFF -cltTimeout 120 -svrTimeout 120 -CKA NO -TCPB NO -CMP NO
+add service drop_internet_service 172.16.255.62 ANY * -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport NO -sp OFF -cltTimeout 120 -svrTimeout 120 -CKA NO -TCPB NO -CMP NO -netProfile dorp_internet
+add service enniu-jmail-172.16.208.135 172.16.208.135 TCP 1125 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service enniu-jmail-172.16.209.21 172.16.209.103 TCP 1125 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service SQ-CMCC-E06-12812 172.16.255.89 ANY * -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport NO -sp OFF -cltTimeout 120 -svrTimeout 120 -CKA NO -TCPB NO -CMP NO
+add service 172.16.152.152-80 172.16.152.152 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.16.152.173-80 172.16.152.173 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.16.152.174-80 172.16.152.174 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.16.208.128-1125 172.16.208.128 TCP 1125 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.208.79-1125 172.16.208.79 TCP 1125 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.197.107 172.16.197.107 TCP 3542 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.197.24 172.16.197.24 TCP 3542 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.197.104:3606 172.16.197.104 TCP 3606 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.197.104:3607 172.16.197.104 TCP 3607 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.197.104:3608 172.16.197.104 TCP 3608 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.197.104:3609 172.16.197.104 TCP 3609 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.21.9.114-80 172.21.9.114 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.21.9.113-80 172.21.9.113 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES -state DISABLED
+add service 172.21.9.115-80 172.21.9.115 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.21.9.188-80 172.21.9.188 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.21.9.189-80 172.21.9.189 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.21.9.190-80 172.21.9.190 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.21.9.191-80 172.21.9.191 HTTP 80 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 180 -svrTimeout 360 -CKA NO -TCPB NO -CMP YES
+add service 172.21.9.113-443 172.21.9.113 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO -state DISABLED
+add service 172.21.9.114-443 172.21.9.114 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.21.9.115-443 172.21.9.115 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.21.9.188-443 172.21.9.188 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.21.9.189-443 172.21.9.189 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.21.9.190-443 172.21.9.190 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.21.9.191-443 172.21.9.191 TCP 443 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.197.100-3602 172.16.197.100 TCP 3602 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.197.24-3543 172.16.197.24 TCP 3543 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport YES -sp OFF -cltTimeout 9000 -svrTimeout 9000 -CKA NO -TCPB NO -CMP NO
+add service 172.16.208.130-5349 172.16.208.130 UDP 5349 -gslb NONE -maxClient 0 -maxReq 0 -cip DISABLED -usip YES -useproxyport NO -sp OFF -cltTimeout 120 -svrTimeout 120 -CKA NO -TCPB NO -CMP NO
+add ssl certKey ns-server-certificate -cert ns-server.cert -key ns-server.key
+add system cmdPolicy backup ALLOW "(^(show)\\s+system\\s+.*)|(^(rm)\\s+system\\s+backup\\s+(.*?)+tgz)|(^(create)\\s+system\\s+backup\\s+.*?)"
+add filter policy sftp -rule "REQ.IP.SOURCEIP == 115.236.43.146" -reqAction DROP
+set lb parameter -preferDirectRoute NO -sessionsThreshold 450000
+add lb vserver XT-CTC ANY 0.0.0.0 0 -persistenceType DESTIP -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -m MAC -cltTimeout 120
+add lb vserver SQ-CMCC ANY 0.0.0.0 0 -persistenceType DESTIP -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -m MAC -cltTimeout 120
+add lb vserver u51.com-80 HTTP 115.238.29.11 80 -persistenceType NONE -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -cltTimeout 180
+add lb vserver u51.com-443 TCP 115.238.29.11 443 -persistenceType NONE -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -cltTimeout 9000
+add lb vserver XY-CTC-2 ANY 0.0.0.0 0 -persistenceType DESTIP -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -m MAC -cltTimeout 120 -netProfile XY-CTC-2
+add lb vserver rb-test ANY 115.238.29.15 443 -persistenceType NONE -cltTimeout 120
+add lb vserver enniu-jmail TCP 115.238.29.16 25 -persistenceType NONE -cltTimeout 9000
+add lb vserver drop_internet_vs ANY 0.0.0.0 0 -persistenceType NONE -cltTimeout 120
+add lb vserver ipv6-test TCP 2409:8c28:202:a::1 80 -persistenceType NONE -cltTimeout 9000
+add lb vserver 117.148.143.80-u51.com HTTP 117.148.143.80 80 -persistenceType NONE -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -cltTimeout 180
+add lb vserver 117.148.143.80-u51.com-443 TCP 117.148.143.80 443 -persistenceType NONE -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -cltTimeout 9000
+add lb vserver financial-sftp TCP 115.238.29.10 50022 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(14.18.232.140/32)||CLIENT.IP.SRC.IN_SUBNET(27.221.51.74/32)||CLIENT.IP.SRC.IN_SUBNET(39.170.34.155/32)||CLIENT.IP.SRC.IN_SUBNET(39.170.64.251/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3542 TCP 115.238.29.10 3542 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3606 TCP 115.238.29.10 3606 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3607 TCP 115.238.29.10 3607 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(139.196.100.67/32)||CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3608 TCP 115.238.29.10 3608 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3609 TCP 115.238.29.10 3609 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
+add lb vserver GNH-LVS-80 HTTP 115.238.29.13 80 -persistenceType NONE -cltTimeout 180
+add lb vserver GNH-LVS-443 TCP 115.238.29.13 443 -persistenceType NONE -cltTimeout 9000
+add lb vserver GNH-internet ANY 0.0.0.0 0 -persistenceType DESTIP -cltTimeout 120 -netProfile XY-CTC
+add lb vserver 115.238.29.10-3602 TCP 115.238.29.10 3602 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3543 TCP 115.238.29.10 3543 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
+add lb vserver u51.com-5349 UDP 115.238.29.11 5349 -persistenceType NONE -cltTimeout 120
+set cache parameter -via "NS-CACHE-10.0:   1"
+add cs vserver internet-out ANY * * -cltTimeout 120 -Listenpolicy "Client.IP.SRC.IN_SUBNET(172.16.192.0/18)||Client.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.26.192.0/18)||CLIENT.IP.SRC.IN_SUBNET(172.19.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.24.0.0/16)||Client.IP.SRC.IN_SUBNET(172.16.192.0/18)||Client.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.26.192.0/18)||CLIENT.IP.SRC.IN_SUBNET(172.19.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.24.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.16.197.0/24)" -Listenpriority 10
+add cs action SQ-CMCC -targetLBVserver SQ-CMCC
+add cs action XY-CTC -targetLBVserver XT-CTC
+add cs action XY-CTC-2 -targetLBVserver XY-CTC-2
+add cs action drop_internet_action -targetLBVserver drop_internet_vs
+add cs action sftp -targetLBVserver financial-sftp
+add cs action GNH-internet -targetLBVserver XT-CTC
+add cs policy isp-any -rule "REQ.IP.SOURCEIP == 172.16.200.0 -netmask 255.255.255.0"
+add cs policy XY-CTC -rule "CLIENT.IP.SRC.IN_SUBNET(172.16.192.0/18)||CLIENT.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.19.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.24.0.0/16)" -action XY-CTC
+add cs policy SQ-CMCC -rule "CLIENT.IP.SRC.IN_SUBNET(172.16.192.0/18)||CLIENT.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.19.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.24.0.0/16)" -action SQ-CMCC
+add cs policy Test192HOST-CTC2 -rule "CLIENT.IP.SRC.EQ(172.16.209.192)" -action XY-CTC-2
+add cs policy DHCP-out -rule "CLIENT.IP.SRC.IN_SUBNET(172.26.192.0/18)" -action XY-CTC
+add cs policy drop_internet -rule "CLIENT.IP.SRC.IN_SUBNET(172.16.196.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.197.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.198.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.199.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.200.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.201.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.202.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.203.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.224.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.225.0/24)||CLIENT.IP.SRC.IN_SUBNET(172.16.208.75/32)" -action drop_internet_action
+add cs policy LSKF -rule "CLIENT.IP.SRC.IN_SUBNET(172.16.197.210/32)" -action XY-CTC
+add cs policy GNH-internet -rule "CLIENT.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.16.212.213/32)" -action GNH-internet
+set aaa parameter -maxAAAUsers 1000
+set ns rpcNode 172.16.193.2 -password 3fd944f9571619d6fa900e873deddebe709c7f2d9071e90f07cbb5ad449bb943a1c1279d13f3aaac0588882ca6db93a4 -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
+set ns rpcNode 172.16.193.3 -password 17304504f9e36be47484c03d72da982b1ca3f47ec4d7b8a6ecfb150454e07ea9c63f7c50075069abeb6da86436dea616 -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
+add audit syslogAction syslog 172.16.152.48 -logLevel ALL
+add audit syslogAction test-syslog 172.16.208.169 -serverPort 515 -logLevel ALL
+add audit syslogAction syslog-yyz 172.16.37.38 -logLevel ALL -dateFormat YYYYMMDD -logFacility LOCAL5
+add audit syslogPolicy syslog ns_true syslog
+add audit syslogPolicy test-syslog ns_true test-syslog
+add audit syslogPolicy 172.16.37.38 ns_true syslog-yyz
+add rewrite action rewrite_host_hdr_act replace "HTTP.REQ.HEADER(\"Host\")" "\"myexample.example.net.in\""
+add rewrite action rewrite_url_act replace HTTP.REQ.URL.PATH_AND_QUERY "\"/resource/inventory/st=112\""
+bind cmp global ns_adv_nocmp_xml_ie -priority 8700 -gotoPriorityExpression END -type RES_DEFAULT
+bind cmp global ns_adv_nocmp_mozilla_47 -priority 8800 -gotoPriorityExpression END -type RES_DEFAULT
+bind cmp global ns_adv_cmp_mscss -priority 8900 -gotoPriorityExpression END -type RES_DEFAULT
+bind cmp global ns_adv_cmp_msapp -priority 9000 -gotoPriorityExpression END -type RES_DEFAULT
+bind cmp global ns_adv_cmp_content_type -priority 10000 -gotoPriorityExpression END -type RES_DEFAULT
+add appflow collector app-flow -IPAddress 172.16.9.6 -port 2055
+add appflow collector 192.168.23.4 -IPAddress 192.168.23.4 -port 9992
+add appflow collector 10.247.23.58-9992 -IPAddress 10.247.23.58 -port 9992
+add appflow collector 172.16.208.168 -IPAddress 172.16.208.168 -port 9991
+add appflow collector 172.16.208.32 -IPAddress 172.16.208.32 -port 9992
+set appflow param -templateRefresh 60 -appnameRefresh 60 -httpUrl ENABLED -httpCookie ENABLED -httpReferer ENABLED -httpMethod ENABLED -httpHost ENABLED -httpUserAgent ENABLED -httpContentType ENABLED
+add appflow action net-mas -collectors 192.168.23.4 -clientSideMeasurements ENABLED
+add appflow action af_action_u51.com-443_172.16.190.223 -collectors 10.247.23.58-9992 172.16.208.32 -clientSideMeasurements ENABLED -securityInsight ENABLED
+add appflow action af_action_u51.com-80_172.16.190.223 -collectors 10.247.23.58-9992 172.16.208.32 -clientSideMeasurements ENABLED -securityInsight ENABLED
+add appflow action elk -collectors 172.16.208.168 -clientSideMeasurements ENABLED
+add appflow action "NGINX rs-CMCC" -collectors app-flow
+add appflow policy net-mas true net-mas
+add appflow policy af_policy_u51.com-443_172.16.190.223 true af_action_u51.com-443_172.16.190.223
+add appflow policy af_policy_u51.com-80_172.16.190.223 true af_action_u51.com-80_172.16.190.223 -undefAction af_action_u51.com-80_172.16.190.223
+add appflow policy elk true elk
+add responder policy qps_res "SYS.CHECK_LIMIT(\"qps\")" DROP
+add responder policy tps_res "SYS.CHECK_LIMIT(\"TCP443ClientTPSLimitID\")" DROP
+add cache contentGroup DEFAULT
+set cache contentGroup NSFEO -maxResSize 1994752
+add cache contentGroup BASEFILE -relExpiry 86000 -weakNegRelExpiry 600 -maxResSize 256 -memLimit 2
+add cache contentGroup DELTAJS -relExpiry 86000 -weakNegRelExpiry 600 -insertAge NO -maxResSize 256 -memLimit 1 -pinned YES
+add cache contentGroup ctx_cg_poc -relExpiry 86000 -weakNegRelExpiry 600 -insertAge NO -maxResSize 500 -memLimit 256 -pinned YES
+add cache policy _nonGetReq -rule "!HTTP.REQ.METHOD.eq(GET)" -action NOCACHE
+add cache policy _advancedConditionalReq -rule "HTTP.REQ.HEADER(\"If-Match\").EXISTS || HTTP.REQ.HEADER(\"If-Unmodified-Since\").EXISTS" -action NOCACHE
+add cache policy _personalizedReq -rule "HTTP.REQ.HEADER(\"Cookie\").EXISTS || HTTP.REQ.HEADER(\"Authorization\").EXISTS || HTTP.REQ.HEADER(\"Proxy-Authorization\").EXISTS || HTTP.REQ.IS_NTLM_OR_NEGOTIATE" -action MAY_NOCACHE
+add cache policy _uncacheableStatusRes -rule "! ((HTTP.RES.STATUS.EQ(200)) || (HTTP.RES.STATUS.EQ(304)) || (HTTP.RES.STATUS.BETWEEN(400,499)) || (HTTP.RES.STATUS.BETWEEN(300, 302)) || (HTTP.RES.STATUS.EQ(307))|| (HTTP.RES.STATUS.EQ(203)))" -action NOCACHE
+add cache policy _uncacheableCacheControlRes -rule "((HTTP.RES.CACHE_CONTROL.IS_PRIVATE) || (HTTP.RES.CACHE_CONTROL.IS_NO_CACHE) || (HTTP.RES.CACHE_CONTROL.IS_NO_STORE) || (HTTP.RES.CACHE_CONTROL.IS_INVALID))" -action NOCACHE
+add cache policy _cacheableCacheControlRes -rule "((HTTP.RES.CACHE_CONTROL.IS_PUBLIC) || (HTTP.RES.CACHE_CONTROL.IS_MAX_AGE) || (HTTP.RES.CACHE_CONTROL.IS_MUST_REVALIDATE) || (HTTP.RES.CACHE_CONTROL.IS_PROXY_REVALIDATE) || (HTTP.RES.CACHE_CONTROL.IS_S_MAXAGE))" -action CACHE -storeInGroup DEFAULT
+add cache policy _uncacheableVaryRes -rule "((HTTP.RES.HEADER(\"Vary\").EXISTS) && ((HTTP.RES.HEADER(\"Vary\").INSTANCE(1).LENGTH > 0) || (!HTTP.RES.HEADER(\"Vary\").STRIP_END_WS.SET_TEXT_MODE(IGNORECASE).eq(\"Accept-Encoding\"))))" -action NOCACHE
+add cache policy _uncacheablePragmaRes -rule "HTTP.RES.HEADER(\"Pragma\").EXISTS" -action NOCACHE
+add cache policy _cacheableExpiryRes -rule "HTTP.RES.HEADER(\"Expires\").EXISTS" -action CACHE -storeInGroup DEFAULT
+add cache policy _imageRes -rule "HTTP.RES.HEADER(\"Content-Type\").SET_TEXT_MODE(IGNORECASE).STARTSWITH(\"image/\")" -action CACHE -storeInGroup DEFAULT
+add cache policy _personalizedRes -rule "HTTP.RES.HEADER(\"Set-Cookie\").EXISTS || HTTP.RES.HEADER(\"Set-Cookie2\").EXISTS" -action NOCACHE
+add cache policy ctx_images -rule "HTTP.REQ.URL.SET_TEXT_MODE(IGNORECASE).CONTAINS_INDEX(\"ctx_file_extensions\").BETWEEN(101,150)" -action CACHE -storeInGroup ctx_cg_poc
+add cache policy ctx_web_css -rule "HTTP.REQ.URL.ENDSWITH(\".css\")" -action CACHE -storeInGroup ctx_cg_poc
+add cache policy ctx_doc_pdf -rule "HTTP.REQ.URL.ENDSWITH(\".pdf\")" -action CACHE -storeInGroup ctx_cg_poc
+add cache policy ctx_web_JavaScript -rule "HTTP.REQ.URL.ENDSWITH(\".js\")" -action CACHE -storeInGroup ctx_cg_poc
+add cache policy ctx_web_JavaScript-Res -rule "HTTP.RES.HEADER(\"Content-Type\").CONTAINS(\"application/x-javascript\")" -action CACHE -storeInGroup ctx_cg_poc
+add cache policy ctx_NOCACHE_Cleanup -rule TRUE -action NOCACHE
+add cache policylabel _reqBuiltinDefaults -evaluates REQ
+add cache policylabel _resBuiltinDefaults -evaluates RES
+bind cache policylabel _reqBuiltinDefaults -policyName _nonGetReq -priority 100 -gotoPriorityExpression END
+bind cache policylabel _reqBuiltinDefaults -policyName _advancedConditionalReq -priority 200 -gotoPriorityExpression END
+bind cache policylabel _reqBuiltinDefaults -policyName _personalizedReq -priority 300 -gotoPriorityExpression END
+bind cache policylabel _resBuiltinDefaults -policyName _uncacheableStatusRes -priority 100 -gotoPriorityExpression END
+bind cache policylabel _resBuiltinDefaults -policyName _uncacheableVaryRes -priority 200 -gotoPriorityExpression END
+bind cache policylabel _resBuiltinDefaults -policyName _uncacheableCacheControlRes -priority 300 -gotoPriorityExpression END
+bind cache policylabel _resBuiltinDefaults -policyName _cacheableCacheControlRes -priority 400 -gotoPriorityExpression END
+bind cache policylabel _resBuiltinDefaults -policyName _uncacheablePragmaRes -priority 500 -gotoPriorityExpression END
+bind cache policylabel _resBuiltinDefaults -policyName _cacheableExpiryRes -priority 600 -gotoPriorityExpression END
+bind cache policylabel _resBuiltinDefaults -policyName _imageRes -priority 700 -gotoPriorityExpression END
+bind cache policylabel _resBuiltinDefaults -policyName _personalizedRes -priority 800 -gotoPriorityExpression END
+bind cache global NOPOLICY -priority 185883 -gotoPriorityExpression USE_INVOCATION_RESULT -type REQ_DEFAULT -invoke policylabel _reqBuiltinDefaults
+bind cache global NOPOLICY -priority 185883 -gotoPriorityExpression USE_INVOCATION_RESULT -type RES_DEFAULT -invoke policylabel _resBuiltinDefaults
+set ns encryptionParams -method AES256 -keyValue 2372bdcb173afaee4aa8eb6e13036f84421a378743f6462f2d1b8f608ea32cb2e939de5f288893bd1218517926a53634f34112f3d6934a5fb1136880acc65535bb5f5a3e9bac9d0d67cd7f6eaa9a1efd -encrypted -encryptmethod ENCMTHD_3
+bind lb vserver XT-CTC XY-CTC
+bind lb vserver SQ-CMCC SQ-CMCC
+bind lb vserver SQ-CMCC SQ-CMCC-E06-12812
+bind lb vserver u51.com-80 172.16.248.201-80
+bind lb vserver u51.com-80 172.16.248.203-80
+bind lb vserver u51.com-80 172.16.248.200-80
+bind lb vserver u51.com-80 172.16.248.202-80
+bind lb vserver u51.com-443 172.16.248.201-443
+bind lb vserver u51.com-443 172.16.248.203-443
+bind lb vserver u51.com-443 172.16.248.200-443
+bind lb vserver u51.com-443 172.16.248.202-443
+bind lb vserver XY-CTC-2 XY-CTC
+bind lb vserver rb-test 172.16.209.15
+bind lb vserver enniu-jmail enniu-jmail-172.16.208.135
+bind lb vserver enniu-jmail enniu-jmail-172.16.209.21
+bind lb vserver enniu-jmail 172.16.208.128-1125
+bind lb vserver enniu-jmail 172.16.208.79-1125
+bind lb vserver 117.148.143.80-u51.com 172.16.248.201-80
+bind lb vserver 117.148.143.80-u51.com 172.16.248.203-80
+bind lb vserver 117.148.143.80-u51.com 172.16.248.200-80
+bind lb vserver 117.148.143.80-u51.com 172.16.248.202-80
+bind lb vserver 117.148.143.80-u51.com-443 172.16.248.201-443
+bind lb vserver 117.148.143.80-u51.com-443 172.16.248.203-443
+bind lb vserver 117.148.143.80-u51.com-443 172.16.248.200-443
+bind lb vserver 117.148.143.80-u51.com-443 172.16.248.202-443
+bind lb vserver 115.238.29.10-3542 172.16.197.107
+bind lb vserver 115.238.29.10-3542 172.16.197.24
+bind lb vserver 115.238.29.10-3606 172.16.197.104:3606
+bind lb vserver 115.238.29.10-3607 172.16.197.104:3607
+bind lb vserver 115.238.29.10-3608 172.16.197.104:3608
+bind lb vserver 115.238.29.10-3609 172.16.197.104:3609
+bind lb vserver GNH-LVS-80 172.21.9.113-80
+bind lb vserver GNH-LVS-80 172.21.9.114-80
+bind lb vserver GNH-LVS-80 172.21.9.115-80
+bind lb vserver GNH-LVS-443 172.21.9.113-443
+bind lb vserver GNH-LVS-443 172.21.9.114-443
+bind lb vserver GNH-LVS-443 172.21.9.115-443
+bind lb vserver GNH-internet XY-CTC
+bind lb vserver 115.238.29.10-3602 172.16.197.100-3602
+bind lb vserver 115.238.29.10-3543 172.16.197.24-3543
+bind lb vserver u51.com-5349 172.16.208.130-5349
+bind lb vserver financial-sftp -policyName sftp -priority 110
+bind lb vserver u51.com-80 -policyName af_policy_u51.com-80_172.16.190.223 -priority 99
+bind lb vserver u51.com-443 -policyName af_policy_u51.com-443_172.16.190.223 -priority 99
+bind cs vserver internet-out -policyName LSKF -priority 80
+bind cs vserver internet-out -policyName drop_internet -priority 90
+bind cs vserver internet-out -policyName XY-CTC -priority 100
+bind cs vserver internet-out -policyName DHCP-out -priority 101
+bind cs vserver internet-out -policyName SQ-CMCC -priority 110
+bind cs vserver internet-out -policyName Test192HOST-CTC2 -priority 130
+set ns diameter -identity netscaler.com -realm com
+set subscriber gxInterface -pcrfRealm pcrf.com -holdOnSubscriberAbsence YES -revalidationTimeout 900 -servicePathAVP 262099 -servicePathVendorid 3845
+set ns tcpParam -maxTimeWaitConn 1
+set ns tcpbufParam -memLimit 3072
+set dns parameter -dns64Timeout 1000
+add dns nsRec . a.root-servers.net -TTL 3600000
+add dns nsRec . b.root-servers.net -TTL 3600000
+add dns nsRec . c.root-servers.net -TTL 3600000
+add dns nsRec . d.root-servers.net -TTL 3600000
+add dns nsRec . e.root-servers.net -TTL 3600000
+add dns nsRec . f.root-servers.net -TTL 3600000
+add dns nsRec . g.root-servers.net -TTL 3600000
+add dns nsRec . h.root-servers.net -TTL 3600000
+add dns nsRec . i.root-servers.net -TTL 3600000
+add dns nsRec . j.root-servers.net -TTL 3600000
+add dns nsRec . k.root-servers.net -TTL 3600000
+add dns nsRec . l.root-servers.net -TTL 3600000
+add dns nsRec . m.root-servers.net -TTL 3600000
+add dns addRec l.root-servers.net 199.7.83.42 -TTL 3600000
+add dns addRec b.root-servers.net 192.228.79.201 -TTL 3600000
+add dns addRec d.root-servers.net 199.7.91.13 -TTL 3600000
+add dns addRec j.root-servers.net 192.58.128.30 -TTL 3600000
+add dns addRec h.root-servers.net 198.97.190.53 -TTL 3600000
+add dns addRec f.root-servers.net 192.5.5.241 -TTL 3600000
+add dns addRec k.root-servers.net 193.0.14.129 -TTL 3600000
+add dns addRec a.root-servers.net 198.41.0.4 -TTL 3600000
+add dns addRec c.root-servers.net 192.33.4.12 -TTL 3600000
+add dns addRec m.root-servers.net 202.12.27.33 -TTL 3600000
+add dns addRec i.root-servers.net 192.36.148.17 -TTL 3600000
+add dns addRec g.root-servers.net 192.112.36.4 -TTL 3600000
+add dns addRec e.root-servers.net 192.203.230.10 -TTL 3600000
+set lb monitor ping PING -LRTM DISABLED
+set lb monitor tcp-ecv TCP-ECV -LRTM ENABLED -interval 2 -resptimeout 1 -retries 2 -downTime 4
+set lb monitor tcps-ecv TCP-ECV -LRTM DISABLED
+set lb monitor ldns-dns LDNS-DNS -query . -queryType Address
+set lb monitor stasecure CITRIX-STA-SERVICE -interval 2 MIN
+set lb monitor sta CITRIX-STA-SERVICE -interval 2 MIN
+add lb monitor http-head-test HTTP -respCode 200 -httpRequest "HEAD /test" -LRTM DISABLED
+add lb monitor ping_cmcc PING -LRTM DISABLED -destIP 172.16.255.85 -transparent YES
+add lb monitor ping_CTC2 PING -LRTM DISABLED -destIP 172.16.255.25 -transparent YES
+add lb monitor ping_114 PING -LRTM DISABLED -destIP 114.114.114.114
+add lb monitor ping_202 PING -LRTM DISABLED -destIP 202.101.172.35
+add lb monitor ping_202_46 PING -LRTM DISABLED -destIP 202.101.172.46
+add lb monitor ping_100 PING -LRTM DISABLED -destIP 100.1.1.1
+add lb monitor test-jason PING -LRTM DISABLED -destIP 10.10.10.10
+add lb monitor test-jason-2 PING -LRTM DISABLED -destIP 172.16.190.229
+add lb monitor ping-115.238.29.1 PING -LRTM DISABLED -destIP 115.238.29.1
+add lb monitor ping-115.238.29.2 PING -LRTM DISABLED -destIP 115.238.29.2
+add lb monitor ping-172.16.223.1 PING -LRTM DISABLED -destIP 172.16.223.1
+add lb monitor ping-172.16.211.245 PING -LRTM DISABLED -destIP 172.16.211.245
+bind service test -monitorName test-jason-2
+bind service test -monitorName ping-172.16.223.1
+bind service test -monitorName ping_202_46
+bind service 172.16.248.202-443 -monitorName tcp-ecv
+bind service 172.16.248.202-80 -monitorName tcp-ecv
+bind service 172.16.248.200-443 -monitorName tcp-ecv
+bind service 172.16.248.200-80 -monitorName tcp-ecv
+bind service 172.16.248.203-443 -monitorName tcp-ecv
+bind service 172.16.248.201-443 -monitorName tcp-ecv
+bind service 172.16.248.203-80 -monitorName tcp-ecv
+bind service 172.16.248.201-80 -monitorName tcp-ecv
+bind service 172.16.251.1-443 -monitorName tcp-ecv
+bind service 172.16.251.1-80 -monitorName tcp-ecv
+bind service SQ-CMCC -monitorName ping_cmcc
+bind service XY-CTC -monitorName ping_202_46
+bind service XY-CTC -monitorName ping_CTC2
+add route 0.0.0.0 0.0.0.0 172.16.255.25
+add route 172.21.8.0 255.255.248.0 172.16.255.61 -advertise DISABLED -routeType STATIC
+add route 172.21.8.0 255.255.248.0 172.16.255.57 -advertise DISABLED -routeType STATIC
+add route 172.22.8.0 255.255.248.0 172.16.255.61 -advertise DISABLED -routeType STATIC
+add route 172.22.8.0 255.255.248.0 172.16.255.57 -advertise DISABLED -routeType STATIC
+add route 10.0.12.0 255.255.255.0 172.16.255.57 -advertise DISABLED -routeType STATIC
+add route 10.247.23.58 255.255.255.255 172.16.255.57 -advertise DISABLED -routeType STATIC
+set ssl service nshttps-172.16.255.90-443 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nsrpcs-172.16.255.90-3008 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nshttps-172.16.255.86-443 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nsrpcs-172.16.255.86-3008 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nshttps-172.16.255.26-443 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nsrpcs-172.16.255.26-3008 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nshttps-172.16.255.62-443 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nsrpcs-172.16.255.62-3008 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nshttps-172.16.255.58-443 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nsrpcs-172.16.255.58-3008 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nsrnatsip-127.0.0.1-5061 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nskrpcs-127.0.0.1-3009 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nshttps-::1l-443 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nsrpcs-::1l-3008 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nshttps-127.0.0.1-443 -eRSA ENABLED -sessReuse DISABLED
+set ssl service nsrpcs-127.0.0.1-3008 -eRSA ENABLED -sessReuse DISABLED
+set vpn parameter -forceCleanup none -clientConfiguration all
+bind system user backupuser backup 110
+bind system user xiefan sysadmin 0
+bind system user yangyizhi superuser 100
+bind system user yangyizhi sysadmin 110
+bind system user 51en superuser 0
+bind system user 51en sysadmin 100
+bind system global syslog -priority 100
+bind system global test-syslog -priority 100
+bind system global 172.16.37.38 -priority 100
+bind tm global -policyName SETTMSESSPARAMS_ADV_POL -priority 65534 -gotoPriorityExpression NEXT
+add ns acl test ALLOW -srcIP = 172.16.254.189 -destIP = 118.184.180.46 -priority 10 -kernelstate SFAPPLIED61
+add ns acl allow-baoleiji ALLOW -srcIP = 172.16.208.208 -destIP = 172.16.193.2 -priority 20 -kernelstate SFNOTAPPLIED61
+apply ns acls
+bind ssl service nshttps-172.16.255.90-443 -certkeyName ns-server-certificate
+bind ssl service nsrpcs-172.16.255.90-3008 -certkeyName ns-server-certificate
+bind ssl service nshttps-172.16.255.86-443 -certkeyName ns-server-certificate
+bind ssl service nsrpcs-172.16.255.86-3008 -certkeyName ns-server-certificate
+bind ssl service nshttps-172.16.255.26-443 -certkeyName ns-server-certificate
+bind ssl service nsrpcs-172.16.255.26-3008 -certkeyName ns-server-certificate
+bind ssl service nshttps-172.16.255.62-443 -certkeyName ns-server-certificate
+bind ssl service nsrpcs-172.16.255.62-3008 -certkeyName ns-server-certificate
+bind ssl service nshttps-172.16.255.58-443 -certkeyName ns-server-certificate
+bind ssl service nsrpcs-172.16.255.58-3008 -certkeyName ns-server-certificate
+bind ssl service nsrnatsip-127.0.0.1-5061 -certkeyName ns-server-certificate
+bind ssl service nskrpcs-127.0.0.1-3009 -certkeyName ns-server-certificate
+bind ssl service nshttps-::1l-443 -certkeyName ns-server-certificate
+bind ssl service nsrpcs-::1l-3008 -certkeyName ns-server-certificate
+bind ssl service nshttps-127.0.0.1-443 -certkeyName ns-server-certificate
+bind ssl service nsrpcs-127.0.0.1-3008 -certkeyName ns-server-certificate
+bind ssl service nshttps-172.16.255.90-443 -eccCurveName P_256
+bind ssl service nshttps-172.16.255.90-443 -eccCurveName P_384
+bind ssl service nshttps-172.16.255.90-443 -eccCurveName P_224
+bind ssl service nshttps-172.16.255.90-443 -eccCurveName P_521
+bind ssl service nsrpcs-172.16.255.90-3008 -eccCurveName P_256
+bind ssl service nsrpcs-172.16.255.90-3008 -eccCurveName P_384
+bind ssl service nsrpcs-172.16.255.90-3008 -eccCurveName P_224
+bind ssl service nsrpcs-172.16.255.90-3008 -eccCurveName P_521
+bind ssl service nshttps-172.16.255.86-443 -eccCurveName P_256
+bind ssl service nshttps-172.16.255.86-443 -eccCurveName P_384
+bind ssl service nshttps-172.16.255.86-443 -eccCurveName P_224
+bind ssl service nshttps-172.16.255.86-443 -eccCurveName P_521
+bind ssl service nsrpcs-172.16.255.86-3008 -eccCurveName P_256
+bind ssl service nsrpcs-172.16.255.86-3008 -eccCurveName P_384
+bind ssl service nsrpcs-172.16.255.86-3008 -eccCurveName P_224
+bind ssl service nsrpcs-172.16.255.86-3008 -eccCurveName P_521
+bind ssl service nshttps-172.16.255.26-443 -eccCurveName P_256
+bind ssl service nshttps-172.16.255.26-443 -eccCurveName P_384
+bind ssl service nshttps-172.16.255.26-443 -eccCurveName P_224
+bind ssl service nshttps-172.16.255.26-443 -eccCurveName P_521
+bind ssl service nsrpcs-172.16.255.26-3008 -eccCurveName P_256
+bind ssl service nsrpcs-172.16.255.26-3008 -eccCurveName P_384
+bind ssl service nsrpcs-172.16.255.26-3008 -eccCurveName P_224
+bind ssl service nsrpcs-172.16.255.26-3008 -eccCurveName P_521
+bind ssl service nshttps-172.16.255.62-443 -eccCurveName P_256
+bind ssl service nshttps-172.16.255.62-443 -eccCurveName P_384
+bind ssl service nshttps-172.16.255.62-443 -eccCurveName P_224
+bind ssl service nshttps-172.16.255.62-443 -eccCurveName P_521
+bind ssl service nsrpcs-172.16.255.62-3008 -eccCurveName P_256
+bind ssl service nsrpcs-172.16.255.62-3008 -eccCurveName P_384
+bind ssl service nsrpcs-172.16.255.62-3008 -eccCurveName P_224
+bind ssl service nsrpcs-172.16.255.62-3008 -eccCurveName P_521
+bind ssl service nshttps-172.16.255.58-443 -eccCurveName P_256
+bind ssl service nshttps-172.16.255.58-443 -eccCurveName P_384
+bind ssl service nshttps-172.16.255.58-443 -eccCurveName P_224
+bind ssl service nshttps-172.16.255.58-443 -eccCurveName P_521
+bind ssl service nsrpcs-172.16.255.58-3008 -eccCurveName P_256
+bind ssl service nsrpcs-172.16.255.58-3008 -eccCurveName P_384
+bind ssl service nsrpcs-172.16.255.58-3008 -eccCurveName P_224
+bind ssl service nsrpcs-172.16.255.58-3008 -eccCurveName P_521
+bind ssl service nsrnatsip-127.0.0.1-5061 -eccCurveName P_256
+bind ssl service nsrnatsip-127.0.0.1-5061 -eccCurveName P_384
+bind ssl service nsrnatsip-127.0.0.1-5061 -eccCurveName P_224
+bind ssl service nsrnatsip-127.0.0.1-5061 -eccCurveName P_521
+bind ssl service nskrpcs-127.0.0.1-3009 -eccCurveName P_256
+bind ssl service nskrpcs-127.0.0.1-3009 -eccCurveName P_384
+bind ssl service nskrpcs-127.0.0.1-3009 -eccCurveName P_224
+bind ssl service nskrpcs-127.0.0.1-3009 -eccCurveName P_521
+bind ssl service nshttps-::1l-443 -eccCurveName P_256
+bind ssl service nshttps-::1l-443 -eccCurveName P_384
+bind ssl service nshttps-::1l-443 -eccCurveName P_224
+bind ssl service nshttps-::1l-443 -eccCurveName P_521
+bind ssl service nsrpcs-::1l-3008 -eccCurveName P_256
+bind ssl service nsrpcs-::1l-3008 -eccCurveName P_384
+bind ssl service nsrpcs-::1l-3008 -eccCurveName P_224
+bind ssl service nsrpcs-::1l-3008 -eccCurveName P_521
+bind ssl service nshttps-127.0.0.1-443 -eccCurveName P_256
+bind ssl service nshttps-127.0.0.1-443 -eccCurveName P_384
+bind ssl service nshttps-127.0.0.1-443 -eccCurveName P_224
+bind ssl service nshttps-127.0.0.1-443 -eccCurveName P_521
+bind ssl service nsrpcs-127.0.0.1-3008 -eccCurveName P_256
+bind ssl service nsrpcs-127.0.0.1-3008 -eccCurveName P_384
+bind ssl service nsrpcs-127.0.0.1-3008 -eccCurveName P_224
+bind ssl service nsrpcs-127.0.0.1-3008 -eccCurveName P_521
+set rnatparam -tcpproxy DISABLED
+set L3Param -icmpErrGenerate DISABLED
+add appfw JSONContentType "^application/json$" -isRegex REGEX
+add appfw XMLContentType ".*/xml" -isRegex REGEX
+add appfw XMLContentType ".*/.*\\+xml" -isRegex REGEX
+add appfw XMLContentType ".*/xml-.*" -isRegex REGEX
+set ip6TunnelParam -srcIP ::
+set ptp -state ENABLE
+set ns param -timezone "GMT+08:00-CST-Asia/Shanghai"

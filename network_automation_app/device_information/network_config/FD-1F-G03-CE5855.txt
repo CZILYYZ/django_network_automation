@@ -1,0 +1,631 @@
+!Software Version V200R001C00SPC700
+!Last configuration was updated at 2022-04-13 12:19:14+00:00 by 51en
+!Last configuration was saved at 2023-02-01 01:43:59+00:00 by 51en
+#
+sysname FD-1F-G03-CE5855
+#
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.226.32
+#
+device board 1 board-type CE5855-48T4S2Q-EI
+device board 2 board-type CE5855-48T4S2Q-EI
+#
+drop-profile default
+#
+drop-profile ithis
+#
+vlan batch 10 to 98 152 200 to 201 255
+#
+telnet server disable
+telnet ipv6 server disable
+#
+diffserv domain default
+#
+vlan 30
+ name cloudstack-mgmt
+#
+vlan 31
+ name cloudstack-vm
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51nb password irreversible-cipher $1c$BOU&6iU'cK$h~]B@,94$MthTwTZZn:QZ{L>+s{YxIPc)f2[(c|O$
+ local-user 51nb service-type terminal telnet ssh
+ local-user 51nb level 3
+ local-user 51en password irreversible-cipher $1c$q#d)1,bu09$Vt!}!.'wq)g@wB$;ctN:*QUV*u,gP~P4h[9x7>a-$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 15
+ stack member 1 priority 150
+ #
+ stack member 2 domain 15
+#
+interface Vlanif10
+ ip address 10.247.10.2 255.255.255.0
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk0
+ description to-F16-5855
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface Eth-Trunk1
+ description uT:FD-1F-F10-CE8860-10.1:()Eth-Trunk41
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+#
+interface Eth-Trunk11
+ description to-G03-R630-1-ESXI
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk12
+ description to-G03-R630-2-ESXI
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk13
+ description to-G03-R630-3-ESXI
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description to-G03-R630-4-ESXI
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk15
+ description to-G03-R630-5-mysql
+ port default vlan 17
+ stp edged-port enable
+ mode lacp-dynamic
+#
+interface Eth-Trunk16
+ description to-G03-R630-6-mysql
+ port default vlan 17
+ stp edged-port enable
+ mode lacp-dynamic
+#
+interface Eth-Trunk17
+ description to-G03-R630-7-mysql
+ port default vlan 17
+ stp edged-port enable
+ mode lacp-dynamic
+#
+interface Eth-Trunk18
+ description to-G03-R630-8-mysql
+ port default vlan 17
+ stp edged-port enable
+ mode lacp-dynamic
+#
+interface Eth-Trunk19
+ description to-G03-R630-9-cassandra
+ port link-type trunk
+ port trunk pvid vlan 43
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 43
+ mode lacp-dynamic
+#
+interface Eth-Trunk20
+ description to-G03-R630-10-cassandra
+ port default vlan 43
+ mode lacp-dynamic
+#
+interface Eth-Trunk22
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk23
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk24
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk25
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface Eth-Trunk26
+ description to-G03-R630-10-39-bond1
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk27
+ description to-G03-R630-10-40-bond1
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk28
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk29
+ description to-G03-R630-9-cassandra-bound1
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk30
+ port default vlan 10
+ mode lacp-dynamic
+#
+interface Stack-Port1/1
+#
+interface Stack-Port1/2
+#
+interface Stack-Port2/1
+#
+interface Stack-Port2/2
+#
+interface GE1/0/1
+ description to-G03-R630-1-ESXI-eth0
+ eth-trunk 11
+#
+interface GE1/0/2
+ description to-G03-R630-1-ESXI-eth1
+ eth-trunk 11
+#
+interface GE1/0/3
+ description to-G03-R630-2-ESXI-eth0
+ eth-trunk 12
+#
+interface GE1/0/4
+ description to-G03-R630-2-ESXI-eth1
+ eth-trunk 12
+#
+interface GE1/0/5
+ description to-G03-R630-3-ESXI-eth0
+ eth-trunk 13
+#
+interface GE1/0/6
+ description to-G03-R630-3-ESXI-eth1
+ eth-trunk 13
+#
+interface GE1/0/7
+ description to-G03-R630-4-ESXI-eth0
+ port default vlan 30
+ stp edged-port enable
+#
+interface GE1/0/8
+ description to-G03-R630-4-ESXI-eth1
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE1/0/9
+ eth-trunk 15
+#
+interface GE1/0/10
+ eth-trunk 16
+#
+interface GE1/0/11
+ eth-trunk 17
+#
+interface GE1/0/12
+ eth-trunk 18
+#
+interface GE1/0/13
+ eth-trunk 19
+#
+interface GE1/0/14
+ eth-trunk 29
+#
+interface GE1/0/15
+ eth-trunk 20
+#
+interface GE1/0/16
+ eth-trunk 28
+#
+interface GE1/0/17
+ eth-trunk 22
+#
+interface GE1/0/18
+ description to-G03-R630-10-39-eth1
+ eth-trunk 26
+#
+interface GE1/0/19
+ shutdown
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE1/0/20
+ description to-G03-R630-10-40-eth1
+ eth-trunk 27
+#
+interface GE1/0/21
+ shutdown
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE1/0/22
+ eth-trunk 23
+#
+interface GE1/0/23
+ eth-trunk 24
+#
+interface GE1/0/24
+ eth-trunk 25
+#
+interface GE1/0/25
+ eth-trunk 25
+#
+interface GE1/0/26
+ description to-19D9JK2-iscsi
+ port default vlan 15
+#
+interface GE1/0/27
+ eth-trunk 30
+#
+interface GE1/0/28
+ description dT:G03-JZ6QMH1-eth0
+ port default vlan 17
+#
+interface GE1/0/29
+#
+interface GE1/0/30
+#
+interface GE1/0/31
+#
+interface GE1/0/32
+#
+interface GE1/0/33
+#
+interface GE1/0/34
+#
+interface GE1/0/35
+#
+interface GE1/0/36
+#
+interface GE1/0/37
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/38
+ description to-4R9GC52
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/39
+ description to-8R9GC52
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/40
+ description to-G03-R630-11-jekins-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/41
+ description to-G03-R630-8-mysql-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/42
+ description to-G03-R630-7-mysql-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/43
+ description to-G03-R630-4-ESXI-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/44
+ description to-G03-R630-3-ESXI-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/45
+ eth-trunk 0
+#
+interface GE1/0/46
+ eth-trunk 0
+#
+interface GE1/0/47
+#
+interface GE1/0/48
+ shutdown
+ dual-active detect mode direct
+#
+interface GE2/0/1
+ description to-G03-R630-1-ESXI-eth2
+ eth-trunk 11
+#
+interface GE2/0/2
+ description to-G03-R630-1-ESXI-eth3
+ eth-trunk 11
+#
+interface GE2/0/3
+ description to-G03-R630-2-ESXI-eth2
+ eth-trunk 12
+#
+interface GE2/0/4
+ description to-G03-R630-2-ESXI-eth3
+ eth-trunk 12
+#
+interface GE2/0/5
+ description to-G03-R630-3-ESXI-eth2
+ eth-trunk 13
+#
+interface GE2/0/6
+ description to-G03-R630-3-ESXI-eth3
+ eth-trunk 13
+#
+interface GE2/0/7
+ description to-G03-R630-3-ESXI-eth2
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE2/0/8
+ description to-G03-R630-3-ESXI-eth3
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE2/0/9
+ eth-trunk 15
+#
+interface GE2/0/10
+ eth-trunk 16
+#
+interface GE2/0/11
+ eth-trunk 17
+#
+interface GE2/0/12
+ eth-trunk 18
+#
+interface GE2/0/13
+ eth-trunk 29
+#
+interface GE2/0/14
+ eth-trunk 19
+#
+interface GE2/0/15
+ eth-trunk 28
+#
+interface GE2/0/16
+ eth-trunk 20
+#
+interface GE2/0/17
+ eth-trunk 22
+#
+interface GE2/0/18
+ description to-G03-R630-10-39-eth2
+ eth-trunk 26
+#
+interface GE2/0/19
+ shutdown
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE2/0/20
+ description to-G03-R630-10-40-eth2
+ eth-trunk 27
+#
+interface GE2/0/21
+ shutdown
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GE2/0/22
+ eth-trunk 23
+#
+interface GE2/0/23
+ eth-trunk 24
+#
+interface GE2/0/24
+ eth-trunk 25
+#
+interface GE2/0/25
+ eth-trunk 25
+#
+interface GE2/0/26
+ description to-19D9JK2-iscsi
+ port default vlan 15
+#
+interface GE2/0/27
+ eth-trunk 30
+#
+interface GE2/0/28
+#
+interface GE2/0/29
+#
+interface GE2/0/30
+#
+interface GE2/0/31
+#
+interface GE2/0/32
+#
+interface GE2/0/33
+#
+interface GE2/0/34
+#
+interface GE2/0/35
+#
+interface GE2/0/36
+#
+interface GE2/0/37
+#
+interface GE2/0/38
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/39
+ description to-G03-R630-10-cass-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/40
+ description to-G03-R630-9-cass-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/41
+ description to-G03-R630-6-mysql-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/42
+ description to-G03-R630-5-mysql-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/43
+ description to-G03-R630-2-ESXI-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/44
+ description to-G03-R630-1-ESXI-MGMT
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE2/0/45
+ eth-trunk 0
+#
+interface GE2/0/46
+ eth-trunk 0
+#
+interface GE2/0/47
+#
+interface GE2/0/48
+ dual-active detect mode direct
+#
+interface 10GE1/0/1
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE1/0/2
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE1/0/3
+ port mode stack 
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE1/0/4
+ port mode stack 
+ shutdown
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/1
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/2
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/3
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/4
+ device transceiver 10GBASE-FIBER
+#
+interface 40GE1/0/1
+ description uT:FD-1F-F10-CE8860-10.1:(local)40GE2/3/1
+ eth-trunk 1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/2
+ port mode stack 
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/1
+ description uT:FD-1F-F10-CE8860-10.1:(local)40GE1/3/1
+ eth-trunk 1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/2
+ port mode stack 
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 10.247.10.1
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03446A2ED1C7B1
+snmp-agent community read cipher %^%#)7V^C\DO{E>/|z$-S!Z!9%O"5r*I&P=f@D*x7_/E2-e&L]3>39QT(+(5!u#45U=g)}zO+A~(,9R{G#[V%^%#
+#
+snmp-agent sys-info version all
+#
+lldp enable
+#
+stelnet server enable
+ssh authentication-type default password
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ user privilege level 3
+#
+vm-manager
+#
+ops
+ assistant auto_save
+  execute 1 command display current-configuration > FD-G03-5855-10-2.txt
+  execute 2 command tftp 172.16.9.233 put FD-G03-5855-10-2.txt
+  condition timer cron 0 2 * * * *
+#
+return

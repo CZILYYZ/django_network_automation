@@ -1,0 +1,682 @@
+Building configuration...
+
+Current configuration : 15683 bytes
+!
+! Last configuration change at 17:02:19 GMT Thu Feb 23 2023 by 51en
+! NVRAM config last updated at 17:02:21 GMT Thu Feb 23 2023 by 51en
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec localtime show-timezone year
+service password-encryption
+!
+hostname FD-1F-E25-2960-8.21
+!
+boot-start-marker
+boot-end-marker
+!
+enable password 7 131F16035A5E133933
+!
+username 51en privilege 15 password 7 101B581C0B37213C3C567A
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local 
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone GMT 8 0
+switch 1 provision ws-c2960x-48td-l
+switch 2 provision ws-c2960x-48td-l
+stack-mac persistent timer 0
+!
+!
+ip domain-name u51.com
+vtp domain cisco
+vtp mode transparent
+!
+!
+!
+!
+!
+!
+password encryption aes
+!
+crypto pki trustpoint TP-self-signed-412544512
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-412544512
+ revocation-check none
+ rsakeypair TP-self-signed-412544512
+!
+!
+crypto pki certificate chain TP-self-signed-412544512
+ certificate self-signed 01
+  30820229 30820192 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 34313235 34343531 32301E17 0D313630 36303631 30303034 
+  365A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3431 32353434 
+  35313230 819F300D 06092A86 4886F70D 01010105 0003818D 00308189 02818100 
+  AE7D1F91 EB675567 E3E1C9E4 BC772D2B 4B2617B6 98F9DA6B A408396D 1B20E55C 
+  44AC575D 7EA6354C D5920AFC E7BAE44F 2DD2A450 2325B72C FF20167D 88526C5C 
+  0AFD12FA 6A846D2C 5F7EA09A 49A3217E D2CD9475 0DB015A4 974A6344 2403D158 
+  2B3729D5 A0D43520 8550C64B DBEBFD7B 9AF85BD6 0B42F12F B71B65F8 1F4F920F 
+  02030100 01A35330 51300F06 03551D13 0101FF04 05300301 01FF301F 0603551D 
+  23041830 16801417 F45D5550 85F67F1F 3D0C8838 D82C2468 AC79CC30 1D060355 
+  1D0E0416 041417F4 5D555085 F67F1F3D 0C8838D8 2C2468AC 79CC300D 06092A86 
+  4886F70D 01010505 00038181 00826024 410042D3 CCE87687 77A9BB44 01842A66 
+  83DD2129 368A31FF DFE9D9CD 3424D7F6 2343EB20 EFB14ABE 1355C54B 4E62181F 
+  9C1283FA 859A0852 9CF3EF89 565C8E1E 5B4C2A7F 6694C957 E9199ED7 4BCEA9E4 
+  73C15C6D 23BF449F D8979C32 72F89DD3 08AAEF68 FFE6DCDE C6AAF559 D0F4F055 
+  3EAEDA79 0C407050 0A80403A 82
+  	quit
+spanning-tree mode pvst
+spanning-tree extend system-id
+port-channel load-balance src-dst-ip
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 4-5 
+!
+vlan 38
+ name RAMOS-pxe  
+!
+vlan 44,50 
+!
+vlan 53
+ name cassandra
+!
+vlan 57 
+!
+vlan 61
+ name demo
+!
+vlan 63,100,111,200,500 
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel3
+ description uT:FD-1F-B08&C17-C4510:()Po20    
+ switchport mode trunk
+!
+interface Port-channel4
+ description to-E25-R730-ceph-15.189-bond
+ switchport access vlan 57
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel11
+ description to-R630-WEB-16-189
+ switchport access vlan 100
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel12
+ description to-R630-hbase-16-195
+ switchport access vlan 100
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel13
+ description to-R630-hbase-16-196
+ switchport access vlan 100
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel14
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel15
+ description to-E25-R630-sec-17.214-bond
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel17
+ description to-E25-1288HV5-mysql-18.82-bond
+ switchport access vlan 4
+ switchport mode access
+ no logging event link-status
+ no port-channel standalone-disable
+!
+interface Port-channel18
+ description to-E25-1288HV5-mysql-18.83-bond
+ switchport access vlan 50
+ switchport mode access
+ no logging event link-status
+ no port-channel standalone-disable
+!
+interface Port-channel19
+ description to-E25-DELL-J3YQRG2-mysql-bond
+ switchport access vlan 4
+ switchport mode access
+ no logging event link-status
+ no port-channel standalone-disable
+!
+interface Port-channel20
+ description to-E25-R730-ES-18.85-bond
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel21
+ description to-E25-R730-ES-18.86-bond
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface Port-channel22
+ description E25-BRQ4X72-bond0
+ switchport access vlan 50
+ switchport mode access
+ no port-channel standalone-disable
+!
+interface FastEthernet0
+ no ip address
+!
+interface GigabitEthernet1/0/1
+ switchport access vlan 50
+ switchport mode access
+ spanning-tree portfast
+ channel-group 22 mode active
+!
+interface GigabitEthernet1/0/2
+ switchport access vlan 63
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/3
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/4
+ switchport access vlan 53
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/5
+ switchport access vlan 53
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/6
+ switchport access vlan 53
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/7
+ description to-E25-1288HV5-mysql-18.82-eth0
+ switchport access vlan 4
+ switchport mode access
+ channel-group 17 mode active
+!
+interface GigabitEthernet1/0/8
+ description to-E25-1288HV5-mysql-18.83-eth0
+ switchport access vlan 50
+ switchport mode access
+ channel-group 18 mode active
+!
+interface GigabitEthernet1/0/9
+ description to-E25-1288HV5-mysql-18.84-eth0
+ switchport access vlan 4
+ switchport mode access
+ channel-group 19 mode active
+!
+interface GigabitEthernet1/0/10
+ description to-MGMT-172.16.15.163
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/11
+ description to-R630-web-16-189-mgmt
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/12
+ description to-R630-hbase-16-195-mgmt
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/13
+ description to-R630-hbase-16-196-mgmt
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/14
+!
+interface GigabitEthernet1/0/15
+ switchport access vlan 100
+ switchport mode access
+ channel-group 11 mode active
+!
+interface GigabitEthernet1/0/16
+ description to-R630-hbase-16-195-eth0
+ switchport mode access
+ channel-group 12 mode active
+!
+interface GigabitEthernet1/0/17
+ description to-R630-hbase-16-196-eth0
+ switchport mode access
+ channel-group 13 mode active
+!
+interface GigabitEthernet1/0/18
+ description to-E25-R630-15.154-eth0
+ switchport mode access
+ channel-group 14 mode active
+!
+interface GigabitEthernet1/0/19
+ description to-E25-R630-15.154-eth2
+ switchport mode access
+ channel-group 14 mode active
+!
+interface GigabitEthernet1/0/20
+ description to-E25-R630-sec-17.214-eth0
+ switchport mode access
+ channel-group 15 mode active
+!
+interface GigabitEthernet1/0/21
+ description to-R630-hbase-16-195-eth2
+ switchport mode access
+ channel-group 12 mode active
+!
+interface GigabitEthernet1/0/22
+ description to-R630-hbase-16-196-eth2
+ switchport mode access
+ channel-group 13 mode active
+!
+interface GigabitEthernet1/0/23
+ description to-E25-R730-ES-18.85-eth0
+ switchport mode access
+ channel-group 20 mode active
+!
+interface GigabitEthernet1/0/24
+ description to-E25-R730-ES-18.86-eth0
+ switchport mode access
+ channel-group 21 mode active
+!
+interface GigabitEthernet1/0/25
+ switchport mode access
+ channel-group 4 mode active
+!
+interface GigabitEthernet1/0/26
+ switchport mode access
+ channel-group 4 mode active
+!
+interface GigabitEthernet1/0/27
+ switchport access vlan 4
+ switchport mode access
+ channel-group 19 mode active
+!
+interface GigabitEthernet1/0/28
+!
+interface GigabitEthernet1/0/29
+!
+interface GigabitEthernet1/0/30
+!
+interface GigabitEthernet1/0/31
+!
+interface GigabitEthernet1/0/32
+!
+interface GigabitEthernet1/0/33
+!
+interface GigabitEthernet1/0/34
+!
+interface GigabitEthernet1/0/35
+!
+interface GigabitEthernet1/0/36
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet1/0/37
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet1/0/38
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet1/0/39
+!
+interface GigabitEthernet1/0/40
+!
+interface GigabitEthernet1/0/41
+!
+interface GigabitEthernet1/0/42
+!
+interface GigabitEthernet1/0/43
+!
+interface GigabitEthernet1/0/44
+ description to-E25-R730-ceph-15.189-mgmt
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/45
+ description to-E25-R630-sec-17.214-mgmt
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/46
+!
+interface GigabitEthernet1/0/47
+ description access-DMZ-3750
+ switchport mode trunk
+ shutdown
+ channel-protocol lacp
+!
+interface GigabitEthernet1/0/48
+ description access-DMZ-3750
+ switchport mode trunk
+ shutdown
+ channel-protocol lacp
+!
+interface GigabitEthernet1/0/49
+!
+interface GigabitEthernet1/0/50
+!
+interface TenGigabitEthernet1/0/1
+!
+interface TenGigabitEthernet1/0/2
+ description uT:FD-1F-B08&C17-C4510:(local)TE2/1/10  
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface GigabitEthernet2/0/1
+ switchport access vlan 50
+ switchport mode access
+ spanning-tree portfast
+ channel-group 22 mode active
+!
+interface GigabitEthernet2/0/2
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/3
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/4
+ switchport access vlan 53
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/5
+ switchport access vlan 53
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/6
+ switchport access vlan 53
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/7
+ description to-E25-1288HV5-mysql-18.82-eth1
+ switchport access vlan 4
+ switchport mode access
+ channel-group 17 mode active
+!
+interface GigabitEthernet2/0/8
+ description to-E25-1288HV5-mysql-18.83-eth1
+ switchport access vlan 50
+ switchport mode access
+ channel-group 18 mode active
+!
+interface GigabitEthernet2/0/9
+ description to-E25-1288HV5-mysql-18.84-eth1
+ switchport access vlan 4
+ switchport mode access
+ channel-group 19 mode active
+!
+interface GigabitEthernet2/0/10
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/11
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/12
+ description to-MGMT-172.16.15.166
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet2/0/13
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/14
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/15
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+ channel-group 11 mode active
+!
+interface GigabitEthernet2/0/16
+ description to-R630-hbase-16-195-eth1
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+ channel-group 12 mode active
+!
+interface GigabitEthernet2/0/17
+ description to-R630-hbase-16-196-eth1
+ switchport mode access
+ channel-group 13 mode active
+!
+interface GigabitEthernet2/0/18
+ description to-E25-R630-15.154-eth1
+ switchport mode access
+ channel-group 14 mode active
+!
+interface GigabitEthernet2/0/19
+ description to-E25-R630-15.154-eth3
+ switchport mode access
+ channel-group 14 mode active
+!
+interface GigabitEthernet2/0/20
+ description to-E25-R630-sec-17.214-eth1
+ switchport mode access
+ channel-group 15 mode active
+!
+interface GigabitEthernet2/0/21
+ description to-R630-hbase-16-195-eth3
+ switchport access vlan 100
+ switchport mode access
+ channel-group 12 mode active
+!
+interface GigabitEthernet2/0/22
+ description to-R630-hbase-16-196-eth3
+ switchport mode access
+ channel-group 13 mode active
+!
+interface GigabitEthernet2/0/23
+ description to-E25-R730-ES-18.85-eth1
+ switchport mode access
+ channel-group 20 mode active
+!
+interface GigabitEthernet2/0/24
+ description to-E25-R730-ES-18.86-eth1
+ switchport mode access
+ channel-group 21 mode active
+!
+interface GigabitEthernet2/0/25
+ switchport mode access
+ channel-group 4 mode active
+!
+interface GigabitEthernet2/0/26
+ switchport mode access
+ channel-group 4 mode active
+!
+interface GigabitEthernet2/0/27
+ switchport access vlan 4
+ switchport mode access
+ channel-group 19 mode active
+!
+interface GigabitEthernet2/0/28
+!
+interface GigabitEthernet2/0/29
+!
+interface GigabitEthernet2/0/30
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/31
+!
+interface GigabitEthernet2/0/32
+!
+interface GigabitEthernet2/0/33
+!
+interface GigabitEthernet2/0/34
+!
+interface GigabitEthernet2/0/35
+!
+interface GigabitEthernet2/0/36
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet2/0/37
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet2/0/38
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/39
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet2/0/40
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/41
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/42
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/43
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/44
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/45
+!
+interface GigabitEthernet2/0/46
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet2/0/47
+ switchport mode trunk
+ shutdown
+ channel-protocol lacp
+!
+interface GigabitEthernet2/0/48
+ switchport mode trunk
+ shutdown
+ channel-protocol lacp
+!
+interface GigabitEthernet2/0/49
+!
+interface GigabitEthernet2/0/50
+!
+interface TenGigabitEthernet2/0/1
+!
+interface TenGigabitEthernet2/0/2
+ description uT:FD-1F-B08&C17-C4510:(local)TE1/1/10  
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan100
+ ip address 172.16.8.21 255.255.248.0
+!
+ip default-gateway 172.16.8.1
+ip http server
+ip http secure-server
+!
+ip ssh time-out 5
+ip ssh version 2
+ip scp server enable
+!
+ip access-list extended CISCO-CWA-URL-REDIRECT-ACL
+ deny   udp any any eq domain
+ deny   tcp any any eq domain
+ deny   udp any eq bootps any
+ deny   udp any any eq bootpc
+ deny   udp any eq bootpc any
+ permit tcp any any eq www
+kron occurrence save at 21:19 recurring
+ policy-list saveconfig
+!
+logging host 172.16.226.32
+access-list 97 permit 192.168.20.80
+access-list 97 permit 172.16.9.233
+access-list 97 permit 192.168.20.252
+access-list 97 permit 192.168.20.240
+access-list 97 permit 172.16.8.118
+access-list 97 permit 172.16.8.119
+access-list 97 permit 172.16.8.106
+access-list 97 permit 192.168.200.0 0.0.0.255
+!
+snmp-server community 51zhangdan RO
+!
+!
+!
+!
+line con 0
+ password 7 00011D080D4E59565E76
+line vty 0 4
+ password 7 045802150C2E
+ length 0
+ transport input ssh
+line vty 5 15
+ password 7 030752180500
+ transport input ssh
+!
+ntp peer 192.168.59.177
+end

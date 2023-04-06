@@ -1,0 +1,555 @@
+!Software Version V100R005C10SPC200
+!Last configuration was updated at 2022-02-23 20:12:57+08:00 by 51en
+!Last configuration was saved at 2023-02-01 01:10:23+08:00 by 51en
+#
+clock timezone BJ add 08:00:00
+#
+sysname FD-1F-F16-CE5855
+#
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.226.32
+#
+device board 1 board-type CE5855-48T4S2Q-EI
+device board 2 board-type CE5855-48T4S2Q-EI
+#
+set cpu threshold 70 restore 60 interval 3 slot 1
+#
+drop-profile default
+#
+ntp ipv6 server disable
+ntp max-distance 15
+ntp unicast-server 10.0.80.10 source-interface Vlanif10
+#
+cpu-defend policy test
+ car packet-type arp pps 1000 
+ car packet-type snmp pps 32 
+#
+vlan batch 10 15 to 23 30 to 46 48 85 to 86 90 to 95 99 to 100 152 200 to 201 254 to 255
+vlan batch 1000 to 1005
+#
+rsa peer-public-key 10.0.86.22
+ public-key-code begin
+ 3082010A
+  02820101
+    00D163F7 D5FF1AF3 C2E83203 333A2575 5EC9A1B0 B40E1B87 CB3DDE65 CCD72323
+    D64F0C28 E8E80574 3483C780 9958BD69 6CAF15AF F7767997 4A76EF67 D35C7B0D
+    E4EF5FC7 DD869457 37849058 EA522417 94A53D84 5CEFB312 E256D347 0B7FB032
+    93CB5795 DEA8093B 1174C5D0 9AEC8EE6 FCBD28D9 F0CC0DE5 E370784C 9F9CEE1B
+    A5CCA425 A4AABC83 73715E62 7D3C83A5 FB6BF992 DEDD8AD2 02792BD5 A5BE2FD0
+    B0DFD573 59D90CCA DC16C53A 593D84D1 29592C62 661E1548 AC3575F2 CEDBC0B1
+    90027BC8 67BC87EA FEF3F2C0 9EDA63CD B51AD3CD 6E55E421 651C8193 D5C9920A
+    5ED63FA0 8F7F39FC 9EC4E82A 17E14E27 5546DDA6 1654C67F AF6594B4 C13FE670
+    1B
+  0203
+    010001
+ public-key-code end
+ peer-public-key end
+#
+dhcp enable
+#
+telnet server disable
+telnet ipv6 server disable
+#
+cpu-defend-policy test
+#
+diffserv domain default
+#
+vlan 30
+ name cloudstack-mgmt
+#
+vlan 31
+ name cloudstack-vm
+#
+vlan 40
+ name RAMOS-pxe
+#
+vlan 41
+ name test
+#
+vlan 200
+ name WZ-BANK
+#
+vlan 1000
+ name to-office-huashu
+#
+vlan 1001
+ name to-office-WYHL
+#
+vlan 1002
+ name up-to-docker_test
+#
+vlan 1003
+ name to-Internet
+#
+vlan 1004
+ name to-HF-costomer
+#
+vlan 1005
+ name to-CQ-customer
+#
+acl number 2000
+ rule 1 permit source 172.16.9.5 0
+ rule 2 permit source 172.16.9.6 0
+ rule 3 permit source 172.16.9.7 0
+ rule 4 permit source 172.16.152.16 0
+ rule 5 permit source 172.16.11.50 0
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51nb password irreversible-cipher $1a$9k6_WlVKg"$Ko}5W-H:"4L-_~'H+X@,5mB'V`F,1,x0_ZF0sleX$
+ local-user 51nb service-type ssh
+ local-user 51nb level 15
+ local-user 51en password irreversible-cipher $1a$dgi+R%P7pX$%]vyR'Q>O%OBWu3jxMl&l%q>N+Efk8wMkb6F(Ce!$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 15
+ stack member 1 priority 150
+ #
+ stack member 2 domain 15
+#
+interface Vlanif10
+ ip address 10.247.10.8 255.255.255.0
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk11
+ description toF16-R730-ESXI-1
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk12
+ description toF16-R730-ESXI-2
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ stp edged-port enable
+ mode lacp-dynamic
+#
+interface Eth-Trunk13
+ description toF16-R730-ESXI-3
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description to-F16-R730-ESXI-4
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk15
+ description to-F16-R730-ESXI-5
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk16
+ description to-f16-R720-pgsql
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk17
+ description access-B7V2BC2-R630
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk100
+ description uT:FD-1F-F10-CE8860-10.1:()Eth-Trunk45
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+#
+interface Stack-Port1/1
+#
+interface Stack-Port1/2
+#
+interface Stack-Port2/1
+#
+interface Stack-Port2/2
+#
+interface GE1/0/1
+ description to-F16-R730-ESXI-1-eth0
+ eth-trunk 11
+#
+interface GE1/0/2
+ description to-F16-R730-ESXI-1-eth1
+ eth-trunk 11
+#
+interface GE1/0/3
+ description to-F16-R730-ESXI-2-eth0
+ eth-trunk 12
+#
+interface GE1/0/4
+ description to-F16-R730-ESXI-2-eth1
+ eth-trunk 12
+#
+interface GE1/0/5
+ description to-F16-R730-ESXI-3-eth0
+ eth-trunk 13
+#
+interface GE1/0/6
+ description to-F16-R730-ESXI-3-eth1
+ eth-trunk 13
+#
+interface GE1/0/7
+ description to-F16-R720-test-db-eth0
+ port default vlan 16
+ stp edged-port enable
+#
+interface GE1/0/8
+ description to-F16-R730-ESXI-4-eth0
+ eth-trunk 14
+#
+interface GE1/0/9
+ description to-F16-R730-ESXI-4-eth1
+ eth-trunk 14
+#
+interface GE1/0/10
+ description to-F16-R730-ESXI-5-eth0
+ eth-trunk 15
+#
+interface GE1/0/11
+ description to-F16-R730-ESXI-5-eth1
+ eth-trunk 15
+#
+interface GE1/0/12
+ port default vlan 85
+ stp edged-port enable
+#
+interface GE1/0/13
+ description C8KSF52-eth1
+ port default vlan 93
+ stp edged-port enable
+#
+interface GE1/0/14
+ description to-R720-pgsql-eth0
+ eth-trunk 16
+#
+interface GE1/0/15
+ description access-10.247.10.108
+ port default vlan 10
+#
+interface GE1/0/16
+ eth-trunk 17
+#
+interface GE1/0/17
+#
+interface GE1/0/18
+#
+interface GE1/0/19
+#
+interface GE1/0/20
+ undo portswitch
+ description to-test-USG-area
+ ip address 10.247.0.89 255.255.255.252
+#
+interface GE1/0/21
+#
+interface GE1/0/22
+#
+interface GE1/0/23
+#
+interface GE1/0/24
+#
+interface GE1/0/25
+#
+interface GE1/0/26
+#
+interface GE1/0/27
+#
+interface GE1/0/28
+#
+interface GE1/0/29
+#
+interface GE1/0/30
+#
+interface GE1/0/31
+#
+interface GE1/0/32
+#
+interface GE1/0/33
+#
+interface GE1/0/34
+#
+interface GE1/0/35
+#
+interface GE1/0/36
+#
+interface GE1/0/37
+#
+interface GE1/0/38
+#
+interface GE1/0/39
+#
+interface GE1/0/40
+#
+interface GE1/0/41
+#
+interface GE1/0/42
+#
+interface GE1/0/43
+#
+interface GE1/0/44
+ port default vlan 10
+ stp edged-port enable
+#
+interface GE1/0/45
+#
+interface GE1/0/46
+ port default vlan 10
+#
+interface GE1/0/47
+#
+interface GE1/0/48
+ description dual-active detect
+ dual-active detect mode direct
+#
+interface GE2/0/1
+ description to-F16-R730-ESXI-1-eth2
+ eth-trunk 11
+#
+interface GE2/0/2
+ description to-F16-R730-ESXI-1-eth3
+ eth-trunk 11
+#
+interface GE2/0/3
+ description to-F16-R730-ESXI-2-eth2
+ eth-trunk 12
+#
+interface GE2/0/4
+ description to-F16-R730-ESXI-2-eth3
+ eth-trunk 12
+#
+interface GE2/0/5
+ description to-F16-R730-ESXI-3-eth2
+ eth-trunk 13
+#
+interface GE2/0/6
+ description to-F16-R730-ESXI-3-eth3
+ eth-trunk 13
+#
+interface GE2/0/7
+ description to-F16-R720-test-db-eth1
+ port default vlan 16
+ stp edged-port enable
+#
+interface GE2/0/8
+ description to-F16-R730-ESXI-4-eth2
+ eth-trunk 14
+#
+interface GE2/0/9
+ description to-F16-R730-ESXI-4-eth3
+ eth-trunk 14
+#
+interface GE2/0/10
+ description to-F16-R730-ESXI-5-eth2
+ eth-trunk 15
+#
+interface GE2/0/11
+ description to-F16-R730-ESXI-5-eth3
+ eth-trunk 15
+#
+interface GE2/0/12
+#
+interface GE2/0/13
+#
+interface GE2/0/14
+ description to-R720-pgsql-eth1
+ eth-trunk 16
+#
+interface GE2/0/15
+#
+interface GE2/0/16
+ eth-trunk 17
+#
+interface GE2/0/17
+#
+interface GE2/0/18
+#
+interface GE2/0/19
+#
+interface GE2/0/20
+ undo portswitch
+ description to-test-USG-area
+ ip address 10.247.0.93 255.255.255.252
+#
+interface GE2/0/21
+#
+interface GE2/0/22
+#
+interface GE2/0/23
+#
+interface GE2/0/24
+#
+interface GE2/0/25
+#
+interface GE2/0/26
+#
+interface GE2/0/27
+#
+interface GE2/0/28
+#
+interface GE2/0/29
+#
+interface GE2/0/30
+#
+interface GE2/0/31
+#
+interface GE2/0/32
+#
+interface GE2/0/33
+#
+interface GE2/0/34
+#
+interface GE2/0/35
+#
+interface GE2/0/36
+#
+interface GE2/0/37
+#
+interface GE2/0/38
+#
+interface GE2/0/39
+#
+interface GE2/0/40
+ port default vlan 86
+#
+interface GE2/0/41
+ port default vlan 10
+#
+interface GE2/0/42
+ description to-F16-R730-ESXI-4-MGMT
+ port default vlan 10
+#
+interface GE2/0/43
+ description to-F16-R730-ESXI-5-MFMT
+ port default vlan 10
+#
+interface GE2/0/44
+ description to-F16-R730-ESXI-1-MGMT
+ port default vlan 10
+#
+interface GE2/0/45
+ description to-F16-R730-ESXI-2-MGMT
+ port default vlan 10
+#
+interface GE2/0/46
+ description to-F16-R730-ESXI-3-MGMT
+ port default vlan 10
+#
+interface GE2/0/47
+#
+interface GE2/0/48
+ description dual-active detect
+ dual-active detect mode direct
+#
+interface 10GE1/0/1
+ port mode stack 
+ device transceiver 1000BASE-X
+#
+interface 10GE1/0/2
+#
+interface 10GE1/0/3
+ port mode stack 
+ stack-port 1/1
+ description stack-port
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE1/0/4
+ port mode stack 
+ stack-port 1/1
+ description stack-port
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/1
+#
+interface 10GE2/0/2
+#
+interface 10GE2/0/3
+ port mode stack 
+ stack-port 2/1
+ description stack-port
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE2/0/4
+ port mode stack 
+ stack-port 2/1
+ description stack-port
+ device transceiver 10GBASE-FIBER
+#
+interface 40GE1/0/1
+ description uT:FD-1F-F10-CE8860-10.1:()40GE1/3/5
+ eth-trunk 100
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/2
+#
+interface 40GE2/0/1
+ description uT:FD-1F-F10-CE8860-10.1:()40GE2/3/5
+ eth-trunk 100
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/2
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 10.247.10.1
+ip route-static 10.247.0.96 255.255.255.224 10.247.0.90
+ip route-static 10.247.0.96 255.255.255.224 10.247.0.94
+ip route-static 10.247.0.200 255.255.255.255 10.247.0.90
+ip route-static 10.247.0.200 255.255.255.255 10.247.0.94
+#
+snmp-agent
+snmp-agent local-engineid 800007DB0380D4A58EC621
+snmp-agent community read cipher %^%#i=4b4y;Q]2O62RJ|2TqQ!cKk>_+>X(e&h:ZgD*$.q-Y-WL!:GM[JEs0[ZJ^Qc@wg6'hU\MZ0TF9QQH8&%^%#
+snmp-agent community read cipher %^%#ruGhIVl#u=!"+w!XD'>S7Z]{*lMK`&QmSrXVQ#=A4<VaV0Sk_=zBij=JNQ4$Q(-0CVP*#>DJ/_,p}P.I%^%#
+#
+snmp-agent sys-info version all
+#
+lldp enable
+#
+stelnet server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr aes256_cbc aes128_cbc 3des_cbc blowfish_cbc
+ssh server hmac sha2_256_96 sha2_256 sha1 sha1_96
+#
+ssh client first-time enable
+ssh client 10.0.86.22 assign rsa-key 10.0.86.22
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ user privilege level 15
+ protocol inbound ssh
+#
+vm-manager
+#
+ops
+ assistant auto_save
+  execute 1 command display current-configuration > FD-F16-5855-10.8.txt
+  execute 2 command tftp 172.16.9.233 put  FD-F16-5855-10.8.txt
+  condition timer cron 0 2 * * * *
+#
+return

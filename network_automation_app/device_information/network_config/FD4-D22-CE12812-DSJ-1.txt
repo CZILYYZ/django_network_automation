@@ -1,0 +1,941 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-08-26 15:47:47+08:00 by 51en
+!Last configuration was saved at 2023-02-23 14:39:17+08:00 by 51en
+#
+clock timezone GMT+8 add 08:00:00
+#
+sysname FD4-D22-CE12812-DSJ-1
+#
+info-center loghost 172.16.226.32 level informational
+#
+transceiver non-certified-alarm disable
+#
+system tcam ED-extend slot 6 
+#
+device board 13 board-type CE-MPUA
+device board 14 board-type CE-MPUA
+device board 5 board-type CE-L24LQ-EC1
+device board 8 board-type CE-L24LQ-EC1
+device board 7 board-type CE-L24LQ-EC1
+device board 6 board-type CE-L48XS-ED
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp server disable
+ntp ipv6 server disable
+ntp unicast-server 172.16.152.20
+ntp unicast-server 172.16.152.21
+#
+assign forward nvo3 service extend enable
+#
+assign forward nvo3 acl extend enable
+#
+dfs-group 1
+ source ip 51.51.51.100 
+ #
+ active-active-gateway
+  peer 51.51.51.101
+#
+vlan batch 100 110
+#
+stp bridge-address 0039-0039-0039
+stp instance 0 root primary
+#
+ecc peer-public-key 127.0.0.1
+ public-key-code begin
+  0401D9C5 08D824FC BCB91644 2C26BC4B 00CB2CA7 4C43095E AFFDEB5D 04395FD6
+  DF471F4B 9C759291 B1C90BB4 F9292057 453F9EFF E2465919 B42F7615 73D8415E
+  AF15F500 EE2DE178 CA0C2622 FCF26F3F 97CEA5D1 0001427F EDC4BE71 5BF93C7C
+  F1B0246A 1CEC90CC 2B5049C3 EAEFD146 8B31375F 2E467B67 64D653FF 4C6D6435
+  4689616A 6E
+ public-key-code end
+ peer-public-key end
+#
+ecc peer-public-key 172.16.63.137
+ public-key-code begin
+  04010BBB 5D71955C 7634D1AC 3517B3B4 F4C0B6FD 84DD54FF 892E982A 0E36D37C
+  7AE30402 EE11A0EF 7E5E7A88 B180ABF1 841FD19D C5F2AA0A 95F98CE5 4A017712
+  D831ED01 9B39CD6D 9B8CF245 C43CBD5F E08EFBDA 3247DF2B B0E830D3 64BF65CC
+  F282804B 5E44D5E8 EA4B9EF4 967DF783 643C9D79 1D94B487 1F667A4A BD8A8B25
+  AF7287C2 C8
+ public-key-code end
+ peer-public-key end
+#
+evpn-overlay enable
+#
+telnet server disable
+telnet ipv6 server disable
+#
+diffserv domain default
+#
+vlan 100
+ name DaShuJu-WG
+#
+vlan 110
+ name test
+#
+bridge-domain 10100
+ vxlan vni 10100
+ evpn 
+  route-distinguisher 100:100
+  vpn-target 100:100 export-extcommunity
+  vpn-target 100:100 import-extcommunity
+#
+acl name bgp-pre basic
+ rule 0 permit source 172.19.141.65 0
+#
+acl name k8s-route-filter advance
+ rule 5 permit ip source 172.19.141.64 0.0.0.63
+ rule 10 permit ip source 172.19.128.0 0.0.63.255
+ rule 15 permit ip source 172.27.0.0 0.0.31.255
+#
+aaa
+ undo local-user policy security-enhance
+ local-user authentication lock times 0 1
+ local-user 51en password irreversible-cipher $1c$Op;x4%.D-5$gxs{I_>L$;|e!h;]BRMTC)sd;(p];UxGZJCE)6^C$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ local-user calicouser password irreversible-cipher $1c$9=Rn$sHAxK$E7a8-%-d_R^YKeHe!;}2\^U|.j|oZ/D|y.GnL5i2$
+ local-user calicouser service-type ssh
+ local-user calicouser level 3
+ local-user netconf password irreversible-cipher $1c$Iao@7_BpM0$d4:G6juc=KJ"[oD>R<"J<q'<)WpJt0$+wx-F%l'0$
+ local-user netconf service-type ssh
+ local-user netconf level 3
+ #
+ authentication-scheme default
+  authentication-mode local radius
+ #
+ authorization-scheme default
+  authorization-mode local hwtacacs
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+#
+interface Vbdif10100
+ ip address 172.16.28.1 255.255.252.0
+ ip address 172.16.32.1 255.255.255.0 sub
+ ip address 172.16.33.1 255.255.255.0 sub
+ mac-address 0000-5e00-0102
+ dhcp select relay
+ dhcp relay binding server ip 172.16.55.11
+ dhcp relay gateway 1.1.1.1
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk1
+ undo portswitch
+ description uT:FD-1F-B08-NE20:()Eth-trunk3
+ ip address 172.16.63.134 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk2
+ undo portswitch
+ description uT:FD-1F-C17-NE20:()Eth-Trunk3
+ ip address 172.16.63.138 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk3
+ undo portswitch
+ description dT:FD4-D01&D03-6850-1:()Eth-trunk1
+ ip address 172.16.63.149 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk4
+ undo portswitch
+ description dT:FD-D05&D07-6850-1:()Eth-trunk1
+ ip address 172.16.63.157 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk5
+ undo portswitch
+ description dT:FD-D09&D11-6850-1:()Eth-trunk1
+ ip address 172.16.63.165 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk6
+ undo portswitch
+ description dT:FD-D13&D15-6850-:()Eth-trunk1
+ shutdown
+ ip address 172.16.63.173 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk7
+ undo portswitch
+ description dT:FD-D17&D19-6850-1:()Eth-trunk1
+ ip address 172.16.63.181 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk8
+ undo portswitch
+ description dT:FD-D21&D23-6850-1:()Eth-trunk1
+ shutdown
+ ip address 172.16.63.189 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk9
+ undo portswitch
+ description dT:FD-D02&D04-6850-1:()Eth-trunk1
+ ip address 172.16.63.197 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk10
+ undo portswitch
+ description dT:FD-D06&D08-6850-1:()Eth-trunk1
+ ip address 172.16.63.205 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk11
+ undo portswitch
+ description dT:FD-D10&D12-6850-1:()Eth-trunk1
+ ip address 172.16.63.213 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk12
+ undo portswitch
+ description dT:FD-D14&D16-6850-1:()Eth-trunk1
+ ip address 172.16.63.221 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk13
+ undo portswitch
+ description dT:FD-D18&D20-6850-1:()Eth-trunk1
+ ip address 172.16.63.229 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk14
+ undo portswitch
+ description dT:FD-D22-6850-1:()Eth-trunk1
+ ip address 172.16.63.249 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk15
+ description pT:FD4-D24-CE12812-DSJ-1:Eth-Trunk15
+ stp disable
+ mode lacp-static
+ peer-link 1
+#
+interface Eth-Trunk16
+ undo portswitch
+ description dT:FD3-A12A14-6850-1:()Eth-trunk1
+ ip address 172.16.1.1 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk17
+ undo portswitch
+ description dT:FD3-A16A18-6850-1:()Eth-trunk1
+ ip address 172.16.1.9 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk18
+ undo portswitch
+ description dT:FD3-A20A22-6850-1:()Eth-trunk1
+ ip address 172.16.1.17 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface Eth-Trunk29
+ description uT:F10-8860-16.253:()Eth-trunk126
+ shutdown
+ port link-type trunk
+ mode lacp-static
+ dfs-group 1 m-lag 1
+#
+interface Eth-Trunk29.100 mode l2
+ encapsulation dot1q vid 100
+ bridge-domain 10100
+#
+interface Eth-Trunk30
+ undo portswitch
+ description pT:FD4-D24-12812-1:()Eth-trunk30
+ ip address 172.16.63.245 255.255.255.252
+ ospf network-type p2p
+ m-lag unpaired-port reserved
+#
+interface 10GE6/0/0
+ description uT:FD-1F-B08-NE20:()10GE0/3/3
+ eth-trunk 1
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/1
+ description uT:FD-1F-B08-NE20:()10GE1/3/17
+ eth-trunk 2
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/2
+ description uT:FD-1F-B08-NE20:()10GE1/3/13
+ eth-trunk 2
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/3
+ description uT:FD-1F-B08-NE20:()10GE1/3/14
+ eth-trunk 2
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/4
+ description uT:FD-1F-B08-NE20:()10GE1/3/13
+ eth-trunk 1
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/5
+ description uT:FD-1F-B08-NE20:()10GE1/3/14
+ eth-trunk 1
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/6
+#
+interface 10GE6/0/7
+#
+interface 10GE6/0/8
+#
+interface 10GE6/0/9
+#
+interface 10GE6/0/10
+#
+interface 10GE6/0/11
+#
+interface 10GE6/0/12
+#
+interface 10GE6/0/13
+#
+interface 10GE6/0/14
+#
+interface 10GE6/0/15
+#
+interface 10GE6/0/16
+#
+interface 10GE6/0/17
+#
+interface 10GE6/0/18
+#
+interface 10GE6/0/19
+#
+interface 10GE6/0/20
+#
+interface 10GE6/0/21
+#
+interface 10GE6/0/22
+#
+interface 10GE6/0/23
+#
+interface 10GE6/0/24
+#
+interface 10GE6/0/25
+#
+interface 10GE6/0/26
+#
+interface 10GE6/0/27
+#
+interface 10GE6/0/28
+#
+interface 10GE6/0/29
+#
+interface 10GE6/0/30
+#
+interface 10GE6/0/31
+#
+interface 10GE6/0/32
+#
+interface 10GE6/0/33
+#
+interface 10GE6/0/34
+#
+interface 10GE6/0/35
+#
+interface 10GE6/0/36
+#
+interface 10GE6/0/37
+#
+interface 10GE6/0/38
+#
+interface 10GE6/0/39
+#
+interface 10GE6/0/40
+#
+interface 10GE6/0/41
+#
+interface 10GE6/0/42
+#
+interface 10GE6/0/43
+#
+interface 10GE6/0/44
+#
+interface 10GE6/0/45
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/46
+ undo portswitch
+ description dT:FD3-A12-KVM
+ ip address 172.16.1.25 255.255.255.252
+ device transceiver 1000BASE-T
+#
+interface 10GE6/0/47
+ undo portswitch
+ description dT:D22-KVM-172.16.63.238
+ ip address 172.16.63.237 255.255.255.252
+ device transceiver 1000BASE-T
+#
+interface 40GE5/0/0
+#
+interface 40GE5/0/1
+#
+interface 40GE5/0/2
+#
+interface 40GE5/0/3
+#
+interface 40GE5/0/4
+#
+interface 40GE5/0/5
+#
+interface 40GE5/0/6
+#
+interface 40GE5/0/7
+#
+interface 40GE5/0/8
+#
+interface 40GE5/0/9
+#
+interface 40GE5/0/10
+#
+interface 40GE5/0/11
+#
+interface 40GE5/0/12
+#
+interface 40GE5/0/13
+#
+interface 40GE5/0/14
+#
+interface 40GE5/0/15
+#
+interface 40GE5/0/16
+#
+interface 40GE5/0/17
+#
+interface 40GE5/0/18
+#
+interface 40GE5/0/19
+#
+interface 40GE5/0/20
+#
+interface 40GE5/0/21
+#
+interface 40GE5/0/22
+#
+interface 40GE5/0/23
+#
+interface 40GE7/0/0
+ description uT:F10-8860-16.253:()40GE1/3/11
+ shutdown
+ eth-trunk 29
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/2
+ description dT:FD4-D01&D03-6850-1:()40GE1/0/1
+ eth-trunk 3
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/3
+ description dT:FD-D05&D07-6850-1:()40GE1/0/1
+ eth-trunk 4
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/4
+ description dT:FD-D09&D11-6850-1:()40GE1/0/1
+ eth-trunk 5
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/5
+ description dT:FD-D13&D15-6850-:()40GE1/0/1
+ shutdown
+ eth-trunk 6
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/6
+ description dT:FD-D17&D19-6850-1:()40GE1/0/1
+ eth-trunk 7
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/7
+ description dT:FD-D21&D23-6850-1:()40GE1/0/1
+ shutdown
+ eth-trunk 8
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/8
+ description dT:FD-D02&D04-6850-1:()40GE1/0/1
+ eth-trunk 9
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/9
+ description dT:FD-D06&D08-6850-1:()40GE1/0/1
+ eth-trunk 10
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/10
+ description dT:FD-D10&D12-6850-1:()40GE2/0/1
+ eth-trunk 11
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/11
+ description dT:FD-D14&D16-6850-1:()40GE1/0/1
+ eth-trunk 12
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/12
+ description dT:FD-D18&D20-6850-1:()40GE2/0/1
+ eth-trunk 13
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/13
+ eth-trunk 14
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/14
+ description pT:FD4-D24-CE12812-DSJ-1:40GE7/0/14
+ eth-trunk 15
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/15
+ description dT:FD3-A12A14-6850-1:()40GE1/0/1
+ eth-trunk 16
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/16
+ description dT:FD3-A16A18-6850-1:()40GE1/0/1
+ eth-trunk 17
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/17
+ description dT:FD3-A20A22-6850-1:()40GE1/0/1
+ eth-trunk 18
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE7/0/18
+#
+interface 40GE7/0/19
+#
+interface 40GE7/0/20
+#
+interface 40GE7/0/21
+#
+interface 40GE7/0/22
+#
+interface 40GE7/0/23
+#
+interface 40GE8/0/0
+ description uT:F10-8860-16.253:()40GE2/3/13
+ shutdown
+ eth-trunk 29
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE8/0/1
+#
+interface 40GE8/0/2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE8/0/3
+#
+interface 40GE8/0/4
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE8/0/5
+#
+interface 40GE8/0/6
+#
+interface 40GE8/0/7
+#
+interface 40GE8/0/8
+#
+interface 40GE8/0/9
+#
+interface 40GE8/0/10
+#
+interface 40GE8/0/11
+#
+interface 40GE8/0/12
+#
+interface 40GE8/0/13
+#
+interface 40GE8/0/14
+ description pT:FD4-D24-CE12812-DSJ-1:40GE8/0/14
+ eth-trunk 15
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE8/0/15
+#
+interface 40GE8/0/16
+#
+interface 40GE8/0/17
+#
+interface 40GE8/0/18
+#
+interface 40GE8/0/19
+#
+interface 40GE8/0/20
+#
+interface 40GE8/0/21
+ description pT:FD4-D24-12812-1:()10GE8/0/21
+ eth-trunk 30
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE8/0/22
+ description pT:FD4-D24-12812-1:()10GE8/0/22
+ eth-trunk 30
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE8/0/23
+ description pT:FD4-D24-12812-1:()10GE8/0/23
+ eth-trunk 30
+ device transceiver 40GBASE-FIBER
+#
+interface LoopBack0
+ ip address 51.51.51.100 255.255.255.255
+#
+interface LoopBack10
+ ip address 51.51.51.114 255.255.255.255
+#
+interface Sip13/0/0
+#
+interface Sip13/0/1
+#
+interface Sip14/0/0
+#
+interface Sip14/0/1
+#
+interface Nve1
+ source 51.51.51.114
+ vni 10100 head-end peer-list protocol bgp
+#
+interface NULL0
+#
+bgp 65533
+ router-id 51.51.51.100
+ peer 172.16.28.230 as-number 64001
+ peer 172.16.28.230 connect-interface LoopBack0
+ peer 172.16.29.101 as-number 64001
+ peer 172.16.29.101 connect-interface LoopBack0
+ peer 172.16.29.102 as-number 64001
+ peer 172.16.29.102 connect-interface LoopBack0
+ peer 172.16.29.103 as-number 64001
+ peer 172.16.29.103 connect-interface LoopBack0
+ peer 172.16.29.104 as-number 64001
+ peer 172.16.29.104 connect-interface LoopBack0
+ peer 172.16.29.105 as-number 64001
+ peer 172.16.29.105 connect-interface LoopBack0
+ peer 172.16.29.106 as-number 64001
+ peer 172.16.29.106 connect-interface LoopBack0
+ peer 172.16.29.107 as-number 64001
+ peer 172.16.29.107 connect-interface LoopBack0
+ peer 172.16.29.108 as-number 64001
+ peer 172.16.29.108 connect-interface LoopBack0
+ peer 172.16.29.109 as-number 64001
+ peer 172.16.29.109 connect-interface LoopBack0
+ peer 172.16.29.110 as-number 64001
+ peer 172.16.29.110 connect-interface LoopBack0
+ peer 172.16.29.111 as-number 64001
+ peer 172.16.29.111 connect-interface LoopBack0
+ peer 172.16.29.112 as-number 64001
+ peer 172.16.29.112 connect-interface LoopBack0
+ peer 172.16.29.113 as-number 64001
+ peer 172.16.29.113 connect-interface LoopBack0
+ peer 172.16.29.114 as-number 64001
+ peer 172.16.29.114 connect-interface LoopBack0
+ peer 172.16.29.115 as-number 64001
+ peer 172.16.29.115 connect-interface LoopBack0
+ peer 172.16.29.116 as-number 64001
+ peer 172.16.29.116 connect-interface LoopBack0
+ peer 172.16.29.117 as-number 64001
+ peer 172.16.29.117 connect-interface LoopBack0
+ peer 172.16.29.118 as-number 64001
+ peer 172.16.29.118 connect-interface LoopBack0
+ peer 172.16.29.119 as-number 64001
+ peer 172.16.29.119 connect-interface LoopBack0
+ group DSJ internal
+ peer DSJ connect-interface LoopBack0
+ peer 51.51.51.101 as-number 65533
+ peer 51.51.51.101 group DSJ
+ peer 51.51.51.102 as-number 65533
+ peer 51.51.51.102 group DSJ
+ peer 51.51.51.103 as-number 65533
+ peer 51.51.51.103 group DSJ
+ peer 51.51.51.104 as-number 65533
+ peer 51.51.51.104 group DSJ
+ peer 51.51.51.105 as-number 65533
+ peer 51.51.51.105 group DSJ
+ peer 51.51.51.106 as-number 65533
+ peer 51.51.51.106 group DSJ
+ peer 51.51.51.107 as-number 65533
+ peer 51.51.51.107 group DSJ
+ peer 51.51.51.108 as-number 65533
+ peer 51.51.51.108 group DSJ
+ peer 51.51.51.109 as-number 65533
+ peer 51.51.51.109 group DSJ
+ peer 51.51.51.110 as-number 65533
+ peer 51.51.51.110 group DSJ
+ peer 51.51.51.111 as-number 65533
+ peer 51.51.51.111 group DSJ
+ peer 51.51.51.112 as-number 65533
+ peer 51.51.51.112 group DSJ
+ peer 51.51.51.113 as-number 65533
+ peer 51.51.51.113 group DSJ
+ peer 51.51.51.115 as-number 65533
+ peer 51.51.51.115 group DSJ
+ peer 51.51.51.116 as-number 65533
+ peer 51.51.51.116 group DSJ
+ peer 51.51.51.117 as-number 65533
+ peer 51.51.51.117 group DSJ
+ #
+ ipv4-family unicast
+  reflector cluster-id 100
+  peer 51.51.51.101 enable
+  peer 172.16.28.230 enable
+  peer 172.16.28.230 route-policy fd-k8s-route-filter import
+  peer 172.16.28.230 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.101 enable
+  peer 172.16.29.101 route-policy fd-k8s-route-filter import
+  peer 172.16.29.101 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.102 enable
+  peer 172.16.29.102 route-policy fd-k8s-route-filter import
+  peer 172.16.29.102 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.103 enable
+  peer 172.16.29.103 route-policy fd-k8s-route-filter import
+  peer 172.16.29.103 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.104 enable
+  peer 172.16.29.104 route-policy fd-k8s-route-filter import
+  peer 172.16.29.104 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.105 enable
+  peer 172.16.29.105 route-policy fd-k8s-route-filter import
+  peer 172.16.29.105 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.106 enable
+  peer 172.16.29.106 route-policy fd-k8s-route-filter import
+  peer 172.16.29.106 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.107 enable
+  peer 172.16.29.107 route-policy fd-k8s-route-filter import
+  peer 172.16.29.107 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.108 enable
+  peer 172.16.29.108 route-policy fd-k8s-route-filter import
+  peer 172.16.29.108 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.109 enable
+  peer 172.16.29.109 route-policy fd-k8s-route-filter import
+  peer 172.16.29.109 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.110 enable
+  peer 172.16.29.110 route-policy fd-k8s-route-filter import
+  peer 172.16.29.110 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.111 enable
+  peer 172.16.29.111 route-policy fd-k8s-route-filter import
+  peer 172.16.29.111 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.112 enable
+  peer 172.16.29.112 route-policy fd-k8s-route-filter import
+  peer 172.16.29.112 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.113 enable
+  peer 172.16.29.113 route-policy fd-k8s-route-filter import
+  peer 172.16.29.113 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.114 enable
+  peer 172.16.29.114 route-policy fd-k8s-route-filter import
+  peer 172.16.29.114 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.115 enable
+  peer 172.16.29.115 route-policy fd-k8s-route-filter import
+  peer 172.16.29.115 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.116 enable
+  peer 172.16.29.116 route-policy fd-k8s-route-filter import
+  peer 172.16.29.116 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.117 enable
+  peer 172.16.29.117 route-policy fd-k8s-route-filter import
+  peer 172.16.29.117 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.118 enable
+  peer 172.16.29.118 route-policy fd-k8s-route-filter import
+  peer 172.16.29.118 route-policy k8s-route-export-filter-all export
+  peer 172.16.29.119 enable
+  peer 172.16.29.119 route-policy fd-k8s-route-filter import
+  peer 172.16.29.119 route-policy k8s-route-export-filter-all export
+  peer DSJ enable
+  peer DSJ reflect-client
+  peer 51.51.51.102 enable
+  peer 51.51.51.102 group DSJ
+  peer 51.51.51.103 enable
+  peer 51.51.51.103 group DSJ
+  peer 51.51.51.104 enable
+  peer 51.51.51.104 group DSJ
+  peer 51.51.51.105 enable
+  peer 51.51.51.105 group DSJ
+  peer 51.51.51.106 enable
+  peer 51.51.51.106 group DSJ
+  peer 51.51.51.107 enable
+  peer 51.51.51.107 group DSJ
+  peer 51.51.51.108 enable
+  peer 51.51.51.108 group DSJ
+  peer 51.51.51.109 enable
+  peer 51.51.51.109 group DSJ
+  peer 51.51.51.110 enable
+  peer 51.51.51.110 group DSJ
+  peer 51.51.51.111 enable
+  peer 51.51.51.111 group DSJ
+  peer 51.51.51.112 enable
+  peer 51.51.51.112 group DSJ
+  peer 51.51.51.113 enable
+  peer 51.51.51.113 group DSJ
+  peer 51.51.51.115 enable
+  peer 51.51.51.115 group DSJ
+  peer 51.51.51.116 enable
+  peer 51.51.51.116 group DSJ
+  peer 51.51.51.117 enable
+  peer 51.51.51.117 group DSJ
+ #
+ l2vpn-family evpn
+  reflector cluster-id 100
+  undo policy vpn-target
+  peer DSJ enable
+  peer DSJ reflect-client
+  peer 51.51.51.102 enable
+  peer 51.51.51.102 group DSJ
+  peer 51.51.51.103 enable
+  peer 51.51.51.103 group DSJ
+  peer 51.51.51.104 enable
+  peer 51.51.51.104 group DSJ
+  peer 51.51.51.105 enable
+  peer 51.51.51.105 group DSJ
+  peer 51.51.51.106 enable
+  peer 51.51.51.106 group DSJ
+  peer 51.51.51.107 enable
+  peer 51.51.51.107 group DSJ
+  peer 51.51.51.108 enable
+  peer 51.51.51.108 group DSJ
+  peer 51.51.51.109 enable
+  peer 51.51.51.109 group DSJ
+  peer 51.51.51.110 enable
+  peer 51.51.51.110 group DSJ
+  peer 51.51.51.111 enable
+  peer 51.51.51.111 group DSJ
+  peer 51.51.51.112 enable
+  peer 51.51.51.112 group DSJ
+  peer 51.51.51.113 enable
+  peer 51.51.51.113 group DSJ
+  peer 51.51.51.115 enable
+  peer 51.51.51.115 group DSJ
+  peer 51.51.51.116 enable
+  peer 51.51.51.116 group DSJ
+  peer 51.51.51.117 enable
+  peer 51.51.51.117 group DSJ
+#
+ospf 1
+#
+ospf 100 router-id 51.51.51.100
+ import-route static
+ import-route bgp route-policy xy-k8s-route-filter
+ area 0.0.0.1
+  authentication-mode md5 1 cipher %^%##=/*D*Hp48Nw~-5t;>}3Ac2%AoHT])zcB];kZTXQ%^%#
+  network 51.51.51.100 0.0.0.0
+  network 51.51.51.114 0.0.0.0
+  network 172.16.1.0 0.0.0.3
+  network 172.16.1.8 0.0.0.3
+  network 172.16.1.16 0.0.0.3
+  network 172.16.1.24 0.0.0.3
+  network 172.16.28.0 0.0.3.255
+  network 172.16.32.0 0.0.0.255
+  network 172.16.33.0 0.0.0.255
+  network 172.16.34.0 0.0.0.255
+  network 172.16.63.132 0.0.0.3
+  network 172.16.63.136 0.0.0.3
+  network 172.16.63.148 0.0.0.3
+  network 172.16.63.156 0.0.0.3
+  network 172.16.63.164 0.0.0.3
+  network 172.16.63.172 0.0.0.3
+  network 172.16.63.180 0.0.0.3
+  network 172.16.63.188 0.0.0.3
+  network 172.16.63.196 0.0.0.3
+  network 172.16.63.204 0.0.0.3
+  network 172.16.63.212 0.0.0.3
+  network 172.16.63.220 0.0.0.3
+  network 172.16.63.228 0.0.0.3
+  network 172.16.63.236 0.0.0.3
+  network 172.16.63.244 0.0.0.3
+  network 172.16.63.248 0.0.0.3
+#
+route-policy bgp-pre permit node 10
+ if-match acl bgp-pre
+#
+route-policy fd-k8s-route-filter permit node 10
+ if-match acl k8s-route-filter
+#
+route-policy fd-k8s-route-filter deny node 20
+#
+route-policy k8s-route-export-filter-all deny node 40
+#
+route-policy xy-k8s-route-filter permit node 10
+ if-match acl k8s-route-filter
+#
+route-policy xy-k8s-route-filter deny node 20
+#
+route-policy xy-k8s-route-filter-export deny node 40
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03A4BE2BFA8D01
+snmp-agent community read cipher %^%#.ZN>/;l+1B3,OSGx{NFSCyw6EJaIuPTXi`6Bn/3;XhO@Cgz1`XX.sS+.&rt>%SpoX]e;$$^9D6B4N]R;%^%#
+#
+snmp-agent sys-info version v2c v3
+#
+lldp enable
+#
+stelnet ipv4 server enable
+snetconf ipv4 server enable
+stelnet ipv6 server enable
+snetconf ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type snetconf stelnet
+ssh user calicouser
+ssh user calicouser authentication-type password
+ssh user calicouser service-type snetconf
+ssh user netconf
+ssh user netconf authentication-type password
+ssh user netconf service-type snetconf
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_gcm aes128_gcm aes256_ctr aes192_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+ssh client 127.0.0.1 assign ecc-key 127.0.0.1
+ssh client 172.16.63.137 assign ecc-key 172.16.63.137
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+#
+netconf
+ idle-timeout 1 20
+ protocol inbound ssh ipv4 port 830
+ protocol inbound ssh ipv6 port 830
+#
+vm-manager
+#
+return

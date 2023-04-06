@@ -1,0 +1,531 @@
+!Software Version V200R001C00SPC700
+!Last configuration was updated at 2022-05-16 17:08:39+00:00 by 51en
+!Last configuration was saved at 2023-02-01 00:04:21+00:00 by 51en
+#
+sysname XY-2F-E05&E06-CE6810
+#
+info-center loghost 172.16.226.32
+info-center loghost 222.186.36.143
+#
+device board 1 board-type CE6810-32T16S4Q-LI
+device board 2 board-type CE6810-32T16S4Q-LI
+#
+drop-profile default
+#
+drop-profile ithis
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp server disable
+ntp ipv6 server disable
+ntp unicast-server 172.16.152.20
+ntp unicast-server 172.16.152.21
+#
+vlan batch 1001 to 1002 2000 to 2001 3000
+#
+rsa peer-public-key 115.238.29.22
+ public-key-code begin
+ 308189
+  028181
+    00B4073F E131E746 05926E4C A002FFD0 319DA6DE 69AE8801 CD15E477 4E2E7D49
+    E7F77A06 36C4E035 0F4798EF D1582E7E DCFDBB0F 47D22857 279F8E95 9A8BDDDB
+    9E78AA93 6804BD4C 4BB09000 00DF560F 88467AB2 0170A0DC 0653E3F8 5021064E
+    67E83822 D667970B 5EB295B2 1126DB48 5C94F228 CC49B5E9 D0D82518 CBE558F1
+    DF
+  0203
+    010001
+ public-key-code end
+ peer-public-key end
+#
+rsa peer-public-key 115.238.29.26
+ public-key-code begin
+ 308189
+  028181
+    00B4073F E131E746 05926E4C A002FFD0 319DA6DE 69AE8801 CD15E477 4E2E7D49
+    E7F77A06 36C4E035 0F4798EF D1582E7E DCFDBB0F 47D22857 279F8E95 9A8BDDDB
+    9E78AA93 6804BD4C 4BB09000 00DF560F 88467AB2 0170A0DC 0653E3F8 5021064E
+    67E83822 D667970B 5EB295B2 1126DB48 5C94F228 CC49B5E9 D0D82518 CBE558F1
+    DF
+  0203
+    010001
+ public-key-code end
+ peer-public-key end
+#
+rsa peer-public-key 172.16.255.49
+ public-key-code begin
+ 3082010A
+  02820101
+    00B3C9C7 7EF4F52B 6928A99A 50C57B42 2FD8C43E 99A9F2AE 5807A5E4 9486AE5D
+    93905129 18C9B797 B26B1BDE BFAFC456 77745EF7 E864C575 02B65DEE AA57F9E6
+    B38433B3 71A57EBA 2C874D4A 94782DFF D1346BED 1B4481A8 F029ED67 1A707E22
+    6E6D10B0 C4F6F2A0 95BF9952 04A9182B 2A64AADB F0F0BA04 F73FFE06 AE719769
+    D77E7A41 C460B37C 594BB52C BE414010 E6033403 2CC15C2B 2C3F4EA5 FFEBC2EF
+    0A7A26E5 D3ECE292 9AF2F77C AB6A546B 8511E056 84343BDB 99B356C3 5C782DA6
+    1A059773 188621A1 BA09BD32 F32E572B 6AB8834E AB8C0D23 2A4E9F39 2ED623C7
+    9302B377 346B829C 35293669 2AA8D68B 1C39D96D 95EAD35B 18D67B7C 7DAB88CF
+    9F
+  0203
+    010001
+ public-key-code end
+ peer-public-key end
+#
+rsa peer-public-key 172.16.255.53
+ public-key-code begin
+ 3082010A
+  02820101
+    00F52DB6 FD22C901 D4908599 50FCB015 E4AAE04F D1324B9E 5A91F89C BDF19845
+    F7B5E596 DB7F6656 03CC0E03 D3714460 35861605 AF1A631C 0CA29E19 983E44BD
+    E68480B4 5B96B611 45840132 0643288D 5AD59FD9 12BA6EE6 64074532 B6E91E8D
+    A9FA1DD3 7030E3F7 7F16EFD3 6254D57C 81476559 49268CAD 95552865 CC64D801
+    52F2C3D7 56B84394 6E2DFA9B B979F538 DCECC3E6 89BBD0E2 21193801 C56B713B
+    AD1A6AAE C58D4B28 3E65D234 321D57F2 85DF2928 7F0CBC70 B0CA9CBB 3CD9CF4D
+    9FC066B0 432AC40F C6937F3E 29D433CD 6CF3B800 45C85DB3 60DE9A78 8273A309
+    76DA2214 E4764C7D F65112D2 654738E2 1EFCC1B7 A96D83AD 56F6092D AA33F2B8
+    A7
+  0203
+    010001
+ public-key-code end
+ peer-public-key end
+#
+configuration file auto-save backup-to-server server 172.16.9.233 transport-type tftp 
+#
+telnet server disable
+telnet ipv6 server disable
+#
+observe-port 1 interface 10GE1/0/1  
+#
+sflow collector 2 ip 172.16.208.32
+#
+diffserv domain default
+#
+vlan 1001
+ description link-to-NS
+#
+acl number 2000
+ rule 5 permit source 183.129.178.139 0
+ rule 10 permit source 115.238.29.8 0
+ rule 15 permit source 115.236.23.33 0
+#
+acl number 2001
+ rule 5 permit source 43.254.52.2 0
+ rule 10 permit source 183.129.178.139 0
+ rule 15 permit source 115.238.29.8 0
+ rule 20 permit source 115.236.23.33 0
+ rule 25 permit source 115.236.43.146 0
+ rule 30 permit source 115.204.232.118 0
+ rule 35 permit source 172.16.37.38 0
+ rule 40 permit source 172.16.255.49 0
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51en password irreversible-cipher $1c$1XAUS:},,V$p[1V.D%@92g@Z:-}q(J'ES$,~4`LdWA]IuDdj5bD$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ local-user 51nbnb password irreversible-cipher $1c$7yi]FSy,:!$$oudN~miL,YOO}>}w6.5JZ}d>1"I{F5{DxN{rt{C$
+ local-user 51nbnb service-type ssh
+ local-user 51nbnb level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 10
+ stack member 1 priority 250
+ #
+ stack member 2 domain 10
+ stack member 2 priority 10
+#
+interface Vlanif1001
+ description to-NS
+ ip address 172.16.255.25 255.255.255.252
+#
+interface Vlanif1002
+ description to-gnh-USG6550
+ ip address 172.21.0.9 255.255.255.248
+#
+interface Vlanif2000
+ ip address 115.238.29.2 255.255.255.252
+#
+interface Vlanif2001
+ ip address 115.238.29.6 255.255.255.252
+#
+interface Vlanif3000
+ ip address 115.238.29.25 255.255.255.252
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk11
+ description dT:XY-G03-usg6550-M:()Eth-trunk2
+ port default vlan 1002
+#
+interface Eth-Trunk12
+ description dT:XY-G03-usg6550-S:()Eth-trunk2
+ port default vlan 1002
+#
+interface Eth-Trunk124
+ undo portswitch
+ description uT:XY-2F-E05-CE12812:()Eth-trunk124
+ ip address 172.16.255.50 255.255.255.252
+#
+interface Eth-Trunk125
+ undo portswitch
+ description uT:XY-2F-E06-CE12812:()Eth-trunk125
+ ip address 172.16.255.54 255.255.255.252
+#
+interface Stack-Port1/1
+#
+interface Stack-Port2/1
+#
+interface 10GE1/0/1
+ description to-F08-R730-sec-192.169-eth2-mirror
+#
+interface 10GE1/0/2
+#
+interface 10GE1/0/3
+#
+interface 10GE1/0/4
+#
+interface 10GE1/0/5
+#
+interface 10GE1/0/6
+#
+interface 10GE1/0/7
+#
+interface 10GE1/0/8
+#
+interface 10GE1/0/9
+#
+interface 10GE1/0/10
+#
+interface 10GE1/0/11
+#
+interface 10GE1/0/12
+#
+interface 10GE1/0/13
+#
+interface 10GE1/0/14
+#
+interface 10GE1/0/15
+#
+interface 10GE1/0/16
+#
+interface 10GE1/0/17
+#
+interface 10GE1/0/18
+#
+interface 10GE1/0/19
+#
+interface 10GE1/0/20
+#
+interface 10GE1/0/21
+#
+interface 10GE1/0/22
+#
+interface 10GE1/0/23
+#
+interface 10GE1/0/24
+#
+interface 10GE1/0/25
+#
+interface 10GE1/0/26
+#
+interface 10GE1/0/27
+#
+interface 10GE1/0/28
+#
+interface 10GE1/0/29
+#
+interface 10GE1/0/30
+#
+interface 10GE1/0/31
+ speed auto 1000
+#
+interface 10GE1/0/32
+ description uT:NS-172.16.193.2:(local)GE1/2
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 1999 2002 to 4094
+ negotiation disable
+ speed 1000
+#
+interface 10GE1/0/33
+ description to:link-to-out-1-115.238.29.1
+ port default vlan 2000
+ port-mirroring observe-port 1 inbound
+ port-mirroring observe-port 1 outbound
+ device transceiver 1000BASE-X
+#
+interface 10GE1/0/34
+#
+interface 10GE1/0/35
+#
+interface 10GE1/0/36
+#
+interface 10GE1/0/37
+#
+interface 10GE1/0/38
+#
+interface 10GE1/0/39
+#
+interface 10GE1/0/40
+#
+interface 10GE1/0/41
+ device transceiver 1000BASE-X
+#
+interface 10GE1/0/42
+ device transceiver 1000BASE-X
+#
+interface 10GE1/0/43
+#
+interface 10GE1/0/44
+#
+interface 10GE1/0/45
+ description dT:XY-G03-usg6550-M:(local)GE1/0/11
+ eth-trunk 11
+ device transceiver 1000BASE-X
+#
+interface 10GE1/0/46
+ description dT:XY-G03-usg6550-S:(local)GE1/0/11
+ eth-trunk 12
+ device transceiver 1000BASE-X
+#
+interface 10GE1/0/47
+ device transceiver 1000BASE-X
+#
+interface 10GE1/0/48
+ dual-active detect mode direct
+ device transceiver 1000BASE-X
+#
+interface 10GE2/0/1
+#
+interface 10GE2/0/2
+ description dT:ASA:LAN0
+ port default vlan 3000
+#
+interface 10GE2/0/3
+#
+interface 10GE2/0/4
+#
+interface 10GE2/0/5
+#
+interface 10GE2/0/6
+#
+interface 10GE2/0/7
+#
+interface 10GE2/0/8
+#
+interface 10GE2/0/9
+#
+interface 10GE2/0/10
+#
+interface 10GE2/0/11
+#
+interface 10GE2/0/12
+#
+interface 10GE2/0/13
+#
+interface 10GE2/0/14
+#
+interface 10GE2/0/15
+#
+interface 10GE2/0/16
+#
+interface 10GE2/0/17
+#
+interface 10GE2/0/18
+#
+interface 10GE2/0/19
+#
+interface 10GE2/0/20
+#
+interface 10GE2/0/21
+#
+interface 10GE2/0/22
+#
+interface 10GE2/0/23
+#
+interface 10GE2/0/24
+#
+interface 10GE2/0/25
+#
+interface 10GE2/0/26
+#
+interface 10GE2/0/27
+#
+interface 10GE2/0/28
+#
+interface 10GE2/0/29
+#
+interface 10GE2/0/30
+#
+interface 10GE2/0/31
+ speed auto 1000
+#
+interface 10GE2/0/32
+ description uT:NS-172.16.193.3:(local)GE1/2
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 1999 2002 to 4094
+ negotiation disable
+ speed 1000
+#
+interface 10GE2/0/33
+ description to:link-to-out-2-115.238.29.5
+ port default vlan 2001
+ port-mirroring observe-port 1 inbound
+ port-mirroring observe-port 1 outbound
+ device transceiver 1000BASE-X
+#
+interface 10GE2/0/34
+#
+interface 10GE2/0/35
+#
+interface 10GE2/0/36
+#
+interface 10GE2/0/37
+#
+interface 10GE2/0/38
+#
+interface 10GE2/0/39
+#
+interface 10GE2/0/40
+#
+interface 10GE2/0/41
+ device transceiver 1000BASE-X
+#
+interface 10GE2/0/42
+ device transceiver 1000BASE-X
+#
+interface 10GE2/0/43
+#
+interface 10GE2/0/44
+#
+interface 10GE2/0/45
+ description dT:XY-G03-usg6550-M:(local)GE1/0/10
+ eth-trunk 11
+ device transceiver 1000BASE-X
+#
+interface 10GE2/0/46
+ description dT:XY-G03-usg6550-S:(local)GE1/0/10
+ eth-trunk 12
+ device transceiver 1000BASE-X
+#
+interface 10GE2/0/47
+ device transceiver 1000BASE-X
+#
+interface 10GE2/0/48
+ dual-active detect mode direct
+ device transceiver 1000BASE-X
+#
+interface 40GE1/0/1
+ port mode stack 
+ stack-port 1/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/2
+ port mode stack 
+ stack-port 1/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/3
+ description uT:XY-2F-E05-CE12812:(local)40GE12/0/23
+ eth-trunk 124
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/4
+ description uT:XY-2F-E06-CE12812:(local)40GE12/0/22
+ eth-trunk 125
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/1
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/2
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/3
+ description uT:XY-2F-E05-CE12812:(local)40GE12/0/22
+ eth-trunk 124
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/4
+ description uT:XY-2F-E06-CE12812:(local)40GE12/0/23
+ eth-trunk 125
+ device transceiver 40GBASE-FIBER
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 115.238.29.1
+ip route-static 0.0.0.0 0.0.0.0 115.238.29.5
+ip route-static 115.238.29.0 255.255.255.192 172.16.255.26
+ip route-static 115.238.29.12 255.255.255.255 172.16.255.26
+ip route-static 115.238.29.13 255.255.255.255 172.16.255.26
+ip route-static 115.238.29.64 255.255.255.192 172.16.255.49
+ip route-static 115.238.29.64 255.255.255.192 172.16.255.53
+ip route-static 172.16.37.38 255.255.255.255 172.16.255.49
+ip route-static 172.16.37.60 255.255.255.255 172.16.255.49
+ip route-static 172.16.152.48 255.255.255.255 172.16.255.53
+#
+snmp-agent
+snmp-agent acl 2000
+snmp-agent local-engineid 800007DB03C4FF1FED3941
+snmp-agent community read cipher %^%#4$VB+xg`[QD<s~SMGLB,=:i#U'z*i/H,|SLrGz&RAnbxA#IdTMP$4,#^3lQ6II`:&W0G|F9JTMMae~}U%^%#
+#
+snmp-agent sys-info version v2c v3
+#
+lldp enable
+#
+stelnet server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh user 51nbnb
+ssh user 51nbnb authentication-type password
+ssh user 51nbnb service-type stelnet
+ssh server acl 2001
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+ssh client 115.238.29.22 assign rsa-key 115.238.29.22
+ssh client 115.238.29.26 assign rsa-key 115.238.29.26
+ssh client 172.16.255.49 assign rsa-key 172.16.255.49
+ssh client 172.16.255.53 assign rsa-key 172.16.255.53
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ idle-timeout 5 0
+ protocol inbound ssh
+#
+vm-manager
+#
+ops
+ assistant XYE05E06S6810
+  execute 1 command display current-configuration  > XY-S6810-E05&E06t.txt
+  execute 2 command tftp 172.16.9.233 put XY-S6810-E05&E06.txt
+  condition timer cron 0 2 * * * *
+#
+return

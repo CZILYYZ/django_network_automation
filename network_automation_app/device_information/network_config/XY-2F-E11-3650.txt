@@ -1,0 +1,420 @@
+Building configuration...
+
+Current configuration : 8295 bytes
+!
+! Last configuration change at 17:03:17 GMT Thu Feb 23 2023 by 51en
+! NVRAM config last updated at 17:03:17 GMT Thu Feb 23 2023 by 51en
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec localtime show-timezone year
+service timestamps log datetime msec localtime show-timezone year
+service password-encryption
+service compress-config
+!
+hostname XY-2F-E11-3650
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-vrf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+!
+username 51en privilege 15 password 7 075A704940292A3227405B
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local 
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone GMT 8 0
+switch 1 provision ws-c3650-48td
+!
+!
+!
+!
+!
+coap http enable
+!
+!
+!
+!
+!
+!
+ip routing
+!
+ip domain-name 51.nb
+!
+!
+qos queue-softmax-multiplier 100
+!
+!
+diagnostic bootup level minimal
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+hw-switch switch 1 logging onboard message level 3
+!
+redundancy
+ mode sso
+!
+lldp run
+!
+!
+class-map match-any non-client-nrt-class
+!
+policy-map port_child_policy
+ class non-client-nrt-class
+  bandwidth remaining ratio 10
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 51.51.51.14 255.255.255.255
+!
+interface GigabitEthernet0/0
+ vrf forwarding Mgmt-vrf
+ ip address 1.1.1.1 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet1/0/1
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/2
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/3
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/4
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/5
+ description dT:D09-KVM-172.16.192.250
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/6
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/7
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/8
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/9
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/10
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/11
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/12
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/13
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/14
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/15
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/16
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/17
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/18
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/19
+ switchport access vlan 194
+ switchport mode access
+!
+interface GigabitEthernet1/0/20
+ description D09
+ switchport access vlan 194
+ switchport mode access
+!
+interface GigabitEthernet1/0/21
+ switchport access vlan 194
+ switchport mode access
+!
+interface GigabitEthernet1/0/22
+ switchport access vlan 194
+ switchport mode access
+!
+interface GigabitEthernet1/0/23
+ description to-D03-1700
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/24
+ description to-D04-1700
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/25
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/26
+ description dT:D06-1700
+ switchport access vlan 192
+ switchport mode access
+!
+interface GigabitEthernet1/0/27
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/28
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/29
+ description dT:C01-1700
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/30
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/31
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/32
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/33
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/34
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/35
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/36
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/37
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/38
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/39
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/40
+ description dT:XY-G06-6850-1
+ switchport access vlan 194
+ switchport mode access
+!
+interface GigabitEthernet1/0/41
+ description dT:XY-G07-6850-1
+ switchport access vlan 194
+ switchport mode access
+!
+interface GigabitEthernet1/0/42
+ description dT:E05-Bofen-WG
+ switchport access vlan 192
+ switchport mode access
+ speed 100
+!
+interface GigabitEthernet1/0/43
+ description to-XY-bank-usg-M
+ switchport access vlan 193
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/44
+ description to-XY-bank-usg-S
+ switchport access vlan 193
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/45
+ description dT:E11-KVM-172.16.193.250
+ switchport access vlan 193
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/46
+ description dT:E06-ASAM-172.16.193.251
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/47
+ description dT:NS-193.3-mgmt:(local)GE1/1
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/0/48
+ description dT:NS-193.2-mgmt:(local)GE1/1
+ switchport access vlan 193
+ switchport mode access
+!
+interface GigabitEthernet1/1/1
+ description uT:XY-2F-E05-CE12812:(local)10GE6/0/43
+ no switchport
+ ip address 172.16.255.138 255.255.255.252
+ ip ospf message-digest-key 1 md5 7 055E5721236C1C594852
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+!
+interface GigabitEthernet1/1/2
+ description uT:XY-2F-E06-CE12812:(local)10GE6/0/43
+ no switchport
+ ip address 172.16.255.142 255.255.255.252
+ ip ospf message-digest-key 1 md5 7 115C482B1532595C557D
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+!
+interface TenGigabitEthernet1/1/3
+ description test
+!
+interface TenGigabitEthernet1/1/4
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan192
+ ip address 172.16.254.233 255.255.255.252 secondary
+ ip address 172.16.192.1 255.255.255.0
+!
+interface Vlan193
+ ip address 172.16.193.1 255.255.255.0
+!
+interface Vlan194
+ ip address 172.16.194.1 255.255.255.0
+!
+interface Vlan195
+ no ip address
+!
+router ospf 100
+ router-id 51.51.51.14
+ area 1 authentication message-digest
+ area 1 stub
+ passive-interface Vlan192
+ passive-interface Vlan193
+ passive-interface Vlan194
+ network 51.51.51.14 0.0.0.0 area 1
+ network 172.16.192.0 0.0.0.255 area 1
+ network 172.16.193.0 0.0.0.255 area 1
+ network 172.16.194.0 0.0.0.255 area 1
+ network 172.16.254.232 0.0.0.3 area 1
+ network 172.16.255.136 0.0.0.3 area 1
+ network 172.16.255.140 0.0.0.3 area 1
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+no ip http secure-server
+ip ssh version 2
+ip scp server enable
+!
+!
+logging source-interface Loopback0
+logging host 172.16.226.32
+!
+snmp-server community 51zhangdan RO
+tftp-server flash:nvram_config
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ privilege level 15
+ transport input all
+line vty 5 15
+ transport input ssh
+!
+ntp peer 172.16.152.20
+ntp peer 172.16.152.21
+wsma agent exec
+ profile httplistener
+ profile httpslistener
+!
+wsma agent config
+ profile httplistener
+ profile httpslistener
+!
+wsma agent filesys
+ profile httplistener
+ profile httpslistener
+!
+wsma agent notify
+ profile httplistener
+ profile httpslistener
+!
+!
+wsma profile listener httplistener
+ transport http
+!
+wsma profile listener httpslistener
+ transport https
+!
+ap group default-group
+end

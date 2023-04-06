@@ -1,0 +1,347 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-06-01 19:44:20+00:00 by SYSTEM automatically
+!Last configuration was saved at 2022-05-12 06:59:36+00:00 by 51en
+#
+sysname XY-2F-D09-CE6850
+#
+info-center loghost source LoopBack0
+info-center loghost 172.16.226.32
+#
+system resource standard
+#
+device board 1 board-type CE6850-48T6Q-HI
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp server disable
+ntp ipv6 server disable
+ntp unicast-server 172.16.152.21
+#
+vlan batch 8 to 15
+#
+telnet server disable
+telnet ipv6 server disable
+#
+diffserv domain default
+#
+bfd
+#
+bridge-domain 10008
+ l2 binding vlan 8
+ vxlan vni 10008
+#
+bridge-domain 10009
+ l2 binding vlan 9
+ vxlan vni 10009
+#
+bridge-domain 10010
+ l2 binding vlan 10
+ vxlan vni 10010
+#
+bridge-domain 10015
+ l2 binding vlan 15
+ vxlan vni 10015
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51en password irreversible-cipher $1c$jOLlU|Ia*>$RM8gUeQLu<X4T+O`a;pE53U/.Y"7=/dbnWQokA8R$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk1
+ undo portswitch
+ description uT:E05-12812:Eth-trunk140
+ ip address 172.16.255.218 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk2
+ undo portswitch
+ description uT:E06-12812:Eth-trunk140
+ ip address 172.16.255.222 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk3
+ description dT:D09-D5Q6YM2-194.15-bond1
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk4
+ description dT:D09-D5Q6YM2-194.15-bond2
+ port default vlan 8
+ mode lacp-dynamic
+#
+interface Eth-Trunk5
+ description dT:D09-D5M9YM2-194.15-bond1
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk6
+ description dT:D09-D5M9YM2-194.15-bond2
+ port default vlan 8
+ mode lacp-dynamic
+#
+interface Eth-Trunk7
+ description dT:D09-GYY5YM2-194.15-bond1
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk8
+ description dT:D09-GYY5YM2-194.15-bond2
+ port default vlan 8
+ mode lacp-dynamic
+#
+interface Eth-Trunk9
+ description dT:D09-2102310YPY10J4002588-194.15-bond1
+ port default vlan 8
+ mode lacp-dynamic
+#
+interface Eth-Trunk10
+ description dT:D09-2102310YPY10J4002588-194.15-bond2
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk11
+ description dT:D09-DCB6GM2-bond0
+ port default vlan 15
+ mode lacp-dynamic
+#
+interface Eth-Trunk12
+ description dT;D09-CL5CHP2:bond0
+ port default vlan 15
+ mode lacp-dynamic
+#
+interface Eth-Trunk13
+ description dT:D09-CL87HP2-bond0
+ port default vlan 15
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description dT:D09-CKK8HP2-bond0
+ port default vlan 15
+ mode lacp-dynamic
+#
+interface 10GE1/0/1
+ eth-trunk 3
+#
+interface 10GE1/0/2
+ eth-trunk 3
+#
+interface 10GE1/0/3
+ eth-trunk 4
+#
+interface 10GE1/0/4
+ eth-trunk 4
+#
+interface 10GE1/0/5
+ eth-trunk 5
+#
+interface 10GE1/0/6
+ eth-trunk 5
+#
+interface 10GE1/0/7
+ eth-trunk 6
+#
+interface 10GE1/0/8
+ eth-trunk 6
+#
+interface 10GE1/0/9
+ eth-trunk 7
+#
+interface 10GE1/0/10
+ eth-trunk 7
+#
+interface 10GE1/0/11
+ eth-trunk 8
+#
+interface 10GE1/0/12
+ eth-trunk 8
+#
+interface 10GE1/0/13
+ eth-trunk 9
+#
+interface 10GE1/0/14
+ eth-trunk 9
+#
+interface 10GE1/0/15
+ eth-trunk 10
+#
+interface 10GE1/0/16
+ eth-trunk 10
+#
+interface 10GE1/0/17
+ eth-trunk 11
+#
+interface 10GE1/0/18
+ eth-trunk 11
+#
+interface 10GE1/0/19
+ eth-trunk 12
+#
+interface 10GE1/0/20
+ eth-trunk 12
+#
+interface 10GE1/0/21
+ eth-trunk 13
+#
+interface 10GE1/0/22
+ eth-trunk 13
+#
+interface 10GE1/0/23
+ eth-trunk 14
+#
+interface 10GE1/0/24
+ eth-trunk 14
+#
+interface 10GE1/0/25
+#
+interface 10GE1/0/26
+#
+interface 10GE1/0/27
+#
+interface 10GE1/0/28
+#
+interface 10GE1/0/29
+#
+interface 10GE1/0/30
+#
+interface 10GE1/0/31
+#
+interface 10GE1/0/32
+#
+interface 10GE1/0/33
+#
+interface 10GE1/0/34
+#
+interface 10GE1/0/35
+#
+interface 10GE1/0/36
+#
+interface 10GE1/0/37
+#
+interface 10GE1/0/38
+#
+interface 10GE1/0/39
+#
+interface 10GE1/0/40
+#
+interface 10GE1/0/41
+#
+interface 10GE1/0/42
+#
+interface 10GE1/0/43
+#
+interface 10GE1/0/44
+#
+interface 10GE1/0/45
+#
+interface 10GE1/0/46
+#
+interface 10GE1/0/47
+#
+interface 10GE1/0/48
+#
+interface 40GE1/0/1
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/2
+ eth-trunk 2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/3
+#
+interface 40GE1/0/4
+#
+interface 40GE1/0/5
+#
+interface 40GE1/0/6
+#
+interface LoopBack0
+ ip address 51.51.51.19 255.255.255.255
+#
+interface Nve1
+ source 51.51.51.19
+ vni 10008 head-end peer-list 51.51.51.15
+ vni 10008 head-end peer-list 51.51.51.16
+ vni 10008 head-end peer-list 51.51.51.26
+ vni 10008 head-end peer-list 51.51.51.250
+ vni 10009 head-end peer-list 51.51.51.15
+ vni 10009 head-end peer-list 51.51.51.16
+ vni 10009 head-end peer-list 51.51.51.26
+ vni 10009 head-end peer-list 51.51.51.250
+ vni 10010 head-end peer-list 51.51.51.15
+ vni 10010 head-end peer-list 51.51.51.16
+ vni 10010 head-end peer-list 51.51.51.26
+ vni 10010 head-end peer-list 51.51.51.250
+ vni 10015 head-end peer-list 51.51.51.15
+ vni 10015 head-end peer-list 51.51.51.16
+ vni 10015 head-end peer-list 51.51.51.26
+ vni 10015 head-end peer-list 51.51.51.250
+#
+interface NULL0
+#
+ospf 100 router-id 51.51.51.115
+ bfd all-interfaces enable
+ area 0.0.0.1
+  authentication-mode md5 1 cipher %^%#7O6XMV+4H%JIBT5#OvF#GADlLJb:w7RGtZN_=fk)%^%#
+  network 51.51.51.19 0.0.0.0
+  network 172.16.255.216 0.0.0.3
+  network 172.16.255.220 0.0.0.3
+  stub
+#
+snmp-agent
+snmp-agent local-engineid 800007DB039C7DA3872471
+snmp-agent community read cipher %^%#UNdN$r*o#CER"f)m>G\#1CDW5oME'NUikON1VOn!qFqIOGsO&0h`9|;]\W;AW-VA7jxMOD6Hw2K#1ieG%^%#
+#
+snmp-agent sys-info version all
+#
+lldp enable
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+#
+vm-manager
+#
+return

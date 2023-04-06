@@ -1,0 +1,661 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-02-23 12:00:01+00:00 by 51en
+!Last configuration was saved at 2023-01-31 17:10:58+00:00 by 51en
+#
+sysname FD-D14&D16-CE6850-1
+#
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.226.32
+#
+system resource standard
+#
+device board 1 board-type CE6850-48T6Q-HI
+device board 2 board-type CE6850-48T6Q-HI
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+vlan batch 100
+#
+evpn-overlay enable
+#
+telnet server disable
+telnet ipv6 server disable
+#
+diffserv domain default
+#
+bridge-domain 10100
+ l2 binding vlan 100
+ vxlan vni 10100
+ evpn 
+  route-distinguisher 100:100
+  vpn-target 100:100 export-extcommunity
+  vpn-target 100:100 import-extcommunity
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51en password irreversible-cipher $1c$<82%Ev9+s6$M7a+LB]ZgF!_nQ0-PXvR(.*!Yw!)x*4BR%Ie8[\K$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 10
+ stack member 1 priority 200
+ #
+ stack member 2 domain 10
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk1
+ undo portswitch
+ description dT:FD4-D22-CE12812-DSJ-1:()Eth-trunk12
+ ip address 172.16.63.222 255.255.255.252
+ ospf network-type p2p
+#
+interface Eth-Trunk2
+ undo portswitch
+ description dT:FD4-D24-CE12812-DSJ-1:()Eth-trunk12
+ ip address 172.16.63.226 255.255.255.252
+ ospf network-type p2p
+#
+interface Eth-Trunk3
+ description dT:D14-2102311QGK10HB000498-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk4
+ description dT:D14-2102311QGK10HB000499-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk5
+ description dT:D14-2102311QGK10H9000227-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk6
+ description dT:D14-2102311QGK10HB000587-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk7
+ description dT:D14-2102311QGK10HB000557-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk8
+ description dT:D14-818282938-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk9
+ description dT:D14-818282939-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk10
+ description dT:D14-2102311QGK10HB000556-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk11
+ description dT:D14-2102311QGK10HB000477-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk12
+ description dT:D14-2102311QGK10HB000478-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk13
+ description dT:D14-2102311QGK10HB000454-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description dT:D14-2102311QGK10HB000542-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk15
+ description dT:D14--bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk16
+ description dT:D14--bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk17
+ description dT:D14--bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk18
+ description dT:D16-2102311QGK10HB000783-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk19
+ description dT:D16-2102311QGK10HB000476-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk20
+ description dT:D16-2102311QGK10HB000400-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk21
+ description dT:D16-2102311QGK10HB001172-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk22
+ description dT:D16-2102311QGK10HB000421-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk23
+ description dT:D16-2102311QGK10HB000564-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk24
+ description dT:D16-2102311QGK10HB000401-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk25
+ description dT:D16-2102311QGK10HB000419-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk26
+ description dT:D16-753PZH2-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk27
+ description dT:D16-2102311QGK10HB000403-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk28
+ description dT:D16-2102311QGK10HB000402-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk29
+ description dT:D16-745JZH2-bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk30
+ description dT:D16-HZNC7J2-bond0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk31
+ description dT:D16-HZNG7J2-bond0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk32
+ description dT:D16--bound0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Stack-Port1/2
+#
+interface Stack-Port2/2
+#
+interface 10GE1/0/1
+ eth-trunk 3
+#
+interface 10GE1/0/2
+ eth-trunk 4
+#
+interface 10GE1/0/3
+ eth-trunk 5
+#
+interface 10GE1/0/4
+ eth-trunk 6
+#
+interface 10GE1/0/5
+ eth-trunk 7
+#
+interface 10GE1/0/6
+ eth-trunk 8
+#
+interface 10GE1/0/7
+ eth-trunk 9
+#
+interface 10GE1/0/8
+ eth-trunk 10
+#
+interface 10GE1/0/9
+ eth-trunk 11
+#
+interface 10GE1/0/10
+ eth-trunk 12
+#
+interface 10GE1/0/11
+ eth-trunk 13
+#
+interface 10GE1/0/12
+ eth-trunk 14
+#
+interface 10GE1/0/13
+ eth-trunk 15
+#
+interface 10GE1/0/14
+ eth-trunk 16
+#
+interface 10GE1/0/15
+ eth-trunk 17
+#
+interface 10GE1/0/16
+ eth-trunk 18
+#
+interface 10GE1/0/17
+ eth-trunk 19
+#
+interface 10GE1/0/18
+ eth-trunk 20
+#
+interface 10GE1/0/19
+ eth-trunk 21
+#
+interface 10GE1/0/20
+ eth-trunk 22
+#
+interface 10GE1/0/21
+ eth-trunk 23
+#
+interface 10GE1/0/22
+ eth-trunk 24
+#
+interface 10GE1/0/23
+ eth-trunk 25
+#
+interface 10GE1/0/24
+ eth-trunk 26
+#
+interface 10GE1/0/25
+ eth-trunk 27
+#
+interface 10GE1/0/26
+ eth-trunk 28
+#
+interface 10GE1/0/27
+ eth-trunk 29
+#
+interface 10GE1/0/28
+ eth-trunk 30
+#
+interface 10GE1/0/29
+ eth-trunk 31
+#
+interface 10GE1/0/30
+ eth-trunk 32
+#
+interface 10GE1/0/31
+#
+interface 10GE1/0/32
+#
+interface 10GE1/0/33
+ description dT:D14-2102311QGK10HB000498-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/34
+ description dT:D14-2102311QGK10HB000499-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/35
+ description dT:D14-2102311QGK10H9000227-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/36
+ description dT:D14-2102311QGK10HB000587-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/37
+ description dT:D14-2102311QGK10HB000557-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/38
+ description dT:D14-818282938-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/39
+ description dT:D14-818282939-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/40
+ description dT:D14-2102311QGK10HB000556-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/41
+ description dT:D14-2102311QGK10HB000477-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/42
+ description dT:D14-2102311QGK10HB000478-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/43
+ description dT:D14-2102311QGK10HB000454-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/44
+ description dT:D14-2102311QGK10HB000542-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/45
+ description dT:D14--MGMT
+ port default vlan 100
+#
+interface 10GE1/0/46
+ description dT:D14--MGMT
+ port default vlan 100
+#
+interface 10GE1/0/47
+ description dT:D14--MGMT
+ port default vlan 100
+#
+interface 10GE1/0/48
+ description pT:2/0/48-stack-test
+ dual-active detect mode direct
+#
+interface 10GE2/0/1
+ eth-trunk 3
+#
+interface 10GE2/0/2
+ eth-trunk 4
+#
+interface 10GE2/0/3
+ eth-trunk 5
+#
+interface 10GE2/0/4
+ eth-trunk 6
+#
+interface 10GE2/0/5
+ eth-trunk 7
+#
+interface 10GE2/0/6
+ eth-trunk 8
+#
+interface 10GE2/0/7
+ eth-trunk 9
+#
+interface 10GE2/0/8
+ eth-trunk 10
+#
+interface 10GE2/0/9
+ eth-trunk 11
+#
+interface 10GE2/0/10
+ eth-trunk 12
+#
+interface 10GE2/0/11
+ eth-trunk 13
+#
+interface 10GE2/0/12
+ eth-trunk 14
+#
+interface 10GE2/0/13
+ eth-trunk 15
+#
+interface 10GE2/0/14
+ eth-trunk 16
+#
+interface 10GE2/0/15
+ eth-trunk 17
+#
+interface 10GE2/0/16
+ eth-trunk 18
+#
+interface 10GE2/0/17
+ eth-trunk 19
+#
+interface 10GE2/0/18
+ eth-trunk 20
+#
+interface 10GE2/0/19
+ eth-trunk 21
+#
+interface 10GE2/0/20
+ eth-trunk 22
+#
+interface 10GE2/0/21
+ eth-trunk 23
+#
+interface 10GE2/0/22
+ eth-trunk 24
+#
+interface 10GE2/0/23
+ eth-trunk 25
+#
+interface 10GE2/0/24
+ eth-trunk 26
+#
+interface 10GE2/0/25
+#
+interface 10GE2/0/26
+ eth-trunk 28
+#
+interface 10GE2/0/27
+ eth-trunk 29
+#
+interface 10GE2/0/28
+ eth-trunk 30
+#
+interface 10GE2/0/29
+ eth-trunk 31
+#
+interface 10GE2/0/30
+ eth-trunk 32
+#
+interface 10GE2/0/31
+ eth-trunk 27
+#
+interface 10GE2/0/32
+#
+interface 10GE2/0/33
+ description dT:D16-2102311QGK10HB000783-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/34
+ description dT:D16-2102311QGK10HB000476-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/35
+ description dT:D16-2102311QGK10HB000400-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/36
+ description dT:D16-2102311QGK10HB001172-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/37
+ description dT:D16-2102311QGK10HB000421-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/38
+ description dT:D16-2102311QGK10HB000564-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/39
+ description dT:D16-2102311QGK10HB000401-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/40
+ description dT:D16-2102311QGK10HB000419-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/41
+ description dT:D16-753PZH2-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/42
+ description dT:D16-2102311QGK10HB000403-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/43
+ description dT:D16-2102311QGK10HB000402-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/44
+ description dT:D16-45JZH2-MGMT
+ port default vlan 100
+#
+interface 10GE2/0/45
+ description dT:D16--MGMT
+ port default vlan 100
+#
+interface 10GE2/0/46
+ description dT:D16--MGMT
+ port default vlan 100
+#
+interface 10GE2/0/47
+ description dT:D16--MGMT
+ port default vlan 100
+#
+interface 10GE2/0/48
+ description pT:1/0/48-stack-test
+ dual-active detect mode direct
+#
+interface 40GE1/0/1
+ description dT:FD4-D22-CE12812-DSJ-1:()7/0/11
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/2
+#
+interface 40GE1/0/3
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/4
+#
+interface 40GE1/0/5
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/6
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/1
+ description dT:FD4-D24-CE12812-DSJ-1:()40GE7/0/11
+ eth-trunk 2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/2
+#
+interface 40GE2/0/3
+#
+interface 40GE2/0/4
+#
+interface 40GE2/0/5
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/6
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface LoopBack0
+ ip address 51.51.51.111 255.255.255.255
+#
+interface Nve1
+ source 51.51.51.111
+ vni 10100 head-end peer-list protocol bgp
+#
+interface NULL0
+#
+bgp 65533
+ router-id 51.51.51.111
+ group DSJ internal
+ peer DSJ connect-interface LoopBack0
+ peer 51.51.51.100 as-number 65533
+ peer 51.51.51.100 group DSJ
+ peer 51.51.51.101 as-number 65533
+ peer 51.51.51.101 group DSJ
+ #
+ ipv4-family unicast
+  peer DSJ enable
+  peer 51.51.51.100 enable
+  peer 51.51.51.100 group DSJ
+  peer 51.51.51.101 enable
+  peer 51.51.51.101 group DSJ
+ #
+ l2vpn-family evpn
+  undo policy vpn-target
+  peer DSJ enable
+  peer 51.51.51.100 enable
+  peer 51.51.51.100 group DSJ
+  peer 51.51.51.101 enable
+  peer 51.51.51.101 group DSJ
+#
+ospf 100 router-id 51.51.51.111
+ area 0.0.0.1
+  authentication-mode md5 1 cipher %^%#W-Ip4K"j:@h7CQYh!|}.l;%&5g}12*[+YyV:|GY<%^%#
+  network 51.51.51.111 0.0.0.0
+  network 172.16.63.220 0.0.0.3
+  network 172.16.63.224 0.0.0.3
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03E86819A010C1
+snmp-agent community read cipher %^%#D&9*1:RO}1[*.d8<,eyS_Y^%9&YdZ&^~Cd'f&baOuyHy>a%Oy6W*Us3$!=o:xe;zF5o)*/s876%c.16H%^%#
+#
+snmp-agent sys-info version v2c v3
+#
+lldp enable
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+#
+vm-manager
+#
+return

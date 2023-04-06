@@ -1,0 +1,2051 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-05-18 11:34:58+08:00 by 51en
+!Last configuration was saved at 2023-02-23 14:45:43+08:00 by 51en
+#
+clock timezone GMT+8 add 08:00:00
+#
+sysname XY-2F-E06-CE12812
+#
+ftp server default-directory logfile/
+#
+vxlan path detection enable
+#
+info-center loghost source LoopBack0
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.226.32
+#
+system tcam ED-extend slot 6 
+#
+device board 13 board-type CE-MPUA
+device board 14 board-type CE-MPUA
+device board 12 board-type CE-L24LQ-EC1
+device board 6 board-type CE-L48XS-ED
+device board 11 board-type CE-L24LQ-EC1
+device board 10 board-type CE-L24LQ-EC1
+device board 9 board-type CE-L24LQ-EC1
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp ipv6 server disable
+ntp unicast-server 172.16.152.20
+ntp unicast-server 172.16.152.21
+#
+assign forward nvo3 service extend enable
+#
+assign forward nvo3 acl extend enable
+#
+netstream timeout ip inactive 100
+netstream timeout ip tcp-session 
+netstream export ip version 9 
+netstream export ip source 51.51.51.13
+netstream export ip host 172.16.9.6 2055
+#
+dfs-group 1
+ source ip 51.51.51.13 
+ #
+ active-active-gateway
+  peer 51.51.51.8
+#
+vlan batch 8 to 10 12 to 13 15 20 to 21 23 42 to 53 100 3000
+#
+dsa peer-public-key 172.16.255.26 encoding-type der
+ public-key-code begin
+ 308201A1
+  028181
+    00845F48 8AA4CCB3 6ABA72E8 1A53F99F C45503A5 B661ED96 33FA7502 F19F096A
+    BF76D489 F712506E B8711722 77BE1C93 463E9427 DADF0796 D7BF0794 82CB886C
+    EFBDB930 C1EEC2D8 534A0482 977399F4 DBB6D1ED EF082ABE EA74E41A F1177C39
+    D19B5E39 ABBA5ED8 5DD4D9D4 6E838E6C 3127E733 AE29CA05 7D744D88 382247B4
+    1B
+  0215
+    009B3C20 AF6B8E90 4AEBF9FE E0F461CC E4AC07DC 87
+  028180
+    5740CB48 46D5EB06 544B8978 39F9C016 BEE56C31 BF258468 C6CD3DF6 CF77F9E9
+    19FEB36C 6E80758D 1DACC687 A9FFA43A 82E55156 19FECFD2 1B7AC929 6BED1C12
+    BEA8EAF0 0FED777D BD97A125 C3B50981 D61744A2 5F6247A7 C7EF321C 51F92A4B
+    84671016 74E78CC9 A8E06CC1 BBB5C522 25D0E31E E4E39AEF 566710EE 93A12394
+  028180
+    323AC663 F3AF22A4 C1D65766 71F730BE 9F0DFA39 133BD443 55B6E695 27B3D855
+    A662184B D118B99E 53A19FE5 D2E17CDC B9C85967 C3E2A680 51F3BECA 8B72456F
+    9987B34B 4E9D882B 0639B912 DB3CC956 ACD453A1 688BBF7E 5F54109D B72CD47F
+    C8CBD00A 94088459 24CD02F4 5E65D541 5A8BD3AE 5C4B9E17 D75F9A59 3A37E828
+ public-key-code end
+ peer-public-key end
+#
+ecc peer-public-key 172.16.16.10
+ public-key-code begin
+  044BA550 964A3A94 8842C166 199ADB58 39B63BED 2D3A5F59 3D7EBFD7 8713DEA2
+  45416B0D 87DA9410 7A196681 A15C1BF2 339E0EA5 B96C5FA6 91834321 1231D3B2
+  0A
+ public-key-code end
+ peer-public-key end
+#
+dhcp enable
+#
+evpn-overlay enable
+#
+telnet server disable
+telnet ipv6 server disable
+#
+observe-port 1 interface Eth-Trunk129  
+#
+diffserv domain default
+#
+ip vpn-instance APP
+ ipv4-family
+  route-distinguisher 2000:1
+  vpn-target 2000:1 export-extcommunity
+  vpn-target 2000:1 import-extcommunity
+#
+ip vpn-instance DB
+ ipv4-family
+  route-distinguisher 2001:1
+  vpn-target 2001:1 export-extcommunity
+  vpn-target 2001:1 import-extcommunity
+#
+ip vpn-instance GNH
+ ipv4-family
+  route-distinguisher 2002:1
+  vpn-target 2002:1 export-extcommunity
+  vpn-target 2002:1 import-extcommunity
+#
+ip vpn-instance SQCTCC
+ ipv4-family
+  route-distinguisher 1002:1
+  vpn-target 1000:1 export-extcommunity
+  vpn-target 1000:1 import-extcommunity
+#
+ip vpn-instance XYCMCC
+ ipv4-family
+  route-distinguisher 1003:1
+  vpn-target 1003:1 export-extcommunity
+  vpn-target 1003:1 import-extcommunity
+#
+ip vpn-instance other1
+ ipv4-family
+  route-distinguisher 2003:1
+  vpn-target 2003:1 export-extcommunity
+  vpn-target 2003:1 import-extcommunity
+#
+ip vpn-instance other2
+ ipv4-family
+  route-distinguisher 2004:1
+  vpn-target 2004:1 export-extcommunity
+  vpn-target 2004:1 import-extcommunity
+#
+ip vpn-instance other3
+ ipv4-family
+  route-distinguisher 2005:1
+  vpn-target 2005:1 export-extcommunity
+  vpn-target 2005:1 import-extcommunity
+#
+bfd
+#
+vlan 12
+ description link-to-NS
+#
+vlan 13
+ name to-BANK
+#
+vlan 21
+ name SQCTCC
+#
+vlan 23
+ name XYCMCC-to-ns-2
+#
+bridge-domain 10008
+ vxlan vni 10008
+#
+bridge-domain 10009
+ vxlan vni 10009
+#
+bridge-domain 10010
+ vxlan vni 10010
+#
+bridge-domain 10015
+ vxlan vni 10015
+#
+bridge-domain 10196
+ vxlan vni 10196
+#
+bridge-domain 10197
+ vxlan vni 10197
+#
+bridge-domain 10198
+ vxlan vni 10198
+#
+bridge-domain 10199
+ vxlan vni 10199
+#
+bridge-domain 10200
+ vxlan vni 10200
+#
+bridge-domain 10201
+ vxlan vni 10201
+#
+bridge-domain 10202
+ vxlan vni 10202
+#
+bridge-domain 10203
+ vxlan vni 10203
+#
+bridge-domain 10204
+ description kvm
+ vxlan vni 10204
+#
+bridge-domain 10205
+ description kvm
+ vxlan vni 10205
+#
+bridge-domain 10206
+ description kvm
+ vxlan vni 10206
+#
+bridge-domain 10207
+ description kvm
+ vxlan vni 10207
+#
+bridge-domain 10208
+ vxlan vni 10208
+#
+bridge-domain 10209
+ vxlan vni 10209
+#
+bridge-domain 10210
+ vxlan vni 10210
+#
+bridge-domain 10211
+ vxlan vni 10211
+#
+bridge-domain 10212
+ vxlan vni 10212
+#
+bridge-domain 10213
+ vxlan vni 10213
+#
+bridge-domain 10214
+ vxlan vni 10214
+#
+bridge-domain 10215
+ vxlan vni 10215
+#
+bridge-domain 10216
+ vxlan vni 10216
+#
+bridge-domain 10217
+ vxlan vni 10217
+#
+bridge-domain 10218
+ vxlan vni 10218
+#
+bridge-domain 10219
+ vxlan vni 10219
+#
+bridge-domain 10220
+ vxlan vni 10220
+#
+bridge-domain 10221
+ vxlan vni 10221
+#
+bridge-domain 10222
+ vxlan vni 10222
+#
+bridge-domain 10223
+ vxlan vni 10223
+#
+bridge-domain 10224
+ vxlan vni 10224
+#
+bridge-domain 10225
+ vxlan vni 10225
+#
+bridge-domain 10226
+ vxlan vni 10226
+#
+bridge-domain 10227
+ vxlan vni 10227
+#
+bridge-domain 10228
+ vxlan vni 10228
+#
+bridge-domain 10229
+ vxlan vni 10229
+#
+bridge-domain 10248
+ vxlan vni 10248
+#
+bridge-domain 10249
+ vxlan vni 10249
+#
+bridge-domain 10252
+ vxlan vni 10252
+#
+bridge-domain 10253
+ vxlan vni 10253
+#
+acl number 2000
+ rule 10 permit source 172.16.0.0 0.0.63.255
+#
+acl name bgp-pre basic
+ rule 5 permit source 51.51.51.0 0.0.0.255
+ rule 10 permit source 172.19.128.0 0.0.63.255
+ rule 15 permit source 172.24.128.0 0.0.63.255
+ rule 30 permit source 10.242.128.0 0.0.15.255
+ rule 35 permit source 172.27.0.0 0.0.31.255
+#
+acl name k8s-bgp-import basic
+ rule 5 permit source 51.51.51.0 0.0.0.255
+ rule 10 permit source 172.19.128.0 0.0.63.255
+ rule 15 permit source 172.24.128.0 0.0.63.255
+ rule 20 permit source 10.242.128.0 0.0.15.255
+ rule 25 permit source 172.25.0.0 0.0.255.255
+ rule 35 permit source 172.27.0.0 0.0.31.255
+#
+acl name pbr basic
+ rule 0 permit source 172.16.223.100 0
+#
+acl name static-import basic
+ rule 5 permit source 172.26.192.0 0.0.63.255
+ rule 15 permit source 172.16.255.29 0
+ rule 20 permit source 172.16.255.30 0
+ rule 25 permit source 172.16.229.128 0.0.0.127
+#
+acl number 3333
+ rule 0 permit ip destination 115.236.23.33 0
+ rule 1 permit ip source 115.236.23.33 0
+#
+acl name gnh-limit advance
+ rule 5 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 8080
+ rule 10 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 8302
+ rule 15 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 8300
+ rule 20 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq www
+ rule 25 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 443
+ rule 30 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 4584
+ rule 35 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 4568
+ rule 40 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 4591
+ rule 45 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 4560
+ rule 50 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 4592
+ rule 55 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 6391
+ rule 60 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 6379
+ rule 65 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 6999
+ rule 70 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 5672
+ rule 75 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 9092
+ rule 80 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 2181
+ rule 85 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq ftp
+ rule 90 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 2379
+ rule 95 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 8200
+ rule 100 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 8140
+ rule 105 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq smtp
+ rule 495 permit ospf
+ rule 500 permit tcp tcp-flag established
+#
+acl name loginner-limit advance
+ rule 5 permit udp source-port eq bootpc destination-port eq bootps
+ rule 10 permit ip destination 172.16.14.75 0
+ rule 15 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 445 destination 172.16.13.41 0
+ rule 20 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 445 destination 172.16.151.11 0
+ rule 25 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 445 destination 172.16.184.119 0
+ rule 30 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 445 destination 172.16.214.109 0
+ rule 35 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 135 destination 172.16.13.41 0
+ rule 40 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 135 destination 172.16.151.11 0
+ rule 45 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 135 destination 172.16.184.119 0
+ rule 50 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 135 destination 172.16.214.109 0
+ rule 55 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 6020 destination 172.16.13.41 0
+ rule 60 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 6020 destination 172.16.151.11 0
+ rule 65 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 6020 destination 172.16.184.119 0
+ rule 70 permit tcp source 172.16.221.0 0.0.0.255 source-port eq 6020 destination 172.16.214.109 0
+ rule 75 deny tcp source 172.16.221.0 0.0.0.255 source-port eq 445
+ rule 80 deny tcp source 172.16.221.0 0.0.0.255 source-port eq 135
+ rule 85 deny tcp source 172.16.221.0 0.0.0.255 source-port eq 139
+ rule 90 deny tcp source 172.16.221.0 0.0.0.255 source-port eq 6020
+ rule 200 permit ip source 172.16.221.0 0.0.0.255
+#
+traffic classifier idc-not-pbr-1 type or
+ if-match vxlan tag-format none inner-source-ip 172.16.0.0 mask 16 inner-destination-ip 172.16.0.0 mask 16
+#
+traffic classifier idc-not-pbr-2 type or
+ if-match vxlan tag-format none inner-source-ip 172.16.0.0 mask 16 inner-destination-ip 172.18.0.0 mask 16
+#
+traffic classifier idc-not-pbr-3 type or
+ if-match vxlan tag-format none inner-source-ip 172.16.0.0 mask 16 inner-destination-ip 192.168.59.0 mask 24
+#
+traffic classifier idc-office-not-pbr-1 type or
+ if-match vxlan tag-format none inner-source-ip 172.16.0.0 mask 16 inner-destination-ip 10.0.0.0 mask 8
+#
+traffic classifier idc-office-not-pbr-2 type or
+ if-match vxlan tag-format none inner-source-ip 172.16.0.0 mask 16 inner-destination-ip 192.168.0.0 mask 16
+#
+traffic classifier loginner-limit type or
+ if-match vxlan tag-format none acl loginner-limit 
+#
+traffic classifier not-pbr-209-192 type or
+ if-match vxlan tag-format none inner-source-ip 172.16.209.192 mask 32
+#
+traffic classifier pbr type or
+ if-match vxlan tag-format none inner-source-ip 172.16.223.0 mask 24
+#
+traffic classifier xy-inner-not-pbr type or
+ if-match vxlan tag-format none inner-source-ip 172.16.192.0 mask 18 inner-destination-ip 172.16.192.0 mask 18
+#
+traffic classifier xy-pbr-204 type or
+ if-match vxlan tag-format none inner-source-ip 172.16.204.0 mask 24
+#
+traffic classifier xy-pbr-all type or
+ if-match vxlan tag-format none inner-source-ip 172.16.192.0 mask 18
+#
+traffic behavior loginner-limit
+#
+traffic behavior pbr
+ redirect load-balance nexthop 172.16.255.5 172.16.255.102
+#
+traffic behavior pbr-to-netscaler
+ redirect nexthop 172.16.255.62
+#
+traffic behavior xy-not-pbr
+#
+traffic policy loginner-limit
+ classifier loginner-limit behavior loginner-limit precedence 5
+#
+traffic policy pbr
+ classifier xy-inner-not-pbr behavior xy-not-pbr precedence 3
+ classifier not-pbr-209-192 behavior xy-not-pbr precedence 4
+ classifier xy-pbr-all behavior pbr precedence 10
+#
+traffic policy pbr-to-netscaler
+ classifier idc-office-not-pbr-1 behavior xy-not-pbr precedence 3
+ classifier idc-office-not-pbr-2 behavior xy-not-pbr precedence 4
+ classifier idc-not-pbr-1 behavior xy-not-pbr precedence 5
+ classifier idc-not-pbr-2 behavior xy-not-pbr precedence 10
+ classifier idc-not-pbr-3 behavior xy-not-pbr precedence 15
+ classifier xy-pbr-all behavior pbr-to-netscaler precedence 20
+#
+aaa
+ undo local-user policy security-enhance
+ local-user huawei password irreversible-cipher $1c$%Q(jHNXt8T$/0jI4dXS2SV,`V<_3h(E0;V0%4hV*.*+ewGly}*W$
+ local-user huawei service-type ssh
+ local-user huawei level 3
+ local-user xingyi password irreversible-cipher $1c$(R"PM_1l;9$sIa/%87&c=jQE/!4vux*s;$L%r^X*-*zE02Pn!d,$
+ local-user xingyi service-type ftp
+ local-user xingyi level 3
+ local-user xingyi ftp-directory flash:
+ local-user xingyi1 password irreversible-cipher $1c$a\"`Pz\CSC$<l1]@SH3s1fki;Q^-aQ~t7>D7w;&4@v{YOP!(sS$$
+ local-user xingyi1 service-type ftp
+ local-user maxusheng password irreversible-cipher $1c$R!YP/:MZwG$voa+N[gp]IFNW0EMlAkJ`g$d4Y<oBM~*Y&P4]a+>$
+ local-user maxusheng service-type ssh
+ local-user maxusheng level 3
+ local-user 51nbnb password irreversible-cipher $1c$0[u&G!TC#T$7$NCWncH^+8~9"Ko7~$UCKlsWExX5$YLJJ34uLE=$
+ local-user 51nbnb service-type ssh
+ local-user 51nbnb level 3
+ local-user 51nb password irreversible-cipher $1c$_jQ/70fCC~$4#W2<^4TLL3I!O0KT,N28liS-U2Y};pE2x2zpNg#$
+ local-user 51nb service-type ssh
+ local-user 51nb level 3
+ local-user 51en password irreversible-cipher $1c$thRV>%Mpm7$W-+%!&kLA'"B1>V9!<V5gAf%(W<@`CuK_W8k+|M4$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+#
+interface Vbdif10008
+ ip address 172.21.8.1 255.255.255.0
+ ip address 172.22.8.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.22.8.1
+#
+interface Vbdif10009
+ ip address 172.21.9.1 255.255.255.0
+ ip address 172.22.9.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.22.9.1
+#
+interface Vbdif10010
+ ip address 172.21.10.1 255.255.255.0
+ ip address 172.22.10.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.22.8.1
+#
+interface Vbdif10015
+ ip address 172.21.15.1 255.255.255.0
+ ip address 172.22.15.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.22.15.1
+#
+interface Vbdif10196
+ description db
+ ip address 172.16.196.1 255.255.255.0
+ ip address 172.26.196.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.196.1
+#
+interface Vbdif10197
+ description db
+ ip address 172.16.197.1 255.255.255.0
+ ip address 172.26.197.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.197.1
+#
+interface Vbdif10198
+ description db
+ ip address 172.16.198.1 255.255.255.0
+ ip address 172.26.198.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.198.1
+#
+interface Vbdif10199
+ description db
+ ip address 172.16.199.1 255.255.255.0
+ ip address 172.26.199.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.199.1
+#
+interface Vbdif10200
+ description db
+ ip address 172.16.200.1 255.255.255.0
+ ip address 172.26.200.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.200.1
+#
+interface Vbdif10201
+ description db
+ ip address 172.16.201.1 255.255.255.0
+ ip address 172.26.201.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.201.1
+#
+interface Vbdif10202
+ description db
+ ip address 172.16.202.1 255.255.255.0
+ ip address 172.26.202.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.202.1
+#
+interface Vbdif10203
+ description db
+ ip address 172.16.203.1 255.255.255.0
+ ip address 172.26.203.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.203.1
+#
+interface Vbdif10204
+ description kvm
+ ip address 172.16.204.1 255.255.255.0
+ ip address 172.26.204.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.204.1
+#
+interface Vbdif10205
+ description kvm
+ ip address 172.16.205.1 255.255.255.0
+ ip address 172.26.205.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.205.1
+#
+interface Vbdif10206
+ description kvm
+ ip address 172.16.206.1 255.255.255.0
+ ip address 172.26.206.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.206.1
+#
+interface Vbdif10207
+ description kvm
+ ip address 172.16.207.1 255.255.255.0
+ ip address 172.26.207.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.207.1
+#
+interface Vbdif10208
+ ip address 172.16.208.1 255.255.255.0
+ ip address 172.26.208.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.208.1
+#
+interface Vbdif10209
+ ip address 172.16.209.1 255.255.255.0
+ ip address 172.26.209.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.209.1
+#
+interface Vbdif10210
+ ip address 172.16.210.1 255.255.255.0
+ ip address 172.26.210.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.210.1
+#
+interface Vbdif10211
+ ip address 172.16.211.1 255.255.255.0
+ ip address 172.26.211.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.211.1
+#
+interface Vbdif10212
+ ip address 172.16.212.1 255.255.255.0
+ ip address 172.26.212.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.212.1
+#
+interface Vbdif10213
+ ip address 172.16.213.1 255.255.255.0
+ ip address 172.26.213.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.213.1
+#
+interface Vbdif10214
+ ip address 172.16.214.1 255.255.255.0
+ ip address 172.26.214.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.214.1
+#
+interface Vbdif10215
+ ip address 172.16.215.1 255.255.255.0
+ ip address 172.26.215.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.215.1
+#
+interface Vbdif10216
+ ip address 172.16.216.1 255.255.255.0
+ ip address 172.26.216.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.216.1
+#
+interface Vbdif10217
+ ip address 172.16.217.1 255.255.255.0
+ ip address 172.26.217.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.217.1
+#
+interface Vbdif10218
+ ip address 172.16.218.1 255.255.255.0
+ ip address 172.26.218.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.218.1
+#
+interface Vbdif10219
+ ip address 172.16.219.1 255.255.255.0
+ ip address 172.26.219.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.219.1
+#
+interface Vbdif10220
+ ip address 172.16.220.1 255.255.255.0
+ ip address 172.26.220.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.220.1
+#
+interface Vbdif10221
+ ip address 172.16.221.1 255.255.255.0
+ ip address 172.26.221.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.221.1
+#
+interface Vbdif10222
+ ip address 172.16.222.1 255.255.255.0
+ ip address 172.26.222.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.222.1
+#
+interface Vbdif10223
+ ip address 172.16.223.1 255.255.255.0
+ ip address 172.26.223.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.223.1
+ traffic-policy pbr-to-netscaler inbound 
+#
+interface Vbdif10224
+ ip address 172.16.224.1 255.255.255.0
+ ip address 172.26.224.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.224.1
+#
+interface Vbdif10225
+ description db
+ ip address 172.16.225.1 255.255.255.0
+ ip address 172.26.225.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.225.1
+#
+interface Vbdif10226
+ ip address 172.16.226.1 255.255.255.0
+ ip address 172.26.226.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.226.1
+#
+interface Vbdif10227
+ ip address 172.16.227.1 255.255.255.0
+ ip address 172.26.227.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.227.1
+#
+interface Vbdif10228
+ ip address 172.16.228.1 255.255.255.0
+ ip address 172.26.228.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.228.1
+#
+interface Vbdif10229
+ shutdown
+ ip address 172.16.229.1 255.255.255.248
+ mac-address 0000-5e00-0101
+ dhcp relay binding server ip 172.16.44.35
+#
+interface Vbdif10248
+ ip address 172.16.248.1 255.255.255.0
+ ip address 172.26.248.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.248.1
+#
+interface Vbdif10249
+ ip address 172.16.249.1 255.255.255.0
+ ip address 172.26.249.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.249.1
+#
+interface Vbdif10252
+ ip address 172.16.252.1 255.255.255.0
+ ip address 172.26.252.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.252.1
+#
+interface Vbdif10253
+ ip address 172.16.253.1 255.255.255.0
+ ip address 172.26.253.1 255.255.255.0 sub
+ mac-address 0000-5e00-0101
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.253.1
+#
+interface Vlanif10
+ description To_E05_NE20_ETRUNK10
+ ip address 172.16.255.6 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Vlanif12
+ description link-to-NS
+ ip address 172.16.255.61 255.255.255.252
+ ospf network-type p2p
+ ospf timer hello 1
+#
+interface Vlanif13
+ ip address 172.16.255.153 255.255.255.248
+ ospf cost 100
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Vlanif20
+ ip binding vpn-instance SQCTCC
+ ip address 172.16.255.74 255.255.255.252
+#
+interface Vlanif21
+ ip binding vpn-instance XYCMCC
+ ip address 172.16.255.82 255.255.255.252
+#
+interface Vlanif23
+ description link-to-NS-VPN
+ ip binding vpn-instance XYCMCC
+ ip address 172.16.255.89 255.255.255.252
+#
+interface Vlanif42
+ description inside-to-9560-APP
+ ip binding vpn-instance APP
+ ip address 172.16.254.97 255.255.255.248
+#
+interface Vlanif43
+ description outside-to-9560-APP
+ ip address 172.16.254.105 255.255.255.248
+#
+interface Vlanif44
+ description inside-to-9560-DB
+ ip binding vpn-instance DB
+ ip address 172.16.254.113 255.255.255.248
+#
+interface Vlanif45
+ description outside-to-9560-DB
+ ip address 172.16.254.121 255.255.255.248
+#
+interface Vlanif46
+ description inside-to-9560-GNH
+ ip binding vpn-instance GNH
+ ip address 172.16.254.129 255.255.255.248
+#
+interface Vlanif47
+ description outside-to-9560-GNH
+ ip address 172.16.254.137 255.255.255.248
+#
+interface Vlanif48
+ description inside-to-9560-other1
+ ip binding vpn-instance other1
+ ip address 172.16.254.145 255.255.255.248
+#
+interface Vlanif49
+ description outside-to-9560-other1
+ ip address 172.16.254.153 255.255.255.248
+#
+interface Vlanif50
+ description inside-to-9560-other2
+ ip binding vpn-instance other2
+ ip address 172.16.254.161 255.255.255.248
+#
+interface Vlanif51
+ description outside-to-9560-other2
+ ip address 172.16.254.169 255.255.255.248
+#
+interface Vlanif52
+ description inside-to-9560-other3
+ ip binding vpn-instance other3
+ ip address 172.16.254.177 255.255.255.248
+#
+interface Vlanif53
+ description outside-to-9560-other3
+ ip address 172.16.254.185 255.255.255.248
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk1
+ undo portswitch
+#
+interface Eth-Trunk2
+ undo portswitch
+ description dT:XY-2F-G01G02-CE6850:(local)Eth-trunk41
+ shutdown
+ ip address 172.16.254.241 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk10
+ description to-E06-8860
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 10 20 to 21
+ mode lacp-static
+#
+interface Eth-Trunk11
+ undo portswitch
+ description to-E05-8860-BGP
+ ip address 172.16.255.101 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+ mode lacp-static
+#
+interface Eth-Trunk12
+ undo portswitch
+ description to-E05-8860-BGP
+ ip address 172.16.239.5 255.255.255.252
+ mode lacp-static
+#
+interface Eth-Trunk114
+ undo portswitch
+ description To_XY_E01&E02-ETH114
+ ip address 172.16.255.65 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk115
+ undo portswitch
+ description To_XY_E03&E04-ETH115
+ ip address 172.16.255.37 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk116
+ undo portswitch
+ description To_XY_E07&E08-ETH-TRUNK116
+ ip address 172.16.255.41 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk117
+ undo portswitch
+ description TO_XY-E09&E10_ETH-TRUNK117
+ ip address 172.16.255.45 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk120
+ undo portswitch
+ description TO-XY-D01&D02-6850
+ ip address 172.16.255.165 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk125
+ undo portswitch
+ description to-E05&E06-6850
+ ip address 172.16.255.53 255.255.255.252
+#
+interface Eth-Trunk126
+ undo portswitch
+ description To_XY-6850-F01&02
+ ip address 172.16.255.121 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk127
+ undo portswitch
+ description To_XY-6850-FO3&04
+ ip address 172.16.255.125 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk128
+ undo portswitch
+ description to-XY-F05&06-6850
+ ip address 172.16.255.129 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk129
+ undo portswitch
+ description To_XY-6850-F07&08
+ ip address 172.16.255.133 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk130
+ undo portswitch
+ description to-XY-G03-8860
+ shutdown
+ ip address 172.16.255.197 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+ port-mirroring observe-port 1 inbound
+ port-mirroring observe-port 1 outbound
+#
+interface Eth-Trunk140
+ undo portswitch
+ description dT:D09-6850:Eth-trunk2
+ ip address 172.16.255.221 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk150
+ undo portswitch
+ description To-XY-D05&D06-6850
+ ip address 172.16.255.181 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk160
+ undo portswitch
+ description To-XY-D07&D08-6850
+ ip address 172.16.255.189 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk170
+ undo portswitch
+ description To-C01&C02-6850
+ ip address 172.16.255.205 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk180
+ undo portswitch
+ description To-C03&C04-6850
+ ip address 172.16.255.213 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk200
+ description dT:D09-6850:Eth-trunk2
+ port link-type trunk
+ port trunk allow-pass vlan 42 to 53 61
+#
+interface Eth-Trunk201
+ description to-D10-9560
+ port link-type trunk
+ port trunk allow-pass vlan 42 to 53 61
+#
+interface Eth-Trunk210
+ undo portswitch
+ description to-D09-8860
+ ip address 172.16.255.233 255.255.255.252
+#
+interface Eth-Trunk220
+ undo portswitch
+ description to-D10-8860
+ ip address 172.16.255.237 255.255.255.252
+#
+interface Eth-Trunk230
+#
+interface Eth-Trunk240
+ undo portswitch
+ description To-C07&C08-6850
+ ip address 172.16.254.205 255.255.255.252
+ ospf network-type p2p
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+ mode lacp-dynamic
+#
+interface 10GE6/0/0
+ shutdown
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/1
+#
+interface 10GE6/0/2
+ shutdown
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/3
+#
+interface 10GE6/0/4
+ shutdown
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/5
+#
+interface 10GE6/0/6
+ shutdown
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/7
+#
+interface 10GE6/0/8
+#
+interface 10GE6/0/9
+#
+interface 10GE6/0/10
+#
+interface 10GE6/0/11
+#
+interface 10GE6/0/12
+#
+interface 10GE6/0/13
+#
+interface 10GE6/0/14
+ device transceiver 1000BASE-X
+#
+interface 10GE6/0/15
+#
+interface 10GE6/0/16
+#
+interface 10GE6/0/17
+#
+interface 10GE6/0/18
+#
+interface 10GE6/0/19
+#
+interface 10GE6/0/20
+#
+interface 10GE6/0/21
+#
+interface 10GE6/0/22
+#
+interface 10GE6/0/23
+#
+interface 10GE6/0/24
+#
+interface 10GE6/0/25
+#
+interface 10GE6/0/26
+#
+interface 10GE6/0/27
+#
+interface 10GE6/0/28
+#
+interface 10GE6/0/29
+#
+interface 10GE6/0/30
+#
+interface 10GE6/0/31
+#
+interface 10GE6/0/32
+#
+interface 10GE6/0/33
+#
+interface 10GE6/0/34
+#
+interface 10GE6/0/35
+#
+interface 10GE6/0/36
+#
+interface 10GE6/0/37
+#
+interface 10GE6/0/38
+#
+interface 10GE6/0/39
+#
+interface 10GE6/0/40
+ description dT:bank-FW1-172.16.193.6:(local)GE1/0/9
+ port default vlan 13
+ stp disable
+ device transceiver 1000BASE-X
+#
+interface 10GE6/0/41
+ description dT:bank-FW2-172.16.193.7:(local)GE1/0/9
+ port default vlan 13
+ stp disable
+ device transceiver 1000BASE-X
+#
+interface 10GE6/0/42
+#
+interface 10GE6/0/43
+ undo portswitch
+ description dT:XY-2F-E11-3650:(local)GE1/1/2
+ ip address 172.16.255.141 255.255.255.252
+ ospf network-type p2p
+ ospf timer hello 1
+ device transceiver 1000BASE-X
+#
+interface 10GE6/0/44
+ description dT:Netscaler-8010-172.16.193.3:(local)GE10/1
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ port-mirroring observe-port 1 inbound
+ port-mirroring observe-port 1 outbound
+ device transceiver 1000BASE-X
+#
+interface 10GE6/0/45
+ description dT:Netscaler-8010-172.16.193.2:(local)GE10/1
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ port-mirroring observe-port 1 inbound
+ port-mirroring observe-port 1 outbound
+ device transceiver 1000BASE-X
+#
+interface 10GE6/0/46
+ eth-trunk 1
+ device transceiver 10GBASE-FIBER
+#
+interface 10GE6/0/47
+ eth-trunk 1
+ device transceiver 10GBASE-FIBER
+#
+interface 40GE9/0/0
+#
+interface 40GE9/0/1
+#
+interface 40GE9/0/2
+#
+interface 40GE9/0/3
+#
+interface 40GE9/0/4
+#
+interface 40GE9/0/5
+#
+interface 40GE9/0/6
+#
+interface 40GE9/0/7
+#
+interface 40GE9/0/8
+#
+interface 40GE9/0/9
+#
+interface 40GE9/0/10
+#
+interface 40GE9/0/11
+#
+interface 40GE9/0/12
+#
+interface 40GE9/0/13
+#
+interface 40GE9/0/14
+#
+interface 40GE9/0/15
+#
+interface 40GE9/0/16
+#
+interface 40GE9/0/17
+#
+interface 40GE9/0/18
+#
+interface 40GE9/0/19
+#
+interface 40GE9/0/20
+#
+interface 40GE9/0/21
+#
+interface 40GE9/0/22
+#
+interface 40GE9/0/23
+#
+interface 40GE10/0/0
+ description uT:XY-2F-E05-CE8860:(local)40GE1/1/7
+ eth-trunk 11
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE10/0/1
+ description uT:XY-2F-E05-CE8860:(local)40GE1/1/8
+ eth-trunk 11
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE10/0/2
+ description uT:XY-2F-E06-CE8860:(local)40GE1/1/5
+ eth-trunk 10
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE10/0/3
+ description uT:XY-2F-E06-CE8860:(local)40GE1/1/6
+ eth-trunk 10
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE10/0/4
+#
+interface 40GE10/0/5
+#
+interface 40GE10/0/6
+#
+interface 40GE10/0/7
+#
+interface 40GE10/0/8
+#
+interface 40GE10/0/9
+#
+interface 40GE10/0/10
+#
+interface 40GE10/0/11
+#
+interface 40GE10/0/12
+#
+interface 40GE10/0/13
+#
+interface 40GE10/0/14
+#
+interface 40GE10/0/15
+#
+interface 40GE10/0/16
+#
+interface 40GE10/0/17
+#
+interface 40GE10/0/18
+#
+interface 40GE10/0/19
+#
+interface 40GE10/0/20
+#
+interface 40GE10/0/21
+#
+interface 40GE10/0/22
+ description dT:XY-2F-D10-CE8860:(local)40GE1/1/15
+ eth-trunk 220
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE10/0/23
+ description dT:XY-2F-D09-CE8860:(local)40GE1/1/15
+ eth-trunk 210
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/0
+ description dT:XY-2F-F01&F02-CE6850:(local)40GE1/0/4
+ eth-trunk 126
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/1
+ description dT:XY-2F-F01&F02-CE6850:(local)40GE2/0/4
+ eth-trunk 126
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/2
+ description dT:XY-2F-F03&F04-CE6850:(local)40GE1/0/4
+ eth-trunk 127
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/3
+ description dT:XY-2F-F03&F04-CE6850:(local)40GE2/0/4
+ eth-trunk 127
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/4
+ description dT:XY-2F-F05&F06-CE6850:(local)40GE1/0/4
+ eth-trunk 128
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/5
+ description dT:XY-2F-F05&F06-CE6850:(local)40GE2/0/4
+ eth-trunk 128
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/6
+ description dT:XY-2F-F07&F08-CE6850:(local)40GE1/0/4
+ eth-trunk 129
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/7
+ description dT:XY-2F-F07&F08-CE6850:(local)40GE2/0/4
+ eth-trunk 129
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/8
+ eth-trunk 140
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/9
+ eth-trunk 140
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/10
+ description dT:XY-2F-D05&D06-CE6850:(local)40GE1/0/4
+ eth-trunk 150
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/11
+ description dT:XY-2F-D05&D06-CE6850:(local)40GE2/0/4
+ eth-trunk 150
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/12
+ description dT:XY-2F-D07&D08-CE6850:(local)40GE1/0/4
+ eth-trunk 160
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/13
+ description dT:XY-2F-D07&D08-CE6850:(local)40GE2/0/4
+ eth-trunk 160
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/14
+ description to-D10-9560-2/0/1
+ eth-trunk 201
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/15
+ description to-D09-9560-2/0/1
+ eth-trunk 200
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/16
+ description dT:XY-2F-C01&C02-CE6850:(local)40GE2/0/4
+ eth-trunk 170
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/17
+ description dT:XY-2F-C01&C02-CE6850:(local)40GE1/0/4
+ eth-trunk 170
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/18
+ description dT:XY-2F-C03&C04-CE6850:(local)40GE1/0/4
+ eth-trunk 180
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/19
+ description dT:XY-2F-C03&C04-CE6850:(local)40GE2/0/4
+ eth-trunk 180
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/20
+#
+interface 40GE11/0/21
+#
+interface 40GE11/0/22
+ description dT:XY-2F-D10-CE8860:(local)40GE1/3/15
+ eth-trunk 220
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE11/0/23
+ description dT:XY-2F-D09-CE8860:(local)40GE1/3/15
+ eth-trunk 210
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/0
+#
+interface 40GE12/0/1
+#
+interface 40GE12/0/2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/3
+#
+interface 40GE12/0/4
+ description dT:XY-2F-E01&E02-CE6850:(local)40GE1/0/4
+ eth-trunk 114
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/5
+ description dT:XY-2F-E01&E02-CE6850:(local)40GE2/0/4
+ eth-trunk 114
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/6
+ description dT:XY-2F-E03&E04-CE6850:(local)40GE1/0/4
+ eth-trunk 115
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/7
+ description dT:XY-2F-E03&E04-CE6850:(local)40GE2/0/4
+ eth-trunk 115
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/8
+ description dT:XY-2F-E07&E08-CE6850:(local)40GE1/0/4
+ eth-trunk 116
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/9
+ description dT:XY-2F-E07&E08-CE6850:(local)40GE2/0/4
+ eth-trunk 116
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/10
+ description dT:XY-2F-E09&E10-CE6850:(local)40GE1/0/4
+ eth-trunk 117
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/11
+ description dT:XY-2F-E09&E10-CE6850:(local)40GE2/0/4
+ eth-trunk 117
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/12
+ description dT:XY-2F-D01&D02-CE6850:(local)40GE2/0/4
+ eth-trunk 120
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/13
+ description dT:XY-2F-D01&D02-CE6850:(local)40GE1/0/4
+ eth-trunk 120
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/14
+ description dT:XY-2F-G01G02-CE6850:(local)40GE1/0/5
+ shutdown
+ eth-trunk 2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/15
+ description dT:XY-2F-G03-CE8860:(local)40GE2/2/14
+ shutdown
+ eth-trunk 130
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/16
+ eth-trunk 230
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/17
+ eth-trunk 230
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/18
+ description dT:XY-2F-C07&C08-6850:(local)40GE1/0/4
+ eth-trunk 240
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/19
+ description dT:XY-2F-C07&C08-6850:(local)40GE2/0/4
+ eth-trunk 240
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/20
+#
+interface 40GE12/0/21
+#
+interface 40GE12/0/22
+ description dT:XY-2F-E05&E06-CE6810:(local)40GE1/0/4
+ eth-trunk 125
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE12/0/23
+ description dT:XY-2F-E05&E06-CE6810:(local)40GE2/0/4
+ eth-trunk 125
+ device transceiver 40GBASE-FIBER
+#
+interface LoopBack0
+ ip address 51.51.51.13 255.255.255.255
+#
+interface LoopBack10
+ ip address 51.51.51.250 255.255.255.255
+#
+interface Sip13/0/0
+#
+interface Sip13/0/1
+#
+interface Sip14/0/0
+#
+interface Sip14/0/1
+#
+interface Nve1
+ source 51.51.51.250
+ vni 10008 head-end peer-list 51.51.51.15
+ vni 10008 head-end peer-list 51.51.51.16
+ vni 10008 head-end peer-list 51.51.51.19
+ vni 10008 head-end peer-list 51.51.51.26
+ vni 10009 head-end peer-list 51.51.51.15
+ vni 10009 head-end peer-list 51.51.51.16
+ vni 10009 head-end peer-list 51.51.51.19
+ vni 10009 head-end peer-list 51.51.51.26
+ vni 10010 head-end peer-list 51.51.51.15
+ vni 10010 head-end peer-list 51.51.51.16
+ vni 10010 head-end peer-list 51.51.51.19
+ vni 10010 head-end peer-list 51.51.51.26
+ vni 10015 head-end peer-list 51.51.51.15
+ vni 10015 head-end peer-list 51.51.51.16
+ vni 10015 head-end peer-list 51.51.51.19
+ vni 10015 head-end peer-list 51.51.51.26
+ vni 10196 head-end peer-list 51.51.51.11
+ vni 10196 head-end peer-list 51.51.51.12
+ vni 10196 head-end peer-list 51.51.51.15
+ vni 10196 head-end peer-list 51.51.51.16
+ vni 10196 head-end peer-list 51.51.51.17
+ vni 10196 head-end peer-list 51.51.51.28
+ vni 10196 head-end peer-list 51.51.51.34
+ vni 10197 head-end peer-list 51.51.51.11
+ vni 10197 head-end peer-list 51.51.51.12
+ vni 10197 head-end peer-list 51.51.51.15
+ vni 10197 head-end peer-list 51.51.51.16
+ vni 10197 head-end peer-list 51.51.51.17
+ vni 10197 head-end peer-list 51.51.51.23
+ vni 10197 head-end peer-list 51.51.51.24
+ vni 10197 head-end peer-list 51.51.51.28
+ vni 10197 head-end peer-list 51.51.51.29
+ vni 10197 head-end peer-list 51.51.51.34
+ vni 10198 head-end peer-list 51.51.51.9
+ vni 10198 head-end peer-list 51.51.51.11
+ vni 10198 head-end peer-list 51.51.51.12
+ vni 10198 head-end peer-list 51.51.51.15
+ vni 10198 head-end peer-list 51.51.51.16
+ vni 10198 head-end peer-list 51.51.51.17
+ vni 10198 head-end peer-list 51.51.51.28
+ vni 10198 head-end peer-list 51.51.51.34
+ vni 10199 head-end peer-list 51.51.51.11
+ vni 10199 head-end peer-list 51.51.51.12
+ vni 10199 head-end peer-list 51.51.51.15
+ vni 10199 head-end peer-list 51.51.51.16
+ vni 10199 head-end peer-list 51.51.51.17
+ vni 10199 head-end peer-list 51.51.51.28
+ vni 10199 head-end peer-list 51.51.51.34
+ vni 10200 head-end peer-list 51.51.51.11
+ vni 10200 head-end peer-list 51.51.51.12
+ vni 10200 head-end peer-list 51.51.51.15
+ vni 10200 head-end peer-list 51.51.51.16
+ vni 10200 head-end peer-list 51.51.51.17
+ vni 10200 head-end peer-list 51.51.51.28
+ vni 10200 head-end peer-list 51.51.51.34
+ vni 10201 head-end peer-list 51.51.51.11
+ vni 10201 head-end peer-list 51.51.51.12
+ vni 10201 head-end peer-list 51.51.51.15
+ vni 10201 head-end peer-list 51.51.51.16
+ vni 10201 head-end peer-list 51.51.51.17
+ vni 10201 head-end peer-list 51.51.51.28
+ vni 10201 head-end peer-list 51.51.51.34
+ vni 10202 head-end peer-list 51.51.51.11
+ vni 10202 head-end peer-list 51.51.51.12
+ vni 10202 head-end peer-list 51.51.51.15
+ vni 10202 head-end peer-list 51.51.51.16
+ vni 10202 head-end peer-list 51.51.51.17
+ vni 10202 head-end peer-list 51.51.51.28
+ vni 10202 head-end peer-list 51.51.51.34
+ vni 10203 head-end peer-list 51.51.51.11
+ vni 10203 head-end peer-list 51.51.51.12
+ vni 10203 head-end peer-list 51.51.51.15
+ vni 10203 head-end peer-list 51.51.51.16
+ vni 10203 head-end peer-list 51.51.51.17
+ vni 10203 head-end peer-list 51.51.51.28
+ vni 10203 head-end peer-list 51.51.51.34
+ vni 10204 head-end peer-list 51.51.51.9
+ vni 10204 head-end peer-list 51.51.51.10
+ vni 10204 head-end peer-list 51.51.51.18
+ vni 10204 head-end peer-list 51.51.51.21
+ vni 10204 head-end peer-list 51.51.51.22
+ vni 10204 head-end peer-list 51.51.51.23
+ vni 10204 head-end peer-list 51.51.51.24
+ vni 10204 head-end peer-list 51.51.51.29
+ vni 10205 head-end peer-list 51.51.51.9
+ vni 10205 head-end peer-list 51.51.51.10
+ vni 10205 head-end peer-list 51.51.51.18
+ vni 10205 head-end peer-list 51.51.51.21
+ vni 10205 head-end peer-list 51.51.51.22
+ vni 10205 head-end peer-list 51.51.51.23
+ vni 10205 head-end peer-list 51.51.51.24
+ vni 10205 head-end peer-list 51.51.51.29
+ vni 10206 head-end peer-list 51.51.51.9
+ vni 10206 head-end peer-list 51.51.51.10
+ vni 10206 head-end peer-list 51.51.51.18
+ vni 10206 head-end peer-list 51.51.51.21
+ vni 10206 head-end peer-list 51.51.51.22
+ vni 10206 head-end peer-list 51.51.51.23
+ vni 10206 head-end peer-list 51.51.51.24
+ vni 10206 head-end peer-list 51.51.51.29
+ vni 10207 head-end peer-list 51.51.51.9
+ vni 10207 head-end peer-list 51.51.51.10
+ vni 10207 head-end peer-list 51.51.51.18
+ vni 10207 head-end peer-list 51.51.51.21
+ vni 10207 head-end peer-list 51.51.51.22
+ vni 10207 head-end peer-list 51.51.51.23
+ vni 10207 head-end peer-list 51.51.51.24
+ vni 10207 head-end peer-list 51.51.51.29
+ vni 10208 head-end peer-list 51.51.51.9
+ vni 10208 head-end peer-list 51.51.51.10
+ vni 10208 head-end peer-list 51.51.51.18
+ vni 10208 head-end peer-list 51.51.51.21
+ vni 10208 head-end peer-list 51.51.51.22
+ vni 10208 head-end peer-list 51.51.51.23
+ vni 10208 head-end peer-list 51.51.51.24
+ vni 10208 head-end peer-list 51.51.51.29
+ vni 10209 head-end peer-list 51.51.51.9
+ vni 10209 head-end peer-list 51.51.51.10
+ vni 10209 head-end peer-list 51.51.51.18
+ vni 10209 head-end peer-list 51.51.51.21
+ vni 10209 head-end peer-list 51.51.51.22
+ vni 10209 head-end peer-list 51.51.51.23
+ vni 10209 head-end peer-list 51.51.51.24
+ vni 10209 head-end peer-list 51.51.51.29
+ vni 10210 head-end peer-list 51.51.51.9
+ vni 10210 head-end peer-list 51.51.51.10
+ vni 10210 head-end peer-list 51.51.51.18
+ vni 10210 head-end peer-list 51.51.51.21
+ vni 10210 head-end peer-list 51.51.51.22
+ vni 10210 head-end peer-list 51.51.51.23
+ vni 10210 head-end peer-list 51.51.51.24
+ vni 10210 head-end peer-list 51.51.51.29
+ vni 10211 head-end peer-list 51.51.51.9
+ vni 10211 head-end peer-list 51.51.51.10
+ vni 10211 head-end peer-list 51.51.51.18
+ vni 10211 head-end peer-list 51.51.51.21
+ vni 10211 head-end peer-list 51.51.51.22
+ vni 10211 head-end peer-list 51.51.51.23
+ vni 10211 head-end peer-list 51.51.51.24
+ vni 10211 head-end peer-list 51.51.51.29
+ vni 10212 head-end peer-list 51.51.51.9
+ vni 10212 head-end peer-list 51.51.51.10
+ vni 10212 head-end peer-list 51.51.51.12
+ vni 10212 head-end peer-list 51.51.51.18
+ vni 10212 head-end peer-list 51.51.51.21
+ vni 10212 head-end peer-list 51.51.51.22
+ vni 10212 head-end peer-list 51.51.51.23
+ vni 10212 head-end peer-list 51.51.51.24
+ vni 10212 head-end peer-list 51.51.51.29
+ vni 10213 head-end peer-list 51.51.51.9
+ vni 10213 head-end peer-list 51.51.51.10
+ vni 10213 head-end peer-list 51.51.51.18
+ vni 10213 head-end peer-list 51.51.51.21
+ vni 10213 head-end peer-list 51.51.51.22
+ vni 10213 head-end peer-list 51.51.51.23
+ vni 10213 head-end peer-list 51.51.51.24
+ vni 10213 head-end peer-list 51.51.51.29
+ vni 10214 head-end peer-list 51.51.51.9
+ vni 10214 head-end peer-list 51.51.51.10
+ vni 10214 head-end peer-list 51.51.51.18
+ vni 10214 head-end peer-list 51.51.51.21
+ vni 10214 head-end peer-list 51.51.51.22
+ vni 10214 head-end peer-list 51.51.51.23
+ vni 10214 head-end peer-list 51.51.51.24
+ vni 10214 head-end peer-list 51.51.51.29
+ vni 10215 head-end peer-list 51.51.51.9
+ vni 10215 head-end peer-list 51.51.51.10
+ vni 10215 head-end peer-list 51.51.51.18
+ vni 10215 head-end peer-list 51.51.51.21
+ vni 10215 head-end peer-list 51.51.51.22
+ vni 10215 head-end peer-list 51.51.51.23
+ vni 10215 head-end peer-list 51.51.51.24
+ vni 10215 head-end peer-list 51.51.51.29
+ vni 10216 head-end peer-list 51.51.51.9
+ vni 10216 head-end peer-list 51.51.51.10
+ vni 10216 head-end peer-list 51.51.51.18
+ vni 10216 head-end peer-list 51.51.51.21
+ vni 10216 head-end peer-list 51.51.51.22
+ vni 10216 head-end peer-list 51.51.51.23
+ vni 10216 head-end peer-list 51.51.51.24
+ vni 10216 head-end peer-list 51.51.51.29
+ vni 10217 head-end peer-list 51.51.51.9
+ vni 10217 head-end peer-list 51.51.51.10
+ vni 10217 head-end peer-list 51.51.51.18
+ vni 10217 head-end peer-list 51.51.51.21
+ vni 10217 head-end peer-list 51.51.51.22
+ vni 10217 head-end peer-list 51.51.51.23
+ vni 10217 head-end peer-list 51.51.51.24
+ vni 10217 head-end peer-list 51.51.51.29
+ vni 10218 head-end peer-list 51.51.51.9
+ vni 10218 head-end peer-list 51.51.51.10
+ vni 10218 head-end peer-list 51.51.51.18
+ vni 10218 head-end peer-list 51.51.51.21
+ vni 10218 head-end peer-list 51.51.51.22
+ vni 10218 head-end peer-list 51.51.51.23
+ vni 10218 head-end peer-list 51.51.51.24
+ vni 10218 head-end peer-list 51.51.51.29
+ vni 10219 head-end peer-list 51.51.51.9
+ vni 10219 head-end peer-list 51.51.51.10
+ vni 10219 head-end peer-list 51.51.51.18
+ vni 10219 head-end peer-list 51.51.51.21
+ vni 10219 head-end peer-list 51.51.51.22
+ vni 10219 head-end peer-list 51.51.51.23
+ vni 10219 head-end peer-list 51.51.51.24
+ vni 10219 head-end peer-list 51.51.51.29
+ vni 10220 head-end peer-list 51.51.51.9
+ vni 10220 head-end peer-list 51.51.51.10
+ vni 10220 head-end peer-list 51.51.51.18
+ vni 10220 head-end peer-list 51.51.51.21
+ vni 10220 head-end peer-list 51.51.51.22
+ vni 10220 head-end peer-list 51.51.51.23
+ vni 10220 head-end peer-list 51.51.51.24
+ vni 10220 head-end peer-list 51.51.51.29
+ vni 10221 head-end peer-list 51.51.51.9
+ vni 10221 head-end peer-list 51.51.51.10
+ vni 10221 head-end peer-list 51.51.51.18
+ vni 10221 head-end peer-list 51.51.51.21
+ vni 10221 head-end peer-list 51.51.51.22
+ vni 10221 head-end peer-list 51.51.51.23
+ vni 10221 head-end peer-list 51.51.51.24
+ vni 10221 head-end peer-list 51.51.51.29
+ vni 10222 head-end peer-list 51.51.51.9
+ vni 10222 head-end peer-list 51.51.51.10
+ vni 10222 head-end peer-list 51.51.51.18
+ vni 10222 head-end peer-list 51.51.51.21
+ vni 10222 head-end peer-list 51.51.51.22
+ vni 10222 head-end peer-list 51.51.51.23
+ vni 10222 head-end peer-list 51.51.51.24
+ vni 10222 head-end peer-list 51.51.51.29
+ vni 10223 head-end peer-list 51.51.51.9
+ vni 10223 head-end peer-list 51.51.51.10
+ vni 10223 head-end peer-list 51.51.51.18
+ vni 10223 head-end peer-list 51.51.51.21
+ vni 10223 head-end peer-list 51.51.51.22
+ vni 10223 head-end peer-list 51.51.51.23
+ vni 10223 head-end peer-list 51.51.51.24
+ vni 10223 head-end peer-list 51.51.51.29
+ vni 10224 head-end peer-list 51.51.51.9
+ vni 10224 head-end peer-list 51.51.51.10
+ vni 10224 head-end peer-list 51.51.51.11
+ vni 10224 head-end peer-list 51.51.51.12
+ vni 10224 head-end peer-list 51.51.51.15
+ vni 10224 head-end peer-list 51.51.51.16
+ vni 10224 head-end peer-list 51.51.51.17
+ vni 10224 head-end peer-list 51.51.51.18
+ vni 10224 head-end peer-list 51.51.51.21
+ vni 10224 head-end peer-list 51.51.51.22
+ vni 10224 head-end peer-list 51.51.51.23
+ vni 10224 head-end peer-list 51.51.51.24
+ vni 10224 head-end peer-list 51.51.51.28
+ vni 10224 head-end peer-list 51.51.51.29
+ vni 10224 head-end peer-list 51.51.51.34
+ vni 10225 head-end peer-list 51.51.51.11
+ vni 10225 head-end peer-list 51.51.51.12
+ vni 10225 head-end peer-list 51.51.51.15
+ vni 10225 head-end peer-list 51.51.51.16
+ vni 10225 head-end peer-list 51.51.51.17
+ vni 10225 head-end peer-list 51.51.51.28
+ vni 10225 head-end peer-list 51.51.51.34
+ vni 10226 head-end peer-list 51.51.51.9
+ vni 10226 head-end peer-list 51.51.51.10
+ vni 10226 head-end peer-list 51.51.51.12
+ vni 10226 head-end peer-list 51.51.51.17
+ vni 10226 head-end peer-list 51.51.51.18
+ vni 10226 head-end peer-list 51.51.51.21
+ vni 10226 head-end peer-list 51.51.51.22
+ vni 10226 head-end peer-list 51.51.51.23
+ vni 10226 head-end peer-list 51.51.51.24
+ vni 10226 head-end peer-list 51.51.51.29
+ vni 10227 head-end peer-list 51.51.51.28
+ vni 10228 head-end peer-list 51.51.51.28
+ vni 10229 head-end peer-list 51.51.51.29
+ vni 10248 head-end peer-list 51.51.51.9
+ vni 10248 head-end peer-list 51.51.51.10
+ vni 10248 head-end peer-list 51.51.51.18
+ vni 10248 head-end peer-list 51.51.51.21
+ vni 10248 head-end peer-list 51.51.51.22
+ vni 10248 head-end peer-list 51.51.51.23
+ vni 10248 head-end peer-list 51.51.51.24
+ vni 10248 head-end peer-list 51.51.51.29
+ vni 10249 head-end peer-list 51.51.51.9
+ vni 10249 head-end peer-list 51.51.51.10
+ vni 10249 head-end peer-list 51.51.51.11
+ vni 10249 head-end peer-list 51.51.51.12
+ vni 10249 head-end peer-list 51.51.51.15
+ vni 10249 head-end peer-list 51.51.51.16
+ vni 10249 head-end peer-list 51.51.51.17
+ vni 10249 head-end peer-list 51.51.51.18
+ vni 10252 head-end peer-list 51.51.51.9
+ vni 10252 head-end peer-list 51.51.51.10
+ vni 10252 head-end peer-list 51.51.51.18
+ vni 10252 head-end peer-list 51.51.51.21
+ vni 10252 head-end peer-list 51.51.51.22
+ vni 10252 head-end peer-list 51.51.51.23
+ vni 10252 head-end peer-list 51.51.51.24
+ vni 10252 head-end peer-list 51.51.51.29
+ vni 10253 head-end peer-list 51.51.51.9
+ vni 10253 head-end peer-list 51.51.51.10
+ vni 10253 head-end peer-list 51.51.51.18
+ vni 10253 head-end peer-list 51.51.51.21
+ vni 10253 head-end peer-list 51.51.51.22
+ vni 10253 head-end peer-list 51.51.51.23
+ vni 10253 head-end peer-list 51.51.51.24
+ vni 10253 head-end peer-list 51.51.51.29
+#
+interface NULL0
+#
+bgp 65535
+ router-id 51.51.51.13
+ peer 172.16.255.234 as-number 65535
+ peer 172.16.255.238 as-number 65535
+ peer 172.16.255.238 description D10-8860
+ #
+ ipv4-family unicast
+  preference route-policy bgp-pre
+  network 172.16.197.0 255.255.255.0
+  import-route ospf 100 route-policy FD-K8S-import
+  maximum load-balancing 2  
+  peer 172.16.255.234 enable
+  peer 172.16.255.234 next-hop-local
+  peer 172.16.255.234 default-route-advertise 
+  peer 172.16.255.238 enable
+  peer 172.16.255.238 next-hop-local
+  peer 172.16.255.238 default-route-advertise 
+#
+ospf 100 router-id 51.51.51.13
+ default-route-advertise
+ bfd all-interfaces enable
+ import-route static route-policy static-import
+ import-route bgp permit-ibgp route-policy k8s-bgp-import
+ silent-interface Eth-Trunk125
+ area 0.0.0.0
+  authentication-mode md5 1 cipher %^%#AD^JM!@GJVz"DIG')<GYDTb7FHB!@CAU>XTk\Ct9%^%#
+  network 172.16.255.4 0.0.0.3
+  network 172.16.255.92 0.0.0.3
+  network 172.16.255.100 0.0.0.3
+  network 172.16.255.208 0.0.0.7
+ area 0.0.0.1
+  abr-summary 172.16.192.0 255.255.192.0
+  authentication-mode md5 1 cipher %^%#4<Cr<VZ~7Q|MMs9hP@$6nC=+#|w=]&tf@E$w^{77%^%#
+  network 51.51.51.13 0.0.0.0
+  network 51.51.51.250 0.0.0.0
+  network 172.16.192.0 0.0.31.255
+  network 172.16.254.196 0.0.0.3
+  network 172.16.254.204 0.0.0.3
+  network 172.16.254.240 0.0.0.3
+  network 172.16.255.36 0.0.0.3
+  network 172.16.255.40 0.0.0.3
+  network 172.16.255.44 0.0.0.3
+  network 172.16.255.64 0.0.0.3
+  network 172.16.255.120 0.0.0.3
+  network 172.16.255.124 0.0.0.3
+  network 172.16.255.128 0.0.0.3
+  network 172.16.255.132 0.0.0.3
+  network 172.16.255.140 0.0.0.3
+  network 172.16.255.164 0.0.0.3
+  network 172.16.255.180 0.0.0.3
+  network 172.16.255.188 0.0.0.3
+  network 172.16.255.204 0.0.0.3
+  network 172.16.255.212 0.0.0.3
+  network 172.16.255.220 0.0.0.3
+  network 172.21.8.0 0.0.0.255
+  network 172.21.9.0 0.0.0.255
+  network 172.21.10.0 0.0.0.255
+  network 172.21.15.0 0.0.0.255
+  network 172.22.8.0 0.0.0.255
+  network 172.22.9.0 0.0.0.255
+  network 172.22.10.0 0.0.0.255
+  network 172.22.15.0 0.0.0.255
+  stub
+ area 0.0.0.2
+  authentication-mode md5 1 cipher %^%#LVbO>u&PsC4tFf(T2`R2[+g;'M&vB!7{4t<)2tYT%^%#
+  network 172.16.255.60 0.0.0.3
+ area 0.0.0.3
+  authentication-mode md5 1 cipher %^%#XT0F.&_cg7pnY7#;*EbFO.M9J\e7r$4_o|5QC+dU%^%#
+  network 172.16.255.152 0.0.0.7
+ area 0.0.0.4
+  authentication-mode md5 1 cipher %^%#Pm!W*2e90<LM90Xz-2_CpV*"WscMb4ih1t!&87^-%^%#
+  network 172.16.255.196 0.0.0.3
+#
+route-policy FD-K8S-import permit node 10
+ if-match acl 2000
+#
+route-policy FD-K8S-import deny node 1000
+#
+route-policy bgp-pre permit node 10
+ if-match acl bgp-pre
+ apply preference 145
+#
+route-policy k8s-bgp-import permit node 10
+ if-match acl k8s-bgp-import
+#
+route-policy k8s-bgp-import deny node 50
+#
+route-policy static-import permit node 10
+ if-match acl static-import
+#
+route-policy static-import deny node 20
+#
+ip ip-prefix filter-default index 10 permit 0.0.0.0 0
+ip ip-prefix filter-ns index 10 permit 0.0.0.0 0
+#
+ip route-static 0.0.0.0 0.0.0.0 Vlanif12 172.16.255.62 track nqa xytest link_to_ns
+ip route-static 115.238.29.64 255.255.255.192 vpn-instance SQCTCC
+ip route-static 172.16.192.0 255.255.192.0 NULL0
+ip route-static 172.16.229.128 255.255.255.128 172.16.255.214
+ip route-static 172.16.255.29 255.255.255.255 172.16.255.214
+ip route-static 172.16.255.30 255.255.255.255 172.16.255.214
+ip route-static 172.16.255.33 255.255.255.255 172.16.255.214
+ip route-static 172.26.192.0 255.255.192.0 NULL0
+ip route-static vpn-instance SQCTCC 0.0.0.0 0.0.0.0 172.16.255.54 public
+ip route-static vpn-instance SQCTCC 115.238.29.64 255.255.255.192 172.16.255.73
+ip route-static vpn-instance XYCMCC 0.0.0.0 0.0.0.0 172.16.255.81
+ip route-static vpn-instance XYCMCC 117.148.143.80 255.255.255.240 172.16.255.90
+ip route-static vpn-instance APP 0.0.0.0 0.0.0.0 172.16.254.98
+ip route-static vpn-instance DB 0.0.0.0 0.0.0.0 172.16.254.114
+ip route-static vpn-instance GNH 0.0.0.0 0.0.0.0 172.16.254.130
+ip route-static vpn-instance other1 0.0.0.0 0.0.0.0 172.16.254.146
+ip route-static vpn-instance other2 0.0.0.0 0.0.0.0 172.16.254.162
+ip route-static vpn-instance other3 0.0.0.0 0.0.0.0 172.16.254.178
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03A0086FF21301
+snmp-agent community read cipher %^%#fWu-6_PGJ#N5WMD][v^=oD&*~ZD8R&SyLNE0)BIC,V-tO(gzPEDyS]"prE<*}"Y(C9=fX3y+53Q4X:S9%^%#
+#
+snmp-agent sys-info version v2c v3
+#
+lldp enable
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh user 51nbnb
+ssh user 51nbnb service-type stelnet
+ssh user huawei
+ssh user huawei authentication-type password
+ssh user huawei service-type stelnet
+ssh user maxusheng
+ssh user maxusheng authentication-type password
+ssh user maxusheng service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+ssh client 172.16.16.10 assign ecc-key 172.16.16.10
+ssh client 172.16.255.26 assign dsa-key 172.16.255.26
+#
+nqa test-instance xytest link_to_ns
+ test-type icmp
+ destination-address ipv4 172.16.255.62
+ source-address ipv4 172.16.255.61
+ interval seconds 5
+ timeout 1
+ frequency 3
+ start now
+#
+user-interface maximum-vty 10
+#
+user-interface con 0
+ authentication-mode password
+ set authentication password cipher $1c$G)d*9sop/P$aPe6L*R$6%=Zl:8]^A]2>X^i4J9;SLtk%y1D>1U#$
+#
+user-interface vty 0 9
+ authentication-mode aaa
+ idle-timeout 5 0
+ protocol inbound ssh
+#
+vm-manager
+#
+ops
+ assistant XYE06S12812
+  execute 1 command display current-configuration  > XY-S12812-E06.txt
+  execute 2 command tftp 172.16.9.233 put XY-S12812-E06.txt
+  condition timer cron 0 2 * * * *
+#
+return

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="mt-3">{{mode}}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="vendor">Filter by platform:</label>
+<div class="form-group d-flex">
+      <select name="vendor" id="vendor" class="form-control flex-grow-1">
+     <option value="">All</option>
+    {% for vendor in vendors %}
+      <option value="{{ vendor }}">{{ vendor }}</option>
+    {% endfor %}
+  </select>
+  <input type="search" placeholder="Search..." class="form-control flex-grow-1 search-input" data-table="customers-list"/>
+</div>
+<div class="scrollbox">
+        <table class="table table-striped mt32 customers-list" id="device-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="select-all"></th>
+                    <th>Name</th>
+                    <th>IP</th>
+                    <th>Model</th>
+                </tr>
+            </thead>
+                {% for device in all_devices %}
+                <tbody>
+                    <tr class="device-row" data-model="{{ device.model }}">
+                        <td><input type="checkbox" name="device" value="{{ device.id }}" class="device-select"></td>
+                        <td>{{ device.hostname }}</td>
+                        <td>{{ device.ip_address }}</td>
+                        <td>{{ device.model }}</td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+        </table>
+</div>
+        <button type="submit" class="mt-3 btn btn-primary">开始备份</button>
+    </form>
+    <script type="text/javascript" src="/static/js/search_input.js"></script>
+    <script type="text/javascript" src="/static/js/search_for_platform.js"></script>
+    <script type="text/javascript" src="/static/js/select_all_currentweb.js"></script>
+<style>
+    .scrollbox {
+        height: 450px;
+        overflow: auto;
+    }
+</style>
+<style>
+    .customers-list thead {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background-color: rgba(135,206,235,1);
+        width: 100%;
+    }
+</style>
+{% endblock content %}

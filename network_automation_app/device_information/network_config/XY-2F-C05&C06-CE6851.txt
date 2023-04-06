@@ -1,0 +1,990 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2023-02-21 11:10:26+08:00 by 51en
+!Last configuration was saved at 2023-02-21 11:10:29+08:00 by 51en
+#
+clock timezone GMT+8 add 08:00:00
+#
+sysname XY-2F-C05&C06-CE8860
+#
+info-center loghost source LoopBack0
+info-center loghost 172.16.226.32
+#
+system resource standard
+#
+device board 1 board-type CE6850-48T6Q-HI
+device board 2 board-type CE6850-48T6Q-HI
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp ipv6 server disable
+ntp unicast-server 172.16.152.20
+ntp unicast-server 172.16.152.21
+#
+vlan batch 2402 to 2403
+#
+dhcp enable
+#
+telnet server disable
+telnet ipv6 server disable
+#
+sflow collector 2 ip 172.16.208.32
+#
+diffserv domain default
+#
+bfd
+#
+acl name DSJ-Pod advance
+ rule 5 permit ip source 172.27.0.0 0.0.31.255 destination 172.27.0.0 0.0.31.255
+ rule 10 permit ip source 172.27.0.0 0.0.31.255 destination 172.16.28.0 0.0.3.255
+ rule 15 permit ip source 172.16.28.0 0.0.3.255 destination 172.27.0.0 0.0.31.255
+#
+acl name deny-all-export-router advance
+ rule 5 deny ip
+#
+acl name k8s-route-filter advance
+ rule 5 permit ip source 172.19.128.0 0.0.63.255
+ rule 10 permit ip source 172.24.128.0 0.0.63.255
+ rule 15 permit ip source 10.242.128.0 0.0.15.255
+ rule 20 permit ip source 172.27.0.0 0.0.31.255
+#
+acl name permit-all-export-router advance
+ rule 30 permit ip source 172.24.128.0 0.0.63.255
+#
+traffic classifier DSJ-Pod type or
+ if-match acl DSJ-Pod
+#
+traffic behavior DSJ-Pod
+ statistics enable
+ car cir 200 mbps green pass yellow discard red discard
+#
+traffic policy DSJ-Pod
+ classifier DSJ-Pod behavior DSJ-Pod precedence 5
+#
+aaa
+ undo local-user policy security-enhance
+ local-user admin password irreversible-cipher $1c$s>`Q$2*EcX$;z'}%\6]}W^wjXRC~[Y1S-i+4cwo#;BD$^T]*[iP$
+ local-user admin service-type ssh
+ local-user admin level 3
+ local-user 51nb password irreversible-cipher $1c$c6Vg-mOv/6$`/I]<`e#[.q#nU,,6.#Z]f$8;+yP;RS%5-"tS$nR$
+ local-user 51nb service-type ssh
+ local-user 51nb level 3
+ local-user calicouser password irreversible-cipher $1c$6x4KNl_91D$GUTUTwPp@+*0oG#{N7m$]2p,5dDn%XTodl.YcyAD$
+ local-user calicouser service-type ssh
+ local-user calicouser level 3
+ local-user 51en password irreversible-cipher $1c$yvS&(u<[_9$,foPNW[WP9MIT0:6kg\Ur,-r3p\f,Zx0sgSI{R4D$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 10
+ stack member 1 priority 200
+ #
+ stack member 2 domain 10
+#
+interface Vlanif2402
+ ip address 172.16.240.33 255.255.255.224
+ ip address 172.26.240.33 255.255.255.224 sub
+ icmp name redirect receive disable
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay binding server ip 172.16.55.11
+ dhcp relay gateway 172.26.240.33
+#
+interface Vlanif2403
+ ip address 172.16.241.1 255.255.255.224
+ icmp name redirect receive disable
+ dhcp select relay
+ dhcp relay binding server ip 172.16.55.11
+ dhcp relay gateway 172.26.240.33
+#
+interface MEth0/0/0
+ ip address 192.168.1.1 255.255.255.0
+#
+interface Eth-Trunk0
+ undo portswitch
+ description uT:XY-2F-D09-CE8860:()Eth-trunk2
+ ip address 172.16.254.194 255.255.255.252
+ mode lacp-dynamic
+#
+interface Eth-Trunk1
+ undo portswitch
+ description uT:XY-2F-D10-CE8860:()Eth-trunk2
+ ip address 172.16.254.198 255.255.255.252
+ mode lacp-dynamic
+#
+interface Eth-Trunk11
+ description to-C05-R630-k8s-193.108-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk12
+ description to-C05-R630-k8s-193.110-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk13
+ description dT:C06-R630-k8s-172.16.241.23
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description to-C05-1288HV5-k8s-193.80-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk15
+ description to-C05-1288HV5-k8s-193.81-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk16
+ description to-C005-CRM1GM2-bond0
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk17
+ description to-C05-RH2288-kvm-193.127-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk18
+ description to-C05-RH2288-kvm-193.128-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk19
+ description dT:C06-2102310YPY10J4002591-bond0
+ undo enable snmp trap updown
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk20
+ description to-C05-R630-k8s-193.136-bond
+ shutdown
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk21
+ description to-C05-R630-k8s-193.137-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk31
+ description dT:C05-CK97HP2
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk32
+ description dT:C05-C8Y2GM2
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk33
+ description to-C06-R630-k8s-193.113-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk34
+ description to-C06-R630-k8s-193.114-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk35
+ description to-C06-SA5112M4-k8s-193.121-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk36
+ description to-C06-SA5112M4-k8s-193.122-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk37
+ description to-C06-R630-k8s-193.123-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk38
+ description to-C06-R720-k8s-193.129-bond
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk39
+ description to-C06-R630-k8s-193.130-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk40
+ description to-C06-R630-k8s-193.131-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk41
+ description to-C06-R630-k8s-193.132-bond
+ undo enable snmp trap updown
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk42
+ description to-C06-R630-k8s-193.133-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk43
+ description to-C06-R630-k8s-193.134-bond
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk44
+ description dT:C05-R630-k8s-172.16.241.2
+ shutdown
+ port default vlan 2403
+ mode lacp-dynamic
+#
+interface Eth-Trunk45
+ description dT:C05-GYT3YM2-bond0
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk46
+ description dT:C05-GYM4YM2-bond0
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk47
+ description dT:C05-R630-k8s-172.16.241.5
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk48
+ description dT:C05-R630-k8s-172.16.241.6
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk49
+ description dT:C05-R630-k8s-172.16.241.7
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk50
+ description dT:C05-R630-k8s-172.16.241.8
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk51
+ description dT:C05-R630-k8s-172.16.241.9
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk52
+ description dT:C05-R630-k8s-172.16.241.10
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk53
+ description dT:C05-R630-k8s-172.16.241.11
+ port default vlan 2402
+ mode lacp-dynamic
+ traffic-policy DSJ-Pod inbound 
+ traffic-policy DSJ-Pod outbound 
+#
+interface Eth-Trunk54
+ description dT:C06-R630-k8s-172.16.241.12
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk55
+ description dT:C06-R630-k8s-172.16.241.13
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk56
+ description dT:C06-R630-k8s-172.16.241.14
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk57
+ description dT:C06-R630-k8s-172.16.241.15
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk58
+ description dT:C06-R630-k8s-172.16.241.16
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk59
+ description dT:C06-R630-k8s-172.16.241.17
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk60
+ description dT:C06-R630-k8s-172.16.241.18
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk61
+ description dT:C06-R630-k8s-172.16.241.19
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk62
+ description dT:C06-R630-k8s-172.16.241.20
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk63
+ description dT:C06-R630-k8s-172.16.241.21
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Eth-Trunk64
+ description dT:C06-R630-k8s-172.16.241.22
+ port default vlan 2402
+ mode lacp-dynamic
+#
+interface Stack-Port1/2
+#
+interface Stack-Port2/1
+#
+interface 10GE1/0/1
+ description to-C05-R630-k8s-193.108-eth0
+ eth-trunk 11
+#
+interface 10GE1/0/2
+ description to-C06-R630-k8s-193.109-eth0
+ eth-trunk 31
+#
+interface 10GE1/0/3
+ description to-C05-R630-k8s-193.110-eth0
+ eth-trunk 12
+#
+interface 10GE1/0/4
+ description to-C06-R630-k8s-193.111-eth0
+ eth-trunk 32
+#
+interface 10GE1/0/5
+ description to-C05-R630-k8s-193.112-eth0
+ eth-trunk 42
+#
+interface 10GE1/0/6
+ description to-C06-R630-k8s-193.113-eth0
+ eth-trunk 33
+#
+interface 10GE1/0/7
+ description to-C05-1288HV5-k8s-193.80-eth0
+ eth-trunk 14
+#
+interface 10GE1/0/8
+ description to-C06-R630-k8s-193.114-eth0
+ eth-trunk 34
+#
+interface 10GE1/0/9
+ description to-C05-1288HV5-k8s-193.81-eth0
+ eth-trunk 15
+#
+interface 10GE1/0/10
+ description to-C06-SA5112M4-k8s-193.121-eth0
+ eth-trunk 35
+#
+interface 10GE1/0/11
+ description to-C05-RH2288-kvm-193.126-eth0
+ eth-trunk 16
+#
+interface 10GE1/0/12
+ description to-C06-SA5112M4-k8s-193.122-eth0
+ undo enable snmp trap updown
+ eth-trunk 36
+#
+interface 10GE1/0/13
+ description to-C05-RH2288-kvm-193.127-eth0
+ eth-trunk 17
+#
+interface 10GE1/0/14
+ description to-C06-R630-k8s-193.123-eth0
+ eth-trunk 37
+#
+interface 10GE1/0/15
+ description to-C05-RH2288-kvm-193.128-eth0
+ eth-trunk 18
+#
+interface 10GE1/0/16
+ description to-C06-R720-k8s-193.129-eth0
+ eth-trunk 38
+#
+interface 10GE1/0/17
+ description to-C05-R630-k8s-193.135-eth0
+ undo enable snmp trap updown
+ eth-trunk 19
+#
+interface 10GE1/0/18
+ description to-C06-R630-k8s-193.130-eth0
+ eth-trunk 39
+#
+interface 10GE1/0/19
+ description to-C05-R630-k8s-193.136-eth0
+ shutdown
+ eth-trunk 20
+#
+interface 10GE1/0/20
+ description to-C06-R630-k8s-193.131-eth0
+ eth-trunk 40
+#
+interface 10GE1/0/21
+ description to-C05-R630-k8s-193.137-eth0
+ eth-trunk 21
+#
+interface 10GE1/0/22
+ description to-C06-R630-k8s-193.132-eth0
+ undo enable snmp trap updown
+ eth-trunk 41
+#
+interface 10GE1/0/23
+ eth-trunk 46
+#
+interface 10GE1/0/24
+ description to-C06-R630-k8s-193.133-eth0
+ eth-trunk 42
+#
+interface 10GE1/0/25
+ eth-trunk 45
+#
+interface 10GE1/0/26
+ description to-C06-R630-k8s-193.134-eth0
+ eth-trunk 43
+#
+interface 10GE1/0/27
+ eth-trunk 11
+#
+interface 10GE1/0/28
+ eth-trunk 12
+#
+interface 10GE1/0/29
+ eth-trunk 14
+#
+interface 10GE1/0/30
+ eth-trunk 15
+#
+interface 10GE1/0/31
+ eth-trunk 16
+#
+interface 10GE1/0/32
+ eth-trunk 17
+#
+interface 10GE1/0/33
+ eth-trunk 18
+#
+interface 10GE1/0/34
+ eth-trunk 21
+#
+interface 10GE1/0/35
+ shutdown
+ eth-trunk 20
+#
+interface 10GE1/0/36
+ eth-trunk 53
+#
+interface 10GE1/0/37
+ eth-trunk 32
+#
+interface 10GE1/0/38
+ eth-trunk 31
+#
+interface 10GE1/0/39
+ eth-trunk 33
+#
+interface 10GE1/0/40
+ eth-trunk 34
+#
+interface 10GE1/0/41
+ eth-trunk 43
+#
+interface 10GE1/0/42
+ eth-trunk 36
+#
+interface 10GE1/0/43
+ eth-trunk 35
+#
+interface 10GE1/0/44
+ eth-trunk 37
+#
+interface 10GE1/0/45
+ eth-trunk 39
+#
+interface 10GE1/0/46
+ eth-trunk 40
+#
+interface 10GE1/0/47
+ eth-trunk 41
+#
+interface 10GE1/0/48
+ dual-active detect mode direct
+#
+interface 10GE2/0/1
+ description to-C05-R630-k8s-193.108-eth1
+ eth-trunk 11
+#
+interface 10GE2/0/2
+ description to-C06-R630-k8s-193.109-eth1
+ eth-trunk 31
+#
+interface 10GE2/0/3
+ description to-C05-R630-k8s-193.110-eth1
+ eth-trunk 12
+#
+interface 10GE2/0/4
+ description to-C06-R630-k8s-193.111-eth1
+ eth-trunk 32
+#
+interface 10GE2/0/5
+ description to-C05-R630-k8s-193.112-eth1
+ eth-trunk 42
+#
+interface 10GE2/0/6
+ description to-C06-R630-k8s-193.113-eth1
+ eth-trunk 33
+#
+interface 10GE2/0/7
+ description to-C05-1288HV5-k8s-193.80-eth1
+ eth-trunk 14
+#
+interface 10GE2/0/8
+ description to-C06-R630-k8s-193.114-eth1
+ eth-trunk 34
+#
+interface 10GE2/0/9
+ description to-C05-1288HV5-k8s-193.81-eth1
+ eth-trunk 15
+#
+interface 10GE2/0/10
+ description to-C06-SA5112M4-k8s-193.121-eth1
+ eth-trunk 35
+#
+interface 10GE2/0/11
+ description to-C05-RH2288-kvm-193.126-eth1
+ eth-trunk 16
+#
+interface 10GE2/0/12
+ description to-C06-SA5112M4-k8s-193.122-eth1
+ undo enable snmp trap updown
+ eth-trunk 36
+#
+interface 10GE2/0/13
+ description to-C05-RH2288-kvm-193.127-eth1
+ eth-trunk 17
+#
+interface 10GE2/0/14
+ description to-C06-R630-k8s-193.123-eth1
+ eth-trunk 37
+#
+interface 10GE2/0/15
+ description to-C05-RH2288-kvm-193.128-eth1
+ eth-trunk 18
+#
+interface 10GE2/0/16
+ description to-C06-R720-k8s-193.129-eth1
+ eth-trunk 38
+#
+interface 10GE2/0/17
+ description to-C05-R630-k8s-193.135-eth1
+ undo enable snmp trap updown
+ eth-trunk 19
+#
+interface 10GE2/0/18
+ description to-C06-R630-k8s-193.130-eth1
+ eth-trunk 39
+#
+interface 10GE2/0/19
+ description to-C05-R630-k8s-193.136-eth1
+ shutdown
+ eth-trunk 20
+#
+interface 10GE2/0/20
+ description to-C06-R630-k8s-193.131-eth1
+ eth-trunk 40
+#
+interface 10GE2/0/21
+ description to-C05-R630-k8s-193.137-eth1
+ eth-trunk 21
+#
+interface 10GE2/0/22
+ description to-C06-R630-k8s-193.132-eth1
+ undo enable snmp trap updown
+ eth-trunk 41
+#
+interface 10GE2/0/23
+ eth-trunk 46
+#
+interface 10GE2/0/24
+ description to-C06-R630-k8s-193.133-eth1
+ eth-trunk 42
+#
+interface 10GE2/0/25
+ eth-trunk 45
+#
+interface 10GE2/0/26
+ description to-C06-R630-k8s-193.134-eth1
+ eth-trunk 43
+#
+interface 10GE2/0/27
+ eth-trunk 11
+#
+interface 10GE2/0/28
+ eth-trunk 12
+#
+interface 10GE2/0/29
+ eth-trunk 14
+#
+interface 10GE2/0/30
+ eth-trunk 15
+#
+interface 10GE2/0/31
+ eth-trunk 16
+#
+interface 10GE2/0/32
+ eth-trunk 17
+#
+interface 10GE2/0/33
+ eth-trunk 18
+#
+interface 10GE2/0/34
+ eth-trunk 21
+#
+interface 10GE2/0/35
+ shutdown
+ eth-trunk 20
+#
+interface 10GE2/0/36
+ eth-trunk 53
+#
+interface 10GE2/0/37
+ eth-trunk 32
+#
+interface 10GE2/0/38
+ eth-trunk 31
+#
+interface 10GE2/0/39
+ eth-trunk 33
+#
+interface 10GE2/0/40
+ eth-trunk 34
+#
+interface 10GE2/0/41
+ eth-trunk 43
+#
+interface 10GE2/0/42
+ eth-trunk 36
+#
+interface 10GE2/0/43
+ eth-trunk 35
+#
+interface 10GE2/0/44
+ eth-trunk 37
+#
+interface 10GE2/0/45
+ eth-trunk 39
+#
+interface 10GE2/0/46
+ eth-trunk 40
+#
+interface 10GE2/0/47
+ eth-trunk 41
+#
+interface 10GE2/0/48
+ dual-active detect mode direct
+#
+interface 40GE1/0/1
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/2
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/3
+ description uT:XY-2F-D09-CE8860:(local)40GE1/1/3
+ eth-trunk 0
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/4
+ description uT:XY-2F-D10-CE8860:(local)40GE1/1/3
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/5
+#
+interface 40GE1/0/6
+#
+interface 40GE2/0/1
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/2
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/3
+ description uT:XY-2F-D09-CE8860:(local)40GE1/1/4
+ eth-trunk 0
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/4
+ description uT:XY-2F-D10-CE8860:(local)40GE1/1/4
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/5
+#
+interface 40GE2/0/6
+#
+interface LoopBack0
+ ip address 51.51.51.33 255.255.255.255
+#
+interface NULL0
+#
+bgp 65535
+ router-id 51.51.51.33
+ peer 172.16.240.35 as-number 65535
+ peer 172.16.240.36 as-number 65535
+ peer 172.16.240.37 as-number 65535
+ peer 172.16.240.38 as-number 65535
+ peer 172.16.240.39 as-number 65535
+ peer 172.16.240.40 as-number 65535
+ peer 172.16.240.41 as-number 65535
+ peer 172.16.240.42 as-number 65535
+ peer 172.16.240.44 as-number 65535
+ peer 172.16.240.49 as-number 65535
+ peer 172.16.240.51 as-number 65535
+ peer 172.16.240.53 as-number 65535
+ peer 172.16.240.54 as-number 65535
+ peer 172.16.240.55 as-number 65535
+ peer 172.16.240.56 as-number 65535
+ peer 172.16.240.57 as-number 65535
+ peer 172.16.240.58 as-number 65535
+ peer 172.16.240.59 as-number 65535
+ peer 172.16.240.60 as-number 65535
+ peer 172.16.254.193 as-number 65535
+ peer 172.16.254.197 as-number 65535
+ #
+ ipv4-family unicast
+  network 51.51.51.33 255.255.255.255
+  network 172.16.240.32 255.255.255.224
+  network 172.16.241.0 255.255.255.224
+  network 172.26.240.32 255.255.255.224
+  maximum load-balancing 2  
+  peer 172.16.240.35 enable
+  peer 172.16.240.35 route-policy xy-k8s-route-filter import
+  peer 172.16.240.35 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.35 reflect-client
+  peer 172.16.240.36 enable
+  peer 172.16.240.36 route-policy xy-k8s-route-filter import
+  peer 172.16.240.36 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.36 reflect-client
+  peer 172.16.240.37 enable
+  peer 172.16.240.37 route-policy xy-k8s-route-filter import
+  peer 172.16.240.37 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.37 reflect-client
+  peer 172.16.240.38 enable
+  peer 172.16.240.38 route-policy xy-k8s-route-filter import
+  peer 172.16.240.38 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.38 reflect-client
+  peer 172.16.240.39 enable
+  peer 172.16.240.39 route-policy xy-k8s-route-filter import
+  peer 172.16.240.39 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.39 reflect-client
+  peer 172.16.240.40 enable
+  peer 172.16.240.40 route-policy xy-k8s-route-filter import
+  peer 172.16.240.40 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.40 reflect-client
+  peer 172.16.240.41 enable
+  peer 172.16.240.41 route-policy xy-k8s-route-filter import
+  peer 172.16.240.41 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.41 reflect-client
+  peer 172.16.240.42 enable
+  peer 172.16.240.42 route-policy xy-k8s-route-filter import
+  peer 172.16.240.42 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.42 reflect-client
+  peer 172.16.240.44 enable
+  peer 172.16.240.44 route-policy xy-k8s-route-filter import
+  peer 172.16.240.44 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.44 reflect-client
+  peer 172.16.240.49 enable
+  peer 172.16.240.49 route-policy xy-k8s-route-filter import
+  peer 172.16.240.49 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.49 reflect-client
+  peer 172.16.240.51 enable
+  peer 172.16.240.51 route-policy xy-k8s-route-filter import
+  peer 172.16.240.51 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.51 reflect-client
+  peer 172.16.240.53 enable
+  peer 172.16.240.53 route-policy xy-k8s-route-filter import
+  peer 172.16.240.53 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.53 reflect-client
+  peer 172.16.240.54 enable
+  peer 172.16.240.54 route-policy xy-k8s-route-filter import
+  peer 172.16.240.54 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.54 reflect-client
+  peer 172.16.240.55 enable
+  peer 172.16.240.55 route-policy xy-k8s-route-filter import
+  peer 172.16.240.55 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.55 reflect-client
+  peer 172.16.240.56 enable
+  peer 172.16.240.56 route-policy xy-k8s-route-filter import
+  peer 172.16.240.56 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.56 reflect-client
+  peer 172.16.240.57 enable
+  peer 172.16.240.57 route-policy xy-k8s-route-filter import
+  peer 172.16.240.57 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.57 reflect-client
+  peer 172.16.240.58 enable
+  peer 172.16.240.58 route-policy xy-k8s-route-filter import
+  peer 172.16.240.58 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.58 reflect-client
+  peer 172.16.240.59 enable
+  peer 172.16.240.59 route-policy xy-k8s-route-filter import
+  peer 172.16.240.59 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.59 reflect-client
+  peer 172.16.240.60 enable
+  peer 172.16.240.60 route-policy xy-k8s-route-filter import
+  peer 172.16.240.60 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.60 reflect-client
+  peer 172.16.254.193 enable
+  peer 172.16.254.193 next-hop-local
+  peer 172.16.254.197 enable
+  peer 172.16.254.197 next-hop-local
+#
+ospf 100 router-id 51.51.51.33
+ bfd all-interfaces enable
+ area 0.0.0.1
+  authentication-mode md5 1 cipher %^%#lAOR.ts7x2>)1QEBV`"OR>,&(oMNr&#b+KH>zgv9%^%#
+  network 51.51.51.33 0.0.0.0
+  network 172.16.254.192 0.0.0.3
+  network 172.16.254.196 0.0.0.3
+  stub
+#
+route-policy k8s-route-export-filter-all permit node 5
+ if-match acl permit-all-export-router
+#
+route-policy k8s-route-export-filter-all deny node 10
+#
+route-policy xy-k8s-route-filter permit node 10
+ if-match acl k8s-route-filter
+#
+route-policy xy-k8s-route-filter deny node 20
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03501D93F588F1
+snmp-agent community read cipher %^%#5^j,8TK|J1es"15TgL3%Yl.=<d(\,WLi7kE>PU10oR_[C2#JG4T)@F'"bu/P_}/A/'eAOLRKb$Pu$3}(%^%#
+#
+snmp-agent sys-info version v2c v3
+#
+lldp enable
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh user admin
+ssh user admin authentication-type password
+ssh user admin service-type stelnet
+ssh user calicouser
+ssh user calicouser authentication-type password
+ssh user calicouser service-type snetconf
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+#
+netconf
+ idle-timeout 1 20
+ protocol inbound ssh ipv4 port 830
+ protocol inbound ssh ipv6 port 830
+#
+vm-manager
+#
+ops
+ assistant auto_save
+  execute 1 command display current-configuration  > XY-6850-C05&C06.txt
+  execute 2 command tftp 172.16.9.233 put XY-6850-C05&C06.txt
+  condition timer cron 0 2 * * * *
+#
+return

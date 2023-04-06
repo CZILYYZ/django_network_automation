@@ -1,0 +1,579 @@
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2022-08-17 16:37:15+08:00 by 51en
+!Last configuration was saved at 2023-02-01 00:18:22+08:00 by 51en
+#
+clock timezone GMT add 08:00:00
+#
+sysname FD-1F-D03-6850
+#
+info-center loghost 172.16.226.32
+#
+system resource standard
+#
+device board 1 board-type CE6850-48T6Q-HI
+device board 2 board-type CE6850-48T6Q-HI
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp server disable
+ntp ipv6 server disable
+ntp unicast-peer 192.168.59.177
+ntp unicast-peer 192.168.59.178
+#
+vlan batch 4 24 to 27 36 44 to 47 50 to 56 58 to 62 100
+#
+ecc peer-public-key 127.0.0.1
+ public-key-code begin
+  0400654E 210E1CE0 736C164B DAEF2896 EC7FD8FA 33DAFA33 F297EF0E 08696A13
+  7B196914 8B440CDF D3FFB437 B1614E17 BB1A2229 AB5F336A 0C41A630 67DDF82D
+  B0B46B01 1D4B07C1 E8401150 DE54E0DD BF14AFAA AE317BE1 1542A537 AC6EC3A2
+  68DB2B6D 18E47953 785569FF 713929D9 19089D2F AE454389 D867ED41 58629B9F
+  E49E2E12 56
+ public-key-code end
+ peer-public-key end
+#
+telnet server disable
+telnet ipv6 server disable
+#
+diffserv domain default
+#
+aaa
+ undo local-user policy security-enhance
+ local-user 51nb password irreversible-cipher $1c$zhTPSx(Vr'$U@)s9_`*nK:!7S6@`g8J:ihZ<.*$DC,,k\)Qxp(2$
+ local-user 51nb service-type ssh
+ local-user 51nb level 3
+ local-user 51en password irreversible-cipher $1c$cXZ[Pkl#S5$b>qxC}hF)JU&>2/Bx5|6cGUw@<w/5!A|TL-;K*.Q$
+ local-user 51en service-type ssh
+ local-user 51en level 3
+ #
+ authentication-scheme default
+ #
+ authorization-scheme default
+ #
+ accounting-scheme default
+ #
+ domain default
+ #
+ domain default_admin
+#
+stack
+ #
+ stack member 1 domain 10
+ stack member 1 priority 200
+ #
+ stack member 2 domain 10
+#
+interface Vlanif100
+ ip address 172.16.16.235 255.255.255.0
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk11
+ description dT:D03-6863HJ2:bond0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk12
+ description to-D03-R630-kvm-17.175-bond
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk13
+ description to-D03-R630-kvm-17.176-bond
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk14
+ description to-D03-R630-kvm-17.177-bond
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk15
+ description to-D03-R630-kvm-17.178-bond
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk16
+ description to-D03-R630-demo-17.68-bond
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk17
+ description to-D03-R630-demo-17.184-bond
+ port default vlan 24
+ mode lacp-dynamic
+#
+interface Eth-Trunk18
+ description to-D03-R630-demo-17.185-bond
+ port default vlan 24
+ mode lacp-dynamic
+#
+interface Eth-Trunk19
+ description to-D03-R630-SPM-17.172-bond
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk20
+ description to-D03-R630-bi-17.171-bond
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk21
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk22
+ port default vlan 24
+ mode lacp-dynamic
+#
+interface Eth-Trunk23
+ description to-D03-R630-demo-17.184-bond12
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk24
+ description to-D03-R630-demo-17.185-bond12
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Eth-Trunk25
+ description to-R730-5-ES-16.80-bond0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk26
+ description to-R730-ES-16.70-bond0
+ port default vlan 4
+ mode lacp-dynamic
+#
+interface Eth-Trunk27
+ description dT:D03-D89JS72-bond0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk28
+ description dT:F2P0MG2-bond0
+ port default vlan 4
+ mode lacp-dynamic
+#
+interface Eth-Trunk29
+ description dT:D03-49FF762-bond0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk30
+ description dT:D03-51MSF52-bond0
+ port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk100
+ description uT:FD-1F-B08&C17-C4510:()Po42
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+ mode lacp-dynamic
+#
+interface Stack-Port1/2
+#
+interface Stack-Port2/1
+#
+interface 10GE1/0/1
+ eth-trunk 27
+#
+interface 10GE1/0/2
+ eth-trunk 28
+#
+interface 10GE1/0/3
+ eth-trunk 29
+#
+interface 10GE1/0/4
+ eth-trunk 29
+#
+interface 10GE1/0/5
+ eth-trunk 30
+#
+interface 10GE1/0/6
+ eth-trunk 30
+#
+interface 10GE1/0/7
+ description to-R730-5-ES-16.80-eth1
+ eth-trunk 25
+#
+interface 10GE1/0/8
+ description to-R730-5-ES-16.80-eth3
+ eth-trunk 25
+#
+interface 10GE1/0/9
+ description to-R730-ES-16.70-eth0
+ eth-trunk 26
+#
+interface 10GE1/0/10
+ eth-trunk 11
+#
+interface 10GE1/0/11
+ description to-D03-R630-demo-17.68-eth0
+ eth-trunk 16
+#
+interface 10GE1/0/12
+ description to-D03-R630-demo-17.68-eth2
+ eth-trunk 16
+#
+interface 10GE1/0/13
+ description to-D03-R630-demo-17.184-eth0
+ eth-trunk 23
+#
+interface 10GE1/0/14
+ description to-D03-R630-demo-17.184-eth2
+ eth-trunk 17
+#
+interface 10GE1/0/15
+ description to-D03-R630-demo-17.185-eth0
+ eth-trunk 24
+#
+interface 10GE1/0/16
+ description to-D03-R630-demo-17.185-eth2
+ eth-trunk 18
+#
+interface 10GE1/0/17
+ description to-D03-R630-SPM-17.172-eth0
+ eth-trunk 19
+#
+interface 10GE1/0/18
+ description to-D03-R630-bi-17.171-eth0
+ eth-trunk 20
+#
+interface 10GE1/0/19
+ port default vlan 60
+#
+interface 10GE1/0/20
+#
+interface 10GE1/0/21
+ port default vlan 60
+#
+interface 10GE1/0/22
+#
+interface 10GE1/0/23
+#
+interface 10GE1/0/24
+#
+interface 10GE1/0/25
+#
+interface 10GE1/0/26
+#
+interface 10GE1/0/27
+#
+interface 10GE1/0/28
+#
+interface 10GE1/0/29
+#
+interface 10GE1/0/30
+#
+interface 10GE1/0/31
+#
+interface 10GE1/0/32
+#
+interface 10GE1/0/33
+#
+interface 10GE1/0/34
+#
+interface 10GE1/0/35
+#
+interface 10GE1/0/36
+#
+interface 10GE1/0/37
+#
+interface 10GE1/0/38
+#
+interface 10GE1/0/39
+#
+interface 10GE1/0/40
+#
+interface 10GE1/0/41
+ description dT:D03-6863HJ2:MGMT
+ port default vlan 100
+#
+interface 10GE1/0/42
+ description dT:D03-49FF762-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/43
+ description to-R730-5-ES-16.80-MGMT
+ port default vlan 100
+#
+interface 10GE1/0/44
+ description dT:F2P0MG2-MGMT
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE1/0/45
+ description uT:FD-1F-B08&C17-C4510:(local)GE1/2/8
+ eth-trunk 100
+#
+interface 10GE1/0/46
+ description uT:FD-1F-B08&C17-C4510:(local)GE1/2/6
+ eth-trunk 100
+#
+interface 10GE1/0/47
+ description uT:FD-1F-B08&C17-C4510:(local)GE1/2/7
+ eth-trunk 100
+#
+interface 10GE1/0/48
+ dual-active detect mode direct
+#
+interface 10GE2/0/1
+ eth-trunk 27
+#
+interface 10GE2/0/2
+ eth-trunk 28
+#
+interface 10GE2/0/3
+ negotiation disable
+ speed 1000
+#
+interface 10GE2/0/4
+#
+interface 10GE2/0/5
+#
+interface 10GE2/0/6
+#
+interface 10GE2/0/7
+ description to-R730-5-ES-16.80-eth2
+ eth-trunk 25
+#
+interface 10GE2/0/8
+ description to-R730-5-ES-16.80-eth3
+ eth-trunk 25
+#
+interface 10GE2/0/9
+ description to-R730-ES-16.70-eth0
+ eth-trunk 26
+#
+interface 10GE2/0/10
+ eth-trunk 11
+#
+interface 10GE2/0/11
+ description to-D03-R630-demo-17.68-eth1
+ eth-trunk 16
+#
+interface 10GE2/0/12
+ description to-D03-R630-demo-17.68-eth3
+ eth-trunk 16
+#
+interface 10GE2/0/13
+ description to-D03-R630-demo-17.184-eth1
+ eth-trunk 23
+#
+interface 10GE2/0/14
+ description to-D03-R630-demo-17.184-eth3
+ eth-trunk 17
+#
+interface 10GE2/0/15
+ description to-D03-R630-demo-17.185-eth1
+ eth-trunk 24
+#
+interface 10GE2/0/16
+ description to-D03-R630-demo-17.185-eth3
+ eth-trunk 18
+#
+interface 10GE2/0/17
+ description to-D03-R630-SPM-17.172-eth1
+ eth-trunk 19
+#
+interface 10GE2/0/18
+ description to-D03-R630-bi-17.171-eth1
+ eth-trunk 20
+#
+interface 10GE2/0/19
+ port default vlan 60
+#
+interface 10GE2/0/20
+ eth-trunk 11
+#
+interface 10GE2/0/21
+ port default vlan 60
+#
+interface 10GE2/0/22
+#
+interface 10GE2/0/23
+#
+interface 10GE2/0/24
+#
+interface 10GE2/0/25
+#
+interface 10GE2/0/26
+#
+interface 10GE2/0/27
+#
+interface 10GE2/0/28
+#
+interface 10GE2/0/29
+#
+interface 10GE2/0/30
+#
+interface 10GE2/0/31
+#
+interface 10GE2/0/32
+#
+interface 10GE2/0/33
+#
+interface 10GE2/0/34
+#
+interface 10GE2/0/35
+ description to-D03-R630-bi-17.171-mgmt
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/36
+ description to-D03-R630-SPM-17.172-mgmt
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/37
+ description to-D03-R630-demo-17.185-mgmt
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/38
+ description to-D03-R630-demo-17.184-mgmt
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/39
+ description to-D03-R630-demo-17.68-mgmt
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/40
+ description to-D03-R630-kvm-17.178-mgmt
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/41
+ description to-D03-R630-kvm-17.177-mgmt
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/42
+ description to-D03-R630-kvm-17.176-mgmt
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/43
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/44
+ description to-D03-R630-kvm-17.69-mgmt
+ port default vlan 100
+ stp edged-port enable
+#
+interface 10GE2/0/45
+ description uT:FD-1F-B08&C17-C4510:(local)GE2/2/8
+ eth-trunk 100
+#
+interface 10GE2/0/46
+ description uT:FD-1F-B08&C17-C4510:(local)GE2/2/6
+ eth-trunk 100
+#
+interface 10GE2/0/47
+ description uT:FD-1F-B08&C17-C4510:(local)GE2/2/7
+ eth-trunk 100
+#
+interface 10GE2/0/48
+#
+interface 40GE1/0/1
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/2
+ port mode stack 
+ stack-port 1/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE1/0/3
+#
+interface 40GE1/0/4
+#
+interface 40GE1/0/5
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/6
+#
+interface 40GE2/0/1
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/2
+ port mode stack 
+ stack-port 2/1
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/3
+#
+interface 40GE2/0/4
+#
+interface 40GE2/0/5
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/6
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 172.16.16.1
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03B4FBF98928F1
+snmp-agent community read cipher %^%#37UB:q13'*:#ko."y+oJG2n=Zs~_1H;I7GRbHqHFgSyiX>n},5~_M9TyZxk&jwk(LIGvK;~|w=Pw~SSD%^%#
+#
+snmp-agent sys-info version v2c v3
+#
+lldp enable
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+ssh client first-time enable
+ssh client 127.0.0.1 assign ecc-key 127.0.0.1
+#
+user-interface con 0
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+#
+vm-manager
+#
+ops
+ assistant FDD036850
+  execute 1 command display current-configuration  > FD-6850-D03.txt
+  execute 2 command tftp 172.16.9.233 put FD-6850-D03.txt
+  condition timer cron 0 2 * * * *
+#
+return
