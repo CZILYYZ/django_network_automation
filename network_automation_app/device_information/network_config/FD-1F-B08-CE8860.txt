@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-12-02 14:55:40+08:00 by 51en
-!Last configuration was saved at 2023-02-01 00:21:05+08:00 by 51en
+!Last configuration was updated at 2023-03-03 00:10:41+08:00 by 51en
+!Last configuration was saved at 2023-03-01 00:24:04+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -32,6 +32,16 @@ ntp ipv6 server disable
 ntp source-interface Eth-Trunk10
 ntp unicast-server 172.16.152.20
 ntp unicast-server 172.16.152.21
+#
+ecc peer-public-key 10.253.224.254
+ public-key-code begin
+  0401F320 5B0E1F89 00D72CBE EC23606A E3E9F7AD 12565728 55B6712A CA378F03
+  B8E0D1F8 346397A2 5B6C5481 330943DF CD67E596 516A43B5 AF58C880 72946E76
+  63EF1700 907C918C 814FC4ED 66148F3C EC4725BF A640D87D 55B82D6A E008A7A5
+  360A493B 4AB3C931 5D5BBFA5 7227D379 0E66A13E 7E566411 7985C21C D514F535
+  57BC7C19 C8
+ public-key-code end
+ peer-public-key end
 #
 telnet server disable
 telnet ipv6 server disable
@@ -766,6 +776,7 @@ ssh server hmac sha2_256_96 sha2_256 sha1_96
 ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
 #
 ssh client first-time enable
+ssh client 10.253.224.254 assign ecc-key 10.253.224.254
 #
 user-interface con 0
 #

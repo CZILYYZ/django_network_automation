@@ -28657,3 +28657,237 @@ nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed
 
 2023-05-22 15:30:15,734 -  nornir.core -     INFO -        run() - Running task 'FT1' with args {} on 1 hosts
 2023-05-22 15:30:34,451 -  nornir.core -     INFO -        run() - Running task 'NS1' with args {} on 1 hosts
+2023-05-22 16:00:39,166 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:00:50,003 - nornir.core.task -    ERROR -      start() - Host 'FD-1F-E01-rouji-3650': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/base_connection.py", line 1721, in send_command
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+Pattern not detected: 'FD\\-1F\\-E01\\-rouji\\-3650\\#' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2023-05-22 16:00:50,003 - nornir.core.task -    ERROR -      start() - Host 'FD-1F-E01-rouji-3650': task 'CS' failed with traceback:
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/django_network_automation/network_automation_app/views.py", line 218, in CS
+    task.run(netmiko_send_command, command_string="show run")
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2023-05-22 16:00:50,034 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:00:52,416 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:03,252 - nornir.core.task -    ERROR -      start() - Host 'FD-1F-C07-3650-8.31': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/base_connection.py", line 1721, in send_command
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+Pattern not detected: 'FD\\-1F\\-C07\\-3650\\-8\\.31\\#' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2023-05-22 16:01:03,252 - nornir.core.task -    ERROR -      start() - Host 'FD-1F-C07-3650-8.31': task 'CS' failed with traceback:
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/django_network_automation/network_automation_app/views.py", line 218, in CS
+    task.run(netmiko_send_command, command_string="show run")
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2023-05-22 16:01:03,283 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:05,479 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:07,819 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:09,434 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:11,721 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:14,041 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:15,449 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:16,648 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:19,743 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:20,923 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:22,450 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:24,927 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:33,970 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:45,071 - nornir.core.task -    ERROR -      start() - Host 'FD-1F-A06-C3650-yun': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 32, in netmiko_send_command
+    result = net_connect.send_command(command_string, **kwargs)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/utilities.py", line 592, in wrapper_decorator
+    return func(self, *args, **kwargs)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/base_connection.py", line 1721, in send_command
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+Pattern not detected: 'FD\\-1F\\-A06\\-C3650\\-yun\\#' in output.
+
+Things you might try to fix this:
+1. Explicitly set your pattern using the expect_string argument.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2023-05-22 16:01:45,072 - nornir.core.task -    ERROR -      start() - Host 'FD-1F-A06-C3650-yun': task 'CS' failed with traceback:
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/django_network_automation/network_automation_app/views.py", line 218, in CS
+    task.run(netmiko_send_command, command_string="show run")
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2023-05-22 16:01:45,102 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:47,687 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:52,276 -  nornir.core -     INFO -        run() - Running task 'CS' with args {} on 1 hosts
+2023-05-22 16:01:57,687 -  nornir.core -     INFO -        run() - Running task 'F5' with args {} on 1 hosts
+2023-05-22 16:02:02,782 - nornir.core.task -    ERROR -      start() - Host 'SQ-F5': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/paramiko/transport.py", line 2270, in _check_banner
+    buf = self.packetizer.readline(timeout)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/paramiko/packet.py", line 374, in readline
+    buf += self._read_timeout(timeout)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/paramiko/packet.py", line 601, in _read_timeout
+    x = self.__socket.recv(128)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/base_connection.py", line 1046, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/paramiko/client.py", line 430, in connect
+    t.start_client(timeout=timeout)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/paramiko/transport.py", line 704, in start_client
+    raise e
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/paramiko/transport.py", line 2093, in run
+    self._check_banner()
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/paramiko/transport.py", line 2274, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner[Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/inventory.py", line 494, in get_connection
+    self.open_connection(
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/inventory.py", line 546, in open_connection
+    conn_obj.open(
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/ssh_dispatcher.py", line 365, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/base_connection.py", line 439, in __init__
+    self._open()
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/base_connection.py", line 444, in _open
+    self.establish_connection()
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/netmiko/base_connection.py", line 1099, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: 
+A paramiko SSHException occurred during connection creation:
+
+Error reading SSH protocol banner[Errno 104] Connection reset by peer
+
+
+
+2023-05-22 16:02:02,783 - nornir.core.task -    ERROR -      start() - Host 'SQ-F5': task 'F5' failed with traceback:
+Traceback (most recent call last):
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 99, in start
+    r = self.task(self, **self.params)
+  File "/root/django_network_automation/network_automation_app/views.py", line 232, in F5
+    task.run(netmiko_send_command, command_string="show running-config")
+  File "/root/django_network_automation/venv/lib/python3.8/site-packages/nornir/core/task.py", line 174, in run
+    raise NornirSubTaskError(task=run_task, result=r)
+nornir.core.exceptions.NornirSubTaskError: Subtask: netmiko_send_command (failed)
+
+
+2023-05-22 16:02:07,898 -  nornir.core -     INFO -        run() - Running task 'FT' with args {} on 1 hosts
+2023-05-22 16:02:28,423 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:30,686 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:32,910 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:35,193 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:37,629 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:39,956 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:44,381 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:48,553 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:53,247 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:55,924 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:02:58,543 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:01,481 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:04,299 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:06,741 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:09,139 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:11,675 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:14,300 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:16,680 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:19,273 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:21,748 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:24,304 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:26,843 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:29,415 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:31,737 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:34,295 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:36,745 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:38,963 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:41,616 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:44,177 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:47,048 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:49,496 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:52,827 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:55,720 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:03:58,035 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:00,608 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:03,244 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:06,013 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:08,516 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:11,027 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:13,480 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:15,809 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:17,774 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:19,698 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:22,076 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:24,340 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:26,644 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:28,861 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:30,976 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:33,261 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:04:35,927 -  nornir.core -     INFO -        run() - Running task 'NS' with args {} on 1 hosts
+2023-05-22 16:04:57,270 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:05:01,695 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts
+2023-05-22 16:05:05,081 -  nornir.core -     INFO -        run() - Running task 'HW' with args {} on 1 hosts

@@ -177,6 +177,8 @@ interface GigabitEthernet1/0/10
  port default vlan 605
 #
 interface GigabitEthernet1/0/11
+ description dT:NB-NongYeYingHang
+ port default vlan 600
 #
 interface GigabitEthernet1/0/12
 #

@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-05-17 10:01:38+00:00 by 51en
-!Last configuration was saved at 2023-01-31 17:06:17+00:00 by 51en
+!Last configuration was updated at 2023-03-15 09:05:33+00:00 by 51en
+!Last configuration was saved at 2023-03-15 08:05:53+00:00 by 51en
 #
 sysname FD4-D02&D04-CE6850-1
 #
@@ -98,7 +98,7 @@ interface Eth-Trunk7
  mode lacp-dynamic
 #
 interface Eth-Trunk8
- description dT:D02-C713GM2-bond0
+ description dT:D02-818203056-bound0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -108,12 +108,12 @@ interface Eth-Trunk9
  mode lacp-dynamic
 #
 interface Eth-Trunk10
- description dT:D02-2102310YQC10J4002804:bond0
+ description dT:D02-818203061-bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk11
- description dT:D02-2102310YQC10J4002802:bond0
+ description dT:D02-818203062-bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -123,17 +123,17 @@ interface Eth-Trunk12
  mode lacp-dynamic
 #
 interface Eth-Trunk13
- description dT:D02-CJR8YM2-bound0
+ description dT:D02-818203063-bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk14
- description dT:D02-1GPNF52-bound0
+ description dT:D02-218455649-bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk15
- description dT:D02-CJQCYM2-bound0
+ description dT:D02-218445423-bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -360,7 +360,7 @@ interface 10GE1/0/37
  port default vlan 100
 #
 interface 10GE1/0/38
- description dT:D02-C713GM2-MGMT
+ description dT:D02-818203056-MGMT
  port default vlan 100
 #
 interface 10GE1/0/39
@@ -368,11 +368,11 @@ interface 10GE1/0/39
  port default vlan 100
 #
 interface 10GE1/0/40
- description dT:D02-2102310YQC10J4002804:MGMT
+ description dT:D02-818203061-MGMT
  port default vlan 100
 #
 interface 10GE1/0/41
- description dT:D02-2102310YQC10J4002802:MGMT
+ description dT:D02-818203062-MGMT
  port default vlan 100
 #
 interface 10GE1/0/42
@@ -380,15 +380,15 @@ interface 10GE1/0/42
  port default vlan 100
 #
 interface 10GE1/0/43
- description dT:D02-CJR8YM2-MGMT
+ description dT:D02-818203063-MGMT
  port default vlan 100
 #
 interface 10GE1/0/44
- description dT:D02-1GPNF52-MGMT
+ description dT:D02-218455649-MGMT
  port default vlan 100
 #
 interface 10GE1/0/45
- description dT:D02-CJQCYM2-MGMT
+ description dT:D02-218445423-MGMT
  port default vlan 100
 #
 interface 10GE1/0/46

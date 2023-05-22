@@ -1,0 +1,306 @@
+!Software Version V200R010C00SPC600
+#
+sysname XY-2F-E11-S5720-255.249
+#
+info-center loghost source Vlanif9
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.226.32
+#
+vlan batch 9 to 20
+#
+authentication-profile name default_authen_profile
+authentication-profile name dot1x_authen_profile
+authentication-profile name mac_authen_profile
+authentication-profile name portal_authen_profile
+authentication-profile name dot1xmac_authen_profile
+authentication-profile name multi_authen_profile
+#
+lldp enable
+#
+diffserv domain default
+#
+radius-server template default
+#
+acl number 3000  
+ rule 5 permit icmp destination 12.1.1.72 0 
+#
+traffic classifier liutong operator and
+ if-match acl 3000
+#
+traffic behavior liutong
+ statistic enable
+#
+traffic policy liutong match-order config
+ classifier liutong behavior liutong
+#
+free-rule-template name default_free_rule
+#
+portal-access-profile name portal_access_profile
+#
+drop-profile default
+#
+vlan 9
+ name mgmt
+vlan 11
+ description to-MT-bank
+vlan 12
+ name BH-bank
+vlan 13
+ name JJ-bank
+vlan 14
+ name icbc
+vlan 15
+ name NJ-bank
+vlan 16
+ name CJ-bank
+vlan 17
+ description to-SHYL-njbank
+vlan 18
+ name TJ-bank
+vlan 19
+ name bx-bank
+#
+aaa
+ authentication-scheme default
+ authentication-scheme radius
+  authentication-mode radius
+ authorization-scheme default
+ accounting-scheme default
+ domain default
+  authentication-scheme radius
+  radius-server default
+ domain default_admin
+  authentication-scheme default
+ local-user 51en password irreversible-cipher $1a$;m1'@|:to#$ZMwYU0-o<"_p{))K&[J6wji*3S@6O./OAMT_E3[W$
+ local-user 51en privilege level 15
+ local-user 51en service-type terminal ssh
+ local-user 51nb password irreversible-cipher $1a$r1TwY8SCL.$Phmg/Ag)N-'8#AC5rA$9`8s#Xyg0z!v|C=7*f%*O$
+ local-user 51nb privilege level 15
+ local-user 51nb service-type ssh
+ local-user admin password irreversible-cipher $1a$BI[`5H[[GU$Ln/i2rGhR$=0[-'1RzN"h58_4~;2CZQ\WJK/bQ\H$
+ local-user admin privilege level 15
+ local-user admin service-type terminal http
+ local-user maxusheng password irreversible-cipher $1a$#xwJOX"e+7$Rxw##&O)qG!lk0FdXz:9&_+aCbg+H-]d\b:Wv)01$
+ local-user maxusheng privilege level 15
+ local-user maxusheng service-type ssh
+#
+interface Vlanif1
+#
+interface Vlanif9
+ ip address 172.16.255.249 255.255.255.248
+#
+interface Vlanif17
+ ip address 10.231.1.69 255.255.255.248
+#
+interface MEth0/0/1
+ ip address 192.168.0.2 255.255.255.0
+#
+interface Eth-Trunk1
+ description uT:bank-FW1-172.16.193.6:()Eth-trunk1
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface Eth-Trunk2
+ description uT:bank-FW1-172.16.193.7:()Eth-trunk1
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
+#
+interface GigabitEthernet0/0/1
+ description to-BJ-bank
+ shutdown
+ port default vlan 10
+#
+interface GigabitEthernet0/0/2
+ undo negotiation auto
+ speed 100
+ description to-MT-bank
+#
+interface GigabitEthernet0/0/3
+ undo negotiation auto
+ speed 100
+ description to-BH-bank
+ port default vlan 12
+#
+interface GigabitEthernet0/0/4
+ description to-JJ-bank
+ port default vlan 13
+#
+interface GigabitEthernet0/0/5
+ description to-ICBC
+ port default vlan 14
+ traffic-policy liutong inbound
+ traffic-policy liutong outbound
+#
+interface GigabitEthernet0/0/6
+ description to-NJ-bank
+ port default vlan 15
+#
+interface GigabitEthernet0/0/7
+ description to-CJ-bank
+ port default vlan 16
+#
+interface GigabitEthernet0/0/8
+ description to-TJ-bank
+ port default vlan 18
+#
+interface GigabitEthernet0/0/9
+ undo negotiation auto
+ speed 100
+ description to-SH-YL
+ port default vlan 17
+#
+interface GigabitEthernet0/0/10
+ description bx-bank-mstp-to-beijin
+ port default vlan 19
+#
+interface GigabitEthernet0/0/11
+ description to:DongHai
+ port default vlan 20
+#
+interface GigabitEthernet0/0/12
+#
+interface GigabitEthernet0/0/13
+#
+interface GigabitEthernet0/0/14
+#
+interface GigabitEthernet0/0/15
+#
+interface GigabitEthernet0/0/16
+#
+interface GigabitEthernet0/0/17
+#
+interface GigabitEthernet0/0/18
+#
+interface GigabitEthernet0/0/19
+#
+interface GigabitEthernet0/0/20
+#
+interface GigabitEthernet0/0/21
+#
+interface GigabitEthernet0/0/22
+#
+interface GigabitEthernet0/0/23
+#
+interface GigabitEthernet0/0/24
+#
+interface GigabitEthernet0/0/25
+#
+interface GigabitEthernet0/0/26
+#
+interface GigabitEthernet0/0/27
+ description uT:bank-FW1-172.16.193.6:(local)GE1/0/6
+ eth-trunk 1
+#
+interface GigabitEthernet0/0/28
+ description uT:bank-FW1-172.16.193.7:(local)GE1/0/6
+ eth-trunk 2
+#
+interface GigabitEthernet1/0/1
+#
+interface GigabitEthernet1/0/2
+#
+interface GigabitEthernet1/0/3
+#
+interface GigabitEthernet1/0/4
+#
+interface GigabitEthernet1/0/5
+#
+interface GigabitEthernet1/0/6
+#
+interface GigabitEthernet1/0/7
+#
+interface GigabitEthernet1/0/8
+#
+interface GigabitEthernet1/0/9
+#
+interface GigabitEthernet1/0/10
+#
+interface GigabitEthernet1/0/11
+#
+interface GigabitEthernet1/0/12
+#
+interface GigabitEthernet1/0/13
+#
+interface GigabitEthernet1/0/14
+#
+interface GigabitEthernet1/0/15
+#
+interface GigabitEthernet1/0/16
+#
+interface GigabitEthernet1/0/17
+#
+interface GigabitEthernet1/0/18
+#
+interface GigabitEthernet1/0/19
+#
+interface GigabitEthernet1/0/20
+#
+interface GigabitEthernet1/0/21
+#
+interface GigabitEthernet1/0/22
+#
+interface GigabitEthernet1/0/23
+#
+interface GigabitEthernet1/0/24
+#
+interface GigabitEthernet1/0/25
+#
+interface GigabitEthernet1/0/26
+#
+interface GigabitEthernet1/0/27
+ description uT:bank-FW1-172.16.193.6:(local)GE1/0/7
+ eth-trunk 1
+#
+interface GigabitEthernet1/0/28
+ description uT:bank-FW1-172.16.193.7:(local)GE1/0/7
+ eth-trunk 2
+#
+interface XGigabitEthernet0/0/1
+#
+interface XGigabitEthernet0/0/2
+#
+interface XGigabitEthernet0/0/3
+#
+interface XGigabitEthernet0/0/4
+#
+interface XGigabitEthernet1/0/1
+#
+interface XGigabitEthernet1/0/2
+#
+interface XGigabitEthernet1/0/3
+#
+interface XGigabitEthernet1/0/4
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 172.16.255.250
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03C4FF1FF106D0
+snmp-agent community read cipher %^%#^,UTKqeWJ*|>#[V>]UP=Spu<!a%adJ-Y{n"etuuG5gzMOXknZIox[O8=-r->2^z'8&#%9PL&}Z3`&4`Q%^%#
+snmp-agent sys-info version all
+#
+stelnet server enable
+ssh user 51en
+ssh user 51en authentication-type password
+ssh user 51en service-type stelnet
+ssh user maxusheng
+ssh user maxusheng authentication-type password
+ssh user maxusheng service-type stelnet
+#
+sflow collector 2 ip 172.16.208.32
+#
+user-interface con 0
+ authentication-mode aaa
+user-interface vty 0 4
+ authentication-mode aaa
+ user privilege level 15
+user-interface vty 16 20
+#
+dot1x-access-profile name dot1x_access_profile
+#
+mac-access-profile name mac_access_profile
+#
+return

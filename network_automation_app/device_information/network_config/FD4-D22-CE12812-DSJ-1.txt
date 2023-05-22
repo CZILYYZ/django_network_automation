@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-08-26 15:47:47+08:00 by 51en
-!Last configuration was saved at 2023-02-23 14:39:17+08:00 by 51en
+!Last configuration was updated at 2023-03-27 13:27:46+08:00 by 51en
+!Last configuration was saved at 2023-03-24 18:34:19+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -637,8 +637,6 @@ interface NULL0
 #
 bgp 65533
  router-id 51.51.51.100
- peer 172.16.28.230 as-number 64001
- peer 172.16.28.230 connect-interface LoopBack0
  peer 172.16.29.101 as-number 64001
  peer 172.16.29.101 connect-interface LoopBack0
  peer 172.16.29.102 as-number 64001
@@ -715,9 +713,6 @@ bgp 65533
  ipv4-family unicast
   reflector cluster-id 100
   peer 51.51.51.101 enable
-  peer 172.16.28.230 enable
-  peer 172.16.28.230 route-policy fd-k8s-route-filter import
-  peer 172.16.28.230 route-policy k8s-route-export-filter-all export
   peer 172.16.29.101 enable
   peer 172.16.29.101 route-policy fd-k8s-route-filter import
   peer 172.16.29.101 route-policy k8s-route-export-filter-all export

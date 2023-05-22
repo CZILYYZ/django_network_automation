@@ -1,10 +1,10 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-02-21 11:10:26+08:00 by 51en
-!Last configuration was saved at 2023-02-21 11:10:29+08:00 by 51en
+!Last configuration was updated at 2023-04-19 14:34:35+08:00 by 51en
+!Last configuration was saved at 2023-04-19 14:34:38+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
-sysname XY-2F-C05&C06-CE8860
+sysname XY-2F-C05&C06-CE6800
 #
 info-center loghost source LoopBack0
 info-center loghost 172.16.226.32
@@ -24,7 +24,7 @@ ntp ipv6 server disable
 ntp unicast-server 172.16.152.20
 ntp unicast-server 172.16.152.21
 #
-vlan batch 2402 to 2403
+vlan batch 2401 to 2404
 #
 dhcp enable
 #
@@ -59,7 +59,7 @@ traffic classifier DSJ-Pod type or
 #
 traffic behavior DSJ-Pod
  statistics enable
- car cir 200 mbps green pass yellow discard red discard
+ car cir 200 mbps green pass yellow pass red discard
 #
 traffic policy DSJ-Pod
  classifier DSJ-Pod behavior DSJ-Pod precedence 5
@@ -96,6 +96,14 @@ stack
  #
  stack member 2 domain 10
 #
+interface Vlanif2401
+ ip address 172.16.240.1 255.255.255.224
+ ip address 172.26.240.1 255.255.255.224 sub
+ icmp name redirect receive disable
+ dhcp select relay
+ dhcp relay binding server ip 172.16.55.11
+ dhcp relay gateway 172.26.240.1
+#
 interface Vlanif2402
  ip address 172.16.240.33 255.255.255.224
  ip address 172.26.240.33 255.255.255.224 sub
@@ -111,6 +119,15 @@ interface Vlanif2403
  dhcp select relay
  dhcp relay binding server ip 172.16.55.11
  dhcp relay gateway 172.26.240.33
+#
+interface Vlanif2404
+ shutdown
+ ip address 172.16.240.97 255.255.255.224
+ ip address 172.26.240.97 255.255.255.224 sub
+ icmp name redirect receive disable
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.240.97
 #
 interface MEth0/0/0
  ip address 192.168.1.1 255.255.255.0
@@ -183,16 +200,14 @@ interface Eth-Trunk18
 #
 interface Eth-Trunk19
  description dT:C06-2102310YPY10J4002591-bond0
- undo enable snmp trap updown
- port default vlan 2402
+ port default vlan 2401
  mode lacp-dynamic
  traffic-policy DSJ-Pod inbound 
  traffic-policy DSJ-Pod outbound 
 #
 interface Eth-Trunk20
  description to-C05-R630-k8s-193.136-bond
- shutdown
- port default vlan 2402
+ port default vlan 2401
  mode lacp-dynamic
  traffic-policy DSJ-Pod inbound 
  traffic-policy DSJ-Pod outbound 
@@ -255,7 +270,7 @@ interface Eth-Trunk37
 #
 interface Eth-Trunk38
  description to-C06-R720-k8s-193.129-bond
- port default vlan 2402
+ port default vlan 2401
  mode lacp-dynamic
 #
 interface Eth-Trunk39
@@ -274,8 +289,7 @@ interface Eth-Trunk40
 #
 interface Eth-Trunk41
  description to-C06-R630-k8s-193.132-bond
- undo enable snmp trap updown
- port default vlan 2402
+ port default vlan 2401
  mode lacp-dynamic
  traffic-policy DSJ-Pod inbound 
  traffic-policy DSJ-Pod outbound 
@@ -307,14 +321,14 @@ interface Eth-Trunk45
 #
 interface Eth-Trunk46
  description dT:C05-GYM4YM2-bond0
- port default vlan 2402
+ port default vlan 2401
  mode lacp-dynamic
  traffic-policy DSJ-Pod inbound 
  traffic-policy DSJ-Pod outbound 
 #
 interface Eth-Trunk47
  description dT:C05-R630-k8s-172.16.241.5
- port default vlan 2402
+ port default vlan 2401
  mode lacp-dynamic
 #
 interface Eth-Trunk48
@@ -484,7 +498,6 @@ interface 10GE1/0/18
 #
 interface 10GE1/0/19
  description to-C05-R630-k8s-193.136-eth0
- shutdown
  eth-trunk 20
 #
 interface 10GE1/0/20
@@ -539,8 +552,7 @@ interface 10GE1/0/34
  eth-trunk 21
 #
 interface 10GE1/0/35
- shutdown
- eth-trunk 20
+ eth-trunk 47
 #
 interface 10GE1/0/36
  eth-trunk 53
@@ -657,7 +669,6 @@ interface 10GE2/0/18
 #
 interface 10GE2/0/19
  description to-C05-R630-k8s-193.136-eth1
- shutdown
  eth-trunk 20
 #
 interface 10GE2/0/20
@@ -712,8 +723,7 @@ interface 10GE2/0/34
  eth-trunk 21
 #
 interface 10GE2/0/35
- shutdown
- eth-trunk 20
+ eth-trunk 47
 #
 interface 10GE2/0/36
  eth-trunk 53
@@ -813,6 +823,12 @@ interface NULL0
 #
 bgp 65535
  router-id 51.51.51.33
+ peer 172.16.240.6 as-number 65535
+ peer 172.16.240.7 as-number 65535
+ peer 172.16.240.13 as-number 65535
+ peer 172.16.240.14 as-number 65535
+ peer 172.16.240.15 as-number 65535
+ peer 172.16.240.16 as-number 65535
  peer 172.16.240.35 as-number 65535
  peer 172.16.240.36 as-number 65535
  peer 172.16.240.37 as-number 65535
@@ -837,10 +853,36 @@ bgp 65535
  #
  ipv4-family unicast
   network 51.51.51.33 255.255.255.255
+  network 172.16.240.0 255.255.255.224
   network 172.16.240.32 255.255.255.224
   network 172.16.241.0 255.255.255.224
+  network 172.26.240.0 255.255.255.224
   network 172.26.240.32 255.255.255.224
   maximum load-balancing 2  
+  peer 172.16.240.6 enable
+  peer 172.16.240.6 route-policy xy-k8s-route-filter import
+  peer 172.16.240.6 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.6 reflect-client
+  peer 172.16.240.7 enable
+  peer 172.16.240.7 route-policy xy-k8s-route-filter import
+  peer 172.16.240.7 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.7 reflect-client
+  peer 172.16.240.13 enable
+  peer 172.16.240.13 route-policy xy-k8s-route-filter import
+  peer 172.16.240.13 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.13 reflect-client
+  peer 172.16.240.14 enable
+  peer 172.16.240.14 route-policy xy-k8s-route-filter import
+  peer 172.16.240.14 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.14 reflect-client
+  peer 172.16.240.15 enable
+  peer 172.16.240.15 route-policy xy-k8s-route-filter import
+  peer 172.16.240.15 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.15 reflect-client
+  peer 172.16.240.16 enable
+  peer 172.16.240.16 route-policy xy-k8s-route-filter import
+  peer 172.16.240.16 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.16 reflect-client
   peer 172.16.240.35 enable
   peer 172.16.240.35 route-policy xy-k8s-route-filter import
   peer 172.16.240.35 route-policy k8s-route-export-filter-all export

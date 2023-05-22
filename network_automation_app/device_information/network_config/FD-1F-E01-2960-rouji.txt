@@ -1,9 +1,9 @@
 Building configuration...
 
-Current configuration : 9545 bytes
+Current configuration : 9704 bytes
 !
-! Last configuration change at 16:20:17 GMT Thu Feb 23 2023 by 51en
-! NVRAM config last updated at 16:20:18 GMT Thu Feb 23 2023 by 51en
+! Last configuration change at 13:50:33 GMT Mon May 15 2023 by 51en
+! NVRAM config last updated at 19:31:15 GMT Thu Mar 2 2023 by 51en
 !
 version 15.0
 no service pad
@@ -70,7 +70,7 @@ crypto pki certificate chain TP-self-signed-2909635584
 !
 spanning-tree mode pvst
 spanning-tree extend system-id
-no spanning-tree vlan 111,200,222-226,1109-1121
+no spanning-tree vlan 2-4,6,8-9,111,200,222-226,1109-1121
 !
 !
 !
@@ -79,7 +79,7 @@ no spanning-tree vlan 111,200,222-226,1109-1121
 !
 vlan internal allocation policy ascending
 !
-vlan 5,7,10,100,102-105,111,200,210-217,219-226,251-252,1000-1001,1006-1122 
+vlan 2-10,100,102-105,111,200,210-217,219-226,251-252,1000-1001,1006-1122 
 !
 ip ssh time-out 5
 ip ssh version 2
@@ -92,6 +92,8 @@ ip scp server enable
 interface Port-channel1
  description uT:FD-1F-E01-C3650-rouji:()Po2
  switchport mode trunk
+!
+interface Port-channel2
 !
 interface Port-channel3
  switchport mode trunk
@@ -332,6 +334,10 @@ interface GigabitEthernet1/0/39
  switchport mode access
 !
 interface GigabitEthernet1/0/40
+ description E02-10.253.254.43-B7YZ9C2-ETH1
+ switchport access vlan 222
+ switchport mode access
+ channel-group 20 mode active
 !
 interface GigabitEthernet1/0/41
 !

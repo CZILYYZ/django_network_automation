@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-02-23 12:00:01+00:00 by 51en
-!Last configuration was saved at 2023-01-31 17:10:58+00:00 by 51en
+!Last configuration was updated at 2023-04-24 09:05:12+00:00 by 51en
+!Last configuration was saved at 2023-04-24 09:15:40+00:00 by 51en
 #
 sysname FD-D14&D16-CE6850-1
 #
@@ -83,7 +83,7 @@ interface Eth-Trunk4
  mode lacp-dynamic
 #
 interface Eth-Trunk5
- description dT:D14-2102311QGK10H9000227-bound0
+ description dT:D14-818203081:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -98,12 +98,12 @@ interface Eth-Trunk7
  mode lacp-dynamic
 #
 interface Eth-Trunk8
- description dT:D14-818282938-bound0
+ description dT:D14-818203080:bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk9
- description dT:D14-818282939-bound0
+ description dT:818203084:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -158,7 +158,7 @@ interface Eth-Trunk19
  mode lacp-dynamic
 #
 interface Eth-Trunk20
- description dT:D16-2102311QGK10HB000400-bound0
+ description dT:D14-818203083:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -168,7 +168,7 @@ interface Eth-Trunk21
  mode lacp-dynamic
 #
 interface Eth-Trunk22
- description dT:D16-2102311QGK10HB000421-bound0
+ description dT:D16-818203079:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -183,7 +183,7 @@ interface Eth-Trunk24
  mode lacp-dynamic
 #
 interface Eth-Trunk25
- description dT:D16-2102311QGK10HB000419-bound0
+ description dT:D16-818203085:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -193,7 +193,7 @@ interface Eth-Trunk26
  mode lacp-dynamic
 #
 interface Eth-Trunk27
- description dT:D16-2102311QGK10HB000403-bound0
+ description dT:D16-818203089:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -345,7 +345,7 @@ interface 10GE1/0/38
  port default vlan 100
 #
 interface 10GE1/0/39
- description dT:D14-818282939-MGMT
+ description dT:818203084:MGMT
  port default vlan 100
 #
 interface 10GE1/0/40
@@ -457,6 +457,7 @@ interface 10GE2/0/24
  eth-trunk 26
 #
 interface 10GE2/0/25
+ eth-trunk 23
 #
 interface 10GE2/0/26
  eth-trunk 28
@@ -495,7 +496,7 @@ interface 10GE2/0/36
  port default vlan 100
 #
 interface 10GE2/0/37
- description dT:D16-2102311QGK10HB000421-MGMT
+ description dT:D16-818203079:MGMT
  port default vlan 100
 #
 interface 10GE2/0/38

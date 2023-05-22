@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-06-27 14:40:50+08:00 by 51en
-!Last configuration was saved at 2023-02-01 00:45:23+08:00 by 51en
+!Last configuration was updated at 2023-03-16 15:28:34+08:00 by 51en
+!Last configuration was saved at 2023-03-16 15:28:37+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -103,17 +103,16 @@ interface Eth-Trunk6
  mode lacp-dynamic
 #
 interface Eth-Trunk7
- description dT:D05-936LH42-172.16.28.202-bound0
+ description dT:D05-218455634-bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk8
- description dT:D05-8BSQQ42-172.16.28.203-bound0
+ description dT:D05-218455644-bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk9
- description dT:D05-6834HJ2-172.16.28.136-bound0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -128,7 +127,7 @@ interface Eth-Trunk11
  mode lacp-dynamic
 #
 interface Eth-Trunk12
- description dT:D05-6811HJ2-172.16.28.139-bound0
+ description dT:D05-2102310YPY10J4002595:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -183,7 +182,7 @@ interface Eth-Trunk22
  mode lacp-dynamic
 #
 interface Eth-Trunk23
- description dT:D07-6822HJ2-172.16.28.149:bond0
+ description dT:D05-218455659:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -198,7 +197,7 @@ interface Eth-Trunk25
  mode lacp-dynamic
 #
 interface Eth-Trunk26
- description dT:D07-DJMRYC2:bond0
+ description dT:D07-218455651-bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -213,22 +212,22 @@ interface Eth-Trunk28
  mode lacp-dynamic
 #
 interface Eth-Trunk29
- description dT:D07-9WJ5GM2-172.16.30.10:bond0
+ description dT:D07-BXD8GM2-bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk30
- description dT:D07-2102310YQC10J4002805:bond0
+ description dT:D07-BXL5GM2-bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk31
- description dT:D07-C731KL2-172.16.28.204-bound0
+ description dT:D07-2102310YPY10J4002597-bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk32
- description dT:D07-2102310YQC10J4002800-bond0
+ description dT:D07-2102310YQC10J4002801:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -362,11 +361,11 @@ interface 10GE1/0/31
 interface 10GE1/0/32
 #
 interface 10GE1/0/33
- description dT:D07-9WJ5GM2-172.16.30.10:bond0
+ description dT:D07-BXD8GM2-MGMT
  port default vlan 100
 #
 interface 10GE1/0/34
- description dT:D07-2102310YQC10J4002805:MGMT
+ description dT:D07-BXL5GM2-MGMT
  port default vlan 100
 #
 interface 10GE1/0/35
@@ -386,15 +385,15 @@ interface 10GE1/0/38
  port default vlan 100
 #
 interface 10GE1/0/39
- description dT:D05-936LH42-172.16.15.35-MGMT
+ description dT:D05-218455634-MGMT
  port default vlan 100
 #
 interface 10GE1/0/40
- description dT:D05-8BSQQ42-172.16.15.167-MGMT
+ description dT:D05-218455644-MGMT
  port default vlan 100
 #
 interface 10GE1/0/41
- description dT:D05-6834HJ2-172.16.16.2-MGMT
+ description dT:D05-218445421-MGMT
  port default vlan 100
 #
 interface 10GE1/0/42
@@ -406,7 +405,7 @@ interface 10GE1/0/43
  port default vlan 100
 #
 interface 10GE1/0/44
- description dT:D07-819181778:MGMT
+ description dT:D05-2102310YPY10J4002587:MGMT
  port default vlan 100
 #
 interface 10GE1/0/45
@@ -550,11 +549,11 @@ interface 10GE2/0/31
 interface 10GE2/0/32
 #
 interface 10GE2/0/33
- description dT:D07-C731KL2-172.16.16.110-MGMT
+ description dT:D07-2102310YPY10J4002597-MGMT
  port default vlan 100
 #
 interface 10GE2/0/34
- description dT:D07-C73ZJL2-172.16.16.111-MGMT
+ description dT:D07-2102310YQC10J4002801:MGMT
  port default vlan 100
 #
 interface 10GE2/0/35
@@ -562,7 +561,7 @@ interface 10GE2/0/35
  port default vlan 100
 #
 interface 10GE2/0/36
- description dT:D05-CDXYJL2-172.16.16.123-MGMT
+ description dT:D05-2102310YPY10J4002595:MGMT
  port default vlan 100
 #
 interface 10GE2/0/37
@@ -586,7 +585,7 @@ interface 10GE2/0/41
  port default vlan 100
 #
 interface 10GE2/0/42
- description dT:D07-6822HJ2-172.16.28.149:bond0
+ description dT:D05-218455659:MGMT
  port default vlan 100
 #
 interface 10GE2/0/43
@@ -598,7 +597,7 @@ interface 10GE2/0/44
  port default vlan 100
 #
 interface 10GE2/0/45
- description dT:D07-6844HJ2-172.16.28.146:bond0
+ description dT:D07-218455651-MGMT
  port default vlan 100
 #
 interface 10GE2/0/46

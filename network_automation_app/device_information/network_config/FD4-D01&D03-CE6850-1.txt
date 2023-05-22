@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-05-17 17:05:50+08:00 by 51en
-!Last configuration was saved at 2023-02-01 00:40:51+08:00 by 51en
+!Last configuration was updated at 2023-04-23 15:17:44+08:00 by 51en
+!Last configuration was saved at 2023-03-01 00:54:51+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -80,12 +80,12 @@ interface Eth-Trunk2
  ospf network-type p2p
 #
 interface Eth-Trunk3
- description dT:D01-F77V4X1-172.16.29.200-bound0
+ description dT:D01-818203059-bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk4
- description dT:D01-2WPMBD2-172.16.28.105:bond0
+ description dT:D01-818203060-bound0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -312,7 +312,7 @@ interface 10GE1/0/19
 #
 interface 10GE1/0/20
  description dT:D03-JK26J92-172.16.28.40-eth0
- eth-trunk 19
+ port default vlan 100
 #
 interface 10GE1/0/21
  description dT:D03-JK2FDB2-172.16.28.41-eth0
@@ -379,7 +379,7 @@ interface 10GE1/0/36
  port default vlan 100
 #
 interface 10GE1/0/37
- description dT:D01-2QC3KG2-172.16.28.125:bond0
+ description dT:D06-818203059-MGMT
  port default vlan 100
 #
 interface 10GE1/0/38
@@ -399,7 +399,7 @@ interface 10GE1/0/41
  port default vlan 100
 #
 interface 10GE1/0/42
- description dT:D01-8SFK5K2-172.16.16.42-MGMT
+ description dT:D01-818203060-MGMMT
  port default vlan 100
 #
 interface 10GE1/0/43
@@ -416,7 +416,7 @@ interface 10GE1/0/45
 #
 interface 10GE1/0/46
  description dT:D03-CDYXJL2-172.16.28.191-eth0
- eth-trunk 32
+ port default vlan 100
 #
 interface 10GE1/0/47
  description dT:D03-CDW4KL2-172.16.28.188-eth0

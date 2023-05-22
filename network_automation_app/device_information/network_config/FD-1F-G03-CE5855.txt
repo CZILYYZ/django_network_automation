@@ -1,6 +1,6 @@
 !Software Version V200R001C00SPC700
-!Last configuration was updated at 2022-04-13 12:19:14+00:00 by 51en
-!Last configuration was saved at 2023-02-01 01:43:59+00:00 by 51en
+!Last configuration was updated at 2023-05-17 15:34:51+00:00 by 51en
+!Last configuration was saved at 2023-05-17 15:34:19+00:00 by 51en
 #
 sysname FD-1F-G03-CE5855
 #
@@ -84,10 +84,8 @@ interface Eth-Trunk12
  mode lacp-dynamic
 #
 interface Eth-Trunk13
- description to-G03-R630-3-ESXI
- port link-type trunk
- undo port trunk allow-pass vlan 1
- port trunk allow-pass vlan 2 to 4094
+ description to-docker-10.55
+ port default vlan 48
  mode lacp-dynamic
 #
 interface Eth-Trunk14
@@ -345,7 +343,7 @@ interface GE1/0/43
  stp edged-port enable
 #
 interface GE1/0/44
- description to-G03-R630-3-ESXI-MGMT
+ description to-docker-10.55/MGMT
  port default vlan 10
  stp edged-port enable
 #

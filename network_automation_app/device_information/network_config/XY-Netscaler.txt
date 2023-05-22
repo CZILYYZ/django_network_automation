@@ -1,5 +1,5 @@
 #NS11.1 Build 56.19
-# Last modified Fri Feb 24 14:45:47 2023
+# Last modified Mon May 22 16:26:58 2023
 set ns config -IPAddress 172.16.193.2 -netmask 255.255.255.0
 enable ns feature LB CS CMP CF OSPF REWRITE RESPONDER AppFlow
 enable ns mode L3 USIP MBF USNIP SRADV PMTUD
@@ -247,20 +247,18 @@ add lb vserver XY-CTC-2 ANY 0.0.0.0 0 -persistenceType DESTIP -lbMethod ROUNDROB
 add lb vserver rb-test ANY 115.238.29.15 443 -persistenceType NONE -cltTimeout 120
 add lb vserver enniu-jmail TCP 115.238.29.16 25 -persistenceType NONE -cltTimeout 9000
 add lb vserver drop_internet_vs ANY 0.0.0.0 0 -persistenceType NONE -cltTimeout 120
-add lb vserver ipv6-test TCP 2409:8c28:202:a::1 80 -persistenceType NONE -cltTimeout 9000
 add lb vserver 117.148.143.80-u51.com HTTP 117.148.143.80 80 -persistenceType NONE -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -cltTimeout 180
 add lb vserver 117.148.143.80-u51.com-443 TCP 117.148.143.80 443 -persistenceType NONE -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -cltTimeout 9000
-add lb vserver financial-sftp TCP 115.238.29.10 50022 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(14.18.232.140/32)||CLIENT.IP.SRC.IN_SUBNET(27.221.51.74/32)||CLIENT.IP.SRC.IN_SUBNET(39.170.34.155/32)||CLIENT.IP.SRC.IN_SUBNET(39.170.64.251/32)" -cltTimeout 9000
-add lb vserver 115.238.29.10-3542 TCP 115.238.29.10 3542 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
-add lb vserver 115.238.29.10-3606 TCP 115.238.29.10 3606 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
-add lb vserver 115.238.29.10-3607 TCP 115.238.29.10 3607 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(139.196.100.67/32)||CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
-add lb vserver 115.238.29.10-3608 TCP 115.238.29.10 3608 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
-add lb vserver 115.238.29.10-3609 TCP 115.238.29.10 3609 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3542 TCP 115.238.29.10 3542 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)||CLIENT.IP.SRC.IN_SUBNET(47.100.48.46/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3606 TCP 115.238.29.10 3606 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)||CLIENT.IP.SRC.IN_SUBNET(47.100.48.46/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3607 TCP 115.238.29.10 3607 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(139.196.100.67/32)||CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)||CLIENT.IP.SRC.IN_SUBNET(47.100.48.46/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3608 TCP 115.238.29.10 3608 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)||CLIENT.IP.SRC.IN_SUBNET(47.100.48.46/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3609 TCP 115.238.29.10 3609 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)||CLIENT.IP.SRC.IN_SUBNET(47.100.48.46/32)" -cltTimeout 9000
 add lb vserver GNH-LVS-80 HTTP 115.238.29.13 80 -persistenceType NONE -cltTimeout 180
 add lb vserver GNH-LVS-443 TCP 115.238.29.13 443 -persistenceType NONE -cltTimeout 9000
 add lb vserver GNH-internet ANY 0.0.0.0 0 -persistenceType DESTIP -cltTimeout 120 -netProfile XY-CTC
-add lb vserver 115.238.29.10-3602 TCP 115.238.29.10 3602 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
-add lb vserver 115.238.29.10-3543 TCP 115.238.29.10 3543 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3602 TCP 115.238.29.10 3602 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)||CLIENT.IP.SRC.IN_SUBNET(47.100.48.46/32)" -cltTimeout 9000
+add lb vserver 115.238.29.10-3543 TCP 115.238.29.10 3543 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)||CLIENT.IP.SRC.IN_SUBNET(47.100.48.46/32)" -cltTimeout 9000
 add lb vserver u51.com-5349 UDP 115.238.29.11 5349 -persistenceType NONE -cltTimeout 120
 set cache parameter -via "NS-CACHE-10.0:   1"
 add cs vserver internet-out ANY * * -cltTimeout 120 -Listenpolicy "Client.IP.SRC.IN_SUBNET(172.16.192.0/18)||Client.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.26.192.0/18)||CLIENT.IP.SRC.IN_SUBNET(172.19.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.24.0.0/16)||Client.IP.SRC.IN_SUBNET(172.16.192.0/18)||Client.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.26.192.0/18)||CLIENT.IP.SRC.IN_SUBNET(172.19.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.24.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.16.197.0/24)" -Listenpriority 10
@@ -268,7 +266,6 @@ add cs action SQ-CMCC -targetLBVserver SQ-CMCC
 add cs action XY-CTC -targetLBVserver XT-CTC
 add cs action XY-CTC-2 -targetLBVserver XY-CTC-2
 add cs action drop_internet_action -targetLBVserver drop_internet_vs
-add cs action sftp -targetLBVserver financial-sftp
 add cs action GNH-internet -targetLBVserver XT-CTC
 add cs policy isp-any -rule "REQ.IP.SOURCEIP == 172.16.200.0 -netmask 255.255.255.0"
 add cs policy XY-CTC -rule "CLIENT.IP.SRC.IN_SUBNET(172.16.192.0/18)||CLIENT.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.19.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.24.0.0/16)" -action XY-CTC
@@ -279,8 +276,8 @@ add cs policy drop_internet -rule "CLIENT.IP.SRC.IN_SUBNET(172.16.196.0/24)||CLI
 add cs policy LSKF -rule "CLIENT.IP.SRC.IN_SUBNET(172.16.197.210/32)" -action XY-CTC
 add cs policy GNH-internet -rule "CLIENT.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.16.212.213/32)" -action GNH-internet
 set aaa parameter -maxAAAUsers 1000
-set ns rpcNode 172.16.193.2 -password 3fd944f9571619d6fa900e873deddebe709c7f2d9071e90f07cbb5ad449bb943a1c1279d13f3aaac0588882ca6db93a4 -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
-set ns rpcNode 172.16.193.3 -password 17304504f9e36be47484c03d72da982b1ca3f47ec4d7b8a6ecfb150454e07ea9c63f7c50075069abeb6da86436dea616 -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
+set ns rpcNode 172.16.193.2 -password 06abdc9dcfb2eb060cf2726accae63688eeb201782669dc78866414017413aed1bdd5501de2165e2db181e928628914c -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
+set ns rpcNode 172.16.193.3 -password 6909034f13398b353e5b5cad097201c015511fa7d9ea595b85e5fbf851bc6b4b1b623220495052c9bcc527954204c978 -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
 add audit syslogAction syslog 172.16.152.48 -logLevel ALL
 add audit syslogAction test-syslog 172.16.208.169 -serverPort 515 -logLevel ALL
 add audit syslogAction syslog-yyz 172.16.37.38 -logLevel ALL -dateFormat YYYYMMDD -logFacility LOCAL5
@@ -348,7 +345,7 @@ bind cache policylabel _resBuiltinDefaults -policyName _imageRes -priority 700 -
 bind cache policylabel _resBuiltinDefaults -policyName _personalizedRes -priority 800 -gotoPriorityExpression END
 bind cache global NOPOLICY -priority 185883 -gotoPriorityExpression USE_INVOCATION_RESULT -type REQ_DEFAULT -invoke policylabel _reqBuiltinDefaults
 bind cache global NOPOLICY -priority 185883 -gotoPriorityExpression USE_INVOCATION_RESULT -type RES_DEFAULT -invoke policylabel _resBuiltinDefaults
-set ns encryptionParams -method AES256 -keyValue 2372bdcb173afaee4aa8eb6e13036f84421a378743f6462f2d1b8f608ea32cb2e939de5f288893bd1218517926a53634f34112f3d6934a5fb1136880acc65535bb5f5a3e9bac9d0d67cd7f6eaa9a1efd -encrypted -encryptmethod ENCMTHD_3
+set ns encryptionParams -method AES256 -keyValue f0265562b3074e8b8a0a88a444f525737583c25cc00927674d0a649e394016750177cc3093f37a815f01825efb384da3d9b1d6012890bffa551db308c47598a30397ee31c42ba2cf32b56372b998347d -encrypted -encryptmethod ENCMTHD_3
 bind lb vserver XT-CTC XY-CTC
 bind lb vserver SQ-CMCC SQ-CMCC
 bind lb vserver SQ-CMCC SQ-CMCC-E06-12812
@@ -362,10 +359,8 @@ bind lb vserver u51.com-443 172.16.248.200-443
 bind lb vserver u51.com-443 172.16.248.202-443
 bind lb vserver XY-CTC-2 XY-CTC
 bind lb vserver rb-test 172.16.209.15
-bind lb vserver enniu-jmail enniu-jmail-172.16.208.135
 bind lb vserver enniu-jmail enniu-jmail-172.16.209.21
 bind lb vserver enniu-jmail 172.16.208.128-1125
-bind lb vserver enniu-jmail 172.16.208.79-1125
 bind lb vserver 117.148.143.80-u51.com 172.16.248.201-80
 bind lb vserver 117.148.143.80-u51.com 172.16.248.203-80
 bind lb vserver 117.148.143.80-u51.com 172.16.248.200-80
@@ -374,23 +369,19 @@ bind lb vserver 117.148.143.80-u51.com-443 172.16.248.201-443
 bind lb vserver 117.148.143.80-u51.com-443 172.16.248.203-443
 bind lb vserver 117.148.143.80-u51.com-443 172.16.248.200-443
 bind lb vserver 117.148.143.80-u51.com-443 172.16.248.202-443
-bind lb vserver 115.238.29.10-3542 172.16.197.107
 bind lb vserver 115.238.29.10-3542 172.16.197.24
 bind lb vserver 115.238.29.10-3606 172.16.197.104:3606
 bind lb vserver 115.238.29.10-3607 172.16.197.104:3607
 bind lb vserver 115.238.29.10-3608 172.16.197.104:3608
 bind lb vserver 115.238.29.10-3609 172.16.197.104:3609
-bind lb vserver GNH-LVS-80 172.21.9.113-80
 bind lb vserver GNH-LVS-80 172.21.9.114-80
 bind lb vserver GNH-LVS-80 172.21.9.115-80
-bind lb vserver GNH-LVS-443 172.21.9.113-443
 bind lb vserver GNH-LVS-443 172.21.9.114-443
 bind lb vserver GNH-LVS-443 172.21.9.115-443
 bind lb vserver GNH-internet XY-CTC
 bind lb vserver 115.238.29.10-3602 172.16.197.100-3602
 bind lb vserver 115.238.29.10-3543 172.16.197.24-3543
 bind lb vserver u51.com-5349 172.16.208.130-5349
-bind lb vserver financial-sftp -policyName sftp -priority 110
 bind lb vserver u51.com-80 -policyName af_policy_u51.com-80_172.16.190.223 -priority 99
 bind lb vserver u51.com-443 -policyName af_policy_u51.com-443_172.16.190.223 -priority 99
 bind cs vserver internet-out -policyName LSKF -priority 80

@@ -1,16 +1,21 @@
-!Software Version V200R001C00SPC700
-!Last configuration was updated at 2023-02-21 16:57:48+08:00 by 51en
-!Last configuration was saved at 2023-02-23 14:56:11+08:00 by 51en
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2023-04-19 16:00:00+08:00 by 51en
+!Last configuration was saved at 2022-02-23 19:35:04+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
-sysname FD-1F-C17-CE6850-test
+sysname FD-1F-C17-K8S-6850-stack
 #
-info-center loghost source Eth-Trunk1
-info-center loghost 172.16.35.192
 info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.226.32
+#
+port split dimension interface 40GE1/0/3
+port split dimension interface 40GE2/0/3
+#
+system resource standard
 #
 device board 1 board-type CE6850-48T6Q-HI
+device board 2 board-type CE6850-48T6Q-HI
 #
 drop-profile default
 #
@@ -18,283 +23,63 @@ dcb pfc
 #
 dcb ets-profile default
 #
-vlan batch 2 10 30 35 37 39 111 123 137 200
+ntp server disable
+ntp ipv6 server disable
+ntp unicast-server 192.168.59.177
+ntp unicast-server 192.168.59.178
 #
-rsa peer-public-key key_pc encoding-type openssh
- public-key-code begin
-  ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvQNvNQtNK86WwvSEBUT+02ypbHHapSp1WlJB+3k3oFS7
-  clWhWFx+sz198U3K5axq7RYQaZqW3Vlla7Xsz5yNHNiS9FCM5ePnEk0+4xZRTy1oz1yRSLPGhzCtWnGX
-  MhYx+R1uLnTOPcMPX6s2CAymt+5PrU3gVhUQSMUuiSmumC+9ZLVYEvP8qGZ0O2Qu0xCzCvpreodU8z/t
-  5UmKC3fhpNctB77LIw5I/3LC82OFP6zUQzd9y0qmGgamCj85+IvJjymOgR9Zj4nsmPndjvTFuzsGN7je
-  LfAqt3rvN9jFs/qZKZbDqCPZzB556YGW3qXX5vtypLp9nloR89pZ18dXVw== rsa-key
- public-key-code end
- peer-public-key end
-#
-rsa peer-public-key 172.10.0.2
- public-key-code begin
- 3082010A
-  02820101
-    00F21A9C F5263967 8400380A D5E90862 C9DD0DBD 94E9B917 42BE29B1 53620BC3
-    26C9D1BA 406932BA D96513B1 AB95E884 753368DD 06784C19 3675434A DB546CCF
-    CE823524 5425AA4A A1DE943D F7BE6A99 EF04BC94 218253D4 09AF0EE8 B6DA2AB8
-    74F28165 516C1A72 488C64F7 304C7A66 6D93EB96 64C17125 6DFD8B6D 4CA76551
-    06799AAF 95D460D3 8172926B 8130B334 E006EC92 ED6213E5 7542B6A9 01A1D4B4
-    3BFEE5EC 2F9DB216 B5CB3CA4 0B4E2CE2 0BFD7C14 8BB157D8 EBFB4644 02732863
-    61B65B2F 99D45FAE 9DB23FCB 5CB15017 F13EDA70 07493234 166C3485 694D9BEE
-    1F029FE6 BDFD90E7 7F4109C5 D2C3F70C 438D9DE1 B3434AED 43C33E91 999FF7D4
-    E1
-  0203
-    010001
- public-key-code end
- peer-public-key end
-#
-rsa peer-public-key 51.51.51.1
- public-key-code begin
- 3082010A
-  02820101
-    00CD6721 0E747EAF 42C3F1EC 307A8936 3DE119B1 DECC21F6 809D22B8 DC3DCB61
-    5CB04790 03D5680A B4399308 AEC999F2 D599C529 0396B8BB 5286054C AF64E9D6
-    00112271 C2877A44 FA46D968 85633FFF CD71CE4C AD082833 C3F47145 7DA02675
-    10DD19DC 45312687 858922F2 E339F5A1 5E6522B4 F23EDB8C B11BDE79 65CC9248
-    6E457B26 421C2A88 63208728 69DF8249 51E12262 B124E6F0 CDE01175 4E6EA5C8
-    868CC0D7 FFA485D8 9FD1DF3C F32E720B 96A58D84 3143BD99 3F3B132E C9F57BBC
-    BC3B0FAC E7E8A2A0 D64609D5 4A91154B FA5E3267 3562F7BE 9546C9A4 231873E3
-    EE379C7A 34578ACD 3F1D8AA6 EF432E90 1D043E63 3AB8F2D3 1228D1F7 19262702
-    97
-  0203
-    010001
- public-key-code end
- peer-public-key end
-#
-rsa peer-public-key 172.16.8.41
- public-key-code begin
- 308189
-  028181
-    00D105D1 B525A05B 28391D66 542ED860 C2928C13 E6D58788 7D1DC014 68D9C56E
-    CEA1AA6F 50EF7E65 BF8341D7 0729F5F9 6EDA9AE3 828E2F9F A36103BF 02E2D2A1
-    C9A086FA EE433ABA F0826F6E 3283C99E 9EEB30F2 27EEC394 E8D37A7C AD881EF1
-    61A4932A 9BC93A31 1EC6FCB9 D649975C 18E1D7B2 967A1D35 CE15509A A123D7C8
-    49
-  0203
-    010001
- public-key-code end
- peer-public-key end
-#
-rsa peer-public-key 172.16.128.9
- public-key-code begin
- 3068
-  0261
-    00B42597 717C4BDB DCA2074A 42EEA518 B5AE8D2A CEE7AB2A E96C7DBD EF2D1540
-    C662688F 12B76E56 75BF8173 1E561BE4 DC97FB47 6329C00C 3B803C5D 429332D9
-    91F7317B DD5B0E67 A23E8139 39D29EC4 20541A25 09C9C909 D474ED3A 03BC4ED9
-    A5
-  0203
-    010001
- public-key-code end
- peer-public-key end
-#
-rsa peer-public-key 172.16.37.34
- public-key-code begin
- 3082010A
-  02820101
-    00B7CFDC 0E641AF2 CBB0C9B8 37B3E906 5B8C3F11 F9DA7927 DA8F5B32 10B8D577
-    D1BD8546 7FF22DCF 546772B3 9770AF2A 385A583B 65DB7F98 C7EB0604 DDEDEA04
-    9299282E 702FED72 CFF8CC03 F58F91C6 BA98C640 275E4911 6E3AC74C 74127B47
-    59E5A22D F9FBDB92 D27B65A7 11E8E3E3 9E73EF42 6504DAE8 07F47FC3 AE3EEED4
-    A4E90E40 787ECB41 7880F974 080C56E3 948A99F2 74011003 BC770D6F 79996784
-    D1D45D70 CA3B255C C39C9721 F1F7A1C8 3084CADA 35085B2C B83573FD DF24DF87
-    16DDDA41 0435B968 F8233E41 46729CB5 6B71CE67 A67F6BAD FA0D82D4 F68C749D
-    D944C423 A8256F32 B1AAA756 05A26153 860B1612 F4FB08FA B6D441FB 64FA89D4
-    2D
-  0203
-    010001
- public-key-code end
- peer-public-key end
-#
-rsa peer-public-key 172.16.37.35
- public-key-code begin
- 3082010A
-  02820101
-    00CA1D1F 30128F38 F572CE79 7479EB87 1050CD07 8E5DDA30 DBC78963 16BA8FFA
-    4C207311 C21A8AC2 CC7510CC 3257228C 5100029C BA3533D5 C44DBD62 0D60D163
-    D7FE7F72 465AAACB D6F2E103 C8D37EA8 7577D09C 340870B5 D712003D 1408FB9B
-    8C65A4FC DCC4FC48 7C0C7569 85708EFD E2CCD891 3BDFFD2C 3DD40F2E 83FD5478
-    20321E79 E13A7965 C60A31A8 5C826A69 4A87EDDF 9CB792F3 E6A347A9 C77E0955
-    2483EBAC 6C657F06 FCE538D3 E29EA585 0C00D064 E5082BFB 1BE8AE3E 781AC849
-    83D9B336 454B0223 1992D12C CF0B8380 9AF5DAEC 2788BACC 506C251B 16440B02
-    2829315B C7FA632B B3DC79C1 5A553FBB 98D9F0CC 0E36E6FD E4B81DD3 5FBEEAD2
-    11
-  0203
-    010001
- public-key-code end
- peer-public-key end
-#
-rsa peer-public-key 172.16.37.49
- public-key-code begin
- 3082010A
-  02820101
-    00F21A9C F5263967 8400380A D5E90862 C9DD0DBD 94E9B917 42BE29B1 53620BC3
-    26C9D1BA 406932BA D96513B1 AB95E884 753368DD 06784C19 3675434A DB546CCF
-    CE823524 5425AA4A A1DE943D F7BE6A99 EF04BC94 218253D4 09AF0EE8 B6DA2AB8
-    74F28165 516C1A72 488C64F7 304C7A66 6D93EB96 64C17125 6DFD8B6D 4CA76551
-    06799AAF 95D460D3 8172926B 8130B334 E006EC92 ED6213E5 7542B6A9 01A1D4B4
-    3BFEE5EC 2F9DB216 B5CB3CA4 0B4E2CE2 0BFD7C14 8BB157D8 EBFB4644 02732863
-    61B65B2F 99D45FAE 9DB23FCB 5CB15017 F13EDA70 07493234 166C3485 694D9BEE
-    1F029FE6 BDFD90E7 7F4109C5 D2C3F70C 438D9DE1 B3434AED 43C33E91 999FF7D4
-    E1
-  0203
-    010001
- public-key-code end
- peer-public-key end
-#
-rsa peer-public-key 10.247.105.129
- public-key-code begin
- 3082010A
-  02820101
-    00D4FF45 68601C11 02362DB1 F3EB642E 48B8CA98 68DB9A67 C805F1A8 B09C8149
-    82C9F356 7571690B 12E91FAB 0FDA39B5 00C96B5F 7BBE9E1E D6F5C480 E7F8445C
-    0C07DCB3 86B5B055 39010491 A5A42F2C 571F5239 514C461E 3F917DDE 176C4207
-    77C21A9D 68DDB3CD D5AF638C BD2B63C5 6F11AC1B CAF57694 AC9E363A 7F1DA30F
-    14AD4E5B 3D19330A 31A8DBCF C88F3664 F9D66530 B7A1BE56 437AECE3 FA13CD32
-    FAD8B019 86D73245 24278008 B2B4C724 27465208 B5A9E369 333D1FF7 1B4F1150
-    D2A0C4F9 723F5AEF 54B7ABD2 131C4F55 65298789 FBBA6EAF CDBFB0A5 2C4B6751
-    9ED13F0B 680D9EA6 897C5068 7AC50F56 4712ABFC 5D204F96 518BA417 44BD2284
-    75
-  0203
-    010001
- public-key-code end
- peer-public-key end
-#
-dhcp enable
-#
-evpn-overlay enable
+vlan batch 38 44 to 45 50 55 100 502
 #
 telnet server disable
 telnet ipv6 server disable
 #
-qos car test-limit cir 10 mbps cbs 650 kbytes
-qos car test-limit-2 cir 8000 kbps pir 10000 kbps cbs 1000000 bytes pbs 1250000 bytes
-qos car test-limit-3 cir 10000 kbps pir 20000 kbps
-qos car test-limit-4 cir 10000 kbps cbs 80000 bytes pbs 80000 bytes
-qos car car_total cir 500000 kbps
-qos car DSJ-Pod-car-total cir 1600000 kbps
-#
-observe-port 1 interface 10GE1/0/6  
-#
 diffserv domain default
 #
-diffserv domain ds1
- 8021p-inbound 2 phb af1 red
- 8021p-inbound 5 phb af3 yellow
- 8021p-inbound 6 phb ef green
-#
-ip vpn-instance 35
- ipv4-family 
-  route-distinguisher 190:1
-  vpn-target 33:11 export-extcommunity
-  vpn-target 33:1 import-extcommunity
-#
-sdn agent
- controller-ip 172.16.9.233
-#
-vlan 111
- description 111
-#
-mpls
-#
-mpls ldp
- #
- ipv4-family
-#
-ip pool 38-dhcp
- gateway-list 172.16.38.1 
- network 172.16.38.0 mask 255.255.255.0
- option 67 cipher %^%#mV}46a4n#PTDj{E0lm7$D/g(EiInaEQ,K7P_*UQ.jc=d10-7`PplMMQQ)9(Xk]==Yc~S^+eo_^9iyC75%^%#
-#
-acl number 2000
- rule 5 permit source 172.16.208.208 0
- rule 100 deny
+acl number 2020
 #
 acl number 3000
- rule 10 permit ip source 172.16.37.0 0.0.0.255
- rule 15 permit ip destination 172.16.37.0 0.0.0.255
- rule 20 deny ip
+ rule 5 permit tcp source 172.16.50.254 0 destination 172.16.28.230 0 destination-port eq bgp
 #
-acl name DSJ-Pod advance
- rule 5 permit ip source 172.24.160.0 0.0.31.255
- rule 10 permit ip source 172.16.37.0 0.0.0.255
- rule 15 permit ip
- rule 20 deny ip
+acl number 3001
+ rule 5 permit tcp source 172.16.28.230 0 destination-port eq bgp
 #
-acl name calico-bgp advance
- rule 5 permit ip source 172.19.0.0 0.0.255.255
-#
-acl name k8s-route-export-filter-all advance
+acl name deny-all-export-router advance
  rule 5 deny ip
 #
 acl name k8s-route-filter advance
- rule 5 permit ip source 172.19.128.0 0.0.63.255
+ rule 5 permit ip source 172.19.0.0 0.0.15.255
 #
-acl name ospf-filter advance
- rule 5 permit ip source 51.51.51.11 0
- rule 10 deny ip
+acl name permit-all-export-router advance
+ rule 5 permit ip source 172.24.0.0 0.0.15.255
 #
-acl name qos advance
- rule 5 permit ip source 172.16.37.11 0 destination 172.16.37.12 0
-#
-acl name res-static advance
- rule 5 permit ip source 172.16.35.11 0
-#
-acl name vip-limit advance
- rule 5 permit ip source 10.254.0.0 0.0.255.255
-#
-keychain 1 mode absolute
- #
- key-id 1
-  key-string cipher %^%#9q'k8VE-(:G;w)ZrR@~Dvddx'Z/,tU[`%k/>Sb_C%^%#
-#
-traffic classifier DSJ-Pod type or
+traffic classifier test-in type or
  if-match acl 3000
 #
-traffic classifier c1 type or
- if-match dscp af21 
+traffic classifier test-out type or
+ if-match acl 3000
 #
-traffic classifier qos-test type or
- if-match acl qos
-#
-traffic behavior DSJ-Pod
+traffic behavior test-in
  statistics enable
- car cir 800000 kbps pir 1600000 kbps green pass yellow pass red discard
 #
-traffic behavior behavior1
- car cir 5000 kbps pir 6000 kbps green pass yellow pass red pass service-class be color green
- car car_total share
-#
-traffic behavior qos-test
+traffic behavior test-out
  statistics enable
- car cir 10000 kbps cbs 80000 bytes pbs 80000 bytes
 #
-traffic policy DSJ-Pod
- classifier DSJ-Pod behavior DSJ-Pod precedence 5
+traffic policy test-in
+ classifier test-in behavior test-in precedence 5
 #
-traffic policy qos-test
- classifier qos-test behavior qos-test precedence 5
+traffic policy test-out
+ classifier test-out behavior test-out precedence 5
 #
 aaa
- local-user policy password min-len 10
  undo local-user policy security-enhance
- local-user authentication lock times 3 5
- local-user 51nb password irreversible-cipher $1c$s[PNW6{1*$$1"#\V.nj_Il!HT+!d:2T]o8q#9ik#5'52wR@uuRU$
+ local-user 51nb password irreversible-cipher $1c$+VNpU5!^Z,$m)r03F{AkRtUj1R+h9)'@ob~S*3zY/q#OLBNiAND$
  local-user 51nb service-type ssh
  local-user 51nb level 3
- local-user jason password irreversible-cipher $1c$/dg=&n=O6V$Vm$=)SaHT!JYTmG2NDULAHxsBv!Q>@k:=}(+a$MB$
- local-user jason service-type ssh
- local-user jason level 3
- local-user mxs password irreversible-cipher $1c$>5PE%(,LCM$->(K6fc<`$"lTOWP``54o;Y]~7|U"B<c>l#=JBU($
- local-user mxs service-type ssh
- local-user mxs level 3
- local-user 51en password irreversible-cipher $1c$&m-y%7N"J3$bHO0LmuSUUc^uJGW\6*FO^dR2vUw~8G51qGNSz;#$
- local-user 51en service-type ftp ssh
+ local-user calicouser password irreversible-cipher $1c$oz^<*{d+!>${*Ri6RoW`96@Xv%`{5"PJdlv,[1r]:mhS#62XocM$
+ local-user calicouser service-type ssh
+ local-user calicouser level 3
+ local-user 51en password irreversible-cipher $1c$M=i6F&7!8Y$YE5[6lo50V%/\l8"(_c2tx*\>KP>NBeUMCU#^fo#$
+ local-user 51en service-type ssh
  local-user 51en level 3
  #
  authentication-scheme default
@@ -308,162 +93,102 @@ aaa
  domain default_admin
 #
 stack
+ #
+ stack member 1 domain 10
+ stack member 1 priority 200
+ #
+ stack member 2 domain 10
 #
-interface Vlanif2
- ip address 1.1.1.1 255.255.255.0
+interface Vlanif44
+ ip address 172.16.44.254 255.255.255.0
 #
-interface Vlanif35
- ip address 172.16.35.1 255.255.255.0
- ospf cost 2000
+interface Vlanif45
+ ip address 172.16.45.254 255.255.255.0
 #
-interface Vlanif37
- ip address 172.16.37.1 255.255.255.224
- dhcp select relay
- dhcp relay binding server ip 172.16.55.11
- dhcp relay gateway 172.16.37.1
+interface Vlanif50
+ ip address 172.16.50.254 255.255.255.0
 #
-interface Vlanif39
- ip address 172.16.37.33 255.255.255.224
- ip address 172.10.0.1 255.255.255.252 sub
- dhcp select relay
- dhcp relay binding server ip 172.16.37.34
- dhcp relay binding server ip 172.16.55.11
- dhcp relay gateway 172.16.37.33
-#
-interface Vlanif137
- ip address 172.16.37.129 255.255.255.192
- dhcp select relay
- dhcp relay binding server ip 172.16.37.130
- dhcp relay gateway 172.16.37.129
-#
-interface Vlanif200
- ip address 200.200.200.1 255.255.255.0
+interface Vlanif502
+ ip address 172.16.63.62 255.255.255.252
 #
 interface MEth0/0/0
 #
 interface Eth-Trunk1
- undo portswitch
- description uT:FD-1F-B08&C17-C4510:()Po37
- ip address 172.16.63.58 255.255.255.252
- ospf authentication-mode md5 1 cipher %^%#S)A4%3}yZA-KV36|S[;T-`PXHk;<y0k*bgDPu7%2%^%#
+ description uT:FD-1F-B08&C17-C4510:()Po79
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4094
  mode lacp-dynamic
- port-mirroring observe-port 1 inbound
- port-mirroring observe-port 1 outbound
+ traffic-policy test-in inbound 
+ traffic-policy test-out outbound 
 #
-interface Eth-Trunk2
- description dT:D03-F2NTLG2-bond0
- port default vlan 39
- mode lacp-dynamic
- traffic-policy DSJ-Pod inbound 
+interface Eth-Trunk5
 #
-interface Eth-Trunk3
- description dT:E03-F2TVLG2-bond0
- port default vlan 39
- mode lacp-dynamic
+interface Stack-Port1/1
 #
-interface Eth-Trunk15
+interface Stack-Port2/2
 #
 interface 10GE1/0/1
- description dT:D03-F2NTLG2-eth1:ESXI
- port default vlan 39
- traffic-policy DSJ-Pod inbound 
- traffic-policy DSJ-Pod outbound 
 #
 interface 10GE1/0/2
- description dT:D03-F2NTLG2-eth2
- shutdown
- eth-trunk 2
 #
 interface 10GE1/0/3
- description dT:E03-F2P0MG2-LVS-1
- port default vlan 39
 #
 interface 10GE1/0/4
- description LVS-1
- port default vlan 39
 #
 interface 10GE1/0/5
- description LVS-1
- port default vlan 39
 #
 interface 10GE1/0/6
- port link-type trunk
- port trunk allow-pass vlan 2 to 4094
 #
 interface 10GE1/0/7
- description LVS-2
- port default vlan 39
 #
 interface 10GE1/0/8
- description LVS-2
- port default vlan 39
 #
 interface 10GE1/0/9
 #
 interface 10GE1/0/10
 #
 interface 10GE1/0/11
- shutdown
 #
 interface 10GE1/0/12
- shutdown
 #
 interface 10GE1/0/13
- shutdown
 #
 interface 10GE1/0/14
- shutdown
 #
 interface 10GE1/0/15
- shutdown
 #
 interface 10GE1/0/16
- shutdown
 #
 interface 10GE1/0/17
- shutdown
 #
 interface 10GE1/0/18
- shutdown
 #
 interface 10GE1/0/19
- shutdown
 #
 interface 10GE1/0/20
- shutdown
 #
 interface 10GE1/0/21
- shutdown
 #
 interface 10GE1/0/22
- shutdown
 #
 interface 10GE1/0/23
- shutdown
 #
 interface 10GE1/0/24
- shutdown
 #
 interface 10GE1/0/25
- shutdown
 #
 interface 10GE1/0/26
- shutdown
 #
 interface 10GE1/0/27
- shutdown
 #
 interface 10GE1/0/28
- shutdown
 #
 interface 10GE1/0/29
- shutdown
 #
 interface 10GE1/0/30
- shutdown
 #
 interface 10GE1/0/31
- port default vlan 30
 #
 interface 10GE1/0/32
 #
@@ -472,16 +197,10 @@ interface 10GE1/0/33
 interface 10GE1/0/34
 #
 interface 10GE1/0/35
- description dT:D03-F2NTLG2-MGMT
- port default vlan 37
 #
 interface 10GE1/0/36
- description dT:E03-F2TVLG2-MGMT
- port default vlan 37
 #
 interface 10GE1/0/37
- description LVS-2-MGMT
- port default vlan 37
 #
 interface 10GE1/0/38
 #
@@ -496,36 +215,138 @@ interface 10GE1/0/42
 interface 10GE1/0/43
 #
 interface 10GE1/0/44
- port default vlan 39
 #
 interface 10GE1/0/45
- undo portswitch
- ip address 172.16.63.89 255.255.255.252
- mpls
- mpls ldp
 #
 interface 10GE1/0/46
- undo portswitch
- ip address 172.16.63.85 255.255.255.252
- mpls
- mpls ldp
 #
 interface 10GE1/0/47
- description uT:FD-1F-B08&C17-C4510:(local)GE2/2/12
- eth-trunk 1
 #
 interface 10GE1/0/48
- description uT:FD-1F-B08&C17-C4510:(local)GE1/2/12
- eth-trunk 1
+ dual-active detect mode direct
+#
+interface 10GE2/0/1
+#
+interface 10GE2/0/2
+#
+interface 10GE2/0/3
+#
+interface 10GE2/0/4
+#
+interface 10GE2/0/5
+#
+interface 10GE2/0/6
+#
+interface 10GE2/0/7
+#
+interface 10GE2/0/8
+#
+interface 10GE2/0/9
+#
+interface 10GE2/0/10
+#
+interface 10GE2/0/11
+#
+interface 10GE2/0/12
+#
+interface 10GE2/0/13
+#
+interface 10GE2/0/14
+#
+interface 10GE2/0/15
+#
+interface 10GE2/0/16
+#
+interface 10GE2/0/17
+#
+interface 10GE2/0/18
+#
+interface 10GE2/0/19
+#
+interface 10GE2/0/20
+#
+interface 10GE2/0/21
+#
+interface 10GE2/0/22
+#
+interface 10GE2/0/23
+#
+interface 10GE2/0/24
+#
+interface 10GE2/0/25
+#
+interface 10GE2/0/26
+#
+interface 10GE2/0/27
+#
+interface 10GE2/0/28
+#
+interface 10GE2/0/29
+#
+interface 10GE2/0/30
+#
+interface 10GE2/0/31
+#
+interface 10GE2/0/32
+#
+interface 10GE2/0/33
+#
+interface 10GE2/0/34
+#
+interface 10GE2/0/35
+#
+interface 10GE2/0/36
+#
+interface 10GE2/0/37
+#
+interface 10GE2/0/38
+#
+interface 10GE2/0/39
+#
+interface 10GE2/0/40
+#
+interface 10GE2/0/41
+#
+interface 10GE2/0/42
+#
+interface 10GE2/0/43
+#
+interface 10GE2/0/44
+#
+interface 10GE2/0/45
+#
+interface 10GE2/0/46
+#
+interface 10GE2/0/47
+#
+interface 10GE2/0/48
+ dual-active detect mode direct
 #
 interface 40GE1/0/1
+ port mode stack 
+ stack-port 1/1
  port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
 #
 interface 40GE1/0/2
+ port mode stack 
+ stack-port 1/1
  port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
 #
-interface 40GE1/0/3
- port crc-statistics trigger error-down
+interface 40GE1/0/3:1
+ description uT:FD-1F-B08&C17-C4510:(local)TE1/7/9
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/3:2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/3:3
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/3:4
+ device transceiver 40GBASE-FIBER
 #
 interface 40GE1/0/4
  port crc-statistics trigger error-down
@@ -536,125 +357,132 @@ interface 40GE1/0/5
 interface 40GE1/0/6
  port crc-statistics trigger error-down
 #
-interface LoopBack0
+interface 40GE2/0/1
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/2
+ port mode stack 
+ stack-port 2/2
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-COPPER
+#
+interface 40GE2/0/3:1
+ description uT:FD-1F-B08&C17-C4510:(local)TE2/7/9
+ eth-trunk 1
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/3:2
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/3:3
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/3:4
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE2/0/4
+#
+interface 40GE2/0/5
+#
+interface 40GE2/0/6
 #
 interface NULL0
 #
-bgp 63430
- router-id 172.16.63.58
- peer 172.10.0.2 as-number 63430
- peer 172.10.0.2 description LVS-1
- peer 172.16.37.45 as-number 63430
- peer 172.16.37.45 description LVS-2
+bgp 64001
+ peer 172.16.44.39 as-number 64100
+ peer 172.16.44.48 as-number 64100
+ peer 172.16.44.49 as-number 64100
+ peer 172.16.44.129 as-number 64001
+ peer 172.16.44.194 as-number 64001
+ peer 172.16.44.196 as-number 64001
+ peer 172.16.44.197 as-number 64001
+ peer 172.16.44.198 as-number 64001
+ peer 172.16.44.199 as-number 64001
+ peer 172.16.50.5 as-number 64001
+ peer 172.16.50.7 as-number 64001
+ peer 172.16.50.8 as-number 64001
+ peer 172.16.50.9 as-number 64001
+ peer 172.16.50.10 as-number 64001
  #
  ipv4-family unicast
-  preference 100 100 100
-  import-route ospf 200
-  maximum load-balancing 5  
-  peer 172.10.0.2 enable
-  peer 172.16.37.45 enable
+  maximum load-balancing ebgp 10  
+  peer 172.16.44.39 enable
+  peer 172.16.44.48 enable
+  peer 172.16.44.49 enable
+  peer 172.16.44.129 enable
+  peer 172.16.44.194 enable
+  peer 172.16.44.196 enable
+  peer 172.16.44.197 enable
+  peer 172.16.44.198 enable
+  peer 172.16.44.199 enable
+  peer 172.16.50.5 enable
+  peer 172.16.50.7 enable
+  peer 172.16.50.7 route-policy fd-k8s-route-filter import
+  peer 172.16.50.7 route-policy k8s-route-export-filter-all export
+  peer 172.16.50.7 reflect-client
+  peer 172.16.50.8 enable
+  peer 172.16.50.8 route-policy fd-k8s-route-filter import
+  peer 172.16.50.8 route-policy k8s-route-export-filter-all export
+  peer 172.16.50.8 reflect-client
+  peer 172.16.50.9 enable
+  peer 172.16.50.9 route-policy fd-k8s-route-filter import
+  peer 172.16.50.9 route-policy k8s-route-export-filter-all export
+  peer 172.16.50.9 reflect-client
+  peer 172.16.50.10 enable
+  peer 172.16.50.10 route-policy fd-k8s-route-filter import
+  peer 172.16.50.10 route-policy k8s-route-export-filter-all export
+  peer 172.16.50.10 reflect-client
 #
-ospf 200
- import-route bgp permit-ibgp
- area 0.0.0.0
-  network 172.16.35.0 0.0.0.255
-#
-route-policy bgproute-import permit node 10
- if-match acl calico-bgp
-#
-route-policy fd-k8s-route-filter permit node 100
- if-match acl calico-bgp
-#
-route-policy k8s-route-export-filter-all permit node 10
- if-match acl k8s-route-export-filter-all
-#
-route-policy res-static permit node 20
- if-match acl res-static
-#
-route-policy vip-limit permit node 10
- if-match acl vip-limit
-#
-route-policy vip-limit permit node 20
-#
-route-policy xy-k8s-route-filter permit node 10
+route-policy fd-k8s-route-filter permit node 10
  if-match acl k8s-route-filter
 #
-route-policy xy-k8s-route-filter deny node 20
+route-policy fd-k8s-route-filter deny node 20
 #
-ip route-static 0.0.0.0 0.0.0.0 172.16.63.57
-ip route-static 10.244.0.0 255.255.255.0 172.16.37.57
-ip route-static 10.244.1.0 255.255.255.0 172.16.37.58
-ip route-static 10.244.2.0 255.255.255.0 172.16.37.59
-ip route-static 10.244.3.0 255.255.255.0 172.16.37.60
+route-policy filter-all deny node 10
+#
+route-policy k8s-route-export-filter-all permit node 5
+ if-match acl permit-all-export-router
+#
+route-policy k8s-route-export-filter-all deny node 10
+#
+ip route-static 0.0.0.0 0.0.0.0 172.16.63.61
+#
+snmp-agent
+snmp-agent local-engineid 800007DB0328A6DB601FD1
+snmp-agent community read cipher %^%#UPpl9c:<L#z)>a<5.yoU0+4dTqf:>(M3;p4Z9IBOJJ=E;F#M2BtX7!R%ZEa,PQ{gK)XU<;`P)iNg5el#%^%#
+#
+snmp-agent sys-info version all
 #
 lldp enable
 #
-stelnet server enable
-snetconf server enable
+stelnet ipv4 server enable
+stelnet ipv6 server enable
 ssh user 51en
-ssh user 51en authentication-type all
-ssh user 51en assign rsa-key key_pc
+ssh user 51en authentication-type password
 ssh user 51en service-type stelnet
-ssh user jason
-ssh user jason authentication-type password
-ssh user jason service-type snetconf
-ssh user mxs
-ssh user mxs authentication-type password
-ssh user mxs service-type all
+ssh user calicouser
+ssh user calicouser authentication-type password
+ssh user calicouser service-type snetconf
 ssh authorization-type default aaa
 #
 ssh server cipher aes256_ctr aes128_ctr
 ssh server hmac sha2_256_96 sha2_256 sha1_96
 ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
 #
-ssh client first-time enable
-ssh client 10.247.105.129 assign rsa-key 10.247.105.129
-ssh client 172.10.0.2 assign rsa-key 172.10.0.2
-ssh client 172.16.128.9 assign rsa-key 172.16.128.9
-ssh client 172.16.37.34 assign rsa-key 172.16.37.34
-ssh client 172.16.37.35 assign rsa-key 172.16.37.35
-ssh client 172.16.37.49 assign rsa-key 172.16.37.49
-ssh client 172.16.8.41 assign rsa-key 172.16.8.41
-ssh client 51.51.51.1 assign rsa-key 51.51.51.1
-#
 user-interface con 0
 #
 user-interface vty 0 4
  authentication-mode aaa
- screen-length 0
+ protocol inbound ssh
 #
 netconf
  idle-timeout 1 20
- protocol inbound ssh port 830
-#
-port-group ce1
- group-member 10GE1/0/11
- group-member 10GE1/0/12
- group-member 10GE1/0/13
- group-member 10GE1/0/14
- group-member 10GE1/0/15
- group-member 10GE1/0/16
- group-member 10GE1/0/17
- group-member 10GE1/0/18
- group-member 10GE1/0/19
- group-member 10GE1/0/20
- group-member 10GE1/0/21
- group-member 10GE1/0/22
- group-member 10GE1/0/23
- group-member 10GE1/0/24
- group-member 10GE1/0/25
- group-member 10GE1/0/26
- group-member 10GE1/0/27
- group-member 10GE1/0/28
- group-member 10GE1/0/29
- group-member 10GE1/0/30
+ protocol inbound ssh ipv4 port 830
+ protocol inbound ssh ipv6 port 830
 #
 vm-manager
-#
-ops
- assistant saveconfig
-  execute 1 command display current-configuration FD-1F-E02-6850-test > FD-1F-E02-6850-test.txt
-  execute 2 command tftp 172.16.9.233 put  FD-1F-E02-6850-test.txt
-  condition timer cron 0 13 * * * *
 #
 return

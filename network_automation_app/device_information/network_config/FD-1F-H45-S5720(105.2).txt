@@ -1,6 +1,6 @@
 !Software Version V200R010C00SPC600
 #
-sysname FD-1F-H45-S5720(105.2)
+sysname FD-1F-G01-S5720(105.2)
 #
 info-center loghost 172.16.152.48
 #

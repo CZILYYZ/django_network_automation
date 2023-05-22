@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-05-16 12:37:21+00:00 by 51en
-!Last configuration was saved at 2023-02-01 02:09:09+00:00 by 51en
+!Last configuration was updated at 2023-05-17 16:46:01+00:00 by 51en
+!Last configuration was saved at 2023-05-17 16:48:49+00:00 by 51en
 #
 sysname FD-1F-G12-CE5855
 #
@@ -129,7 +129,6 @@ interface Eth-Trunk17
 #
 interface Eth-Trunk18
  description to-G12-R630-kvm-10.87-bond34
- shutdown
  port link-type trunk
  port trunk pvid vlan 15
  port trunk allow-pass vlan 2 to 4094
@@ -205,6 +204,11 @@ interface Eth-Trunk31
  port default vlan 48
  mode lacp-dynamic
 #
+interface Eth-Trunk32
+ description to-G05-R730-10-62-eth0_1
+ port default vlan 48
+ mode lacp-dynamic
+#
 interface Stack-Port1/1
 #
 interface Stack-Port1/2
@@ -244,8 +248,7 @@ interface GE1/0/7
 #
 interface GE1/0/8
  description to-G12-R630-kvm-10.87-eth2
- shutdown
- eth-trunk 18
+ port default vlan 10
 #
 interface GE1/0/9
  description to-G12-R630-CNMP-10.88-eth0
@@ -253,7 +256,7 @@ interface GE1/0/9
 #
 interface GE1/0/10
  description to-G12-inspur-gpu-10.89-eth0
- port default vlan 17
+ eth-trunk 32
 #
 interface GE1/0/11
  description to-G12-inspur-gpu-10.89-eth2
@@ -405,7 +408,6 @@ interface GE2/0/7
 #
 interface GE2/0/8
  description to-G12-R630-kvm-10.87-eth3
- shutdown
  eth-trunk 18
 #
 interface GE2/0/9
@@ -414,7 +416,7 @@ interface GE2/0/9
 #
 interface GE2/0/10
  description to-G12-inspur-gpu-10.89-eth1
- port default vlan 17
+ eth-trunk 32
 #
 interface GE2/0/11
  description to-G12-inspur-gpu-10.89-eth3

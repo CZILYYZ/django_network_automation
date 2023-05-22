@@ -1,8 +1,8 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-02-24 10:38:43+00:00 by 51en
-!Last configuration was saved at 2023-02-24 10:38:45+00:00 by 51en
+!Last configuration was updated at 2023-04-19 14:33:28+00:00 by 51en
+!Last configuration was saved at 2023-03-23 15:53:35+00:00 by 51en
 #
-sysname XY-2F-D03&D04-CE8860
+sysname XY-2F-D03&D04-CE6850
 #
 info-center loghost 172.16.226.32
 #
@@ -17,7 +17,7 @@ dcb pfc
 #
 dcb ets-profile default
 #
-vlan batch 2403
+vlan batch 2403 to 2404
 #
 stp disable
 #
@@ -113,6 +113,14 @@ interface Vlanif2403
  dhcp relay binding server ip 172.16.44.35
  dhcp relay gateway 172.26.240.129
 #
+interface Vlanif2404
+ ip address 172.16.240.97 255.255.255.224
+ ip address 172.26.240.97 255.255.255.224 sub
+ icmp name redirect receive disable
+ dhcp select relay
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.26.240.97
+#
 interface MEth0/0/0
 #
 interface Eth-Trunk0
@@ -171,7 +179,7 @@ interface Eth-Trunk11
 #
 interface Eth-Trunk12
  description to-D03-R630-k8s-192.219-bond
- port default vlan 2403
+ port default vlan 2404
  mode lacp-dynamic
  traffic-policy DSJ-Pod inbound 
  traffic-policy DSJ-Pod outbound 
@@ -298,7 +306,7 @@ interface Eth-Trunk38
 #
 interface Eth-Trunk39
  description to-D04-R630-k8s-192.10-bond
- port default vlan 2403
+ port default vlan 2404
  mode lacp-dynamic
  traffic-policy DSJ-Pod inbound 
  traffic-policy DSJ-Pod outbound 
@@ -905,9 +913,9 @@ bgp 65535
  peer 172.16.240.89 as-number 65535
  peer 172.16.240.90 as-number 65535
  peer 172.16.240.91 as-number 65535
- peer 172.16.240.92 as-number 65535
  peer 172.16.240.93 as-number 65535
- peer 172.16.240.130 as-number 65535
+ peer 172.16.240.98 as-number 65535
+ peer 172.16.240.100 as-number 65535
  peer 172.16.240.131 as-number 65535
  peer 172.16.240.132 as-number 65535
  peer 172.16.240.133 as-number 65535
@@ -919,8 +927,10 @@ bgp 65535
  ipv4-family unicast
   network 51.51.51.22 255.255.255.255
   network 172.16.240.64 255.255.255.224
+  network 172.16.240.96 255.255.255.224
   network 172.16.240.128 255.255.255.224
   network 172.26.240.64 255.255.255.224
+  network 172.26.240.96 255.255.255.224
   network 172.26.240.128 255.255.255.224
   maximum load-balancing 2  
   peer 172.16.240.67 enable
@@ -1011,18 +1021,18 @@ bgp 65535
   peer 172.16.240.91 route-policy xy-k8s-route-filter import
   peer 172.16.240.91 route-policy k8s-route-export-filter-all export
   peer 172.16.240.91 reflect-client
-  peer 172.16.240.92 enable
-  peer 172.16.240.92 route-policy xy-k8s-route-filter import
-  peer 172.16.240.92 route-policy k8s-route-export-filter-all export
-  peer 172.16.240.92 reflect-client
   peer 172.16.240.93 enable
   peer 172.16.240.93 route-policy xy-k8s-route-filter import
   peer 172.16.240.93 route-policy k8s-route-export-filter-all export
   peer 172.16.240.93 reflect-client
-  peer 172.16.240.130 enable
-  peer 172.16.240.130 route-policy xy-k8s-route-filter import
-  peer 172.16.240.130 route-policy k8s-route-export-filter-all export
-  peer 172.16.240.130 reflect-client
+  peer 172.16.240.98 enable
+  peer 172.16.240.98 route-policy xy-k8s-route-filter import
+  peer 172.16.240.98 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.98 reflect-client
+  peer 172.16.240.100 enable
+  peer 172.16.240.100 route-policy xy-k8s-route-filter import
+  peer 172.16.240.100 route-policy k8s-route-export-filter-all export
+  peer 172.16.240.100 reflect-client
   peer 172.16.240.131 enable
   peer 172.16.240.131 route-policy xy-k8s-route-filter import
   peer 172.16.240.131 route-policy k8s-route-export-filter-all export

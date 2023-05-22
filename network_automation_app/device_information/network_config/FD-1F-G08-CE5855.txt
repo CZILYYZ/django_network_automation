@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-02-23 11:35:59+00:00 by 51en
-!Last configuration was saved at 2023-01-31 16:25:04+00:00 by 51en
+!Last configuration was updated at 2023-05-17 06:50:23+00:00 by 51en
+!Last configuration was saved at 2023-05-17 06:51:27+00:00 by 51en
 #
 sysname FD-1F-G08-CE5855
 #
@@ -75,26 +75,23 @@ interface Eth-Trunk1
  port trunk allow-pass vlan 2 to 4094
 #
 interface Eth-Trunk10
- port link-type trunk
- undo port trunk allow-pass vlan 1
- port trunk allow-pass vlan 2 to 4094
+ description to-G05-R630-KVM-10.53-bond12
+ port default vlan 48
+ mode lacp-dynamic
 #
 interface Eth-Trunk11
- description to-G08-R630-ESXI-bond
- port link-type trunk
- port trunk allow-pass vlan 2 to 4094
+ description to-kvm-10.56
+ port default vlan 48
  mode lacp-dynamic
 #
 interface Eth-Trunk12
- description to-R630-ESXI-10.72-bond
- port link-type trunk
- port trunk allow-pass vlan 2 to 4094
+ description to-docker-10.57-bond12
+ port default vlan 30
  mode lacp-dynamic
 #
 interface Eth-Trunk13
  description to-G08-R630-ESXI-10.73-bond
- port link-type trunk
- port trunk allow-pass vlan 2 to 4094
+ port default vlan 48
  mode lacp-dynamic
 #
 interface Eth-Trunk17
@@ -147,8 +144,8 @@ interface Eth-Trunk26
  mode lacp-dynamic
 #
 interface Eth-Trunk27
- port link-type trunk
- port trunk allow-pass vlan 2 to 4094
+ description to-G05-R630-10-61-bond1
+ port default vlan 48
  mode lacp-dynamic
 #
 interface Eth-Trunk28
@@ -165,6 +162,16 @@ interface Eth-Trunk29
 interface Eth-Trunk30
  description R630-10-kvm-10.81-bond34
  port default vlan 43
+ mode lacp-dynamic
+#
+interface Eth-Trunk31
+ description dT:H45-F94ZG82-bond0
+ port default vlan 48
+ mode lacp-dynamic
+#
+interface Eth-Trunk32
+ description to-G05-R630-KVM-10.53-bond12
+ port default vlan 48
  mode lacp-dynamic
 #
 interface Stack-Port1/2
@@ -189,7 +196,7 @@ interface GE1/0/4
 #
 interface GE1/0/5
  description R630-3-KVM-10.73-Eth0
- eth-trunk 13
+ port default vlan 10
 #
 interface GE1/0/6
  description R630-3-KVM-10.73-Eth2
@@ -261,8 +268,11 @@ interface GE1/0/22
  eth-trunk 29
 #
 interface GE1/0/23
+ eth-trunk 32
 #
 interface GE1/0/24
+ description dT:H45-F94ZG82-MGMT
+ eth-trunk 31
 #
 interface GE1/0/25
 #
@@ -345,7 +355,6 @@ interface GE2/0/4
 #
 interface GE2/0/5
  description R630-3-KVM-10.73-Eth1
- eth-trunk 13
 #
 interface GE2/0/6
  description R630-3-KVM-10.73-Eth3
@@ -417,8 +426,11 @@ interface GE2/0/22
  eth-trunk 29
 #
 interface GE2/0/23
+ port default vlan 10
+ stp edged-port enable
 #
 interface GE2/0/24
+ eth-trunk 31
 #
 interface GE2/0/25
 #
@@ -485,7 +497,7 @@ interface GE2/0/44
  stp edged-port enable
 #
 interface GE2/0/45
- eth-trunk 10
+ port default vlan 10
 #
 interface GE2/0/46
  eth-trunk 10

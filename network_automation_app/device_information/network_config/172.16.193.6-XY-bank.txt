@@ -1,0 +1,1804 @@
+2023-05-22 16:08:47.184 +08:00
+!Software Version V500R001C60SPC500
+#
+sysname 172.16.193.6
+#
+FTP server enable
+#
+ l2tp domain suffix-separator @
+#
+info-center loghost 172.16.37.38 local-time
+info-center loghost 172.16.152.48 local-time
+#
+router id 51.51.51.19
+#
+vlan batch 2 to 4094
+#
+authentication-profile name portal_authen_default
+#
+ ipsec sha2 compatible enable 
+#
+set save-configuration
+#
+ undo factory-configuration prohibit
+#
+undo telnet server enable
+undo telnet ipv6 server enable
+#
+clock timezone Beijing add 08:00:00
+#
+ hrp enable
+ hrp interface GigabitEthernet1/0/0 remote 4.4.4.2
+ hrp timer hello 500
+ hrp mirror session enable
+ hrp auto-sync config static-route
+ undo hrp preempt
+ hrp track interface GigabitEthernet1/0/8
+ hrp track interface GigabitEthernet1/0/9
+#
+ firewall detect ftp
+#
+ firewall defend action discard
+#
+ log type traffic enable
+ log type syslog enable
+ log type policy enable
+#
+ undo dataflow enable
+#
+ undo sa force-detection enable
+#
+ lldp enable
+#
+ isp name "china mobile" set filename china-mobile.csv 
+ isp name "china unicom" set filename china-unicom.csv 
+ isp name "china telecom" set filename china-telecom.csv 
+ isp name "china educationnet" set filename china-educationnet.csv 
+#
+ slb enable
+#
+ user-manage web-authentication security port 8887
+password-policy
+ level high
+user-manage single-sign-on ad
+user-manage single-sign-on tsm
+user-manage single-sign-on radius
+user-manage auto-sync online-user
+page-setting
+ user-manage security version tlsv1.1 tlsv1.2
+#
+ firewall ids authentication type  aes256
+#
+icmp ttl-exceeded send
+#
+ web-manager security version tlsv1.1 tlsv1.2
+ web-manager enable
+ web-manager security enable
+ undo web-manager config-guide enable
+#
+firewall dataplane to manageplane application-apperceive default-action drop
+#
+ undo update schedule ips-sdb enable
+ update schedule ips-sdb daily 01:23
+ undo update schedule av-sdb enable
+ update schedule av-sdb daily 01:23
+ undo update schedule sa-sdb enable
+ update schedule sa-sdb daily 01:23
+ undo update schedule ip-reputation enable
+ update schedule ip-reputation daily 01:23
+ undo update schedule cnc enable
+ update schedule cnc daily 01:23
+ undo update schedule file-reputation enable
+ update schedule file-reputation daily 01:23
+#
+ set disk-scan parameter attach on
+ set disk-scan parameter cycle 15
+ set disk-scan parameter iostat 80
+ set disk-scan parameter speed 10
+ set disk-scan parameter switch on
+ set disk-scan parameter parallel 50
+ disk-usage alarm threshold 95 
+#
+ip vpn-instance default
+ ipv4-family
+#
+ip-link check enable
+ip-link name icbc-direct
+ destination 172.20.0.1 interface Vlanif14 mode icmp
+ip-link name tj-bank-direct
+ destination 172.167.226.1 interface Vlanif18 mode icmp
+ tx-interval 3
+ times 2
+ip-link name NBDH-direct
+ destination 172.20.0.65 interface Vlanif20 mode icmp
+#
+bfd
+#
+ip address-set 0.0.0.0/0_ type object
+ address 0 0.0.0.0 mask 32
+#
+ip address-set 72.128.0.172 type object
+ address 0 72.128.0.172 mask 32
+#
+ip address-set 72.128.0.173 type object
+ address 0 72.128.0.173 mask 32
+#
+ip address-set 72.128.0.174 type object
+ address 0 72.128.0.174 mask 32
+#
+ip address-set 172.16.251.2 type object
+ address 0 172.16.251.2 mask 32
+#
+ip address-set 72.127.1.35 type object
+ address 0 72.127.1.35 mask 32
+#
+ip address-set 72.127.1.36 type object
+ address 0 72.127.1.36 mask 32
+#
+ip address-set 172.16.208.161 type object
+ address 0 172.16.208.161 mask 32
+#
+ip address-set 172.16.208.162 type object
+ address 0 172.16.208.162 mask 32
+#
+ip address-set 172.16.208.163 type object
+ address 0 172.16.208.163 mask 32
+#
+ip address-set 172.16.208.164 type object
+ address 0 172.16.208.164 mask 32
+#
+ip address-set 72.129.0.96/29 type object
+ address 0 72.129.0.96 mask 29
+#
+ip address-set 172.16.209.25 type object
+ address 0 172.16.209.25 mask 32
+#
+ip address-set 172.16.146.112 type object
+ address 0 172.16.146.112 mask 32
+#
+ip address-set 172.16.146.113 type object
+ address 0 172.16.146.113 mask 32
+#
+ip address-set 172.16.147.8 type object
+ address 0 172.16.147.8 mask 32
+#
+ip address-set 172.16.147.9 type object
+ address 0 172.16.147.9 mask 32
+#
+ip address-set 172.16.137.6_ type object
+ address 0 172.16.137.6 mask 32
+#
+ip address-set 172.16.137.6 type object
+ address 0 172.16.137.6 mask 32
+#
+ip address-set 172.16.148.190 type object
+ address 0 172.16.148.190 mask 32
+#
+ip address-set 172.16.209.24 type object
+ address 0 172.16.209.24 mask 32
+#
+ip address-set 172.16.148.119 type object
+ address 0 172.16.148.119 mask 32
+#
+ip address-set 10.12.98.10 type object
+ address 0 10.12.98.10 mask 32
+#
+ip address-set 10.12.98.2 type object
+ address 0 10.12.98.2 mask 32
+#
+ip address-set 10.2.3.108 type object
+ address 0 10.2.3.108 mask 32
+#
+ip address-set 10.23.1.32 type object
+ address 0 10.23.1.32 mask 32
+#
+ip address-set 10.232.0.137 type object
+ address 0 10.232.0.137 mask 32
+#
+ip address-set 72.128.0.188 type object
+ address 0 72.128.0.188 mask 32
+#
+ip address-set 72.128.0.202 type object
+ address 0 72.128.0.202 mask 32
+#
+ip address-set 172.16.137.7 type object
+ address 0 172.16.137.7 mask 32
+#
+ip address-set 72.128.0.189 type object
+ address 0 72.128.0.189 mask 32
+#
+ip address-set 172.16.160.19 type object
+ address 0 172.16.160.19 mask 32
+#
+ip address-set 172.16.160.20 type object
+ address 0 172.16.160.20 mask 32
+#
+ip address-set 172.16.208.178 type object
+ address 0 172.16.208.178 mask 32
+#
+ip address-set 172.16.208.179 type object
+ address 0 172.16.208.179 mask 32
+#
+ip address-set 172.16.255.249 type object
+ address 0 172.16.255.249 mask 32
+#
+ip address-set 10.200.196.162 type object
+ address 0 10.200.196.162 mask 32
+#
+ip address-set 172.16.154.187 type object
+ address 0 172.16.154.187 mask 32
+#
+ip address-set 172.16.154.188 type object
+ address 0 172.16.154.188 mask 32
+#
+ip address-set 172.16.147.7 type object
+ address 0 172.16.147.7 mask 32
+#
+ip address-set 172.16.147.6 type object
+ address 0 172.16.147.6 mask 32
+#
+ip address-set 172.16.183.88 type object
+ address 0 172.16.183.88 mask 32
+#
+ip address-set 172.16.183.89 type object
+ address 0 172.16.183.89 mask 32
+#
+ip address-set 172.16.208.173 type object
+ address 0 172.16.208.173 mask 32
+#
+ip address-set 172.16.208.170 type object
+ address 0 172.16.208.170 mask 32
+#
+ip address-set 172.16.208.171 type object
+ address 0 172.16.208.171 mask 32
+#
+ip address-set 172.16.208.172 type object
+ address 0 172.16.208.172 mask 32
+#
+ip address-set 10.23.238.0/29 type object
+ address 0 10.23.238.0 mask 29
+#
+ip address-set 10.23.238.3 type object
+ address 0 10.23.238.3 mask 32
+#
+ip address-set 10.200.199.57 type object
+ address 0 10.200.199.57 mask 32
+#
+ip address-set 10.23.244.193 type object
+ address 0 10.23.244.193 mask 32
+#
+ip address-set 172.16.190.229_ר߼ type object
+ address 0 172.16.190.229 mask 32
+#
+ip address-set 12.1.1.72 type object
+ address 0 12.1.1.72 mask 32
+#
+ip address-set 12.1.1.73 type object
+ address 0 12.1.1.73 mask 32
+#
+ip address-set 172.20.1.8 type object
+ address 0 172.20.1.8 mask 32
+#
+ip address-set 172.20.0.2 type object
+ address 0 172.20.0.2 mask 32
+#
+ip address-set 172.20.0.1 type object
+ address 0 172.20.0.1 mask 32
+#
+ip address-set 172.20.0.33 type object
+ address 0 172.20.0.33 mask 32
+#
+ip address-set 118.2.2.17 type object
+ address 0 118.2.2.17 mask 32
+#
+ip address-set 118.2.2.47 type object
+ address 0 118.2.2.47 mask 32
+#
+ip address-set 172.19.0.0/16 type object
+ address 0 172.19.0.0 mask 16
+#
+ip address-set 73.162.162.7 type object
+ address 0 73.162.162.7 mask 32
+#
+ip address-set 73.162.162.8 type object
+ address 0 73.162.162.8 mask 32
+#
+ip address-set 192.168.162.1 type object
+ address 0 192.168.162.1 mask 32
+#
+ip address-set 202.162.1.233 type object
+ address 0 202.162.1.233 mask 32
+#
+ip address-set 172.16.211.245 type object
+ address 0 172.16.211.245 mask 32
+#
+ip address-set 172.16.58.173 type object
+ address 0 172.16.58.173 mask 32
+#
+ip address-set 192.168.240.1 type object
+ address 0 192.168.240.1 mask 32
+#
+ip address-set 159.1.193.10 type object
+ address 0 159.1.193.10 mask 32
+#
+ip address-set 73.162.162.10 type object
+ address 0 73.162.162.10 mask 32
+#
+ip address-set 73.162.162.11 type object
+ address 0 73.162.162.11 mask 32
+#
+ip address-set 10.247.18.74 type object
+ address 0 10.247.18.74 mask 32
+#
+ip address-set 10.247.31.214 type object
+ address 0 10.247.31.214 mask 32
+#
+ip address-set 172.16.161.4 type object
+ address 0 172.16.161.4 mask 32
+#
+ip address-set 172.16.161.5 type object
+ address 0 172.16.161.5 mask 32
+#
+ip address-set 172.16.208.57 type object
+ address 0 172.16.208.57 mask 32
+#
+ip address-set 172.16.208.56 type object
+ address 0 172.16.208.56 mask 32
+#
+ip address-set 172.16.214.203 type object
+ address 0 172.16.214.203 mask 32
+#
+ip address-set 172.16.214.202 type object
+ address 0 172.16.214.202 mask 32
+#
+ip address-set 172.16.184.150 type object
+ address 0 172.16.184.150 mask 32
+#
+ip address-set 172.16.184.149 type object
+ address 0 172.16.184.149 mask 32
+#
+ip address-set 10.247.32.38 type object
+ address 0 10.247.32.38 mask 32
+#
+ip address-set 172.16.212.213 type object
+ address 0 172.16.212.213 mask 32
+#
+ip address-set fc_fund_gateway_k8s type object
+ address 0 172.24.129.64 mask 26
+ address 1 172.24.65.64 mask 26
+#
+ip address-set fc-fund-gateway type object
+ address 0 172.16.183.14 mask 32
+ address 1 172.16.183.3 mask 32
+ address 2 172.16.208.29 mask 32
+ address 3 172.16.208.30 mask 32
+#
+ip address-set 10.27.70.76 type object
+ address 0 10.27.70.76 mask 32
+#
+ip address-set 10.23.244.195 type object
+ address 0 10.23.244.195 mask 32
+#
+ip address-set 172.16.208.180 type object
+ address 0 172.16.208.180 mask 32
+#
+ip address-set 10.23.244.194 type object
+ address 0 10.23.244.194 mask 32
+#
+ip address-set 10.247.32.202 type object
+ address 0 10.247.32.202 mask 32
+#
+ip address-set 10.247.34.220 type object
+ address 0 10.247.34.220 mask 32
+#
+ip address-set 10.247.34.113 type object
+ address 0 10.247.34.113 mask 32
+#
+ip address-set 10.23.2.104 type object
+ address 0 10.23.2.104 mask 32
+#
+ip address-set 10.231.1.65 type object
+ address 0 10.231.1.65 mask 32
+#
+ip address-set 172.167.226.1 type object
+ address 0 172.167.226.1 mask 32
+#
+ip address-set 168.1.2.201 type object
+ address 0 168.1.2.201 mask 32
+#
+ip address-set 10.80.66.29 type object
+ address 0 10.80.66.29 mask 32
+#
+ip address-set 172.20.1.12 type object
+ address 0 172.20.1.12 mask 32
+#
+ip address-set 172.20.1.13 type object
+ address 0 172.20.1.13 mask 32
+#
+ip address-set 10.12.128.2 type object
+ address 0 10.12.128.2 mask 32
+#
+ip address-set 31.1.0.154 type object
+ address 0 31.1.0.154 mask 32
+#
+ip address-set 10.23.1.93 type object
+ address 0 10.23.1.93 mask 32
+#
+ip address-set 168.1.2.108 type object
+ address 0 168.1.2.108 mask 32
+#
+ip address-set 172.16.208.114 type object
+ address 0 172.16.208.114 mask 32
+#
+ip address-set SQ-k8s-fc-outside-audit-service type object
+ address 0 172.24.65.128 mask 26
+#
+ip address-set XY-k8s-fc-outside-audit-service type object
+ address 0 172.24.131.0 mask 26
+#
+ip address-set fc-fund-file-service type object
+ address 0 172.16.184.150 mask 32
+ address 1 172.16.184.149 mask 32
+ address 2 172.16.214.203 mask 32
+ address 3 172.16.214.202 mask 32
+#
+ip address-set "SQ-K8S- fc-fund-gateway" type object
+ description SQ-K8S- fc-fund-gateway
+ address 0 172.24.65.64 mask 26
+#
+ip address-set xy-k8s-fc-fund-gateway type object
+ description xy-k8s-fc-fund-gateway
+ address 0 172.24.129.64 mask 26
+#
+ip address-set 31.0.0.50 type object
+ address 0 31.0.0.50 mask 32
+#
+ip address-set 172.20.1.11 type object
+ address 0 172.20.1.11 mask 32
+#
+ip address-set bk-wzbank-gateway-k8s̶ type object
+ address 0 172.24.131.192 mask 26
+ address 1 172.24.67.128 mask 26
+#
+ip address-set fc-fund-gateway-JJ-bank type object
+ address 0 172.16.183.14 mask 32
+ address 1 172.16.183.3 mask 32
+ address 2 172.16.208.29 mask 32
+ address 3 172.16.208.30 mask 32
+#
+ip address-set bk-wzbank-gateway-kvm type object
+ address 0 172.16.208.181 mask 32
+ address 1 172.16.154.190 mask 32
+ address 2 172.16.183.92 mask 32
+ address 3 172.16.209.16 mask 32
+#
+ip address-set 168.1.2.100 type object
+ address 0 168.1.2.100 mask 32
+#
+ip address-set 168.1.2.103 type object
+ address 0 168.1.2.103 mask 32
+#
+ip address-set 172.20.0.40/29 type object
+ description ֱӵַ
+ address 0 172.20.0.40 mask 29
+#
+ip address-set 172.20.1.17-172.20.1.18 type object
+ description ȥҵĿĵַ
+ address 0 range 172.20.1.17 172.20.1.18
+#
+ip address-set 172.24.131.192- type object
+ description k8s
+ address 0 172.24.131.192 mask 26
+#
+ip address-set 172.24.67.128 type object
+ description ʯk8s
+ address 0 172.24.67.128 mask 26
+#
+ip address-set 172.16.208.181 type object
+ address 0 172.16.208.181 mask 32
+#
+ip address-set 172.16.154.190 type object
+ address 0 172.16.154.190 mask 32
+#
+ip address-set 172.16.183.92 type object
+ address 0 172.16.183.92 mask 32
+#
+ip address-set 172.16.209.16 type object
+ address 0 172.16.209.16 mask 32
+#
+ip address-set 172.16.183.20 type object
+ address 0 172.16.183.20 mask 32
+#
+ip address-set 172.16.183.36 type object
+ address 0 172.16.183.36 mask 32
+#
+ip address-set BX-bank-server_sourcelist type object
+ address 0 172.16.183.20 mask 32
+ address 1 172.16.183.36 mask 32
+ address 2 172.16.147.7 mask 32
+ address 3 172.16.147.6 mask 32
+ address 6 172.16.208.114 mask 32
+ address 8 172.16.208.171 mask 32
+ address 9 172.16.208.172 mask 32
+ address 10 172.16.190.229 mask 32
+ address 11 172.16.184.135 mask 32
+ address 12 172.16.152.180 mask 32
+ address 13 172.16.152.179 mask 32
+ address 14 172.16.152.176 mask 32
+ address 15 172.16.152.174 mask 32
+ address 16 172.16.152.173 mask 32
+ address 17 172.16.152.152 mask 32
+ address 18 172.16.214.190 mask 32
+ address 19 172.16.248.202 mask 32
+ address 20 172.16.248.203 mask 32
+ address 21 172.16.248.201 mask 32
+ address 22 172.16.248.200 mask 32
+ address 23 172.16.209.55 mask 32
+#
+ip address-set 172.20.1.18 type object
+ address 0 172.20.1.18 mask 32
+#
+ip address-set 172.20.1.16 type object
+ address 0 172.20.1.16 mask 32
+#
+ip address-set stable-nginx type object
+ address 0 10.247.255.24 mask 32
+ address 1 10.247.255.23 mask 32
+ address 2 10.247.255.22 mask 32
+#
+ip address-set 51- type object
+ address 0 172.16.184.150 mask 32
+ address 1 172.16.184.149 mask 32
+ address 2 172.16.214.203 mask 32
+ address 3 172.16.214.202 mask 32
+ address 4 172.16.183.14 mask 32
+ address 5 172.16.183.3 mask 32
+ address 6 172.16.208.29 mask 32
+ address 7 172.16.208.30 mask 32
+ address 8 172.24.129.64 mask 26
+ address 9 172.24.65.64 mask 26
+#
+ip address-set ҵַ type object
+ address 0 10.25.2.13 mask 32
+ address 1 10.18.26.16 mask 32
+ address 2 10.25.2.12 mask 32
+ address 3 10.25.2.11 mask 32
+#
+ip address-set 168.1.2.121 type object
+ address 0 168.1.2.121 mask 32
+#
+ip address-set 168.1.2.122 type object
+ address 0 168.1.2.122 mask 32
+#
+ip address-set 172.20.1.1 type object
+ address 0 172.20.1.1 mask 32
+#
+ip address-set 172.16.37.60 type object
+ address 0 172.16.37.60 mask 32
+#
+ip address-set BJ-bank-internal type group
+ address 0 address-set 172.19.0.0/16
+ address 4 address-set 172.16.209.25
+ address 9 address-set 172.16.137.6
+ address 10 address-set 172.16.148.190
+ address 11 address-set 172.16.209.24
+ address 12 address-set 172.16.148.119
+ address 13 address-set 172.16.190.229_ר߼
+#
+ip address-set BH-bank-internal type group
+ address 0 address-set 172.16.154.187
+ address 1 address-set 172.16.154.188
+ address 2 address-set 172.16.208.178
+ address 3 address-set 172.16.208.179
+ address 4 address-set 172.16.190.229_ר߼
+ address 5 address-set 172.19.0.0/16
+#
+ip address-set WZ-bank-internal type group
+ address 0 address-set 172.16.208.178
+ address 1 address-set 172.16.208.179
+ address 2 address-set 172.16.154.187
+ address 3 address-set 172.16.154.188
+ address 4 address-set 172.16.190.229_ר߼
+ address 5 address-set 172.19.0.0/16
+ address 6 address-set 172.16.208.180
+#
+ip address-set bankproxy type group
+ address 0 address-set 172.16.147.7
+ address 1 address-set 172.16.147.6
+ address 2 address-set 172.16.183.88
+ address 3 address-set 172.16.183.89
+ address 4 address-set 172.16.208.173
+ address 5 address-set 172.16.183.36
+ address 6 address-set 172.16.208.171
+ address 7 address-set 172.16.208.172
+ address 8 address-set 172.16.190.229_ר߼
+ address 9 address-set 172.19.0.0/16
+ address 10 address-set 172.16.208.114
+ address 11 address-set 172.16.183.20
+#
+ip address-set ط type group
+ address 0 address-set 172.16.190.229_ר߼
+ address 1 address-set 172.16.211.245
+ address 2 address-set 172.16.58.173
+ address 3 address-set 172.16.212.213
+ address 4 192.168.21.72 mask 32
+#
+ip address-set NJ-bank type group
+ address 0 address-set 10.247.18.74
+ address 1 address-set 10.247.31.214
+ address 2 address-set 172.16.161.4
+ address 3 address-set 172.16.161.5
+ address 4 address-set 172.16.208.57
+ address 5 address-set 172.16.208.56
+ address 6 address-set 172.16.214.203
+ address 7 address-set 172.16.214.202
+ address 8 address-set 172.16.184.150
+ address 9 address-set 172.16.184.149
+ address 10 address-set 10.247.32.38
+ address 11 address-set fc_fund_gateway_k8s
+ address 12 address-set fc-fund-gateway
+ address 13 address-set 10.247.32.202
+ address 14 10.220.94.202 mask 32
+ address 15 address-set 10.247.34.113
+#
+ip service-set tcp_50022 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 50022
+#
+ip service-set tcp_32469 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 32469
+#
+ip service-set tcp_12465 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 12465
+#
+ip service-set tcp_9527 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 9527
+#
+ip service-set tcp_8446 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 8446
+#
+ip service-set tcp_40048 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 40048
+#
+ip service-set tcp_8080 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 8080
+#
+ip service-set tcp_16620 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 16620
+#
+ip service-set tcp_9528 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 9528
+#
+ip service-set tcp_18022 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 18022
+#
+ip service-set tcp_9001 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 9001
+#
+ip service-set tcp_9002 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 9002
+#
+ip service-set tcp_8445 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 8445
+#
+ip service-set tcp_32956 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 32956
+#
+ip service-set tcp_58000 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 58000
+#
+ip service-set tcp_19903 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 19903
+#
+ip service-set tcp_20 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 20
+#
+ip service-set tcp_9902 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 9902
+#
+ip service-set tcp_29903 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 29903
+#
+ip service-set tcp_10001 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 10001
+#
+ip service-set tcp_9922 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 9922
+#
+ip service-set ssh_10022 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 10022
+#
+ip service-set tcp_12006 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 12006
+#
+ip service-set tcp_10262 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 10262
+#
+ip service-set tcp_9000 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 9000
+#
+ip service-set TCP-9090 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 9090
+#
+ip service-set tcp_8082 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 8082
+#
+ip service-set tcp_22 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 22
+#
+ip service-set tcp_10005 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 10005
+#
+ip service-set tcp_10004 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 10004
+#
+ip service-set tcp_10006 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 10006
+#
+ip service-set tcp_10002 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 10002
+#
+ time-range worktime
+  period-range 08:00:00 to 18:00:00 working-day   
+#
+acl number 2000
+ rule 5 deny source 0.0.0.0 0 
+ rule 10 permit 
+acl number 2100
+ rule 5 permit source 12.1.1.72 0 
+ rule 10 permit source 12.1.1.73 0 
+acl number 2222
+ rule 5 permit source 10.25.2.11 0 
+#
+acl number 3000
+ description "Acl for Quintuple Packet Capture"
+ rule 0 permit tcp source 10.23.244.0 0.0.0.255 destination-port eq 9528 
+ rule 1 permit tcp source-port eq 9528 destination 10.23.244.0 0.0.0.255 
+#
+ike proposal default
+ encryption-algorithm aes-256 aes-192 aes-128 
+ dh group14 
+ authentication-algorithm sha2-512 sha2-384 sha2-256 
+ authentication-method pre-share
+ integrity-algorithm hmac-sha2-256 
+ prf hmac-sha2-256 
+#
+web-auth-server default
+ port 50100
+#
+portal-access-profile name default
+#
+aaa
+ authentication-scheme default
+ authentication-scheme admin_local
+ authentication-scheme admin_radius_local
+ authentication-scheme admin_hwtacacs_local
+ authentication-scheme admin_ad_local
+ authentication-scheme admin_ldap_local
+ authentication-scheme admin_radius
+ authentication-scheme admin_hwtacacs
+ authentication-scheme admin_ad
+ authentication-scheme admin_ldap
+ authorization-scheme default
+ accounting-scheme default
+ domain default
+  service-type internetaccess ssl-vpn l2tp ike
+  internet-access mode password
+  reference user current-domain
+ manager-user ftpuser 
+  password cipher @%@%ePlH:#-9D+G0hSR<ckzN{Zh^_*FZJNUf!CQs_%EP)J[:Zha{@%@%
+  service-type ftp 
+  level 15 
+  ftp-directory hda1:/backup 
+
+ manager-user netconf-admin 
+  password cipher @%@%KBw7&puroJ[ZC-P7wQ#UAZbaq|>wL}EC%D7sG@)y"H\JZbdA@%@%
+  service-type api 
+  level 15 
+  authentication-scheme admin_local 
+
+ manager-user audit-admin 
+  password cipher @%@%(ANV.fNx_Ss^>1#8QbI$/d:Fz}Hg~&YFIF}E$eCFVYVSd:I/@%@%
+  service-type web terminal 
+  level 15 
+
+ manager-user api-admin 
+  password cipher @%@%va'E2yG0B~]~Td=Ca@H-'GjJP$w9~I*HfFWLv5"c\Aa!GjM'@%@%
+  service-type api 
+  level 15 
+
+ manager-user admin 
+  password cipher @%@%]yv|:Jz&HHi!sY+pW4g*\!nXbCabWu&Kc%Mr0Y*bp2^O!n[\@%@%
+  service-type web terminal ssh 
+  level 15 
+  authentication-scheme admin_local 
+
+ manager-user 51en 
+  password cipher @%@%T3R1(UKDc7T]L;#-c|w$qK4+V(}$SD}yG"7UY]AOA&QIK4.q@%@%
+  service-type ftp web terminal ssh 
+  level 15 
+  ftp-directory hda1: 
+  authentication-scheme admin_local 
+
+ role system-admin
+ role device-admin
+ role device-admin(monitor)
+ role audit-admin
+ bind manager-user audit-admin role audit-admin
+ bind manager-user admin role system-admin
+#
+ntp-service server disable
+ntp-service ipv6 server disable
+ntp-service unicast-server 172.16.152.20
+ntp-service unicast-server 172.16.152.21
+#
+interface Vlanif9
+ ip address 172.16.255.251 255.255.255.248
+ vrrp vrid 7 virtual-ip 172.16.255.250 active
+ vrrp virtual-mac enable
+ alias vlan9-mgmt
+ service-manage ping permit
+ service-manage snmp permit
+#
+interface Vlanif10
+ ip address 72.129.0.98 255.255.255.248
+ vrrp vrid 3 virtual-ip 72.129.0.100 active
+ vrrp virtual-mac enable
+ alias vlan10-BJ-bank
+ service-manage ping permit
+#
+interface Vlanif11
+ ip address 199.1.1.75 255.255.255.248
+ vrrp vrid 4 virtual-ip 199.1.1.74 active
+ vrrp virtual-mac enable
+ alias vlan11-MT-bank
+ service-manage ping permit
+#
+interface Vlanif12
+ ip address 10.232.0.139 255.255.255.248
+ vrrp vrid 5 virtual-ip 10.232.0.138 active
+ vrrp virtual-mac enable
+ alias vlan12-BH-bank
+ service-manage ping permit
+#
+interface Vlanif13
+ ip address 10.23.238.4 255.255.255.248
+ vrrp vrid 6 virtual-ip 10.23.238.6 active
+ vrrp virtual-mac enable
+ alias vlan13-JJ-bank
+ service-manage ping permit
+#
+interface Vlanif14
+ ip address 172.20.0.3 255.255.255.248
+ vrrp vrid 8 virtual-ip 172.20.0.2 active
+ vrrp virtual-mac enable
+ alias vlan14-icbc
+ service-manage ping permit
+#
+interface Vlanif15
+ ip address 202.162.1.235 255.255.255.248
+ vrrp vrid 10 virtual-ip 202.162.1.234 active
+ vrrp virtual-mac enable
+ alias vlan15-NJ-bank
+ service-manage ping permit
+#
+interface Vlanif16
+ ip address 172.20.0.35 255.255.255.248
+ vrrp vrid 9 virtual-ip 172.20.0.34 active
+ vrrp virtual-mac enable
+ alias vlan16-CJ-bank
+ service-manage ping permit
+#
+interface Vlanif17
+ ip address 10.231.1.67 255.255.255.248
+ vrrp vrid 11 virtual-ip 10.231.1.66 active
+ vrrp virtual-mac enable
+ alias vlan17-SHYL
+ service-manage ping permit
+#
+interface Vlanif18
+ ip address 172.167.226.3 255.255.255.248
+ vrrp vrid 12 virtual-ip 172.167.226.2 active
+ vrrp virtual-mac enable
+ alias vlan18-TJ-bank
+ service-manage ping permit
+#
+interface Vlanif19
+ ip address 172.20.0.43 255.255.255.248
+ vrrp vrid 13 virtual-ip 172.20.0.42 active
+ vrrp virtual-mac enable
+ alias vlan19-BX-bank
+ service-manage ping permit
+#
+interface Vlanif20
+ ip address 172.20.0.67 255.255.255.248
+ vrrp vrid 14 virtual-ip 172.20.0.66 active
+ vrrp virtual-mac enable
+ service-manage ping permit
+#
+interface Eth-Trunk1
+ portswitch
+ description dT:XY-2F-E11-S5720-255.249:()Eth-Trunk1
+ port link-type trunk
+ port trunk allow-pass vlan 2 to 4094
+ alias Eth-Trunk1
+#
+l2tp-group default-lns
+#
+interface GigabitEthernet0/0/0
+ description dT:XY-2F-E11-3650:(local)GE1/0/43
+ undo shutdown
+ ip binding vpn-instance default
+ ip address 172.16.193.6 255.255.255.0
+ service-manage http permit
+ service-manage https permit
+ service-manage ping permit
+ service-manage ssh permit
+ service-manage snmp permit
+ service-manage netconf permit
+#
+interface GigabitEthernet1/0/0
+ description pT:bank-FW2-172.16.193.7:(local)GE1/0/0
+ undo shutdown
+ ip address 4.4.4.1 255.255.255.0
+ alias HA
+#
+interface GigabitEthernet1/0/1
+ undo shutdown
+ service-manage https permit
+ service-manage ping permit
+ service-manage ssh permit
+ service-manage telnet permit
+#
+interface GigabitEthernet1/0/2
+ undo shutdown
+ service-manage https permit
+ service-manage ping permit
+ service-manage ssh permit
+ service-manage telnet permit
+#
+interface GigabitEthernet1/0/3
+ undo shutdown
+#
+interface GigabitEthernet1/0/4
+ undo shutdown
+#
+interface GigabitEthernet1/0/5
+ undo shutdown
+#
+interface GigabitEthernet1/0/6
+ description dT:XY-2F-E11-S5720-255.249:(local)GE0/0/27
+ undo shutdown
+ eth-trunk 1
+#
+interface GigabitEthernet1/0/7
+ description dT:XY-2F-E11-S5720-255.249:(local)GE1/0/27
+ undo shutdown
+ eth-trunk 1
+#
+interface GigabitEthernet1/0/8
+ description uT:XY-2F-E05-CE12812:(local)10GE6/0/40
+ undo shutdown
+ ip address 172.16.255.147 255.255.255.248
+ vrrp vrid 1 virtual-ip 172.16.255.146 active
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+ vrrp virtual-mac enable
+ service-manage http permit
+ service-manage https permit
+ service-manage ping permit
+ service-manage ssh permit
+ service-manage snmp permit
+ service-manage netconf permit
+#
+interface GigabitEthernet1/0/9
+ description uT:XY-2F-E06-CE12812:(local)10GE6/0/40
+ undo shutdown
+ ip address 172.16.255.155 255.255.255.248
+ vrrp vrid 2 virtual-ip 172.16.255.154 active
+ ospf bfd enable
+ ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+ vrrp virtual-mac enable
+ service-manage https permit
+ service-manage ping permit
+ service-manage ssh permit
+ service-manage snmp permit
+ service-manage telnet permit
+#
+interface GigabitEthernet1/0/10
+ undo shutdown
+#
+interface GigabitEthernet1/0/11
+ undo shutdown
+#
+interface Virtual-if0
+#
+interface Cellular0/0/0
+#
+interface Cellular0/0/1
+#
+interface NULL0
+#
+firewall zone local
+ set priority 100
+#
+firewall zone trust
+ set priority 85
+ add interface GigabitEthernet0/0/0
+ add interface GigabitEthernet1/0/0
+#
+firewall zone untrust
+ set priority 5
+#
+firewall zone dmz
+ set priority 50
+#
+firewall zone name to_bank id 4
+ set priority 70
+ add interface Eth-Trunk1
+ add interface Vlanif10
+ add interface Vlanif11
+ add interface Vlanif12
+ add interface Vlanif13
+ add interface Vlanif9
+ add interface Vlanif14
+ add interface Vlanif16
+ add interface Vlanif15
+ add interface Vlanif17
+ add interface Vlanif18
+ add interface Vlanif19
+ add interface Vlanif20
+#
+firewall zone name inside id 5
+ set priority 90
+ add interface GigabitEthernet1/0/8
+ add interface GigabitEthernet1/0/9
+#
+api
+ api netconf enable
+#
+ospf 100 router-id 51.51.51.19
+ bfd all-interfaces enable
+ filter-policy 2000 import
+ import-route static route-policy bank-route-import
+ silent-interface Vlanif11
+ silent-interface Vlanif12
+ silent-interface Vlanif13
+ silent-interface Vlanif10
+ silent-interface Vlanif9
+ silent-interface Vlanif14
+ silent-interface Vlanif16
+ silent-interface Vlanif15
+ silent-interface Vlanif17
+ silent-interface Vlanif18
+ area 0.0.0.3
+  authentication-mode md5 1 cipher %^%#"_-[E77OR#B`t`9our_F-U&=L!M^A2>oN:3K0`TB%^%#
+  network 10.23.238.0 0.0.0.7
+  network 10.232.0.136 0.0.0.7
+  network 72.129.0.96 0.0.0.7
+  network 172.16.255.144 0.0.0.7
+  network 172.16.255.152 0.0.0.7
+  network 172.16.255.248 0.0.0.7
+  network 172.20.0.0 0.0.0.7
+  network 172.20.0.32 0.0.0.7
+  network 172.20.0.40 0.0.0.7
+  network 172.167.226.0 0.0.0.7
+  network 202.162.1.232 0.0.0.7
+#
+route-policy bank-route-import permit node 10
+ if-match acl 2100
+ apply cost 100
+#
+route-policy bank-route-import permit node 20
+#
+ip route-static 10.18.26.16 255.255.255.255 172.20.0.65 track ip-link NBDH-direct
+ip route-static 10.23.1.32 255.255.255.255 10.232.0.137
+ip route-static 10.23.1.93 255.255.255.255 10.231.1.65
+ip route-static 10.23.2.104 255.255.255.255 10.231.1.65
+ip route-static 10.23.244.193 255.255.255.255 10.23.238.1
+ip route-static 10.23.244.194 255.255.255.255 10.23.238.1
+ip route-static 10.23.244.195 255.255.255.255 10.23.238.1
+ip route-static 10.25.2.11 255.255.255.255 172.20.0.65 track ip-link NBDH-direct
+ip route-static 10.25.2.12 255.255.255.255 172.20.0.65 track ip-link NBDH-direct
+ip route-static 10.25.2.13 255.255.255.255 172.20.0.65 track ip-link NBDH-direct
+ip route-static 10.200.196.162 255.255.255.255 10.23.238.1
+ip route-static 12.1.1.72 255.255.255.255 172.20.0.1 preference 111 track ip-link icbc-direct
+ip route-static 12.1.1.73 255.255.255.255 172.20.0.1 preference 111 track ip-link icbc-direct
+ip route-static 31.0.0.50 255.255.255.255 10.231.1.65
+ip route-static 31.1.0.154 255.255.255.255 10.231.1.65
+ip route-static 73.162.162.7 255.255.255.255 202.162.1.233
+ip route-static 73.162.162.8 255.255.255.255 202.162.1.233
+ip route-static 73.162.162.10 255.255.255.255 202.162.1.233
+ip route-static 73.162.162.11 255.255.255.255 202.162.1.233
+ip route-static 168.1.2.100 255.255.255.255 172.167.226.1 track ip-link tj-bank-direct
+ip route-static 168.1.2.103 255.255.255.255 172.167.226.1 track ip-link tj-bank-direct
+ip route-static 168.1.2.108 255.255.255.255 172.167.226.1 track ip-link tj-bank-direct
+ip route-static 168.1.2.121 255.255.255.255 172.167.226.1 track ip-link tj-bank-direct
+ip route-static 168.1.2.122 255.255.255.255 172.167.226.1 track ip-link tj-bank-direct
+ip route-static 172.20.1.7 255.255.255.255 172.20.0.33
+ip route-static 172.20.1.8 255.255.255.255 172.20.0.33
+ip route-static 172.20.1.17 255.255.255.255 172.20.0.41
+ip route-static 172.20.1.18 255.255.255.255 172.20.0.41
+ip route-static vpn-instance default 0.0.0.0 0.0.0.0 172.16.193.1
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03F86EEE83106E
+snmp-agent community read cipher %^%#{\:r:Yw=sT9^]S)uo@t#NBS82im}16M-/*RgopEB`GCv6XU&x8Hi56Wsc@A"K~^*Mmh9NRfilB4xBqSI%^%#
+snmp-agent sys-info version v2c v3
+snmp-agent trap enable
+#
+undo ssh server compatible-ssh1x enable
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+scp ipv4 server enable
+scp ipv6 server enable
+ssh authentication-type default password
+ssh user 51nb
+ssh user 51nb authentication-type password
+ssh user 51nb service-type all
+ssh user 51nb sftp-directory hda1:
+ssh user admin
+ssh user admin authentication-type password
+ssh user admin service-type all
+ssh user admin sftp-directory hda1:
+#
+ firewall log session log-type syslog
+ firewall log syslog header default timestamp local
+#
+user-interface con 0
+ authentication-mode aaa
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+user-interface vty 16 20
+#
+pki realm default
+ undo crl auto-update enable
+#
+sa
+#
+location
+#
+nat address-group 72.127.1.34 0
+ mode pat
+ section 0 72.127.1.34 72.127.1.34
+#
+nat address-group 72.129.0.100 1
+ mode pat
+ section 0 72.129.0.100 72.129.0.100
+#
+nat address-group 10.12.98.150 2
+ mode pat
+ section 0 10.12.98.150 10.12.98.150
+#
+nat address-group 10.232.0.138 3
+ mode pat
+ section 0 10.232.0.138 10.232.0.138
+#
+nat address-group 10.200.199.57 4
+ mode pat
+ section 0 10.200.199.57 10.200.199.57
+#
+nat address-group 10.23.238.6 5
+ mode pat
+ section 0 10.23.238.6 10.23.238.6
+#
+nat address-group 172.20.1.1 6
+ mode pat
+ section 0 172.20.1.1 172.20.1.1
+#
+nat address-group 172.20.1.5 7
+ mode pat
+ section 0 172.20.1.5 172.20.1.5
+#
+nat address-group 172.20.0.2 8
+ mode pat
+ section 0 172.20.0.2 172.20.0.2
+#
+nat address-group 172.20.0.34 9
+ mode pat
+ section 0 172.20.0.34 172.20.0.34
+#
+nat address-group 172.20.1.9 10
+ mode pat
+ section 0 172.20.1.9 172.20.1.9
+#
+nat address-group 202.162.1.234 11
+ mode pat
+ section 0 202.162.1.234 202.162.1.234
+#
+nat address-group 192.168.240.1 12
+ mode pat
+ section 0 192.168.240.1 192.168.240.1
+#
+nat address-group 172.20.1.11 13
+ mode pat
+ section 0 172.20.1.11 172.20.1.11
+#
+nat address-group 10.12.128.1 14
+ mode pat
+ section 0 10.12.128.1 10.12.128.1
+#
+nat address-group 10.231.1.66 15
+ mode pat
+ section 0 10.231.1.66 10.231.1.66
+#
+nat address-group 172.167.226.2 16
+ mode pat
+ section 0 172.167.226.2 172.167.226.2
+#
+nat address-group 172.20.1.12 17
+ mode pat
+ section 0 172.20.1.12 172.20.1.12
+#
+nat address-group 172.20.1.13 18
+ mode pat
+ section 0 172.20.1.13 172.20.1.13
+#
+nat address-group 10.12.128.2 19
+ mode pat
+ section 0 10.12.128.2 10.12.128.2
+#
+nat address-group bx-bank-direct-172.20.0.42 20
+ mode pat
+ section 0 172.20.0.42 172.20.0.42
+#
+nat address-group bx-bank-app-172.20.1.15 21
+ mode pat
+ section 0 172.20.1.15 172.20.1.15
+#
+nat address-group 51-natַ 22
+ mode pat
+ section 0 172.20.1.23 172.20.1.23
+#
+ slb
+  group 0 BJ-bank-lvs
+   metric roundrobin
+   health-check type tcp port 80
+   rserver 0 rip 172.52.0.3 port 80
+   action optimize
+  group 1 BJ-bank-sftp
+   metric roundrobin
+   health-check type tcp port 22
+   rserver 0 rip 172.16.146.115 port 22
+   action optimize
+  group 2 SQ-Bank-sftp
+   metric roundrobin
+   health-check type tcp port 22
+   rserver 0 rip 172.16.152.160 port 22 status inactive
+   rserver 1 rip 172.16.226.28 port 22
+   action optimize
+  group 3 bk-wzbank-gateway
+   metric roundrobin
+   health-check type tcp port 30001
+   rserver 1 rip 172.18.148.11 port 30001
+   rserver 5 rip 172.18.148.12 port 30001
+   rserver 6 rip 172.18.148.13 port 30001
+   rserver 7 rip 172.18.148.14 port 30001
+   rserver 8 rip 172.16.240.10 port 30001
+   rserver 9 rip 172.16.240.11 port 30001
+   rserver 10 rip 172.16.240.12 port 30001
+   rserver 11 rip 172.16.240.13 port 30001
+   action optimize
+  group 4 NJ-bank
+   metric roundrobin
+   health-check type tcp
+   rserver 2 rip 172.16.208.29 port 8080
+   rserver 3 rip 172.16.208.30 port 8080
+   action optimize
+  group 5 bk-wzbank-gateway-9528
+   metric roundrobin
+   health-check type tcp port 30002
+   rserver 0 rip 172.18.148.11 port 30002
+   rserver 1 rip 172.18.148.12 port 30002
+   rserver 2 rip 172.18.148.13 port 30002
+   rserver 3 rip 172.18.148.14 port 30002
+   rserver 4 rip 172.16.240.10 port 30002
+   rserver 5 rip 172.16.240.11 port 30002
+   rserver 6 rip 172.16.240.12 port 30002
+   rserver 7 rip 172.16.240.13 port 30002
+   action optimize
+  group 6 xy-ngnix
+   metric roundrobin
+   health-check type tcp port 80
+   rserver 0 rip 172.52.0.3 port 80
+   action optimize
+  group 7 TJ-bank
+   metric roundrobin
+   health-check type tcp port 8080
+   rserver 2 rip 172.16.208.181 port 8080
+   rserver 3 rip 172.16.208.180 port 8080
+   action optimize
+  group 8 YL-TJ-bank
+   metric roundrobin
+   health-check type tcp port 8080
+   rserver 0 rip 172.16.183.92 port 8080
+   rserver 1 rip 172.16.154.190 port 8080
+   rserver 2 rip 172.16.208.181 port 8080
+   rserver 3 rip 172.16.208.180 port 8080
+   action optimize
+  group 9 bx-bank-server
+   metric roundrobin
+   health-check type tcp port 80
+   rserver 0 rip 172.52.1.2 port 80 status inactive
+   rserver 1 rip 172.52.0.3 port 80
+   action optimize
+  group 10 XY-SFTP-1
+   metric roundrobin
+   health-check type tcp port 22
+   rserver 0 rip 172.16.152.160 port 22
+   action optimize
+  vserver 2 BH-bank-sftp
+   vip 0 10.12.98.2
+   protocol tcp
+   vport 22
+   group SQ-Bank-sftp
+  vserver 3 JJ-bank-sftp
+   vip 0 10.23.238.3
+   protocol tcp
+   vport 50022
+   group SQ-Bank-sftp
+  vserver 4 bk-wzbank-gateway
+   vip 0 10.200.199.57
+   protocol tcp
+   vport 9527
+   group bk-wzbank-gateway
+  vserver 5 NJ-bank
+   vip 0 192.168.240.1
+   protocol tcp
+   vport 8080
+   group NJ-bank
+  vserver 6 bk-wzbank-gateway-9528
+   vip 0 172.20.1.11
+   protocol tcp
+   vport 9528
+   group bk-wzbank-gateway-9528
+  vserver 7 YL-NJ-bank-sftp
+   vip 0 10.12.128.2
+   protocol tcp
+   vport 50022
+   group SQ-Bank-sftp
+  vserver 8 TJ-bank
+   vip 0 172.20.1.12
+   protocol tcp
+   vport 8080
+   group TJ-bank
+  vserver 9 YL-TJ-bank
+   vip 0 10.12.128.2
+   protocol tcp
+   vport 8080
+   group YL-TJ-bank
+  vserver 10 bx-bank-server
+   vip 0 172.20.1.16
+   protocol tcp
+   vport 80
+   group bx-bank-server
+#
+multi-interface
+ mode proportion-of-weight
+#
+right-manager server-group
+#
+agile-network 
+#
+device-classification
+ device-group pc
+ device-group mobile-terminal
+ device-group undefined-group
+#
+user-manage server-sync tsm
+#
+security-policy
+ rule name local_any
+  source-zone local
+  action permit
+ rule name any_local
+  destination-zone local
+  action permit
+ rule name icmp
+  service icmp
+  action permit
+ rule name ospf
+  service ospf
+  action permit
+ rule name to-BJ-bank-80
+  source-zone inside
+  destination-zone to_bank
+  source-address address-set BJ-bank-internal
+  source-address address-set bankproxy
+  destination-address address-set 72.128.0.172
+  destination-address address-set 72.128.0.188
+  service http
+  action permit
+ rule name BH-bank-to-51-sftp
+  source-zone to_bank
+  destination-zone inside
+  source-address address-set 10.23.1.32
+  destination-address address-set 10.12.98.2
+  service tcp_50022
+  service ssh
+  action permit
+ rule name to-BH-bank
+  source-zone inside
+  destination-zone to_bank
+  source-address address-set BH-bank-internal
+  source-address address-set bk-wzbank-gateway-k8s̶
+  source-address address-set bk-wzbank-gateway-kvm
+  destination-address address-set 10.23.1.32
+  service tcp_32469
+  action permit
+ rule name 5720-mgmt
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 172.16.255.249
+  action permit
+ rule name to-JJ-bank
+  policy logging
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  source-address address-set WZ-bank-internal
+  destination-address address-set 10.200.196.162
+  service tcp_12465
+  action permit
+ rule name to-JJ-bank-sftp
+  policy logging
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  source-address address-set WZ-bank-internal
+  source-address address-set SQ-k8s-fc-outside-audit-service
+  source-address address-set XY-k8s-fc-outside-audit-service
+  source-address address-set fc-fund-file-service
+  source-address address-set xy-k8s-fc-fund-gateway
+  destination-address address-set 10.23.244.195
+  service tcp_18022
+  action permit
+ rule name to-JJ-bank-
+  policy logging
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  source-address address-set WZ-bank-internal
+  source-address address-set SQ-k8s-fc-outside-audit-service
+  source-address address-set XY-k8s-fc-outside-audit-service
+  source-address address-set fc-fund-file-service
+  source-address address-set "SQ-K8S- fc-fund-gateway"
+  source-address address-set xy-k8s-fc-fund-gateway
+  source-address address-set fc-fund-gateway-JJ-bank
+  source-address address-set 172.24.131.192-
+  source-address address-set 172.24.67.128
+  source-address address-set 172.16.208.181
+  source-address address-set 172.16.154.190
+  source-address address-set 172.16.183.92
+  source-address address-set 172.16.209.16
+  destination-address address-set 10.23.244.194
+  service tcp_19903
+  service tcp_9902
+  service tcp_29903
+  action permit
+ rule name JJ-bank-to-51-sftp
+  policy logging
+  session logging
+  source-zone to_bank
+  destination-zone inside
+  source-address address-set 10.23.244.193
+  destination-address address-set 10.23.238.3
+  service tcp_50022
+  action permit
+ rule name JJ-bank-to-51-gateway
+  policy logging
+  session logging
+  source-zone to_bank
+  destination-zone inside
+  source-address address-set 10.200.196.162
+  destination-address address-set 10.200.199.57
+  service tcp_9527
+  service tcp_9528
+  action permit
+ rule name JJ-bank-to-51-gateway-2
+  policy logging
+  session logging
+  source-zone to_bank
+  destination-zone inside
+  source-address address-set 10.23.244.193
+  source-address address-set 10.23.244.195
+  source-address address-set 10.23.244.194
+  source-address address-set 172.24.131.192-
+  source-address address-set 172.24.67.128
+  source-address address-set 172.16.208.181
+  source-address address-set 172.16.154.190
+  source-address address-set 172.16.183.92
+  source-address address-set 172.16.209.16
+  destination-address address-set 172.20.1.11
+  service tcp_9528
+  action permit
+ rule name to-ICBC-8446
+  policy logging
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 12.1.1.72
+  service tcp_8446
+  service tcp_8445
+  action permit
+ rule name to-ICBC-sftp
+  policy logging
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 12.1.1.73
+  service ftp
+  service icmp
+  service ssh
+  action permit
+ rule name to-CJ-bank-40048
+  policy logging
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 172.20.1.8
+  service tcp_40048
+  service ssh_10022
+  service tcp_12006
+  service ssh
+  action permit
+ rule name NJ-bank-to-51-8080
+  source-zone to_bank
+  destination-zone inside
+  source-address address-set 73.162.162.7
+  source-address address-set 73.162.162.8
+  source-address address-set 73.162.162.10
+  source-address address-set 73.162.162.11
+  destination-address address-set 192.168.240.1
+  service tcp_8080
+  action permit
+ rule name to-NJ-bank
+  source-zone inside
+  destination-zone to_bank
+  source-address address-set ط
+  source-address address-set NJ-bank
+  source-address address-set stable-nginx
+  destination-address address-set 73.162.162.7
+  destination-address address-set 73.162.162.8
+  destination-address address-set 73.162.162.10
+  destination-address address-set 73.162.162.11
+  service tcp_16620
+  service http
+  action permit
+ rule name -Ͼҵ
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 10.23.2.104
+  service tcp_32956
+  action permit
+ rule name -ҵ
+  disable
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 31.1.0.154
+  destination-address address-set 10.23.1.93
+  service tcp_32469
+  service tcp_58000
+  action permit
+ rule name 
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 168.1.2.108
+  service tcp_20
+  service tcp_10262
+  service tcp_9000
+  service TCP-9090
+  service http
+  service ftp
+  service ssh
+  action permit
+ rule name -10005
+  policy logging
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 168.1.2.121
+  service tcp_10005
+  action permit
+ rule name -1000245
+  policy logging
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 168.1.2.122
+  service tcp_10005
+  service tcp_10004
+  service tcp_10002
+  action permit
+ rule name Ŀ
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 168.1.2.100
+  destination-address address-set 168.1.2.103
+  service tcp_10001
+  service tcp_9922
+  action permit
+ rule name TJ-bank-to-51
+  source-zone to_bank
+  destination-zone inside
+  source-address address-set 168.1.2.108
+  destination-address address-set 172.20.1.12
+  service tcp_8080
+  action permit
+ rule name -ҵ-to-51
+  disable
+  session logging
+  source-zone to_bank
+  destination-zone inside
+  source-address address-set 31.1.0.154
+  source-address address-set 31.0.0.50
+  destination-address address-set 10.12.128.2
+  service tcp_50022
+  service tcp_8080
+  action permit
+ rule name to-bx-bank-app
+  source-zone inside
+  destination-zone to_bank
+  source-address address-set BX-bank-server_sourcelist
+  destination-address address-set 172.20.1.18
+  action permit
+ rule name bx-bank-to-51
+  source-zone to_bank
+  destination-zone inside
+  destination-address address-set 172.20.1.16
+  service http
+  action permit
+ rule name 51
+  policy logging
+  session logging
+  source-zone inside
+  destination-zone to_bank
+  source-address address-set 51-
+  destination-address address-set ҵַ
+  service tcp_8082
+  service tcp_22
+  service icmp
+  action permit
+ rule name yyz-tftp
+  policy logging
+  source-address address-set 172.16.37.60
+  action permit
+ rule name yyz-tftp-1
+  policy logging
+  destination-address address-set 172.16.37.60
+  action permit
+#
+auth-policy
+#
+traffic-policy
+#
+policy-based-route
+#
+nat-policy
+ rule name to-BH-bank
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 10.23.1.32
+  action nat address-group 10.12.98.150
+ rule name to-BH-bank-direct
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 10.232.0.137
+  action nat address-group 10.232.0.138
+ rule name to_JJ_bank
+  source-zone inside
+  destination-zone to_bank
+  source-address address-set WZ-bank-internal
+  destination-address address-set 10.200.196.162
+  destination-address address-set 10.23.244.193
+  action nat address-group 10.200.199.57
+ rule name to_JJ_bank_direct
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 10.23.238.0/29
+  action nat address-group 10.23.238.6
+ rule name to-ICBC
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 12.1.1.72
+  destination-address address-set 12.1.1.73
+  action nat address-group 172.20.1.1
+ rule name to-CJ-bank
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 172.20.1.8
+  action nat address-group 172.20.1.5
+ rule name to-ICBC-direct
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 172.20.0.1
+  action nat address-group 172.20.0.2
+ rule name to-CJ-bank-direct
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 172.20.0.33
+  action nat address-group 172.20.0.34
+ rule name to-NJ-bank
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 73.162.162.7
+  destination-address address-set 73.162.162.8
+  destination-address address-set 73.162.162.10
+  destination-address address-set 73.162.162.11
+  action nat address-group 192.168.240.1
+ rule name to-NJ-bank-direct
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 202.162.1.233
+  action nat address-group 202.162.1.234
+ rule name to_JJ_bank_internal
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 10.23.244.195
+  destination-address address-set 10.23.244.194
+  action nat address-group 172.20.1.11
+ rule name -Ͼҵ
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 10.23.2.104
+  action nat address-group 10.12.128.1
+ rule name -direct
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 10.231.1.65
+  action nat address-group 10.231.1.66
+ rule name to-TJ-bank-direct
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 172.167.226.1
+  action nat address-group 172.167.226.2
+ rule name to-TJ-bank
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 168.1.2.108
+  destination-address address-set 168.1.2.100
+  destination-address address-set 168.1.2.103
+  destination-address address-set 168.1.2.121
+  destination-address address-set 168.1.2.122
+  action nat address-group 172.20.1.12
+ rule name -ҵ
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 31.1.0.154
+  destination-address address-set 10.23.1.93
+  destination-address address-set 31.0.0.50
+  action nat address-group 10.12.128.2
+ rule name to-bx-bank-direct
+  description ȥֱַת
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 172.20.0.40/29
+  action nat address-group bx-bank-direct-172.20.0.42
+ rule name to-bx-bank-app
+  description ȥҵַת
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set 172.20.1.17-172.20.1.18
+  action nat address-group bx-bank-app-172.20.1.15
+ rule name 51-
+  source-zone inside
+  destination-zone to_bank
+  destination-address address-set ҵַ
+  action nat address-group 51-natַ
+#
+proxy-policy
+#
+quota-policy
+#
+pcp-policy
+#
+dns-transparent-policy
+ mode based-on-multi-interface
+#
+rightm-policy
+#
+ sms
+#
+return
