@@ -22,6 +22,7 @@ class Device(models.Model):
     location = models.CharField(max_length=255, choices=LOCATION_CHOICES)
 
     Role_CHOICES = (
+        ('FW', '防火墙'),
         ('JR', '接入交换机'),
         ('HX', '核心交换机'),
         ('HJ', '汇聚交换机'),
@@ -32,6 +33,7 @@ class Device(models.Model):
     role = models.CharField(max_length=255, choices=Role_CHOICES)
 
     MODEL_CHOICES = (
+        ('USG', 'USG'),
         ('HW5700', 'HW5700'),
         ('HWNE20', 'HWNE20'),
         ('HW8800', 'HW8800'),

@@ -20,7 +20,7 @@ FD-1F-B08-CE8860:
         model: HW8800
 
 FD-1F-C17-K8S-6850-stack:
-    hostname: 172.16.63.58
+    hostname: 172.16.63.62
     platform: huawei
     data:
         level: HJ
@@ -124,13 +124,6 @@ FD4-D09&D11-CE6850-1:
         level: JR
         model: HW6800
 
-FD4-D10&D12-CE6850-1:
-    hostname: 51.51.51.110
-    platform: huawei
-    data:
-        level: JR
-        model: HW6800
-
 FD4-D14&D16-CE6850-1:
     hostname: 51.51.51.111
     platform: huawei
@@ -227,14 +220,14 @@ XY-2F-D09-CE8860:
     platform: huawei
     data:
         level: JR
-        model: HW6800
+        model: HW8800
 
 XY-2F-D10-CE8860:
     hostname: 51.51.51.31
     platform: huawei
     data:
         level: JR
-        model: HW6800
+        model: HW8800
 
 XY-2F-E01&E02-CE6850:
     hostname: 51.51.51.9
@@ -501,4 +494,25 @@ FD-1F-E01-S5720-1:
     data:
         level: JR
         model: HW5700
+
+172.16.63.19-office&stale:
+    hostname: 172.16.63.19
+    platform: huawei
+    data:
+        level: FW
+        model: USG
+
+172.16.63.12-FD-bank:
+    hostname: 172.16.63.12
+    platform: huawei
+    data:
+        level: FW
+        model: USG
+
+172.16.193.6-XY-bank:
+    hostname: 172.16.193.6
+    platform: huawei
+    data:
+        level: FW
+        model: USG
 
