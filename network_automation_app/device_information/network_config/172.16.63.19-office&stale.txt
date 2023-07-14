@@ -1,4 +1,4 @@
-2023-05-22 08:04:58.576 
+2023-07-14 05:47:33.286 
 !Software Version V500R001C60SPC500
 #
 sysname 172.16.63.19
@@ -5398,6 +5398,15 @@ ip address-set 172.16.28.24 type object
 #
 ip address-set 172.16.37.37 type object
  address 0 172.16.37.37 mask 32
+#
+ip address-set 10.247.22.61 type object
+ address 0 10.247.22.61 mask 32
+#
+ip address-set 10.247.15.153 type object
+ address 0 10.247.15.253 mask 32
+#
+ip address-set 172.16.60.17 type object
+ address 0 172.16.60.17 mask 32
 #
 ip address-set ά type group
  address 4 address-set ֪-10.0.52.36
@@ -10928,6 +10937,16 @@ security-policy
   destination-address address-set 豸web
   service https
   service ssh
+  action permit
+ rule name 10.247.22.61_80_443
+  policy logging
+  session logging
+  source-zone FDIDC
+  destination-zone Docker_test
+  source-address address-set 172.16.0.0/16_
+  destination-address address-set 10.247.22.61
+  service http
+  service https
   action permit
 #
 auth-policy

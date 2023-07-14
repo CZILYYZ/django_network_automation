@@ -1,5 +1,5 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-05-18 11:34:58+08:00 by 51en
+!Last configuration was updated at 2023-06-14 13:57:09+08:00 by 51en
 !Last configuration was saved at 2023-03-01 00:51:28+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
@@ -1981,6 +1981,7 @@ ip route-static 172.26.192.0 255.255.192.0 NULL0
 ip route-static vpn-instance SQCTCC 0.0.0.0 0.0.0.0 172.16.255.54 public
 ip route-static vpn-instance SQCTCC 115.238.29.64 255.255.255.192 172.16.255.73
 ip route-static vpn-instance XYCMCC 0.0.0.0 0.0.0.0 172.16.255.81
+ip route-static vpn-instance XYCMCC 112.17.251.115 255.255.255.255 172.16.255.90
 ip route-static vpn-instance XYCMCC 117.148.143.80 255.255.255.240 172.16.255.90
 ip route-static vpn-instance APP 0.0.0.0 0.0.0.0 172.16.254.98
 ip route-static vpn-instance DB 0.0.0.0 0.0.0.0 172.16.254.114

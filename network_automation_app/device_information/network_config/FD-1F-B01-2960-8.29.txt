@@ -1,9 +1,9 @@
 Building configuration...
 
-Current configuration : 15744 bytes
+Current configuration : 16005 bytes
 !
-! Last configuration change at 09:01:46 UTC Thu Feb 23 2023 by 51en
-! NVRAM config last updated at 16:17:18 UTC Tue Feb 28 2023 by 51en
+! Last configuration change at 02:59:11 UTC Wed Jul 5 2023 by 51en
+! NVRAM config last updated at 03:03:27 UTC Wed Jul 5 2023 by 51en
 !
 version 15.2
 no service pad
@@ -152,9 +152,11 @@ interface Port-channel16
  no port-channel standalone-disable
 !
 interface Port-channel18
- switchport access vlan 100
+ description dT:B01-inspur-gpu-172.16.50.9-bound
+ switchport access vlan 50
  switchport mode access
  spanning-tree portfast
+ no port-channel standalone-disable
 !
 interface Port-channel19
  description to-B01-R730XD-9-weedfs
@@ -241,7 +243,7 @@ interface GigabitEthernet1/0/7
 !
 interface GigabitEthernet1/0/8
  description to-B01-R730XD-8-weedfs-eth0
- switchport access vlan 100
+ switchport access vlan 50
  switchport mode access
  channel-group 18 mode active
 !
@@ -344,6 +346,9 @@ interface GigabitEthernet1/0/33
 interface GigabitEthernet1/0/34
 !
 interface GigabitEthernet1/0/35
+ description dT:B01-inspur-gpu-172.16.50.9-MGMT
+ switchport access vlan 100
+ switchport mode access
 !
 interface GigabitEthernet1/0/36
  switchport access vlan 57
@@ -471,7 +476,7 @@ interface GigabitEthernet2/0/7
 !
 interface GigabitEthernet2/0/8
  description to-B01-R730XD-8-weedfs-eth1
- switchport access vlan 100
+ switchport access vlan 50
  switchport mode access
  channel-group 18 mode active
 !
@@ -531,6 +536,9 @@ interface GigabitEthernet2/0/18
  channel-group 23 mode active
 !
 interface GigabitEthernet2/0/19
+ switchport access vlan 50
+ switchport mode access
+ channel-group 18 mode active
 !
 interface GigabitEthernet2/0/20
  switchport access vlan 4

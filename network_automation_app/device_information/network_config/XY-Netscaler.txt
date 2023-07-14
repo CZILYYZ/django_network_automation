@@ -1,5 +1,5 @@
 #NS11.1 Build 56.19
-# Last modified Mon May 22 16:26:58 2023
+# Last modified Fri Jul 14 14:10:22 2023
 set ns config -IPAddress 172.16.193.2 -netmask 255.255.255.0
 enable ns feature LB CS CMP CF OSPF REWRITE RESPONDER AppFlow
 enable ns mode L3 USIP MBF USNIP SRADV PMTUD
@@ -260,6 +260,7 @@ add lb vserver GNH-internet ANY 0.0.0.0 0 -persistenceType DESTIP -cltTimeout 12
 add lb vserver 115.238.29.10-3602 TCP 115.238.29.10 3602 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)||CLIENT.IP.SRC.IN_SUBNET(47.100.48.46/32)" -cltTimeout 9000
 add lb vserver 115.238.29.10-3543 TCP 115.238.29.10 3543 -persistenceType NONE -Listenpolicy "CLIENT.IP.SRC.IN_SUBNET(47.105.112.145/32)||CLIENT.IP.SRC.IN_SUBNET(47.100.48.46/32)" -cltTimeout 9000
 add lb vserver u51.com-5349 UDP 115.238.29.11 5349 -persistenceType NONE -cltTimeout 120
+add lb vserver 112.17.251.115-u51.com HTTP 112.17.251.115 80 -persistenceType NONE -lbMethod ROUNDROBIN -backupLBMethod LEASTCONNECTION -cltTimeout 180
 set cache parameter -via "NS-CACHE-10.0:   1"
 add cs vserver internet-out ANY * * -cltTimeout 120 -Listenpolicy "Client.IP.SRC.IN_SUBNET(172.16.192.0/18)||Client.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.26.192.0/18)||CLIENT.IP.SRC.IN_SUBNET(172.19.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.24.0.0/16)||Client.IP.SRC.IN_SUBNET(172.16.192.0/18)||Client.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.26.192.0/18)||CLIENT.IP.SRC.IN_SUBNET(172.19.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.24.0.0/16)||CLIENT.IP.SRC.IN_SUBNET(172.16.197.0/24)" -Listenpriority 10
 add cs action SQ-CMCC -targetLBVserver SQ-CMCC
@@ -276,8 +277,8 @@ add cs policy drop_internet -rule "CLIENT.IP.SRC.IN_SUBNET(172.16.196.0/24)||CLI
 add cs policy LSKF -rule "CLIENT.IP.SRC.IN_SUBNET(172.16.197.210/32)" -action XY-CTC
 add cs policy GNH-internet -rule "CLIENT.IP.SRC.IN_SUBNET(172.21.8.0/21)||CLIENT.IP.SRC.IN_SUBNET(172.16.212.213/32)" -action GNH-internet
 set aaa parameter -maxAAAUsers 1000
-set ns rpcNode 172.16.193.2 -password 06abdc9dcfb2eb060cf2726accae63688eeb201782669dc78866414017413aed1bdd5501de2165e2db181e928628914c -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
-set ns rpcNode 172.16.193.3 -password 6909034f13398b353e5b5cad097201c015511fa7d9ea595b85e5fbf851bc6b4b1b623220495052c9bcc527954204c978 -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
+set ns rpcNode 172.16.193.2 -password aed7b005b075bb1627638c3a8afea3414cd60791da02d9e90eaca6ea41b2a0054cc6ea99f5b570f6b9426f13a5321ee9 -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
+set ns rpcNode 172.16.193.3 -password 3639cb69f2a7edeede678bd6edddfbd04fa1d41114353898f2512242be8503a8baab3ca4648763e3a937b8fefe1d88c3 -encrypted -encryptmethod ENCMTHD_3 -srcIP 172.16.193.2
 add audit syslogAction syslog 172.16.152.48 -logLevel ALL
 add audit syslogAction test-syslog 172.16.208.169 -serverPort 515 -logLevel ALL
 add audit syslogAction syslog-yyz 172.16.37.38 -logLevel ALL -dateFormat YYYYMMDD -logFacility LOCAL5
@@ -345,7 +346,7 @@ bind cache policylabel _resBuiltinDefaults -policyName _imageRes -priority 700 -
 bind cache policylabel _resBuiltinDefaults -policyName _personalizedRes -priority 800 -gotoPriorityExpression END
 bind cache global NOPOLICY -priority 185883 -gotoPriorityExpression USE_INVOCATION_RESULT -type REQ_DEFAULT -invoke policylabel _reqBuiltinDefaults
 bind cache global NOPOLICY -priority 185883 -gotoPriorityExpression USE_INVOCATION_RESULT -type RES_DEFAULT -invoke policylabel _resBuiltinDefaults
-set ns encryptionParams -method AES256 -keyValue f0265562b3074e8b8a0a88a444f525737583c25cc00927674d0a649e394016750177cc3093f37a815f01825efb384da3d9b1d6012890bffa551db308c47598a30397ee31c42ba2cf32b56372b998347d -encrypted -encryptmethod ENCMTHD_3
+set ns encryptionParams -method AES256 -keyValue 4c15ab584c10f4cd4584108ff14b543b10d2eb2fe91e02f6606520ad8711b677ff66d7b9825ba8d2efd44b834b5efb728af8ab983d4ad9cc73b27267d7f8a872cf6f52269fc6d91db3afb1fd9c7aa62c -encrypted -encryptmethod ENCMTHD_3
 bind lb vserver XT-CTC XY-CTC
 bind lb vserver SQ-CMCC SQ-CMCC
 bind lb vserver SQ-CMCC SQ-CMCC-E06-12812
@@ -382,6 +383,10 @@ bind lb vserver GNH-internet XY-CTC
 bind lb vserver 115.238.29.10-3602 172.16.197.100-3602
 bind lb vserver 115.238.29.10-3543 172.16.197.24-3543
 bind lb vserver u51.com-5349 172.16.208.130-5349
+bind lb vserver 112.17.251.115-u51.com 172.16.248.201-80
+bind lb vserver 112.17.251.115-u51.com 172.16.248.203-80
+bind lb vserver 112.17.251.115-u51.com 172.16.248.200-80
+bind lb vserver 112.17.251.115-u51.com 172.16.248.202-80
 bind lb vserver u51.com-80 -policyName af_policy_u51.com-80_172.16.190.223 -priority 99
 bind lb vserver u51.com-443 -policyName af_policy_u51.com-443_172.16.190.223 -priority 99
 bind cs vserver internet-out -policyName LSKF -priority 80

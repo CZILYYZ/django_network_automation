@@ -68,13 +68,6 @@ FD-1F-G03-CE5855:
         level: JR
         model: HW5800
 
-FD-1F-G05-CE5855:
-    hostname: 10.247.10.3
-    platform: huawei
-    data:
-        level: JR
-        model: HW5800
-
 FD-1F-G08-CE5855:
     hostname: 10.247.10.5
     platform: huawei
@@ -357,13 +350,6 @@ FD-1F-E01-rouji-3650:
 
 FD-1F-B01-2960-8.29:
     hostname: 172.16.8.29
-    platform: cisco_ios
-    data:
-        level: JR
-        model: CS
-
-FD-1F-C07-3650-8.31:
-    hostname: 172.16.8.31
     platform: cisco_ios
     data:
         level: JR

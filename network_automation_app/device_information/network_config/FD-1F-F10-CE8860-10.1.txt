@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-06-15 20:23:30+00:00 by 51en
-!Last configuration was saved at 2023-03-01 01:10:33+00:00 by 51en
+!Last configuration was updated at 2023-06-30 11:18:11+00:00 by 51en
+!Last configuration was saved at 2023-06-30 11:18:13+00:00 by 51en
 #
 clock timezone utc add 00:00:00
 #
@@ -491,6 +491,7 @@ interface Eth-Trunk41
 #
 interface Eth-Trunk42
  description dT:FD-1F-G05-CE5855:()Eth-Trunk2
+ shutdown
  port link-type trunk
  port trunk allow-pass vlan 2 to 4094
 #
@@ -735,6 +736,7 @@ interface 40GE1/3/1
 #
 interface 40GE1/3/2
  description dT:FD-1F-G05-CE5855:()40GE2/0/1
+ shutdown
  eth-trunk 42
  device transceiver 40GBASE-FIBER
 #
@@ -829,6 +831,7 @@ interface 40GE2/3/1
 #
 interface 40GE2/3/2
  description dT:FD-1F-G05-CE5855:()40GE1/0/1
+ shutdown
  eth-trunk 42
  device transceiver 40GBASE-FIBER
 #

@@ -1,5 +1,5 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-05-17 20:17:06+00:00 by 51en
+!Last configuration was updated at 2023-06-14 14:21:43+00:00 by 51en
 !Last configuration was saved at 2023-03-01 01:20:41+00:00 by 51en
 #
 sysname XY-2F-E05-CE8860
@@ -710,6 +710,7 @@ ip ip-prefix test index 10 permit 172.16.208.169 32
 #
 ip route-static 172.16.183.15 255.255.255.255 51.1.1.42
 ip route-static vpn-instance SQCTCC 0.0.0.0 0.0.0.0 172.16.255.70
+ip route-static vpn-instance XYCMCC 112.17.251.115 255.255.255.255 172.16.255.78
 ip route-static vpn-instance XYCMCC 117.148.143.80 255.255.255.240 172.16.255.78
 #
 snmp-agent

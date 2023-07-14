@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-08-17 16:37:15+08:00 by 51en
-!Last configuration was saved at 2023-03-01 00:23:25+08:00 by 51en
+!Last configuration was updated at 2023-06-28 14:15:06+08:00 by 51en
+!Last configuration was saved at 2023-06-28 14:15:48+08:00 by 51en
 #
 clock timezone GMT add 08:00:00
 #
@@ -24,7 +24,7 @@ ntp ipv6 server disable
 ntp unicast-peer 192.168.59.177
 ntp unicast-peer 192.168.59.178
 #
-vlan batch 4 24 to 27 36 44 to 47 50 to 56 58 to 62 100
+vlan batch 4 24 to 27 36 44 to 47 50 to 62 100
 #
 ecc peer-public-key 127.0.0.1
  public-key-code begin
@@ -166,7 +166,7 @@ interface Eth-Trunk27
 #
 interface Eth-Trunk28
  description dT:F2P0MG2-bond0
- port default vlan 4
+ port default vlan 57
  mode lacp-dynamic
 #
 interface Eth-Trunk29
@@ -177,6 +177,11 @@ interface Eth-Trunk29
 interface Eth-Trunk30
  description dT:D03-51MSF52-bond0
  port default vlan 100
+ mode lacp-dynamic
+#
+interface Eth-Trunk31
+ description dT:49QPXD2:bond0
+ port default vlan 57
  mode lacp-dynamic
 #
 interface Eth-Trunk100
@@ -256,7 +261,7 @@ interface 10GE1/0/18
  eth-trunk 20
 #
 interface 10GE1/0/19
- port default vlan 60
+ eth-trunk 31
 #
 interface 10GE1/0/20
 #
@@ -298,8 +303,10 @@ interface 10GE1/0/37
 interface 10GE1/0/38
 #
 interface 10GE1/0/39
+ port default vlan 100
 #
 interface 10GE1/0/40
+ port default vlan 100
 #
 interface 10GE1/0/41
  description dT:D03-6863HJ2:MGMT
@@ -397,7 +404,7 @@ interface 10GE2/0/18
  eth-trunk 20
 #
 interface 10GE2/0/19
- port default vlan 60
+ eth-trunk 31
 #
 interface 10GE2/0/20
  eth-trunk 11

@@ -1,5 +1,5 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-05-17 06:50:23+00:00 by 51en
+!Last configuration was updated at 2023-07-05 02:53:05+00:00 by 51en
 !Last configuration was saved at 2023-05-17 06:51:27+00:00 by 51en
 #
 sysname FD-1F-G08-CE5855
@@ -245,7 +245,7 @@ interface GE1/0/16
 #
 interface GE1/0/17
  description R630-9-kvm-10.80-eth0
- eth-trunk 27
+ eth-trunk 23
 #
 interface GE1/0/18
  description R630-9-kvm-10.80-eth2
@@ -275,6 +275,7 @@ interface GE1/0/24
  eth-trunk 31
 #
 interface GE1/0/25
+ eth-trunk 23
 #
 interface GE1/0/26
 #

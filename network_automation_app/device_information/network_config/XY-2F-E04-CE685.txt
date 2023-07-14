@@ -438,6 +438,7 @@ interface Eth-Trunk100
 interface Eth-Trunk115
  undo portswitch
  description uT:XY-2F-E06-CE12812:()Eth-trunk115
+
  ip address 172.16.255.38 255.255.255.252
  ospf network-type p2p
  ospf bfd enable

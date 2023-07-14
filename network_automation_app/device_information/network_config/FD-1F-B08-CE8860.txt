@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-03-03 00:10:41+08:00 by 51en
-!Last configuration was saved at 2023-03-01 00:24:04+08:00 by 51en
+!Last configuration was updated at 2023-06-30 17:48:27+08:00 by 51en
+!Last configuration was saved at 2023-06-30 10:52:58+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -372,8 +372,10 @@ interface 25GE1/3/8
  port mode 10G
 #
 interface 25GE1/3/9
+ undo portswitch
  description dT:FD-1F-B08&C17-C4510:(local)TE1/7/11
- eth-trunk 10
+ ip binding vpn-instance XYCMCC
+ ip address 172.16.63.97 255.255.255.252
  device transceiver 10GBASE-FIBER
  port mode 10G
 #
@@ -658,6 +660,10 @@ bgp 65533
   peer 51.51.51.36 enable
   peer 51.51.51.36 next-hop-local
  #
+ ipv4-family vpn-instance XYCMCC
+  import-route direct
+  import-route static
+ #
  ipv4-family vpn-instance huaweiyun-test
   import-route direct
   import-route static
@@ -752,11 +758,15 @@ route-policy ospf-red permit node 20
 ip ip-prefix Huaweiyun-dev index 10 permit 10.228.0.0 16
 ip ip-prefix Huaweiyun-dev index 20 permit 10.229.0.0 16
 #
+ip route-static vpn-instance XYCMCC 172.16.63.0 255.255.255.252 172.16.63.98
+#
 snmp-agent
 snmp-agent local-engineid 800007DB0370799027C6E1
 snmp-agent community read cipher %^%#IdJ=;Ho2KDrr%R7Z-wz/LRVyIxV.s-3,vT-M}zEM'334OXiW=4whAx7w*(_Xd:F+9v+jQT*5IP&c38.'%^%#
 #
 snmp-agent sys-info version v2c v3
+#
+snmp-agent trap enable
 #
 lldp enable
 #

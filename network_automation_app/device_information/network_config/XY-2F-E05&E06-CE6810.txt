@@ -1,6 +1,6 @@
 !Software Version V200R001C00SPC700
-!Last configuration was updated at 2022-05-16 17:08:39+00:00 by 51en
-!Last configuration was saved at 2023-03-01 00:17:47+00:00 by 51en
+!Last configuration was updated at 2023-07-03 14:55:17+00:00 by 51en
+!Last configuration was saved at 2023-07-03 14:56:07+00:00 by 51en
 #
 sysname XY-2F-E05&E06-CE6810
 #
@@ -254,14 +254,14 @@ interface 10GE1/0/32
  description uT:NS-172.16.193.2:(local)GE1/2
  port link-type trunk
  port trunk allow-pass vlan 2 to 1999 2002 to 4094
+ port-mirroring observe-port 1 inbound
+ port-mirroring observe-port 1 outbound
  negotiation disable
  speed 1000
 #
 interface 10GE1/0/33
  description to:link-to-out-1-115.238.29.1
  port default vlan 2000
- port-mirroring observe-port 1 inbound
- port-mirroring observe-port 1 outbound
  device transceiver 1000BASE-X
 #
 interface 10GE1/0/34
@@ -374,14 +374,14 @@ interface 10GE2/0/32
  description uT:NS-172.16.193.3:(local)GE1/2
  port link-type trunk
  port trunk allow-pass vlan 2 to 1999 2002 to 4094
+ port-mirroring observe-port 1 inbound
+ port-mirroring observe-port 1 outbound
  negotiation disable
  speed 1000
 #
 interface 10GE2/0/33
  description to:link-to-out-2-115.238.29.5
  port default vlan 2001
- port-mirroring observe-port 1 inbound
- port-mirroring observe-port 1 outbound
  device transceiver 1000BASE-X
 #
 interface 10GE2/0/34

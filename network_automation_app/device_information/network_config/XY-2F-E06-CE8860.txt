@@ -1,6 +1,8 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-05-17 11:58:53+00:00 by 51en
-!Last configuration was saved at 2023-02-28 17:02:11+00:00 by 51en
+!Last configuration was updated at 2023-06-14 14:00:39+08:00 by 51en
+!Last configuration was saved at 2023-06-12 14:42:18+08:00 by 51en
+#
+clock timezone GMT+8 add 08:00:00
 #
 sysname XY-2F-E06-CE8860
 #
@@ -641,6 +643,7 @@ route-policy ospf-red permit node 20
 #
 ip route-static 172.16.183.15 255.255.255.255 51.1.1.58
 ip route-static vpn-instance SQCTCC 0.0.0.0 0.0.0.0 172.16.255.74
+ip route-static vpn-instance XYCMCC 112.17.251.115 255.255.255.255 172.16.255.82
 ip route-static vpn-instance XYCMCC 117.148.143.80 255.255.255.240 172.16.255.82
 #
 snmp-agent

@@ -108,54 +108,6 @@ interface Eth-Trunk127
  description uT:XY-2F-E05-CE12812:()Eth-trunk220
  ip address 172.16.255.230 255.255.255.252
 #
-interface 25GE1/2/1
-#
-interface 25GE1/2/2
-#
-interface 25GE1/2/3
-#
-interface 25GE1/2/4
-#
-interface 25GE1/2/5
-#
-interface 25GE1/2/6
-#
-interface 25GE1/2/7
-#
-interface 25GE1/2/8
-#
-interface 25GE1/2/9
-#
-interface 25GE1/2/10
-#
-interface 25GE1/2/11
-#
-interface 25GE1/2/12
-#
-interface 25GE1/2/13
-#
-interface 25GE1/2/14
-#
-interface 25GE1/2/15
-#
-interface 25GE1/2/16
-#
-interface 25GE1/2/17
-#
-interface 25GE1/2/18
-#
-interface 25GE1/2/19
-#
-interface 25GE1/2/20
-#
-interface 25GE1/2/21
-#
-interface 25GE1/2/22
-#
-interface 25GE1/2/23
-#
-interface 25GE1/2/24
-#
 interface 40GE1/1/1
  description dT:XY-2F-C09&C10-CE8860:(local)40GE1/0/4
  eth-trunk 1
@@ -255,10 +207,6 @@ interface 40GE1/3/16
  description uT:XY-2F-E05-CE12812:(local)40GE11/0/22
  eth-trunk 127
  device transceiver 40GBASE-FIBER
-#
-interface 100GE1/2/1
-#
-interface 100GE1/2/2
 #
 interface LoopBack0
  ip address 51.51.51.31 255.255.255.255

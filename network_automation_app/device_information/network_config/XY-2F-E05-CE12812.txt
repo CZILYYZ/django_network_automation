@@ -1,5 +1,5 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-05-18 11:34:21+08:00 by 51en
+!Last configuration was updated at 2023-06-14 13:58:44+08:00 by 51en
 !Last configuration was saved at 2023-03-01 00:51:16+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
@@ -1250,54 +1250,6 @@ interface 10GE6/0/47
  eth-trunk 1
  device transceiver 10GBASE-FIBER
 #
-interface 40GE9/0/0
-#
-interface 40GE9/0/1
-#
-interface 40GE9/0/2
-#
-interface 40GE9/0/3
-#
-interface 40GE9/0/4
-#
-interface 40GE9/0/5
-#
-interface 40GE9/0/6
-#
-interface 40GE9/0/7
-#
-interface 40GE9/0/8
-#
-interface 40GE9/0/9
-#
-interface 40GE9/0/10
-#
-interface 40GE9/0/11
-#
-interface 40GE9/0/12
-#
-interface 40GE9/0/13
-#
-interface 40GE9/0/14
-#
-interface 40GE9/0/15
-#
-interface 40GE9/0/16
-#
-interface 40GE9/0/17
-#
-interface 40GE9/0/18
-#
-interface 40GE9/0/19
-#
-interface 40GE9/0/20
-#
-interface 40GE9/0/21
-#
-interface 40GE9/0/22
-#
-interface 40GE9/0/23
-#
 interface 40GE10/0/0
  description dT:XY-2F-E05-CE8860:(local)40GE1/1/5
  eth-trunk 10
@@ -2008,6 +1960,7 @@ ip route-static 172.26.192.0 255.255.192.0 NULL0
 ip route-static vpn-instance SQCTCC 0.0.0.0 0.0.0.0 172.16.255.50 public
 ip route-static vpn-instance SQCTCC 115.238.29.64 255.255.255.192 172.16.255.69
 ip route-static vpn-instance XYCMCC 0.0.0.0 0.0.0.0 172.16.255.77
+ip route-static vpn-instance XYCMCC 112.17.251.115 255.255.255.255 172.16.255.86
 ip route-static vpn-instance XYCMCC 117.148.143.80 255.255.255.240 172.16.255.86
 ip route-static vpn-instance APP 0.0.0.0 0.0.0.0 172.16.254.2
 ip route-static vpn-instance DB 0.0.0.0 0.0.0.0 172.16.254.18
