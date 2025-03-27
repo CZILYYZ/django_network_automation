@@ -129,6 +129,7 @@ interface GigabitEthernet0/0/4
 #
 interface GigabitEthernet0/0/5
  description to-ICBC
+ shutdown
  port default vlan 14
  traffic-policy liutong inbound
  traffic-policy liutong outbound
@@ -149,6 +150,7 @@ interface GigabitEthernet0/0/9
  undo negotiation auto
  speed 100
  description to-SH-YL
+ shutdown
  port default vlan 17
 #
 interface GigabitEthernet0/0/10

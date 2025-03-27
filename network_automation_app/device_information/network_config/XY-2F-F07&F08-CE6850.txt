@@ -1,6 +1,6 @@
 !Software Version V200R001C00SPC700
-!Last configuration was updated at 2022-03-28 19:45:00+08:00 by 51en
-!Last configuration was saved at 2023-03-01 01:13:25+08:00 by 51en
+!Last configuration was updated at 2023-12-14 14:47:26+08:00 by 51en
+!Last configuration was saved at 2023-12-14 14:47:29+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -41,6 +41,8 @@ bfd
 vlan 249
  name ramos-pxe
 #
+bridge-domain 10201
+#
 bridge-domain 10204
  l2 binding vlan 204
  vxlan vni 10204
@@ -67,6 +69,7 @@ bridge-domain 10209
 #
 bridge-domain 10210
  l2 binding vlan 210
+ traffic-policy Mbike inbound 
  vxlan vni 10210
 #
 bridge-domain 10211
@@ -145,6 +148,37 @@ acl number 2000
  rule 0 permit source 172.16.0.0 0.0.255.255
  rule 1 permit source 192.168.178.0 0.0.0.255
  rule 2 permit source 192.168.20.0 0.0.3.255
+#
+acl number 3000
+ rule 5 permit tcp source 172.16.210.0 0.0.0.255 destination-port eq 8080
+ rule 10 permit tcp source 172.16.210.0 0.0.0.255 destination-port eq 22
+#
+acl number 3001
+ rule 5 permit ip
+#
+acl number 3002
+ rule 5 permit tcp source 172.16.210.0 0.0.0.255 destination 172.16.210.0 0.0.0.255
+#
+traffic classifier Mbike type or
+ if-match acl 3000
+#
+traffic classifier Mbike-1 type or
+ if-match acl 3001
+#
+traffic classifier Mbike-2 type or
+ if-match acl 3002
+#
+traffic behavior Mbike
+ deny
+#
+traffic behavior Mbike-1
+#
+traffic behavior Mbike-2
+#
+traffic policy Mbike
+ classifier Mbike-2 behavior Mbike-2 precedence 1
+ classifier Mbike behavior Mbike precedence 5
+ classifier Mbike-1 behavior Mbike-1 precedence 10
 #
 aaa
  undo local-user policy security-enhance
@@ -979,6 +1013,7 @@ interface Nve1
  vni 10226 head-end peer-list 51.51.51.22
  vni 10226 head-end peer-list 51.51.51.23
  vni 10226 head-end peer-list 51.51.51.24
+ vni 10226 head-end peer-list 51.51.51.28
  vni 10226 head-end peer-list 51.51.51.29
  vni 10226 head-end peer-list 51.51.51.250
  vni 10248 head-end peer-list 51.51.51.9

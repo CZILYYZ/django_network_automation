@@ -1,9 +1,9 @@
 Building configuration...
 
-Current configuration : 8294 bytes
+Current configuration : 8516 bytes
 !
-! Last configuration change at 17:03:17 GMT Thu Feb 23 2023 by 51en
-! NVRAM config last updated at 00:57:38 GMT Wed Mar 1 2023 by 51en
+! Last configuration change at 15:52:42 GMT Tue Jan 9 2024 by 51en
+! NVRAM config last updated at 14:22:03 GMT Mon Nov 13 2023 by 51en
 !
 version 15.2
 no service pad
@@ -26,6 +26,7 @@ vrf definition Mgmt-vrf
  address-family ipv6
  exit-address-family
 !
+logging monitor informational
 !
 username 51en privilege 15 password 7 075A704940292A3227405B
 aaa new-model
@@ -166,11 +167,11 @@ interface GigabitEthernet1/0/16
  switchport mode access
 !
 interface GigabitEthernet1/0/17
- switchport access vlan 192
+ switchport access vlan 193
  switchport mode access
 !
 interface GigabitEthernet1/0/18
- switchport access vlan 192
+ switchport access vlan 193
  switchport mode access
 !
 interface GigabitEthernet1/0/19
@@ -231,7 +232,7 @@ interface GigabitEthernet1/0/31
  switchport mode access
 !
 interface GigabitEthernet1/0/32
- switchport access vlan 193
+ switchport access vlan 200
  switchport mode access
 !
 interface GigabitEthernet1/0/33
@@ -349,14 +350,20 @@ interface Vlan194
 interface Vlan195
  no ip address
 !
+interface Vlan200
+ ip address 172.16.128.1 255.255.255.0
+ shutdown
+!
 router ospf 100
  router-id 51.51.51.14
  area 1 authentication message-digest
  area 1 stub
+ redistribute static subnets
  passive-interface Vlan192
  passive-interface Vlan193
  passive-interface Vlan194
  network 51.51.51.14 0.0.0.0 area 1
+ network 172.16.128.0 0.0.0.255 area 1
  network 172.16.192.0 0.0.0.255 area 1
  network 172.16.193.0 0.0.0.255 area 1
  network 172.16.194.0 0.0.0.255 area 1
@@ -368,6 +375,7 @@ ip forward-protocol nd
 no ip http server
 ip http authentication local
 no ip http secure-server
+ip route 172.16.255.160 255.255.255.252 172.16.193.251
 ip ssh version 2
 ip scp server enable
 !

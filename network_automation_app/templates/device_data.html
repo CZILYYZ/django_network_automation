@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Device Data</title>
+</head>
+<body>
+    <h1>Device Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>IP Address</th>
+                <th>CPU Data</th>
+                <th>Memory Data</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in device_data %}
+                <tr>
+                    <td>{{ data.ip_address }}</td>
+                    <td>{{ data.cpu_data }}</td>
+                    <td>{{ data.memory_data }}</td>
+                    <td>{{ data.timestamp }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

@@ -1,5 +1,5 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-03-27 13:33:48+08:00 by 51en
+!Last configuration was updated at 2024-02-20 12:38:15+08:00 by 51en
 !Last configuration was saved at 2023-03-24 18:40:00+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
@@ -77,6 +77,8 @@ ecc peer-public-key 172.16.63.142
  public-key-code end
  peer-public-key end
 #
+dhcp enable
+#
 evpn-overlay enable
 #
 telnet ipv6 server disable
@@ -128,8 +130,8 @@ interface Vbdif10100
  ip address 172.16.33.1 255.255.255.0 sub
  mac-address 0000-5e00-0102
  dhcp select relay
- dhcp relay binding server ip 172.16.55.11
- dhcp relay gateway 1.1.1.1
+ dhcp relay binding server ip 172.16.44.35
+ dhcp relay gateway 172.16.28.1
 #
 interface Vlanif100
 #
@@ -650,6 +652,7 @@ interface NULL0
 bgp 65533
  router-id 51.51.51.101
  peer 172.16.29.101 as-number 64001
+ peer 172.16.29.101 ignore
  peer 172.16.29.101 connect-interface LoopBack0
  peer 172.16.29.102 as-number 64001
  peer 172.16.29.102 connect-interface LoopBack0

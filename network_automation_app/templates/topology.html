@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    <h1>Network Topology</h1>
+    <div id="topology"></div>
+<script>
+    $(function() {
+        // 创建设备图标和接口选择
+        function createDeviceIcon(deviceName, interfaces) {
+            var device = $('<div class="device"></div>').text(deviceName);
+            device.draggable({ containment: "parent" });
+
+            for (var i = 0; i < interfaces.length; i++) {
+                var interfaceName = interfaces[i];
+                var interfaceOption = $('<option></option>').text(interfaceName);
+                
+                $('<select class="interface-select"></select>').append(interfaceOption).appendTo(device);
+            }
+
+            return device;
+        }
+
+        // 添加设备图标到拓扑图
+        function addDeviceToTopology(deviceName, interfaces) {
+            var deviceIcon = createDeviceIcon(deviceName, interfaces);
+            $("#topology").append(deviceIcon);
+        }
+
+        // 绘制拓扑图
+        function drawTopology() {
+            {% for device, interfaces in devices_with_interfaces.items %}
+                addDeviceToTopology('{{ device }}', {{ interfaces|safe }});
+            {% endfor %}
+        }
+
+        drawTopology();
+    });
+</script>
+<style>
+    .device {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 100px;
+        cursor: move;
+        z-index: 100;
+    }
+
+    #topology {
+        position: relative;
+        width: 800px;
+        height: 600px;
+        border: 1px solid #000;
+    }
+</style>
+
+</body>
+</html>

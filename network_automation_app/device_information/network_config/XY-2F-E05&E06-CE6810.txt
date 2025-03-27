@@ -1,6 +1,6 @@
 !Software Version V200R001C00SPC700
-!Last configuration was updated at 2023-07-03 14:55:17+00:00 by 51en
-!Last configuration was saved at 2023-07-03 14:56:07+00:00 by 51en
+!Last configuration was updated at 2023-12-06 00:43:27+00:00 by 51en
+!Last configuration was saved at 2023-12-06 02:01:42+00:00 by 51en
 #
 sysname XY-2F-E05&E06-CE6810
 #
@@ -23,7 +23,7 @@ ntp ipv6 server disable
 ntp unicast-server 172.16.152.20
 ntp unicast-server 172.16.152.21
 #
-vlan batch 1001 to 1002 2000 to 2001 3000
+vlan batch 22 to 23 1001 to 1002 2000 to 2001 2006 3000 4000 to 4001 4004
 #
 rsa peer-public-key 115.238.29.22
  public-key-code begin
@@ -94,11 +94,15 @@ configuration file auto-save backup-to-server server 172.16.9.233 transport-type
 telnet server disable
 telnet ipv6 server disable
 #
+qos car P500 cir 250 mbps pir 300 mbps
+#
 observe-port 1 interface 10GE1/0/1  
 #
 sflow collector 2 ip 172.16.208.32
 #
 diffserv domain default
+#
+bfd
 #
 vlan 1001
  description link-to-NS
@@ -117,6 +121,24 @@ acl number 2001
  rule 30 permit source 115.204.232.118 0
  rule 35 permit source 172.16.37.38 0
  rule 40 permit source 172.16.255.49 0
+#
+acl number 2002
+ rule 5 permit source 115.238.29.96 0.0.0.31
+#
+acl number 3333
+ rule 5 permit ip source 115.238.29.96 0.0.0.31
+ rule 10 permit ip destination 115.238.29.96 0.0.0.31
+#
+traffic classifier c1 type or
+ if-match acl 3333
+#
+traffic classifier source-address type or
+#
+traffic behavior b1
+ car cir 500 mbps share
+#
+traffic policy P500
+ classifier c1 behavior b1 precedence 5
 #
 aaa
  undo local-user policy security-enhance
@@ -145,6 +167,12 @@ stack
  stack member 2 domain 10
  stack member 2 priority 10
 #
+interface Vlanif22
+ ip address 172.16.255.85 255.255.255.252
+#
+interface Vlanif23
+ ip address 172.16.255.89 255.255.255.252
+#
 interface Vlanif1001
  description to-NS
  ip address 172.16.255.25 255.255.255.252
@@ -159,18 +187,46 @@ interface Vlanif2000
 interface Vlanif2001
  ip address 115.238.29.6 255.255.255.252
 #
+interface Vlanif2006
+#
 interface Vlanif3000
  ip address 115.238.29.25 255.255.255.252
 #
+interface Vlanif4000
+ description uT:F5-1
+ ip address 172.16.191.10 255.255.255.252
+#
+interface Vlanif4001
+ description uT:F5-2
+ ip address 172.16.191.14 255.255.255.252
+#
 interface MEth0/0/0
 #
+interface Eth-Trunk2
+ undo portswitch
+ description pT:DianXin
+ ip address 10.208.240.130 255.255.255.252
+ mode lacp-dynamic
+ qos car inbound P500
+#
+interface Eth-Trunk4
+ description uT:F5-1
+ port link-type trunk
+ port trunk allow-pass vlan 4000
+ mode lacp-static
+#
+interface Eth-Trunk5
+ description uT:F5-2
+ port link-type trunk
+ port trunk allow-pass vlan 4001
+ mode lacp-static
+#
 interface Eth-Trunk11
- description dT:XY-G03-usg6550-M:()Eth-trunk2
- port default vlan 1002
+ port default vlan 2006
 #
 interface Eth-Trunk12
  description dT:XY-G03-usg6550-S:()Eth-trunk2
- port default vlan 1002
+ port default vlan 4000
 #
 interface Eth-Trunk124
  undo portswitch
@@ -192,10 +248,14 @@ interface 10GE1/0/1
 interface 10GE1/0/2
 #
 interface 10GE1/0/3
+ description dT:F5-1(193.5)shang_1.5
+ eth-trunk 4
 #
 interface 10GE1/0/4
 #
 interface 10GE1/0/5
+ description dT:F5-2(193.13)xia_1.6
+ eth-trunk 5
 #
 interface 10GE1/0/6
 #
@@ -262,11 +322,14 @@ interface 10GE1/0/32
 interface 10GE1/0/33
  description to:link-to-out-1-115.238.29.1
  port default vlan 2000
+ traffic-policy P500 inbound 
  device transceiver 1000BASE-X
 #
 interface 10GE1/0/34
 #
 interface 10GE1/0/35
+ eth-trunk 2
+ device transceiver 10GBASE-FIBER
 #
 interface 10GE1/0/36
 #
@@ -312,10 +375,14 @@ interface 10GE2/0/2
  port default vlan 3000
 #
 interface 10GE2/0/3
+ description dT:F5-2(193.13)xia_1.5
+ eth-trunk 5
 #
 interface 10GE2/0/4
 #
 interface 10GE2/0/5
+ description dT:F5-1(193.5)shang_1.6
+ eth-trunk 4
 #
 interface 10GE2/0/6
 #
@@ -382,11 +449,14 @@ interface 10GE2/0/32
 interface 10GE2/0/33
  description to:link-to-out-2-115.238.29.5
  port default vlan 2001
+ traffic-policy P500 inbound 
  device transceiver 1000BASE-X
 #
 interface 10GE2/0/34
 #
 interface 10GE2/0/35
+ eth-trunk 2
+ device transceiver 10GBASE-FIBER
 #
 interface 10GE2/0/36
 #
@@ -475,14 +545,23 @@ interface NULL0
 #
 ip route-static 0.0.0.0 0.0.0.0 115.238.29.1
 ip route-static 0.0.0.0 0.0.0.0 115.238.29.5
-ip route-static 115.238.29.0 255.255.255.192 172.16.255.26
-ip route-static 115.238.29.12 255.255.255.255 172.16.255.26
-ip route-static 115.238.29.13 255.255.255.255 172.16.255.26
+ip route-static 10.0.52.26 255.255.255.255 172.16.191.13
+ip route-static 115.238.29.0 255.255.255.192 172.16.191.9
+ip route-static 115.238.29.0 255.255.255.192 172.16.191.13 preference 70
+ip route-static 115.238.29.12 255.255.255.255 172.16.191.9
+ip route-static 115.238.29.12 255.255.255.255 172.16.191.13 preference 70
+ip route-static 115.238.29.13 255.255.255.255 172.16.191.9
+ip route-static 115.238.29.13 255.255.255.255 172.16.191.13 preference 70
 ip route-static 115.238.29.64 255.255.255.192 172.16.255.49
 ip route-static 115.238.29.64 255.255.255.192 172.16.255.53
 ip route-static 172.16.37.38 255.255.255.255 172.16.255.49
 ip route-static 172.16.37.60 255.255.255.255 172.16.255.49
-ip route-static 172.16.152.48 255.255.255.255 172.16.255.53
+ip route-static 172.16.191.0 255.255.255.252 172.16.191.9
+ip route-static 172.16.191.4 255.255.255.252 172.16.191.13
+ip route-static 172.16.191.16 255.255.255.252 172.16.191.13
+ip route-static 172.16.191.20 255.255.255.252 172.16.191.9
+ip route-static 223.93.187.240 255.255.255.248 172.16.191.9
+ip route-static 223.93.187.240 255.255.255.248 172.16.191.13 preference 70
 #
 snmp-agent
 snmp-agent acl 2000
@@ -512,6 +591,25 @@ ssh client 115.238.29.22 assign rsa-key 115.238.29.22
 ssh client 115.238.29.26 assign rsa-key 115.238.29.26
 ssh client 172.16.255.49 assign rsa-key 172.16.255.49
 ssh client 172.16.255.53 assign rsa-key 172.16.255.53
+#
+nqa test-instance 6810_F5_12812_ping icmp
+ test-type icmp
+#
+nqa test-instance 6810_F5_1_12812_ping icmp
+ test-type icmp
+ destination-address ipv4 172.16.191.2
+ interval seconds 3
+ timeout 1
+ frequency 12
+ start now
+#
+nqa test-instance 6810_F5_2_12812_ping icmp
+ test-type icmp
+ destination-address ipv4 172.16.191.18
+ interval seconds 3
+ timeout 1
+ frequency 12
+ start now
 #
 user-interface con 0
 #

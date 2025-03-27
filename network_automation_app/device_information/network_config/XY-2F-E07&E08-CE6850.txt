@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-03-28 11:44:43+00:00 by 51en
-!Last configuration was saved at 2023-02-28 17:10:29+00:00 by 51en
+!Last configuration was updated at 2024-03-14 04:01:56+00:00 by 51en
+!Last configuration was saved at 2024-03-14 04:01:59+00:00 by 51en
 #
 sysname XY-2F-E07&E08-CE6850
 #
@@ -629,7 +629,6 @@ interface 40GE1/0/2
 interface 40GE1/0/3
  description uT:XY-2F-E05-CE12812:(local)40GE12/0/8
  eth-trunk 100
- port crc-statistics trigger error-down
  device transceiver 40GBASE-FIBER
 #
 interface 40GE1/0/4
@@ -709,6 +708,7 @@ interface Nve1
  vni 10199 head-end peer-list 51.51.51.16
  vni 10199 head-end peer-list 51.51.51.17
  vni 10199 head-end peer-list 51.51.51.28
+ vni 10199 head-end peer-list 51.51.51.29
  vni 10199 head-end peer-list 51.51.51.34
  vni 10199 head-end peer-list 51.51.51.250
  vni 10200 head-end peer-list 51.51.51.12

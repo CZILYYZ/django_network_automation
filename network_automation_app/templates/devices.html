@@ -1,58 +1,185 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Device List</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <label for="vendor">Filter by platform:</label>
-<div class="form-group d-flex">
-      <select name="vendor" id="vendor" class="form-control flex-grow-1">
-     <option value="">All</option>
-    {% for vendor in vendors %}
-      <option value="{{ vendor }}">{{ vendor }}</option>
-    {% endfor %}
-  </select>
-  <input type="search" placeholder="Search..." class="form-control flex-grow-1 search-input" data-table="customers-list"/>
-</div>
-<div class="scrollbox">
-        <table class="table table-striped mt32 customers-list" id="device-table">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" id="select-all"></th>
-                    <th>Name</th>
-                    <th>IP</th>
-                    <th>Model</th>
-                </tr>
-            </thead>
-                {% for device in all_devices %}
+<div class="container mt-4">
+    <h1 class="text-left mb-3">设备</h1>
+    <form method="POST" class="mb-3">
+        <div class="row g-2 align-items-center">
+            <div class="col-md-3">
+                <select name="vendor" id="vendor" class="form-select">
+                    <option value="">All Platforms</option>
+                    {% for vendor in vendors %}
+                        <option value="{{ vendor }}">{{ vendor }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-9">
+                <input type="search" placeholder="Search..." class="form-control search-input" data-table="customers-list"/>
+            </div>
+        </div>
+        <div class="scrollbox mt-3">
+            <table class="table table-hover table-striped table-bordered customers-list" id="device-table">
+                <thead class="table-dark sticky-header">
+                    <tr>
+                        <th>Name</th>
+                        <th>IP</th>
+                        <th>Model</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                 <tbody>
+                    {% for device in all_devices %}
                     <tr class="device-row" data-model="{{ device.model }}">
-                        <td><input type="checkbox" name="device" value="{{ device.id }}" class="device-select"></td>
                         <td>{{ device.hostname }}</td>
                         <td>{{ device.ip_address }}</td>
                         <td>{{ device.model }}</td>
+                        <td><button type="button" class="btn btn-outline-primary btn-sm login-btn" data-ip="{{ device.ip_address }}">Login</button></td>
                     </tr>
+                    {% endfor %}
                 </tbody>
-                {% endfor %}
-        </table>
-</div>
+            </table>
+        </div>
     </form>
-    <script type="text/javascript" src="/static/js/select_all_currentweb.js"></script>
-    <script type="text/javascript" src="/static/js/search_input.js"></script>
-    <script type="text/javascript" src="/static/js/search_for_platform.js"></script>
-<style>
-    .scrollbox {
-        height: 480px;
-        overflow: auto;
-    }
-</style>
-<style>
-    .customers-list thead {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        background-color: rgba(135,206,235,1);
-        width: 100%;
-    }
-</style>
+</div>
 
+<!-- SSH Login Modal -->
+<div class="modal" id="sshModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SSH Terminal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea id="terminal" class="form-control" style="height: 400px; background-color: #000; color: #0f0; padding: 10px; overflow-y: auto;"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script type="text/javascript" src="/static/js/select_all_currentweb.js"></script>
+<script type="text/javascript" src="/static/js/search_input.js"></script>
+<script type="text/javascript" src="/static/js/search_for_platform.js"></script>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const socket = io.connect('http://172.16.37.35:5000');
+    const terminal = document.getElementById('terminal');
+    let promptPosition = 0;
+    let buffer = '';
+
+    document.querySelectorAll('.login-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const ip = this.getAttribute('data-ip');
+            console.log('Attempting to connect to:', ip);
+            socket.emit('start_session', { ip: ip });
+            const sshModal = new bootstrap.Modal(document.getElementById('sshModal'));
+            sshModal.show();
+        });
+    });
+
+    socket.on('session_started', function(data) {
+        if (data.status === 'success') {
+            console.log('Session started successfully');
+            terminal.value = ''; // Clear terminal on new session
+            promptPosition = 0;
+        }
+    });
+
+    socket.on('output', function(data) {
+        console.log('Received data:', data);
+        buffer += data;
+
+        // Check for pagination or more prompts
+        if (buffer.includes('--More--')) {
+            // Automatically send space to continue
+            socket.emit('input', ' ');
+            buffer = buffer.replace('--More--', ''); // Remove pagination prompt
+        }
+
+        terminal.value += buffer;
+        terminal.scrollTop = terminal.scrollHeight;
+        promptPosition = terminal.value.length;
+        buffer = ''; // Clear buffer after processing
+    });
+
+    terminal.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const command = terminal.value.substring(promptPosition).trim();
+            socket.emit('input', command + '\n');
+            terminal.value = terminal.value.substring(0, promptPosition); // Remove command from display
+            promptPosition = terminal.value.length; // Update prompt position
+        } else if (e.key === 'Tab') {
+            e.preventDefault();
+            const command = terminal.value.substring(promptPosition);
+            socket.emit('input', command + '\t'); // Send command with Tab
+        } else if (e.key === 'Delete' || e.key === 'Backspace') {
+            if (terminal.selectionStart <= promptPosition) {
+                e.preventDefault(); // Prevent deletion before prompt
+            }
+        }
+    });
+
+    socket.on('autocomplete_response', function(data) {
+        if (data.suggestion) {
+            // Append the suggestion to the current command
+            terminal.value = terminal.value.substring(0, promptPosition) + data.suggestion;
+            promptPosition = terminal.value.length;
+        }
+    });
+
+    document.getElementById('sshModal').addEventListener('hidden.bs.modal', function() {
+        socket.emit('end_session');
+    });
+});
+</script>
+
+<style>
+    .container {
+        max-width: 1200px;
+    }
+    .scrollbox {
+        max-height: 480px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .table {
+        margin-bottom: 0;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+    .btn-outline-primary {
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+    .search-input, .form-select {
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .table-dark {
+        background-color: #343a40;
+        color: #fff;
+    }
+    .table-dark th {
+        border-color: #454d55;
+        position: sticky; /* Add sticky positioning */
+        top: 0; /* Stick to the top */
+        z-index: 10; /* Ensure it stays above other content */
+    }
+    .form-select, .search-input {
+        height: 38px;
+    }
+</style>
 {% endblock %}

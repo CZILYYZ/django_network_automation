@@ -1,6 +1,6 @@
 !Software Version V800R008C10SPC500
-!Last configuration was updated at 2023-02-23 15:36:27+08:00 by 51en
-!Last configuration was saved at 2023-05-30 16:10:54+08:00 by 51en
+!Last configuration was updated at 2023-11-29 17:45:49+08:00 by 51en
+!Last configuration was saved at 2023-11-29 17:45:56+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -208,6 +208,7 @@ interface GigabitEthernet0/3/2
 #
 interface GigabitEthernet0/3/2.2096
  description huaweiyun-test
+ shutdown
  ip binding vpn-instance huaweiyun-test
  ip address 172.16.63.126 255.255.255.252
  statistic enable
@@ -219,6 +220,7 @@ interface GigabitEthernet0/3/2.2096
 #
 interface GigabitEthernet0/3/2.2097
  description huaweiyun-dev
+ shutdown
  ip address 172.16.63.130 255.255.255.252
  statistic enable
  encapsulation dot1q-termination

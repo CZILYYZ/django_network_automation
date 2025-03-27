@@ -1,5 +1,5 @@
 !Software Version V200R001C00SPC700
-!Last configuration was updated at 2023-04-24 20:15:09+08:00 by 51en
+!Last configuration was updated at 2024-02-23 16:40:56+08:00 by 51en
 !Last configuration was saved at 2023-03-23 15:53:24+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
@@ -61,6 +61,24 @@ rsa peer-public-key 51.51.51.1
     BC3B0FAC E7E8A2A0 D64609D5 4A91154B FA5E3267 3562F7BE 9546C9A4 231873E3
     EE379C7A 34578ACD 3F1D8AA6 EF432E90 1D043E63 3AB8F2D3 1228D1F7 19262702
     97
+  0203
+    010001
+ public-key-code end
+ peer-public-key end
+#
+rsa peer-public-key 172.16.63.1
+ public-key-code begin
+ 3082010A
+  02820101
+    00A3E37B 2630A18B 562354C4 DCF808DD 62C86C5F EEA64CD9 B05C7B83 AD389EF5
+    4CC5291C 936C68A7 8AFC055A 0B330362 0A285278 268DE22C 2D32E5DB 3963F10B
+    6F8D1E94 39608E37 50FF4960 55B3A00E 44CEB818 DF830F6C A9DA79FF 3956DAE0
+    F2DFA3F0 A43396CB 07676FE3 0FF58BC9 69E1580E B5BAD23C 4C58BB02 7F4C5BBB
+    7DA27D0C 8C981F00 B7F5D6DC 4D792836 11B00EED CAA94B97 60BC49E8 D6BFD3F5
+    B080F965 64F7072C F07D1FE9 361B48BA ACE72061 E91A9093 34048A5A BF9AE344
+    B9A6C27E DD480D41 813A46D0 AF1F324E 7A2276A6 41D34C46 ED1FBAD7 FDE456AD
+    B6529916 A6F0D239 BCC4778F 62D22022 F6A1073D 375547BC 1946CD7F 33EC545A
+    4D
   0203
     010001
  public-key-code end
@@ -374,6 +392,81 @@ acl number 3333
  rule 745 permit ip source 172.16.63.12 0 destination 172.16.37.37 0
  rule 750 permit ip source 172.16.193.6 0 destination 172.16.37.35 0
  rule 755 permit ip source 172.16.193.6 0 destination 172.16.37.37 0
+ rule 780 permit ip source 10.247.0.124 0 destination 172.16.37.39 0
+ rule 785 permit ip source 10.247.10.1 0 destination 172.16.37.39 0
+ rule 790 permit ip source 10.247.10.2 0 destination 172.16.37.39 0
+ rule 795 permit ip source 10.247.10.5 0 destination 172.16.37.39 0
+ rule 800 permit ip source 10.247.10.6 0 destination 172.16.37.39 0
+ rule 805 permit ip source 10.247.10.7 0 destination 172.16.37.39 0
+ rule 810 permit ip source 10.247.10.8 0 destination 172.16.37.39 0
+ rule 815 permit ip source 10.247.105.129 0 destination 172.16.37.39 0
+ rule 820 permit ip source 10.247.99.1 0 destination 172.16.37.39 0
+ rule 825 permit ip source 10.247.99.250 0 destination 172.16.37.39 0
+ rule 830 permit ip source 10.247.99.251 0 destination 172.16.37.39 0
+ rule 835 permit ip source 10.247.99.252 0 destination 172.16.37.39 0
+ rule 840 permit ip source 10.253.224.254 0 destination 172.16.37.39 0
+ rule 845 permit ip source 10.253.253.1 0 destination 172.16.37.39 0
+ rule 850 permit ip source 10.253.253.10 0 destination 172.16.37.39 0
+ rule 855 permit ip source 172.16.16.235 0 destination 172.16.37.39 0
+ rule 860 permit ip source 172.16.37.33 0 destination 172.16.37.39 0
+ rule 865 permit ip source 172.16.63.1 0 destination 172.16.37.39 0
+ rule 870 permit ip source 172.16.63.12 0 destination 172.16.37.39 0
+ rule 875 permit ip source 172.16.63.19 0 destination 172.16.37.39 0
+ rule 880 permit ip source 172.16.63.37 0 destination 172.16.37.39 0
+ rule 885 permit ip source 172.16.63.62 0 destination 172.16.37.39 0
+ rule 890 permit ip source 172.16.63.65 0 destination 172.16.37.39 0
+ rule 895 permit ip source 172.16.8.1 0 destination 172.16.37.39 0
+ rule 900 permit ip source 172.16.8.21 0 destination 172.16.37.39 0
+ rule 905 permit ip source 172.16.8.26 0 destination 172.16.37.39 0
+ rule 910 permit ip source 172.16.8.29 0 destination 172.16.37.39 0
+ rule 915 permit ip source 172.16.8.30 0 destination 172.16.37.39 0
+ rule 920 permit ip source 172.16.8.37 0 destination 172.16.37.39 0
+ rule 925 permit ip source 51.51.51.100 0 destination 172.16.37.39 0
+ rule 930 permit ip source 51.51.51.101 0 destination 172.16.37.39 0
+ rule 935 permit ip source 51.51.51.102 0 destination 172.16.37.39 0
+ rule 940 permit ip source 51.51.51.103 0 destination 172.16.37.39 0
+ rule 945 permit ip source 51.51.51.104 0 destination 172.16.37.39 0
+ rule 950 permit ip source 51.51.51.106 0 destination 172.16.37.39 0
+ rule 955 permit ip source 51.51.51.108 0 destination 172.16.37.39 0
+ rule 960 permit ip source 51.51.51.111 0 destination 172.16.37.39 0
+ rule 965 permit ip source 51.51.51.113 0 destination 172.16.37.39 0
+ rule 970 permit ip source 51.51.51.36 0 destination 172.16.37.39 0
+ rule 975 permit ip source 51.51.51.5 0 destination 172.16.37.39 0
+ rule 980 permit ip source 51.51.51.6 0 destination 172.16.37.39 0
+ rule 985 permit ip source 115.238.29.6 0 destination 172.16.37.39 0
+ rule 990 permit ip source 172.16.193.2 0 destination 172.16.37.39 0
+ rule 995 permit ip source 172.16.193.6 0 destination 172.16.37.39 0
+ rule 1000 permit ip source 172.16.255.249 0 destination 172.16.37.39 0
+ rule 1005 permit ip source 51.51.51.10 0 destination 172.16.37.39 0
+ rule 1010 permit ip source 51.51.51.11 0 destination 172.16.37.39 0
+ rule 1015 permit ip source 51.51.51.12 0 destination 172.16.37.39 0
+ rule 1020 permit ip source 51.51.51.13 0 destination 172.16.37.39 0
+ rule 1025 permit ip source 51.51.51.14 0 destination 172.16.37.39 0
+ rule 1030 permit ip source 51.51.51.15 0 destination 172.16.37.39 0
+ rule 1035 permit ip source 51.51.51.16 0 destination 172.16.37.39 0
+ rule 1040 permit ip source 51.51.51.17 0 destination 172.16.37.39 0
+ rule 1045 permit ip source 51.51.51.18 0 destination 172.16.37.39 0
+ rule 1050 permit ip source 51.51.51.19 0 destination 172.16.37.39 0
+ rule 1055 permit ip source 51.51.51.22 0 destination 172.16.37.39 0
+ rule 1060 permit ip source 51.51.51.23 0 destination 172.16.37.39 0
+ rule 1065 permit ip source 51.51.51.24 0 destination 172.16.37.39 0
+ rule 1070 permit ip source 51.51.51.28 0 destination 172.16.37.39 0
+ rule 1075 permit ip source 51.51.51.29 0 destination 172.16.37.39 0
+ rule 1080 permit ip source 51.51.51.3 0 destination 172.16.37.39 0
+ rule 1085 permit ip source 51.51.51.30 0 destination 172.16.37.39 0
+ rule 1090 permit ip source 51.51.51.31 0 destination 172.16.37.39 0
+ rule 1095 permit ip source 51.51.51.33 0 destination 172.16.37.39 0
+ rule 1100 permit ip source 51.51.51.34 0 destination 172.16.37.39 0
+ rule 1105 permit ip source 51.51.51.4 0 destination 172.16.37.39 0
+ rule 1110 permit ip source 51.51.51.8 0 destination 172.16.37.39 0
+ rule 1115 permit ip source 51.51.51.9 0 destination 172.16.37.39 0
+ rule 1120 permit ip source 172.16.193.5 0 destination 172.16.37.39 0
+ rule 1125 permit ip source 172.16.193.13 0 destination 172.16.37.39 0
+ rule 1130 permit ip source 10.0.52.36 0 destination 172.16.37.39 0
+ rule 1135 permit ip source 192.168.22.79 0 destination 172.16.37.39 0
+ rule 1140 permit ip destination 172.16.37.39 0
+ rule 1145 permit ip source 172.16.193.5 0 destination 172.16.37.35 0
+ rule 1150 permit ip source 172.16.193.13 0 destination 172.16.37.35 0
 #
 acl name DSJ-Pod advance
  rule 5 permit ip source 172.24.160.0 0.0.31.255
@@ -745,7 +838,7 @@ ip route-static 10.244.3.0 255.255.255.0 172.16.37.60
 #
 snmp-agent
 snmp-agent local-engineid 800007DB03C4FF1F7AFB61
-snmp-agent community read cipher %^%#]\ItNP^3P,X8LA8%GGXVfr#SKa{X0Pw!%dC)V](A/!T9BR$_n*O0kW/5|a^VkJe3UB0~ER`+qnQh4AN#%^%#
+snmp-agent community read cipher %^%#S2^F=o*]}TyE(`4a!epJO&s,S5(9lWWHFdJmi,1M!D5A>xg]~2%SCI$j2ALWf,p21l@\"&4r)">Ko;_=%^%#
 #
 snmp-agent sys-info version v2c v3
 #
@@ -776,6 +869,7 @@ ssh client 172.16.128.9 assign rsa-key 172.16.128.9
 ssh client 172.16.37.34 assign rsa-key 172.16.37.34
 ssh client 172.16.37.35 assign rsa-key 172.16.37.35
 ssh client 172.16.37.49 assign rsa-key 172.16.37.49
+ssh client 172.16.63.1 assign rsa-key 172.16.63.1
 ssh client 172.16.8.41 assign rsa-key 172.16.8.41
 ssh client 51.51.51.1 assign rsa-key 51.51.51.1
 #

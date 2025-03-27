@@ -1,9 +1,9 @@
 Building configuration...
 
-Current configuration : 14777 bytes
+Current configuration : 15160 bytes
 !
-! Last configuration change at 14:46:19 GMT Wed Jul 12 2023 by 51en
-! NVRAM config last updated at 14:19:28 GMT Wed Jul 12 2023 by 51en
+! Last configuration change at 18:49:42 GMT Wed Jul 19 2023 by 51en
+! NVRAM config last updated at 18:49:57 GMT Wed Jul 19 2023 by 51en
 !
 version 15.2
 no service pad
@@ -99,6 +99,12 @@ interface Port-channel2
  description uT:FD-1F-B08&C17-C4510:()Po75
  switchport mode trunk
 !
+interface Port-channel3
+ description to-C24-R730-ES-16.136-bond
+ switchport access vlan 4
+ switchport mode access
+ no port-channel standalone-disable
+!
 interface Port-channel11
  description k8s-node-172.16.44.129
  switchport access vlan 44
@@ -137,8 +143,10 @@ interface Port-channel16
  switchport mode trunk
 !
 interface Port-channel17
- description to-D29-R630-7-ESXI
- switchport mode trunk
+ description to-C24-R730-ES-16.136-bond
+ switchport access vlan 4
+ switchport mode access
+ no port-channel standalone-disable
 !
 interface Port-channel18
  description to-D29-R630-16.213-bond
@@ -256,7 +264,8 @@ interface GigabitEthernet1/0/13
 !
 interface GigabitEthernet1/0/14
  description to-D29-R630-7-ESXI-vnic1
- switchport mode trunk
+ switchport access vlan 4
+ switchport mode access
  channel-group 17 mode active
 !
 interface GigabitEthernet1/0/15
@@ -323,9 +332,10 @@ interface GigabitEthernet1/0/26
  channel-group 24 mode active
 !
 interface GigabitEthernet1/0/27
- switchport access vlan 100
+ switchport access vlan 4
  switchport mode access
  spanning-tree portfast
+ channel-group 3 mode active
 !
 interface GigabitEthernet1/0/28
 !
@@ -448,7 +458,8 @@ interface GigabitEthernet2/0/12
 !
 interface GigabitEthernet2/0/13
  description to-D29-R630-7-ESXI-vnic2
- switchport mode trunk
+ switchport access vlan 4
+ switchport mode access
  channel-group 17 mode active
 !
 interface GigabitEthernet2/0/14
@@ -519,6 +530,9 @@ interface GigabitEthernet2/0/26
  channel-group 24 mode active
 !
 interface GigabitEthernet2/0/27
+ switchport access vlan 4
+ switchport mode access
+ channel-group 3 mode active
 !
 interface GigabitEthernet2/0/28
 !

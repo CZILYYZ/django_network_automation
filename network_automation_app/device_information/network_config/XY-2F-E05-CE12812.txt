@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-06-14 13:58:44+08:00 by 51en
-!Last configuration was saved at 2023-03-01 00:51:16+08:00 by 51en
+!Last configuration was updated at 2024-03-14 11:35:42+08:00 by 51en
+!Last configuration was saved at 2024-03-14 11:35:46+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -41,7 +41,7 @@ dfs-group 1
  active-active-gateway
   peer 51.51.51.13
 #
-vlan batch 8 to 11 13 15 20 to 22 30 to 41 229 1001 to 1002
+vlan batch 8 to 11 13 15 20 to 22 30 to 41 229 1001 to 1002 2006 to 2007
 #
 ecc peer-public-key 51.51.51.13
  public-key-code begin
@@ -85,11 +85,11 @@ ecc peer-public-key 172.16.255.10
 #
 ecc peer-public-key 172.16.255.50
  public-key-code begin
-  04000CC3 13E50C00 2E7802F1 4ED2D816 A606E6CD 1B5392BD 8ABC2F17 ECE55AD3
-  6C0FA707 DCFF7DEF 56181D62 16B455EF 233A6749 1AF3F09F C5242D64 CB9274AD
-  9B26CD00 7DFA6EDD E0D8C5BE 52D7BC3F A2794D74 0D816C43 52B8A832 4E26BCC9
-  4021EA9C 3D9950B0 93E17B30 3662E474 BE1267B9 51B9AA07 62C2A7FF 35CBB903
-  56E1AC96 98
+  04005B6F A1EAB9AC 2CDBC7E4 476A0A90 4A6992BC 80C0C726 DBC18DB3 686DF086
+  98D73542 A3DC85E4 F9B8F6CC 75B176EE 511905A6 6E5BF47A BD223692 44D8ABFE
+  FA7BC301 CDE5A3F6 A19F826E EF75CD05 49359FCD FD8C80AE 74AC63B4 9E9E2B2B
+  6DB0E58B D597C410 764175E6 729C2403 93E02BD4 9431F730 7706FF1F F3B8522A
+  FC241D46 87
  public-key-code end
  peer-public-key end
 #
@@ -339,10 +339,23 @@ acl name static-import basic
  rule 15 permit source 172.16.255.29 0
  rule 20 permit source 172.16.255.30 0
  rule 25 permit source 172.16.229.128 0.0.0.127
+ rule 30 permit source 172.16.255.88 0.0.0.3
+ rule 35 permit source 172.16.255.24 0.0.0.3
+ rule 40 permit source 172.16.255.84 0.0.0.3
+#
+acl number 3000
+ rule 5 permit tcp destination-port eq 8080
+ rule 10 permit tcp destination-port eq 22
+#
+acl number 3001
+ rule 5 permit ip
 #
 acl number 3333
  rule 0 permit ip destination 115.236.23.33 0
  rule 1 permit ip source 115.236.23.33 0
+#
+acl number 3344
+ rule 5 permit tcp source 172.16.248.200 0 source-port eq www destination 172.16.248.200 0 destination-port eq www
 #
 acl name gnh-limit advance
  rule 5 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 8080
@@ -390,6 +403,15 @@ acl name loginner-limit advance
  rule 90 deny tcp source 172.16.221.0 0.0.0.255 source-port eq 6020
  rule 200 permit ip source 172.16.221.0 0.0.0.255
 #
+acl name static-policy advance
+#
+traffic classifier Mbike type or
+ if-match acl 3344
+ if-match acl 3000
+#
+traffic classifier Mbike-1 type or
+ if-match acl 3001
+#
 traffic classifier idc-not-pbr-1 type or
  if-match vxlan tag-format none inner-source-ip 172.16.0.0 mask 16 inner-destination-ip 172.16.0.0 mask 16
 #
@@ -423,6 +445,11 @@ traffic classifier xy-pbr-204 type or
 traffic classifier xy-pbr-all type or
  if-match vxlan tag-format none inner-source-ip 172.16.192.0 mask 18
 #
+traffic behavior Mbike
+ deny
+#
+traffic behavior Mbike-1
+#
 traffic behavior loginner-limit
 #
 traffic behavior pbr
@@ -432,6 +459,10 @@ traffic behavior pbr-to-netscaler
  redirect nexthop 172.16.255.58
 #
 traffic behavior xy-not-pbr
+#
+traffic policy Mbike
+ classifier Mbike behavior Mbike precedence 5
+ classifier Mbike-1 behavior Mbike-1 precedence 10
 #
 traffic policy loginner-limit
  classifier loginner-limit behavior loginner-limit precedence 5
@@ -451,18 +482,6 @@ traffic policy pbr-to-netscaler
 #
 aaa
  undo local-user policy security-enhance
- local-user xingyi password irreversible-cipher $1c$(R"PM_1l;9$sIa/%87&c=jQE/!4vux*s;$L%r^X*-*zE02Pn!d,$
- local-user xingyi service-type ftp
- local-user xingyi level 3
- local-user xingyi ftp-directory flash:
- local-user huawei password irreversible-cipher $1c$QnB*)~#B13$)A<7Zk!85Z1B]YMqf]LM]PWJPI:D]-lVmWK9`fa!$
- local-user huawei service-type ssh
- local-user huawei level 3
- local-user xingyi1 password irreversible-cipher $1c$a\"`Pz\CSC$<l1]@SH3s1fki;Q^-aQ~t7>D7w;&4@v{YOP!(sS$$
- local-user xingyi1 service-type ftp
- local-user maxusheng password irreversible-cipher $1c$R!YP/:MZwG$voa+N[gp]IFNW0EMlAkJ`g$d4Y<oBM~*Y&P4]a+>$
- local-user maxusheng service-type ssh
- local-user maxusheng level 3
  local-user 51nbnb password irreversible-cipher $1c$p)pP6)zdc<$VlnV,*Y7.W<}`MVm9b[;u8b+2[@H!8t:/x,T2]T,$
  local-user 51nbnb service-type ssh
  local-user 51nbnb level 3
@@ -563,7 +582,7 @@ interface Vbdif10200
  dhcp relay gateway 172.26.200.1
 #
 interface Vbdif10201
- description db
+ description Mbike
  ip address 172.16.201.1 255.255.255.0
  ip address 172.26.201.1 255.255.255.0 sub
  mac-address 0000-5e00-0101
@@ -864,6 +883,7 @@ interface Vlanif21
 #
 interface Vlanif22
  description link-to-NS-VNP
+ shutdown
  ip binding vpn-instance XYCMCC
  ip address 172.16.255.85 255.255.255.252
 #
@@ -921,6 +941,14 @@ interface Vlanif41
  description outside-to-9560-other3
  ip address 172.16.254.89 255.255.255.248
 #
+interface Vlanif2006
+ description uT:F5-1
+ ip address 172.16.191.2 255.255.255.252
+#
+interface Vlanif2007
+ shutdown
+ ip address 172.16.191.18 255.255.255.252
+#
 interface MEth0/0/0
 #
 interface Eth-Trunk1
@@ -938,6 +966,17 @@ interface Eth-Trunk2
  ospf network-type p2p
  ospf bfd enable
  ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk3
+ description uT:F5-1
+ port link-type trunk
+ port trunk allow-pass vlan 2006
+ mode lacp-dynamic
+#
+interface Eth-Trunk4
+ port link-type trunk
+ port trunk allow-pass vlan 2007
+ mode lacp-dynamic
 #
 interface Eth-Trunk10
  description uT:XY-2F-E05-CE8860:()Eth-Trunk10
@@ -1115,13 +1154,16 @@ interface Eth-Trunk240
  mode lacp-dynamic
 #
 interface 10GE6/0/0
- shutdown
+ description uT:F5-1(193.5):10GE2/1
+ eth-trunk 3
  device transceiver 10GBASE-FIBER
 #
 interface 10GE6/0/1
+ description uT:F5-1(193.5):10GE2/2
+ eth-trunk 3
+ device transceiver 10GBASE-FIBER
 #
 interface 10GE6/0/2
- shutdown
  device transceiver 10GBASE-FIBER
 #
 interface 10GE6/0/3
@@ -1151,6 +1193,7 @@ interface 10GE6/0/12
 interface 10GE6/0/13
 #
 interface 10GE6/0/14
+ device transceiver 10GBASE-FIBER
 #
 interface 10GE6/0/15
 #
@@ -1594,6 +1637,7 @@ interface Nve1
  vni 10199 head-end peer-list 51.51.51.16
  vni 10199 head-end peer-list 51.51.51.17
  vni 10199 head-end peer-list 51.51.51.28
+ vni 10199 head-end peer-list 51.51.51.29
  vni 10199 head-end peer-list 51.51.51.34
  vni 10200 head-end peer-list 51.51.51.11
  vni 10200 head-end peer-list 51.51.51.12
@@ -1815,6 +1859,7 @@ interface Nve1
  vni 10226 head-end peer-list 51.51.51.22
  vni 10226 head-end peer-list 51.51.51.23
  vni 10226 head-end peer-list 51.51.51.24
+ vni 10226 head-end peer-list 51.51.51.28
  vni 10226 head-end peer-list 51.51.51.29
  vni 10227 head-end peer-list 51.51.51.28
  vni 10228 head-end peer-list 51.51.51.28
@@ -1878,8 +1923,12 @@ ospf 100 router-id 51.51.51.8
  import-route static route-policy static-import
  import-route bgp permit-ibgp route-policy k8s-bgp-import
  silent-interface Eth-Trunk124
+ silent-interface Vlanif2006
+ silent-interface Vlanif2007
  area 0.0.0.0
   authentication-mode md5 1 cipher %^%#~W+>!t]k18|::08@h23Me/IwS03XQX5cW7B}|XzX%^%#
+  network 172.16.191.0 0.0.0.3
+  network 172.16.191.16 0.0.0.3
   network 172.16.255.0 0.0.0.3
   network 172.16.255.92 0.0.0.3
   network 172.16.255.96 0.0.0.3
@@ -1948,14 +1997,21 @@ route-policy static-import deny node 20
 #
 ip ip-prefix filter-default index 10 permit 0.0.0.0 0
 #
-ip route-static 0.0.0.0 0.0.0.0 Vlanif11 172.16.255.58 track nqa xytest link_to_ns
+ip route-static 0.0.0.0 0.0.0.0 172.16.191.1 track nqa 12812_F5_1_6810_ping icmp
 ip route-static 115.238.29.64 255.255.255.192 vpn-instance SQCTCC
+ip route-static 172.16.191.8 255.255.255.252 172.16.191.1
+ip route-static 172.16.191.12 255.255.255.252 172.16.191.17
 ip route-static 172.16.192.0 255.255.192.0 NULL0
 ip route-static 172.16.229.128 255.255.255.128 172.16.255.210
+ip route-static 172.16.255.24 255.255.255.252 172.16.255.58
 ip route-static 172.16.255.25 255.255.255.255 172.16.255.50
 ip route-static 172.16.255.29 255.255.255.255 172.16.255.210
 ip route-static 172.16.255.30 255.255.255.255 172.16.255.210
 ip route-static 172.16.255.33 255.255.255.255 172.16.255.210
+ip route-static 172.16.255.60 255.255.255.252 172.16.255.58 preference 11
+ip route-static 172.16.255.84 255.255.255.252 172.16.255.58
+ip route-static 172.16.255.88 255.255.255.252 172.16.255.58
+ip route-static 172.16.255.160 255.255.255.252 172.16.255.138
 ip route-static 172.26.192.0 255.255.192.0 NULL0
 ip route-static vpn-instance SQCTCC 0.0.0.0 0.0.0.0 172.16.255.50 public
 ip route-static vpn-instance SQCTCC 115.238.29.64 255.255.255.192 172.16.255.69
@@ -2013,6 +2069,22 @@ nqa test-instance xytest link_to_ns
  interval seconds 5
  timeout 1
  frequency 3
+ start now
+#
+nqa test-instance 12812_F5_1_6810_ping icmp
+ test-type icmp
+ destination-address ipv4 172.16.191.10
+ interval seconds 3
+ timeout 1
+ frequency 12
+ start now
+#
+nqa test-instance 12812_F5_2_6810_ping icmp
+ test-type icmp
+ destination-address ipv4 172.16.191.14
+ interval seconds 3
+ timeout 1
+ frequency 12
  start now
 #
 user-interface maximum-vty 10

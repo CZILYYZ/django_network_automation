@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-06-14 14:00:39+08:00 by 51en
-!Last configuration was saved at 2023-06-12 14:42:18+08:00 by 51en
+!Last configuration was updated at 2023-09-07 17:11:37+08:00 by 51en
+!Last configuration was saved at 2023-12-06 01:46:40+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -310,6 +310,7 @@ interface 25GE1/2/2
 interface 25GE1/2/3
  undo portswitch
  description uT:SQ-5F-I16-CE8860:(F1807050140-CTC)25GE1/2/3
+ shutdown
  ip address 51.1.1.37 255.255.255.252
  mpls
  mpls ldp

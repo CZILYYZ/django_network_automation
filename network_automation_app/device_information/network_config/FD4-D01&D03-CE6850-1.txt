@@ -1,5 +1,5 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-04-23 15:17:44+08:00 by 51en
+!Last configuration was updated at 2023-11-23 15:31:34+08:00 by 51en
 !Last configuration was saved at 2023-03-01 00:54:51+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
@@ -130,7 +130,7 @@ interface Eth-Trunk12
  mode lacp-dynamic
 #
 interface Eth-Trunk13
- description dT:D01-2WSHBD2-172.16.28.108:bond0
+ description dT:D01-818203053:bound0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -160,7 +160,7 @@ interface Eth-Trunk18
  mode lacp-dynamic
 #
 interface Eth-Trunk19
- description dT:D03-JK26J92-172.16.28.40-bound0
+ description dT:D03-818203052:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -383,7 +383,7 @@ interface 10GE1/0/37
  port default vlan 100
 #
 interface 10GE1/0/38
- description dT:D01-2WSHBD2-172.16.28.108:bond0
+ description dT:D01-818203053:mgmt
  port default vlan 100
 #
 interface 10GE1/0/39
@@ -408,11 +408,11 @@ interface 10GE1/0/43
 #
 interface 10GE1/0/44
  description dT:D03-JK26J92-172.16.15.236-MGMT
- port default vlan 100
+ eth-trunk 19
 #
 interface 10GE1/0/45
  description dT:D03-JK2FDB2-172.16.15.242-MGMT
- port default vlan 100
+ eth-trunk 32
 #
 interface 10GE1/0/46
  description dT:D03-CDYXJL2-172.16.28.191-eth0

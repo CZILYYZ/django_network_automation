@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">检查服务器磁盘状态</h1>
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_ip_address" class="form-label">IP 地址</label>
+            <input type="text" name="ip" class="form-control" id="ip" required>
+        </div>
+        <button type="submit" class="btn btn-primary">检查状态</button>
+    </form>
+
+    {% if failed_disk_info %}
+    <h2 class="mt-5">故障磁盘信息</h2>
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Slot ID</th>
+                <th>Size</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ failed_disk_info.slot_id }}</td>
+                <td>{{ failed_disk_info.size }}</td>
+                <td>{{ failed_disk_info.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="mt-5">阵列信息</h2>
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Type</th>
+                <th>OS Path</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ array_info.type }}</td>
+                <td>{{ array_info.os_path }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}
+

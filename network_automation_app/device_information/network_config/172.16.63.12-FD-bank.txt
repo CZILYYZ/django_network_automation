@@ -1,4 +1,4 @@
-2023-07-14 13:49:45.965 +08:00
+2024-03-17 16:14:51.615 +08:00
 !Software Version V500R001C60SPC500
 #
 sysname 172.16.63.12
@@ -438,6 +438,9 @@ ip address-set ũҵַ type object
 ip address-set 192.168.23.230 type object
  address 0 192.168.23.230 mask 32
 #
+ip address-set 172.16.44.44 type object
+ address 0 172.16.44.44 mask 32
+#
 ip address-set CZ_bank type group
  address 0 address-set 172.16.161.4_
  address 1 address-set 172.16.161.5_
@@ -502,6 +505,12 @@ ip service-set 8083 type object
 #
 ip service-set TCP_8045 type object
  service 0 protocol tcp source-port 0 to 65535 destination-port 8045
+#
+ip service-set TCP_20035 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 20035
+#
+ip service-set tcp_20036 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 20036
 #
  time-range worktime
   period-range 08:00:00 to 18:00:00 working-day   
@@ -1113,9 +1122,11 @@ security-policy
  rule name ũҵ_
   disable
   policy logging
+  source-zone local
   source-zone to_bank
   destination-zone inside
   source-address address-set 172.29.73.84_
+  source-address address-set 10.0.52.36
   source-address address-set ũҵеַ_
   source-address address-set ũҵлַ
   service TCP_8045
@@ -1123,26 +1134,33 @@ security-policy
   action permit
  rule name ũҵ_Բ
   policy logging
+  source-zone local
   source-zone inside
   destination-zone to_bank
   source-address address-set 172.19.128.0
   source-address address-set 10.0.52.36
   source-address address-set 192.168.23.230
+  source-address address-set 172.16.44.44
   destination-address address-set 172.20.97.176/29_
   destination-address address-set ũҵеַ_
   destination-address address-set ũҵлַ
   service TCP_8045
+  service TCP_20035
   service icmp
   action permit
  rule name ũҵ_
   policy logging
+  source-zone local
   source-zone inside
   destination-zone to_bank
   source-address address-set 172.19.128.0
+  source-address address-set 10.0.52.36
+  source-address address-set 172.16.44.44
   destination-address address-set 172.20.97.176/29_
   destination-address address-set ũҵлַ
   destination-address address-set ũҵַ
   service TCP_8045
+  service tcp_20036
   service icmp
   action permit
  rule name yyz-tftp
@@ -1441,19 +1459,23 @@ policy-based-route
 #
 nat-policy
  rule name ũҵ_
+  source-zone local
   source-zone inside
   destination-zone to_bank
   destination-address address-set ũҵеַ_
   destination-address address-set ũҵлַ
   service TCP_8045
+  service TCP_20035
   service icmp
   action nat address-group 172.29.73.84
  rule name ũҵ_
+  source-zone local
   source-zone inside
   destination-zone to_bank
   destination-address address-set ũҵлַ
   destination-address address-set ũҵַ
   service TCP_8045
+  service tcp_20036
   service icmp
   action nat address-group 172.20.83.60
  rule name to_TJ-bank

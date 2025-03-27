@@ -1,5 +1,5 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-06-27 15:04:28+08:00 by 51en
+!Last configuration was updated at 2023-11-21 15:14:13+08:00 by 51en
 !Last configuration was saved at 2023-03-01 00:59:14+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
@@ -156,12 +156,12 @@ interface Eth-Trunk18
  mode lacp-dynamic
 #
 interface Eth-Trunk19
- description dT:D17-D4L6YM2-172.16.29.221-bound0
+ description dT:D19-818203054:bond0
  port default vlan 100
  mode lacp-dynamic
 #
 interface Eth-Trunk20
- description dT:D19-2WSGBD2-172.16.28.115-bound0
+ description dT:D19-818203051:bond0
  port default vlan 100
  mode lacp-dynamic
 #

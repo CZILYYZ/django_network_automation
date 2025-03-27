@@ -1,0 +1,3187 @@
+auth password-policy {
+    max-login-failures 3
+    policy-enforcement enabled
+}
+auth remote-role { }
+auth remote-user { }
+auth source { }
+auth user 51en {
+    description 51en
+    encrypted-password $6$t7egA8/n$rX5YqhfYKvpwyWkE6I6jvjQ/b9LJaqc5LjPKW3aPKqXqXE.dtb0mQd7s6UpORDw8N3Wo5LpX7Ct/EcLFMvdlr/
+    partition Common
+    partition-access {
+        all-partitions {
+            role admin
+        }
+    }
+    session-limit -1
+    shell bash
+}
+auth user HA-BACKUP {
+    description HA-BACKUP
+    encrypted-password $6$0/IPi4pE$VB5BdANTew7MSmpDV2CRHPWrhtf1ZaLeumtIORUc7tOaYdwJcm1uS8QdZbUEftikhMhqeJ3uyVgxFJ/d2cHeX1
+    partition Common
+    partition-access {
+        all-partitions {
+            role admin
+        }
+    }
+    session-limit -1
+    shell none
+}
+auth user admin {
+    description "Admin User"
+    encrypted-password $6$LCVZGmxB$q854pzEDsRU79iz8XnaAOctUw9lM0iiq.OXO3KW2uSwyCi16nnohoKM7GF30Z/CFsiC90j1YJ.m0DpAKrhnC0.
+    partition Common
+    partition-access {
+        all-partitions {
+            role admin
+        }
+    }
+    session-limit -1
+    shell none
+}
+auth user xiefan {
+    description xiefan
+    encrypted-password $6$6W7cMA6x$dQnv2fUwYcQNcAsuRfjWs1S5zX0EnxrOkA7Ygf.1F/CHybvyUtidP2vXVt/HmdxIgWFGagxDQ9XnrRgxsvnMR.
+    partition Common
+    partition-access {
+        all-partitions {
+            role admin
+        }
+    }
+    session-limit -1
+    shell none
+}
+auth user yangyizhi {
+    description yangyizhi
+    encrypted-password $6$7Ad7HkIB$CGizpc2EtbAP8iKkyxmXmsbxe86uF0.H/2pxH0a3sxDfSNZ2vcmHwpQ7RuenbTX0..4exTQnWMVM5IG1VWIJ0.
+    partition Common
+    partition-access {
+        all-partitions {
+            role admin
+        }
+    }
+    session-limit -1
+    shell bash
+}
+auth user zhengweihua {
+    description zhengweihua
+    encrypted-password $6$cWN8H2hZ$OIhxuskJJnSADsbQ3ZR6R.Je3K/MewV0T5dUuX06uKMoLNlvgTph20D6qcRc38/QHnsQ/ikbEJITUAdICc5Sb1
+    partition Common
+    partition-access {
+        all-partitions {
+            role admin
+        }
+    }
+    session-limit -1
+    shell none
+}
+cli global-settings { }
+cli preference {
+    alias-path { /Common }
+    display-threshold 0
+    pager disabled
+    prompt { host user status current-folder config-sync-status }
+    suppress-warnings { }
+}
+cm cert dtca-bundle.crt {
+    certificate-key-size 2048
+    checksum SHA1:1294:454296c90810eb5be43841d42250c4aea2a5fcf9
+    create-time 2023-11-03:16:52:59
+    created-by root
+    expiration-date 2014361589
+    expiration-string "Oct 31 08:53:09 2033 GMT"
+    issuer CN=ef865f6a-eeee-4e77-9c7a000a49c6b541
+    key-type rsa-public
+    last-update-time 2023-11-03:16:52:59
+    mode 33188
+    revision 14
+    serial-number 403742
+    size 1294
+    subject CN=ef865f6a-eeee-4e77-9c7a000a49c6b541
+    updated-by root
+    version 3
+}
+cm cert dtca.crt {
+    certificate-key-size 2048
+    checksum SHA1:1294:454296c90810eb5be43841d42250c4aea2a5fcf9
+    create-time 2023-11-03:16:52:59
+    created-by root
+    expiration-date 2014361589
+    expiration-string "Oct 31 08:53:09 2033 GMT"
+    issuer CN=ef865f6a-eeee-4e77-9c7a000a49c6b541
+    key-type rsa-public
+    last-update-time 2023-11-03:16:52:59
+    mode 33188
+    revision 8
+    serial-number 403742
+    size 1294
+    subject CN=ef865f6a-eeee-4e77-9c7a000a49c6b541
+    updated-by root
+    version 3
+}
+cm cert dtdi.crt {
+    certificate-key-size 2048
+    checksum SHA1:1269:fca923692a0170d27d576440a2499ae298343952
+    create-time 2023-11-03:16:52:59
+    created-by root
+    expiration-date 2014361590
+    expiration-string "Oct 31 08:53:10 2033 GMT"
+    issuer CN=ef865f6a-eeee-4e77-9c7a000a49c6b541
+    key-type rsa-public
+    last-update-time 2023-11-03:16:52:59
+    mode 33188
+    revision 8
+    serial-number 181940
+    size 1269
+    subject CN=device-58ae33cf1902
+    updated-by root
+    version 3
+}
+cm device device-58ae33cf1902 {
+    active-modules { "LTM, Base, 4000S|PCWPKPL-KYQWNZF|Application Acceleration Manager, Core|APM, Limited|IPV6 Gateway|Rate Shaping|Anti-Virus Checks|Base Endpoint Security Checks|Firewall Checks|Network Access|Secure Virtual Keyboard|APM, Web Application|Machine Certificate Checks|Protected Workspace|Remote Desktop|App Tunnel|SSL, 4000S|Ram Cache" }
+    base-mac 00:0a:49:be:b6:80
+    build 0.0.32
+    cert dtdi.crt
+    chassis-id f5-weuf-smjj
+    edition Final
+    failover-state active
+    hostname XY-2-F5.NB
+    key dtdi.key
+    management-ip 172.16.193.13
+    marketing-name "BIG-IP 4000"
+    optional-modules { "4000S, Performance Upgrade" "Acceleration Manager" "Acceleration Manager, 4000" "ADC, Security Bundle, 4000" "Advanced Protocols" "Advanced Web Application Firewall, 4000" "AFM, 4000" "Anti-Bot Mobile, 4000" "Anti-Bot Mobile, 4000 SERIES" "APM, Base CCU, 4000" "APM, Base CCU, 4000S" "APM, Max CCU, 4000" "APM, Max CCU, 4000S" "App Mode (TMSH Only, No Root/Bash)" "ASM to AWF Upgrade, 4000" "ASM, Unlimited" "BIG-IP, DNS (1K)" "BIG-IP, DNS (Max)" "BIG-IP, DNS and GTM Upgrade (1K TO MAX)" "BIG-IP, Multicast Routing" "DataSafe, 4000 Series" "DNS Services" "External Interface and Network HSM" "FIPS 140 Compliant Mode, 4X00/7XXX/10XXX" "Global Traffic Manager Module" "IP Intelligence, 1Yr" "IP Intelligence, 3Yr" "Link Controller" "LTM to Best Bundle Upgrade w/AWF, 4000S" "LTM to Best Bundle Upgrade, 4000S Platform" "LTM to Best Bundle, 4000S Platform (Promo)" "LTM to Better Bundle Upgrade, 4000S Platform" "LTM to Better Bundle, 4000S Platform (Promo)" MSM "Routing Bundle" "SDN Services" "Secure Web Gateway, 1Yr" "Secure Web Gateway, 3Yr" "SSL Orchestrator, 4XXX/i4XXX" "SSL, Forward Proxy" "SSL, Forward Proxy, 4XXX/i4XXX" "URL Filtering, 1Yr" "URL Filtering, 3Yr" "WAM, 4000" WBA WOM "WOM, Bundle, 4000" }
+    platform-id C113
+    product BIG-IP
+    self-device true
+    time-zone Asia/Shanghai
+    unicast-address {
+        {
+            effective-ip 2.2.2.1
+            effective-port cap
+            ip 2.2.2.1
+        }
+    }
+    version 13.1.5
+}
+cm device-group device_trust_group {
+    auto-sync enabled
+    devices {
+        device-58ae33cf1902 { }
+    }
+    network-failover disabled
+}
+cm device-group gtm {
+    devices {
+        device-58ae33cf1902 { }
+    }
+    network-failover disabled
+}
+cm key dtca.key {
+    checksum SHA1:1704:6156423ad74fb0d0b3c9e45e5560198f4d1f6a7c
+    create-time 2023-11-03:16:52:59
+    created-by root
+    key-size 2048
+    last-update-time 2023-11-03:16:52:59
+    mode 33184
+    revision 8
+    size 1704
+    updated-by root
+}
+cm key dtdi.key {
+    checksum SHA1:1704:6421b1700618534a9463bbb9e5577ee6588e83e0
+    create-time 2023-11-03:16:52:59
+    created-by root
+    key-size 2048
+    last-update-time 2023-11-03:16:52:59
+    mode 33184
+    revision 7
+    size 1704
+    updated-by root
+}
+cm traffic-group traffic-group-1 {
+    unit-id 1
+}
+cm traffic-group traffic-group-local-only {
+    is-floating false
+}
+cm trust-domain Root {
+    ca-cert dtca.crt
+    ca-cert-bundle dtca-bundle.crt
+    ca-devices { /Common/device-58ae33cf1902 }
+    ca-key dtca.key
+    status standalone
+    trust-group device_trust_group
+}
+ltm data-group internal F5-ping {
+    records {
+        172.16.191.0/30 { }
+    }
+    type ip
+}
+ltm data-group internal SHZC-1 {
+    records {
+        47.100.48.46/32 { }
+        47.105.112.145/32 { }
+    }
+    type ip
+}
+ltm data-group internal SHZC-2 {
+    records {
+        47.100.48.46/32 { }
+        47.105.112.145/32 { }
+        139.196.100.67/32 { }
+    }
+    type ip
+}
+ltm data-group internal db_source_network {
+    records {
+        172.16.196.0/24 { }
+        172.16.197.0/24 { }
+        172.16.198.0/24 { }
+        172.16.199.0/24 { }
+        172.16.200.0/24 { }
+        172.16.201.0/24 { }
+        172.16.202.0/24 { }
+        172.16.203.0/24 { }
+        172.16.208.75/32 { }
+        172.16.224.0/24 { }
+        172.16.225.0/24 { }
+    }
+    type ip
+}
+ltm data-group internal deny_source_to_internet {
+    type ip
+}
+ltm data-group internal permit_destination_to_internet {
+    type ip
+}
+ltm default-node-monitor {
+    rule none
+}
+ltm dns analytics global-settings { }
+ltm dns cache global-settings { }
+ltm global-settings connection {
+    default-vs-syn-challenge-threshold 11996
+}
+ltm global-settings general {
+    snat-packet-forward enabled
+}
+ltm global-settings rule { }
+ltm global-settings traffic-control { }
+ltm monitor gateway-icmp transparent_icmp {
+    adaptive disabled
+    defaults-from gateway_icmp
+    destination 223.5.5.5:*
+    interval 5
+    time-until-up 0
+    timeout 16
+    transparent enabled
+}
+ltm monitor http http_rb.u51.com {
+    adaptive disabled
+    defaults-from http
+    destination *:*
+    interval 1
+    ip-dscp 0
+    recv "Welcome to u51.com"
+    recv-disable none
+    send "GET / HTTP/1.0"
+    time-until-up 0
+    timeout 4
+}
+ltm monitor http multipath-monitor {
+    adaptive disabled
+    defaults-from http
+    destination *:*
+    interval 5
+    ip-dscp 0
+    recv ok
+    recv-disable none
+    send "GET /health.html"
+    time-until-up 0
+    timeout 16
+}
+ltm node 10.0.52.36 {
+    address 10.0.52.36
+}
+ltm node 10.242.128.235 {
+    address 10.242.128.235
+}
+ltm node 115.236.43.146 {
+    address 115.236.43.146
+}
+ltm node 115.236.43.150 {
+    address 115.236.43.150
+}
+ltm node 172.16.152.48 {
+    address 172.16.152.48
+}
+ltm node 172.16.152.152 {
+    address 172.16.152.152
+}
+ltm node 172.16.152.160 {
+    address 172.16.152.160
+}
+ltm node 172.16.152.179 {
+    address 172.16.152.179
+}
+ltm node 172.16.152.180 {
+    address 172.16.152.180
+}
+ltm node 172.16.191.6 {
+    address 172.16.191.6
+}
+ltm node 172.16.191.10 {
+    address 172.16.191.10
+}
+ltm node 172.16.191.14 {
+    address 172.16.191.14
+}
+ltm node 172.16.191.18 {
+    address 172.16.191.18
+}
+ltm node 172.16.191.76 {
+    address 172.16.191.76
+}
+ltm node 172.16.191.77 {
+    address 172.16.191.77
+}
+ltm node 172.16.191.84 {
+    address 172.16.191.84
+}
+ltm node 172.16.191.85 {
+    address 172.16.191.85
+}
+ltm node 172.16.197.24 {
+    address 172.16.197.24
+}
+ltm node 172.16.197.100 {
+    address 172.16.197.100
+}
+ltm node 172.16.197.104 {
+    address 172.16.197.104
+}
+ltm node 172.16.208.128 {
+    address 172.16.208.128
+}
+ltm node 172.16.208.130 {
+    address 172.16.208.130
+}
+ltm node 172.16.209.103 {
+    address 172.16.209.103
+}
+ltm node 172.16.210.2 {
+    address 172.16.210.2
+}
+ltm node 172.16.210.3 {
+    address 172.16.210.3
+}
+ltm node 172.16.210.12 {
+    address 172.16.210.12
+}
+ltm node 172.16.210.13 {
+    address 172.16.210.13
+}
+ltm node 172.16.248.200 {
+    address 172.16.248.200
+}
+ltm node 172.16.248.201 {
+    address 172.16.248.201
+}
+ltm node 172.16.248.202 {
+    address 172.16.248.202
+}
+ltm node 172.16.248.203 {
+    address 172.16.248.203
+}
+ltm node 172.21.9.114 {
+    address 172.21.9.114
+}
+ltm node 196.2.1.81 {
+    address 196.2.1.81
+}
+ltm node WYHL-172.31.111.105 {
+    address 172.31.111.105
+}
+ltm node cmcc-192.168.140.1 {
+    address 192.168.140.1
+}
+ltm node cmcc-192.168.140.9 {
+    address 192.168.140.9
+}
+ltm persistence global-settings { }
+ltm policy test {
+    controls { forwarding }
+    last-modified 2023-11-07:10:53:12
+    requires { http }
+    rules {
+        erp {
+            actions {
+                0 {
+                    forward
+                    select
+                    pool SQ-CTCC
+                }
+            }
+            conditions {
+                0 {
+                    http-host
+                    host
+                    values { erp.abc.com }
+                }
+            }
+            ordinal 2
+        }
+        oa {
+            actions {
+                0 {
+                    forward
+                    select
+                    pool 172.16.152.160
+                }
+            }
+            conditions {
+                0 {
+                    http-host
+                    host
+                    values { oa.abc.com }
+                }
+            }
+            ordinal 1
+        }
+    }
+    status published
+    strategy first-match
+}
+ltm pool 10.242.128.235:1883 {
+    members {
+        10.242.128.235:ibm-mqisdp {
+            address 10.242.128.235
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool 10.242.128.235:8883 {
+    members {
+        10.242.128.235:secure-mqtt {
+            address 10.242.128.235
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool 115.238.29.17:9761 {
+    members {
+        172.16.210.12:9761 {
+            address 172.16.210.12
+            session monitor-enabled
+            state up
+        }
+        172.16.210.13:9761 {
+            address 172.16.210.13
+            session monitor-enabled
+            state up
+        }
+        172.16.210.2:9761 {
+            address 172.16.210.2
+            session monitor-enabled
+            state up
+        }
+        172.16.210.3:9761 {
+            address 172.16.210.3
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp
+}
+ltm pool 172.16.152.160 {
+    members {
+        172.16.152.160:ssh {
+            address 172.16.152.160
+            session monitor-enabled
+            state down
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool 172.16.197.24:3542 {
+    members {
+        172.16.197.24:hacl-monitor {
+            address 172.16.197.24
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool 172.16.197.24:3543 {
+    members {
+        172.16.197.24:qftest-lookup {
+            address 172.16.197.24
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool 172.16.197.100:3602 {
+    members {
+        172.16.197.100:infiniswitchcl {
+            address 172.16.197.100
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool 172.16.197.104:3606 {
+    members {
+        172.16.197.104:splitlock {
+            address 172.16.197.104
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool 172.16.197.104:3607 {
+    members {
+        172.16.197.104:precise-i3 {
+            address 172.16.197.104
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool 172.16.197.104:3608 {
+    members {
+        172.16.197.104:trendchip-dcp {
+            address 172.16.197.104
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool 172.16.197.104:3609 {
+    members {
+        172.16.197.104:cpdi-pidas-cm {
+            address 172.16.197.104
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp
+}
+ltm pool 172.16.208.130:5349 {
+    members {
+        172.16.208.130:stuns {
+            address 172.16.208.130
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm pool CE12812_F5 {
+    members {
+        172.16.191.14:any {
+            address 172.16.191.14
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor gateway_icmp
+}
+ltm pool F5_12812 {
+    members {
+        172.16.191.6:any {
+            address 172.16.191.6
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor gateway_icmp
+}
+ltm pool F5_E0612812 {
+    members {
+        172.16.191.18:any {
+            address 172.16.191.18
+            session monitor-enabled
+            state down
+        }
+    }
+    monitor gateway_icmp
+}
+ltm pool GNH-80 {
+    members {
+        172.21.9.114:http {
+            address 172.21.9.114
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor http
+}
+ltm pool GNH-443 {
+    members {
+        172.21.9.114:https {
+            address 172.21.9.114
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor https
+}
+ltm pool SQ-CTCC {
+    monitor gateway_icmp
+}
+ltm pool XY-CTC {
+    members {
+        172.16.191.14:any {
+            address 172.16.191.14
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor gateway_icmp
+}
+ltm pool XY-Nginx-80 {
+    members {
+        172.16.248.200:http {
+            address 172.16.248.200
+            session monitor-enabled
+            state up
+        }
+        172.16.248.201:http {
+            address 172.16.248.201
+            session monitor-enabled
+            state up
+        }
+        172.16.248.202:http {
+            address 172.16.248.202
+            session monitor-enabled
+            state up
+        }
+        172.16.248.203:http {
+            address 172.16.248.203
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor http
+}
+ltm pool XY-Nginx-443 {
+    members {
+        172.16.248.200:https {
+            address 172.16.248.200
+            session monitor-enabled
+            state up
+        }
+        172.16.248.201:https {
+            address 172.16.248.201
+            session monitor-enabled
+            state up
+        }
+        172.16.248.202:https {
+            address 172.16.248.202
+            session monitor-enabled
+            state up
+        }
+        172.16.248.203:https {
+            address 172.16.248.203
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor https
+}
+ltm pool YYZ_test {
+    members {
+        10.0.52.36:ftp {
+            address 10.0.52.36
+            session monitor-enabled
+            state down
+        }
+    }
+    monitor tcp
+}
+ltm pool dT-12812 {
+    members {
+        172.16.191.18:any {
+            address 172.16.191.18
+            session monitor-enabled
+            state down
+        }
+        172.16.191.6:any {
+            address 172.16.191.6
+            session user-disabled
+            state up
+        }
+    }
+    monitor gateway_icmp
+}
+ltm pool enniu-jmail-1125 {
+    members {
+        172.16.208.128:hpvmmagent {
+            address 172.16.208.128
+            session monitor-enabled
+            state up
+        }
+        172.16.209.103:hpvmmagent {
+            address 172.16.209.103
+            session monitor-enabled
+            state up
+        }
+    }
+    monitor tcp
+}
+ltm pool logstash_log {
+    description logstash_log_resive_log
+    members {
+        172.16.152.48:utime {
+            address 172.16.152.48
+            session monitor-enabled
+            state down
+        }
+    }
+    monitor gateway_icmp
+}
+ltm pool u51_nginx_80_pool {
+    description u51_nginx_80_pool
+    load-balancing-mode ratio-member
+    members {
+        172.16.152.179:http {
+            address 172.16.152.179
+            ratio 20
+            session user-disabled
+            state down
+        }
+        172.16.152.180:http {
+            address 172.16.152.180
+            ratio 20
+            session monitor-enabled
+            state down
+        }
+        172.16.248.200:http {
+            address 172.16.248.200
+            session user-disabled
+            state up
+        }
+        172.16.248.201:http {
+            address 172.16.248.201
+            session user-disabled
+            state up
+        }
+        172.16.248.202:http {
+            address 172.16.248.202
+            session user-disabled
+            state up
+        }
+        172.16.248.203:http {
+            address 172.16.248.203
+            session user-disabled
+            state up
+        }
+    }
+    monitor tcp
+}
+ltm pool u51_nginx_443 {
+    load-balancing-mode ratio-member
+    members {
+        172.16.152.179:https {
+            address 172.16.152.179
+            ratio 20
+            session user-disabled
+            state down
+        }
+        172.16.152.180:https {
+            address 172.16.152.180
+            ratio 20
+            session monitor-enabled
+            state down
+        }
+        172.16.248.200:https {
+            address 172.16.248.200
+            session user-disabled
+            state up
+        }
+        172.16.248.201:https {
+            address 172.16.248.201
+            session user-disabled
+            state up
+        }
+        172.16.248.202:https {
+            address 172.16.248.202
+            session user-disabled
+            state up
+        }
+        172.16.248.203:https {
+            address 172.16.248.203
+            session user-disabled
+            state up
+        }
+    }
+    monitor tcp_half_open
+}
+ltm profile client-ssl qifuyun-2022-02 {
+    alert-timeout 10
+    allow-non-ssl disabled
+    app-service none
+    cache-size 262144
+    cache-timeout 3600
+    cert qifuyun-2022-02.crt
+    cert-key-chain {
+        qifuyun-2022-02 {
+            cert qifuyun-2022-02.crt
+            key qifuyun-2022-02.key
+        }
+    }
+    chain none
+    cipher-group none
+    ciphers DEFAULT
+    defaults-from clientssl
+    generic-alert enabled
+    handshake-timeout 10
+    inherit-certkeychain false
+    key qifuyun-2022-02.key
+    mod-ssl-methods disabled
+    mode enabled
+    options { dont-insert-empty-fragments }
+    passphrase none
+    proxy-ssl disabled
+    renegotiate-max-record-delay indefinite
+    renegotiate-period indefinite
+    renegotiate-size indefinite
+    renegotiation enabled
+    secure-renegotiation require
+    server-name none
+    session-ticket disabled
+    sni-default false
+    sni-require false
+    ssl-sign-hash any
+    strict-resume disabled
+    unclean-shutdown enabled
+}
+ltm profile client-ssl rp202202 {
+    app-service none
+    cert 51rp-2022-02.crt
+    cert-key-chain {
+        51rp-2022-02 {
+            cert 51rp-2022-02.crt
+            key 51rp-2022-02.key
+        }
+    }
+    chain none
+    defaults-from clientssl
+    inherit-certkeychain false
+    key 51rp-2022-02.key
+    passphrase none
+    sni-default true
+}
+ltm profile client-ssl u51-2022-02 {
+    app-service none
+    cert u51-2022-02.crt
+    cert-key-chain {
+        u51-2022-02 {
+            cert u51-2022-02.crt
+            key u51-2022-02.key
+        }
+    }
+    chain none
+    defaults-from clientssl
+    inherit-certkeychain false
+    key u51-2022-02.key
+    passphrase none
+    sni-default false
+}
+ltm profile client-ssl u51.com {
+    alert-timeout 10
+    allow-non-ssl disabled
+    app-service none
+    cache-size 262144
+    cache-timeout 3600
+    cert u51.com.crt
+    cert-key-chain {
+        u51.com {
+            cert u51.com.crt
+            key u51.com.key
+        }
+    }
+    chain none
+    cipher-group none
+    ciphers DEFAULT
+    defaults-from clientssl
+    generic-alert enabled
+    handshake-timeout 10
+    inherit-certkeychain false
+    key u51.com.key
+    mod-ssl-methods disabled
+    mode enabled
+    options { dont-insert-empty-fragments }
+    passphrase none
+    proxy-ssl disabled
+    renegotiate-max-record-delay indefinite
+    renegotiate-period indefinite
+    renegotiate-size indefinite
+    renegotiation enabled
+    secure-renegotiation require
+    server-name none
+    session-ticket disabled
+    sni-default false
+    sni-require false
+    ssl-sign-hash any
+    strict-resume disabled
+    unclean-shutdown enabled
+}
+ltm profile client-ssl u51me-2022-02 {
+    alert-timeout 10
+    allow-non-ssl disabled
+    app-service none
+    cache-size 262144
+    cache-timeout 3600
+    cert u51.me-2022-02.crt
+    cert-key-chain {
+        u51.me-2022-02 {
+            cert u51.me-2022-02.crt
+            key u51.me-2022-02.key
+        }
+    }
+    chain none
+    cipher-group none
+    ciphers DEFAULT
+    defaults-from clientssl
+    generic-alert enabled
+    handshake-timeout 10
+    inherit-certkeychain false
+    key u51.me-2022-02.key
+    mod-ssl-methods disabled
+    mode enabled
+    options { dont-insert-empty-fragments }
+    passphrase none
+    proxy-ssl disabled
+    renegotiate-max-record-delay indefinite
+    renegotiate-period indefinite
+    renegotiate-size indefinite
+    renegotiation enabled
+    secure-renegotiation require
+    server-name none
+    session-ticket disabled
+    sni-default false
+    sni-require false
+    ssl-sign-hash any
+    strict-resume disabled
+    unclean-shutdown enabled
+}
+ltm profile client-ssl xiaolanben2022 {
+    app-service none
+    cert xiaolanben2022.crt
+    cert-key-chain {
+        xiaolanben2022 {
+            cert xiaolanben2022.crt
+            key xiaolanben2022.key
+        }
+    }
+    chain none
+    defaults-from clientssl
+    inherit-certkeychain false
+    key xiaolanben2022.key
+    passphrase none
+}
+ltm profile client-ssl xiaoniu51-2022-02 {
+    alert-timeout 10
+    allow-non-ssl disabled
+    app-service none
+    cache-size 262144
+    cache-timeout 3600
+    cert xiaoniu51-2022-02.crt
+    cert-key-chain {
+        xiaoniu51-2022-02 {
+            cert xiaoniu51-2022-02.crt
+            key xiaoniu51-2022-02.key
+        }
+    }
+    chain none
+    cipher-group none
+    ciphers DEFAULT
+    defaults-from clientssl
+    generic-alert enabled
+    handshake-timeout 10
+    inherit-certkeychain false
+    key xiaoniu51-2022-02.key
+    mod-ssl-methods disabled
+    mode enabled
+    options { dont-insert-empty-fragments }
+    passphrase none
+    proxy-ssl disabled
+    renegotiate-max-record-delay indefinite
+    renegotiate-period indefinite
+    renegotiate-size indefinite
+    renegotiation enabled
+    secure-renegotiation require
+    server-name none
+    session-ticket disabled
+    sni-default false
+    sni-require false
+    ssl-sign-hash any
+    strict-resume disabled
+    unclean-shutdown enabled
+}
+ltm profile client-ssl zhangdan-2022-02 {
+    app-service none
+    cert 51zhangdan-2022-02.crt
+    cert-key-chain {
+        51zhangdan-2022-02 {
+            cert 51zhangdan-2022-02.crt
+            key 51zhangdan-2022-02.key
+        }
+    }
+    chain none
+    defaults-from clientssl
+    inherit-certkeychain false
+    key 51zhangdan-2022-02.key
+    passphrase none
+    sni-default false
+}
+ltm profile http http-xfowrd {
+    app-service none
+    defaults-from http
+    insert-xforwarded-for enabled
+    proxy-type reverse
+}
+ltm profile request-log logstash_profile {
+    app-service none
+    defaults-from request-log
+    log-response-by-default yes
+    log-response-logging-errors disabled
+    response-log-error-pool none
+    response-log-error-protocol mds-udp
+    response-log-error-template none
+    response-log-pool logstash_log
+    response-log-protocol mds-tcp
+    response-log-template "$CLIENT_IP ${X-Forwarded-For} $DATE_NCSA $VIRTUAL_IP $VIRTUAL_NAME $VIRTUAL_POOL_NAME $SERVER_IP $SERVER_PORT \"$HTTP_PATH\" \"$HTTP_REQUEST\" $HTTP_STATCODE $RESPONSE_SIZE $RESPONSE_MSECS \"$Referer\" \"${User-agent}\""
+    response-logging enabled
+}
+ltm rule F5-ping {
+when CLIENT_ACCEPTED {
+  if { [matchclass [IP::client_addr] equals F5-ping ] }{
+      snatpool F5-ping
+      pool XY-CTC
+   }
+}
+}
+ltm rule SHZC-1 {
+when CLIENT_ACCEPTED {
+  if {not [ matchclass [IP::client_addr] equals SHZC-1]} {
+  reject 
+}
+}
+}
+ltm rule SHZC-2 {
+when CLIENT_ACCEPTED {
+  if {not [ matchclass [IP::client_addr] equals SHZC-2]} {
+  reject 
+}
+}
+}
+ltm rule allow_office_ip {
+when CLIENT_ACCEPTED {
+  if {not [IP::addr [IP::client_addr]  equals 115.236.43.146/32 ] } {   
+    drop 
+
+  }
+
+}
+}
+ltm rule deny_source_to_internet {
+when CLIENT_ACCEPTED {
+
+  if {[ matchclass [IP::client_addr] equals db_source_network]} {    
+
+     if { not [matchclass [IP::local_addr] equals permit_destination_to_internet]}{ drop}
+
+      }
+  }
+}
+ltm rule http_test {
+when HTTP_REQUEST  { 
+	HTTP::header insert X-Forwarded-For [IP::remote_addr]
+	log local0. "remote_addr: [IP::remote_addr]"
+        set userid [HTTP::header x-userid]
+        if { [HTTP::header exists  x-userid]} {
+            if { (int($userid) %2 ==0) } {
+                pool pool_71.100
+                snat 172.16.191.1
+
+                }
+          }
+        #log local0. " http-re: [HTTP::request]"
+        log local0. " http-headers: $userid"
+
+
+
+
+}
+}
+ltm rule jason-test {
+        #when CLIENT_ACCEPTED {
+when LB_SELECTED {
+   #log "lb selected [LB::server addr]" 
+   if { [IP::addr [LB::server addr] equals 192.168.140.1] } {
+
+       #pool CMCC-GATEWAY
+       snatpool cmcc
+       log "lb selected [LB::server addr]" 
+
+   }
+   elseif { [IP::addr [LB::server addr] equals 192.168.140.9] } {
+
+       #pool CMCC-GATEWAY
+       snatpool cmcc
+       log "lb selected [LB::server addr]" 
+
+   }
+   elseif { [IP::addr [LB::server addr] equals 172.31.111.105] } {
+       snatpool CTC
+       log "lb selected [LB::server addr]" 
+
+   }
+
+
+ }
+}
+ltm rule manger_host {
+when CLIENT_ACCEPTED {
+  if { [IP::addr [IP::client_addr] equals 115.236.43.146] } {
+       pool  	pool_172.16.190.250
+ }
+ elseif { [IP::addr [IP::client_addr] equals 183.129.178.139] } {
+       pool  	pool_172.16.190.250
+ }
+ elseif { [IP::addr [IP::client_addr] equals 43.254.52.2] } {
+       pool  	pool_172.16.190.250
+ }else {
+        reject
+     }
+
+}
+}
+ltm rule out-snat-google {
+when HTTP_REQUEST { 
+if {[HTTP::host] equals "www.google.com.hk" } { 
+pool  TO-HK-SNAT
+snat 172.16.191.1
+} 
+}
+}
+ltm rule x-forwarded-for {
+when HTTP_REQUEST {
+HTTP::header remove X-Forwarded-For
+HTTP::header insert X-Forwarded-For [IP::client_addr]
+}
+}
+ltm snat-translation 115.238.29.8 {
+    address 115.238.29.8
+    inherited-traffic-group true
+    traffic-group traffic-group-1
+}
+ltm snat-translation 172.16.191.5 {
+    address 172.16.191.5
+    inherited-traffic-group true
+    traffic-group traffic-group-1
+}
+ltm snat-translation 172.16.191.13 {
+    address 172.16.191.13
+    inherited-traffic-group true
+    traffic-group traffic-group-1
+}
+ltm snat-translation 172.16.191.17 {
+    address 172.16.191.17
+    inherited-traffic-group true
+    traffic-group traffic-group-1
+}
+ltm snat-translation 223.93.187.241 {
+    address 223.93.187.241
+    inherited-traffic-group true
+    traffic-group traffic-group-1
+}
+ltm snatpool CE12812-F5-ping {
+    members {
+        172.16.191.13
+    }
+}
+ltm snatpool CTC {
+    members {
+        115.238.29.8
+    }
+}
+ltm snatpool F5-12812-ping {
+    members {
+        172.16.191.5
+    }
+}
+ltm snatpool F5-E0612812-ping {
+    members {
+        172.16.191.17
+    }
+}
+ltm snatpool XY-CMCC {
+    members {
+        223.93.187.241
+    }
+}
+ltm tacdb licenseddb licensed-tacdb {
+    partition none
+}
+ltm virtual 115.238.29.10:3542 {
+    destination 115.238.29.10:hacl-monitor
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.24:3542
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 143
+}
+ltm virtual 115.238.29.10:3543 {
+    destination 115.238.29.10:qftest-lookup
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.24:3543
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 144
+}
+ltm virtual 115.238.29.10:3602 {
+    destination 115.238.29.10:infiniswitchcl
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.100:3602
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 145
+}
+ltm virtual 115.238.29.10:3606 {
+    destination 115.238.29.10:splitlock
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.104:3606
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 146
+}
+ltm virtual 115.238.29.10:3607 {
+    destination 115.238.29.10:precise-i3
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.104:3607
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-2
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 147
+}
+ltm virtual 115.238.29.10:3608 {
+    destination 115.238.29.10:trendchip-dcp
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.104:3608
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 148
+}
+ltm virtual 115.238.29.10:3609 {
+    destination 115.238.29.10:cpdi-pidas-cm
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.104:3609
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 149
+}
+ltm virtual 223.93.187.242:3542 {
+    destination 223.93.187.242:hacl-monitor
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.24:3542
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 177
+}
+ltm virtual 223.93.187.242:3543 {
+    destination 223.93.187.242:qftest-lookup
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.24:3543
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 176
+}
+ltm virtual 223.93.187.242:3602 {
+    destination 223.93.187.242:infiniswitchcl
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.100:3602
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 171
+}
+ltm virtual 223.93.187.242:3606 {
+    destination 223.93.187.242:splitlock
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.104:3606
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 175
+}
+ltm virtual 223.93.187.242:3607 {
+    destination 223.93.187.242:precise-i3
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.104:3607
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-2
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 174
+}
+ltm virtual 223.93.187.242:3608 {
+    destination 223.93.187.242:trendchip-dcp
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.104:3608
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 173
+}
+ltm virtual 223.93.187.242:3609 {
+    destination 223.93.187.242:cpdi-pidas-cm
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.197.104:3609
+    profiles {
+        tcp { }
+    }
+    rules {
+        SHZC-1
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 172
+}
+ltm virtual GNH-80 {
+    destination 115.238.29.13:http
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool GNH-80
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 150
+}
+ltm virtual GNH-80_223.93.187.244 {
+    destination 223.93.187.244:http
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool GNH-80
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 167
+}
+ltm virtual GNH-443 {
+    destination 115.238.29.13:https
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool GNH-443
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 151
+}
+ltm virtual GNH-443_223.93.187.244 {
+    destination 223.93.187.244:https
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool GNH-443
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 166
+}
+ltm virtual connection.51vala.com-1883 {
+    destination 115.238.29.17:ibm-mqisdp
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 10.242.128.235:1883
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 178
+}
+ltm virtual connection.51vala.com-1883-223.93.187.246 {
+    destination 223.93.187.246:ibm-mqisdp
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 10.242.128.235:1883
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 180
+}
+ltm virtual connection.51vala.com-8883 {
+    destination 115.238.29.17:secure-mqtt
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 10.242.128.235:8883
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 179
+}
+ltm virtual connection.51vala.com-8883-223.93.187.246 {
+    destination 223.93.187.246:secure-mqtt
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 10.242.128.235:8883
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 181
+}
+ltm virtual enniu-jmail-25 {
+    destination 115.238.29.16:smtp
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool enniu-jmail-1125
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 152
+}
+ltm virtual enniu-jmail_223.93.187.245 {
+    destination 223.93.187.245:smtp
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool enniu-jmail-1125
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 165
+}
+ltm virtual iot.51emonkey.com-9761 {
+    destination 115.238.29.17:9761
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 115.238.29.17:9761
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 153
+}
+ltm virtual iot.51emonkey.com-9761_223.93.187.246 {
+    destination 223.93.187.246:9761
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 115.238.29.17:9761
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 164
+}
+ltm virtual u51.com-80 {
+    destination 115.238.29.11:http
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool XY-Nginx-80
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 154
+}
+ltm virtual u51.com-80_223.93.187.243 {
+    destination 223.93.187.243:http
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool XY-Nginx-80
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 170
+}
+ltm virtual u51.com-443 {
+    destination 115.238.29.11:https
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool XY-Nginx-443
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 155
+}
+ltm virtual u51.com-443_223.93.187.243 {
+    destination 223.93.187.243:https
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool XY-Nginx-443
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 169
+}
+ltm virtual u51.com-5349 {
+    destination 115.238.29.11:stuns
+    ip-protocol udp
+    mask 255.255.255.255
+    pool 172.16.208.130:5349
+    profiles {
+        udp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 156
+}
+ltm virtual u51.com-5349_223.93.187.243 {
+    destination 223.93.187.243:stuns
+    ip-protocol tcp
+    mask 255.255.255.255
+    pool 172.16.208.130:5349
+    profiles {
+        tcp { }
+    }
+    source 0.0.0.0/0
+    translate-address enabled
+    translate-port enabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 168
+}
+ltm virtual vs_0.0.0.0 {
+    destination 0.0.0.0:any
+    mask any
+    mirror enabled
+    pool XY-CTC
+    profiles {
+        fastL4 { }
+    }
+    rules {
+        deny_source_to_internet
+    }
+    source 0.0.0.0/0
+    source-address-translation {
+        pool CTC
+        type snat
+    }
+    translate-address disabled
+    translate-port disabled
+    vlans {
+        Vlan2006-dT-12812
+    }
+    vlans-enabled
+    vs-index 57
+}
+ltm virtual vs_6810ToF5 {
+    destination 172.16.191.4:any
+    mask 255.255.255.252
+    pool F5_12812
+    profiles {
+        fastL4 { }
+    }
+    source 172.16.191.12/30
+    source-address-translation {
+        pool F5-12812-ping
+        type snat
+    }
+    translate-address enabled
+    translate-port disabled
+    vlans {
+        XY-CTC
+    }
+    vlans-enabled
+    vs-index 157
+}
+ltm virtual vs_F5To6810 {
+    destination 172.16.191.12:any
+    mask 255.255.255.252
+    pool CE12812_F5
+    profiles {
+        fastL4 { }
+    }
+    source 172.16.191.4/30
+    source-address-translation {
+        pool CE12812-F5-ping
+        type snat
+    }
+    translate-address enabled
+    translate-port disabled
+    vlans {
+        Vlan2006-dT-12812
+    }
+    vlans-enabled
+    vs-index 158
+}
+net cos global-settings { }
+net dag-globals { }
+net fdb tunnel http-tunnel { }
+net fdb tunnel socks-tunnel { }
+net fdb vlan HA-VLAN { }
+net fdb vlan Vlan2006-dT-12812 { }
+net fdb vlan XY-CTC { }
+net interface 1.1 {
+    if-index 736
+    mac-address 00:0a:49:be:b6:82
+    media-max 1000T-FD
+    mtu 9198
+}
+net interface 1.2 {
+    if-index 752
+    mac-address 00:0a:49:be:b6:83
+    media-max 1000T-FD
+    mtu 9198
+}
+net interface 1.3 {
+    if-index 768
+    mac-address 00:0a:49:be:b6:84
+    media-max 1000T-FD
+    mtu 9198
+}
+net interface 1.4 {
+    if-index 784
+    mac-address 00:0a:49:be:b6:85
+    media-max 1000T-FD
+    mtu 9198
+}
+net interface 1.5 {
+    if-index 800
+    mac-address 00:0a:49:be:b6:86
+    media-active 1000T-FD
+    media-max 1000T-FD
+    mtu 9198
+}
+net interface 1.6 {
+    if-index 816
+    mac-address 00:0a:49:be:b6:87
+    media-active 1000T-FD
+    media-max 1000T-FD
+    mtu 9198
+}
+net interface 1.7 {
+    if-index 832
+    mac-address 00:0a:49:be:b6:88
+    media-max 1000T-FD
+    mtu 9198
+}
+net interface 1.8 {
+    disabled
+    if-index 848
+    lldp-tlvmap 114552
+    mac-address 00:0a:49:be:b6:89
+    media-max 1000T-FD
+    mtu 9198
+}
+net interface 2.1 {
+    if-index 864
+    lldp-admin txrx
+    lldp-tlvmap 114552
+    mac-address 00:0a:49:be:b6:8a
+    media-active 10000SR-FD
+    media-max 10000T-FD
+    mtu 9198
+    serial FNS17351VLV
+    vendor CISCO-FINISAR
+    vendor-oui 009065
+    vendor-partnum FTLX8571D3BCL-C
+    vendor-revision A
+}
+net interface 2.2 {
+    if-index 880
+    mac-address 00:0a:49:be:b6:8b
+    media-active 10000SR-FD
+    media-max 10000T-FD
+    mtu 9198
+    serial FNS17150WV9
+    vendor CISCO-FINISAR
+    vendor-oui 009065
+    vendor-partnum FTLX8571D3BCL-C
+    vendor-revision A
+}
+net interface mgmt {
+    if-index 80
+    mac-address 00:0a:49:be:b6:81
+    media-active 1000T-FD
+    media-max 1000T-FD
+}
+net ipsec ike-daemon ikedaemon {
+    log-publisher default-ipsec-log-publisher
+}
+net lldp-globals { }
+net multicast-globals { }
+net packet-filter-trusted { }
+net route 10.242.0.0 {
+    gw 172.16.191.6
+    network 10.242.0.0/16
+}
+net route 172.21.0.0 {
+    gw 172.16.191.6
+    network 172.21.0.0/16
+}
+net route 172.22.0.0 {
+    gw 172.16.191.6
+    network 172.22.0.0/16
+}
+net route XY-CTC {
+    network default
+    pool /Common/XY-CTC
+}
+net route dT-IDC {
+    gw 172.16.191.6
+    network 172.16.0.0/16
+}
+net route to-k8s {
+    gw 172.16.191.6
+    network 172.24.0.0/16
+}
+net route-domain 0 {
+    id 0
+    vlans {
+        HA-VLAN
+        http-tunnel
+        socks-tunnel
+        XY-CTC
+        Vlan2006-dT-12812
+    }
+}
+net self Vlan4001 {
+    address 172.16.191.13/30
+    allow-service {
+        default
+    }
+    traffic-group traffic-group-local-only
+    vlan XY-CTC
+}
+net self Vlan2006 {
+    address 172.16.191.5/30
+    allow-service {
+        default
+    }
+    traffic-group traffic-group-local-only
+    vlan Vlan2006-dT-12812
+}
+net self HA-VLAN {
+    address 2.2.2.1/29
+    allow-service {
+        default
+    }
+    traffic-group traffic-group-local-only
+    vlan HA-VLAN
+}
+net self-allow {
+    defaults {
+        igmp:any
+        ospf:any
+        pim:any
+        tcp:domain
+        tcp:f5-iquery
+        tcp:https
+        tcp:snmp
+        tcp:ssh
+        udp:520
+        udp:cap
+        udp:domain
+        udp:f5-iquery
+        udp:snmp
+    }
+}
+net stp-globals {
+    config-name 00-0A-49-BE-B6-80
+}
+net trunk dT-12812 {
+    bandwidth 20000
+    cfg-mbr-count 2
+    id 0
+    interfaces {
+        2.1
+        2.2
+    }
+    lacp enabled
+    mac-address 00:0a:49:be:b6:8d
+    media 10000
+    working-mbr-count 2
+}
+net trunk up-to-internet {
+    bandwidth 2000
+    cfg-mbr-count 2
+    id 2
+    interfaces {
+        1.5
+        1.6
+    }
+    lacp enabled
+    mac-address 00:0a:49:be:b6:8f
+    media 1000
+    working-mbr-count 2
+}
+net tunnels tunnel http-tunnel {
+    description "Tunnel for http-explicit profile"
+    if-index 912
+    profile tcp-forward
+}
+net tunnels tunnel socks-tunnel {
+    description "Tunnel for socks profile"
+    if-index 928
+    profile tcp-forward
+}
+net vlan HA-VLAN {
+    description "HA vlan"
+    fwd-mode l3
+    if-index 944
+    interfaces {
+        1.8 { }
+    }
+    tag 4094
+}
+net vlan Vlan2006-dT-12812 {
+    fwd-mode l3
+    if-index 1184
+    interfaces {
+        dT-12812 {
+            tagged
+        }
+    }
+    tag 2006
+}
+net vlan XY-CTC {
+    fwd-mode l3
+    if-index 1200
+    interfaces {
+        up-to-internet {
+            tagged
+        }
+    }
+    sflow {
+        poll-interval-global no
+        sampling-rate-global no
+    }
+    tag 4001
+}
+sys aom { }
+sys autoscale-group { }
+sys crypto allow-key-export { }
+sys crypto cert 51rp-2022-02.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city 杭州市
+    common-name *.51rp.com
+    country CN
+    email-address
+    expiration Jan 27 23:59:59 2023 GMT
+    fingerprint SHA256/A9:1A:B8:61:7B:7F:1B:E7:56:34:97:51:DB:D1:D6:3F:A9:1B:E0:AF:A5:6E:DC:2D:A9:D2:DA:5E:EA:20:E2:EB
+    issuer CN=GeoTrust CN RSA CA G1,OU=www.digicert.com,O=DigiCert Inc,C=US
+    issuer-certificate
+    organization 杭州恩牛网络技术有限公司
+    ou
+    public-key-type RSA
+    state 浙江省
+    subject-alternative-name DNS:51rp.com, DNS:*.51rp.com
+}
+sys crypto cert 51zhangdan-2022-02.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city 杭州市
+    common-name *.51zhangdan.com
+    country CN
+    email-address
+    expiration May 26 12:00:00 2022 GMT
+    fingerprint SHA256/5A:A7:04:8B:50:13:51:05:E4:CD:01:79:A3:BF:DD:DE:C6:BA:88:04:38:CA:D2:1C:49:C6:EA:CA:C6:29:9A:3D
+    issuer CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US
+    issuer-certificate
+    organization 杭州恩牛网络技术有限公司
+    ou IT
+    public-key-type RSA
+    state 浙江省
+    subject-alternative-name DNS:51zhangdan.com, DNS:*.51zhangdan.com
+}
+sys crypto cert h5.u51.com.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city Hangzhou
+    common-name h5.u51.com
+    country CN
+    email-address
+    expiration Jun 14 23:59:59 2018 GMT
+    fingerprint SHA256/9B:D7:0F:0D:07:39:69:41:39:BB:E9:89:FB:20:3F:D9:64:32:E7:02:10:51:C5:A3:E6:0F:58:DB:AE:75:76:EB
+    issuer CN=Symantec Class 3 EV SSL CA - G3,OU=Symantec Trust Network,O=Symantec Corporation,C=US
+    issuer-certificate
+    organization 杭州恩牛网络技术有限公司
+    ou
+    public-key-type RSA
+    state Zhejiang
+    subject-alternative-name DNS:h5.u51.com
+}
+sys crypto cert nutcredit.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city Hangzhou
+    common-name *.nutcredit.com
+    country CN
+    email-address
+    expiration Jul  6 23:59:59 2018 GMT
+    fingerprint SHA256/15:3B:22:00:6C:32:C2:D1:81:A4:F2:54:2F:CF:3A:AB:F0:EB:C9:1C:E3:1D:B4:34:11:84:5B:FE:4C:7A:68:85
+    issuer CN=GeoTrust SSL CA - G3,O=GeoTrust Inc.,C=US
+    issuer-certificate
+    organization 杭州恩牛网络技术有限公司
+    ou 运维部
+    public-key-type RSA
+    state Zhejiang
+    subject-alternative-name DNS:nutcredit.com, DNS:*.nutcredit.com
+}
+sys crypto cert qifuyun-2022-02.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city 杭州市
+    common-name *.qifuyun.com
+    country CN
+    email-address
+    expiration Feb 12 12:00:00 2022 GMT
+    fingerprint SHA256/04:F3:11:7C:D7:A4:E4:DA:B1:03:F5:D3:6A:7A:1B:A8:5C:D1:D6:F6:29:CD:24:8A:78:6B:C7:FE:D7:1A:91:11
+    issuer CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US
+    issuer-certificate
+    organization 杭州企付云科技有限公司
+    ou IT
+    public-key-type RSA
+    state 浙江省
+    subject-alternative-name DNS:qifuyun.com, DNS:*.qifuyun.com
+}
+sys crypto cert u51-2022-02.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city 杭州市
+    common-name *.u51.com
+    country CN
+    email-address
+    expiration Jun 27 12:00:00 2022 GMT
+    fingerprint SHA256/3C:54:FA:DA:7C:6B:5F:F0:6C:6F:CB:47:39:1D:29:74:E0:27:CF:8C:37:78:4F:4F:EC:90:B3:87:F5:F0:D3:52
+    issuer CN=DigiCert SHA2 Secure Server CA,O=DigiCert Inc,C=US
+    issuer-certificate
+    organization 杭州恩牛网络技术有限公司
+    ou IT
+    public-key-type RSA
+    state 浙江省
+    subject-alternative-name DNS:u51.com, DNS:*.u51.com
+}
+sys crypto cert u51.com.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city hangzhou
+    common-name *.u51.com
+    country CN
+    email-address
+    expiration Apr 16 23:59:59 2018 GMT
+    fingerprint SHA256/99:81:A8:13:0A:28:34:2E:4B:73:0E:85:79:D5:DB:09:D2:2E:96:F1:F4:FF:13:7C:62:3D:8C:33:F0:52:29:D0
+    issuer CN=Symantec Class 3 Secure Server CA - G4,OU=Symantec Trust Network,O=Symantec Corporation,C=US
+    issuer-certificate
+    organization 杭州恩牛网络技术有限公司
+    ou 运维部
+    public-key-type RSA
+    state zhejiang
+    subject-alternative-name DNS:u51.com, DNS:*.u51.com
+}
+sys crypto cert u51.me-2022-02.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city
+    common-name *.u51.me
+    country
+    email-address
+    expiration Jan 20 23:59:59 2023 GMT
+    fingerprint SHA256/AD:F0:11:33:F7:CC:AD:F2:99:0F:1E:D7:D2:8B:B8:EA:28:78:12:C0:F5:69:E1:FC:1C:DC:ED:53:96:84:0B:73
+    issuer CN=RapidSSL TLS DV RSA Mixed SHA256 2020 CA-1,O=DigiCert Inc,C=US
+    issuer-certificate
+    organization
+    ou
+    public-key-type RSA
+    state
+    subject-alternative-name DNS:u51.me, DNS:*.u51.me
+}
+sys crypto cert xiaolanben2022.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city 深圳市
+    common-name *.xiaolanben.com
+    country CN
+    email-address
+    expiration Jul  5 12:00:00 2022 GMT
+    fingerprint SHA256/40:B8:29:0D:6C:97:5C:C3:C5:D9:FB:42:99:CB:54:29:AC:40:D0:90:CB:5C:9C:B2:EB:06:D0:4C:8C:B0:99:FE
+    issuer CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US
+    issuer-certificate
+    organization 深圳小蓝本网络技术有限公司
+    ou IT
+    public-key-type RSA
+    state 广东省
+    subject-alternative-name DNS:xiaolanben.com, DNS:*.xiaolanben.com
+}
+sys crypto cert xiaolanben-1.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city 深圳市
+    common-name *.xiaolanben.com
+    country CN
+    email-address
+    expiration Jul  5 12:00:00 2022 GMT
+    fingerprint SHA256/40:B8:29:0D:6C:97:5C:C3:C5:D9:FB:42:99:CB:54:29:AC:40:D0:90:CB:5C:9C:B2:EB:06:D0:4C:8C:B0:99:FE
+    issuer CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US
+    issuer-certificate
+    organization 深圳小蓝本网络技术有限公司
+    ou IT
+    public-key-type RSA
+    state 广东省
+    subject-alternative-name DNS:xiaolanben.com, DNS:*.xiaolanben.com
+}
+sys crypto cert xiaolanben.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city 深圳市
+    common-name *.xiaolanben.com
+    country CN
+    email-address
+    expiration Jul  5 12:00:00 2022 GMT
+    fingerprint SHA256/40:B8:29:0D:6C:97:5C:C3:C5:D9:FB:42:99:CB:54:29:AC:40:D0:90:CB:5C:9C:B2:EB:06:D0:4C:8C:B0:99:FE
+    issuer CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US
+    issuer-certificate
+    organization 深圳小蓝本网络技术有限公司
+    ou IT
+    public-key-type RSA
+    state 广东省
+    subject-alternative-name DNS:xiaolanben.com, DNS:*.xiaolanben.com
+}
+sys crypto cert xiaoniu51-2022-02.crt {
+    cert-validation-options none
+    cert-validators {
+         { }
+    }
+    certificate-key-size 2048
+    city
+    common-name *.xiaoniu51.com
+    country
+    email-address
+    expiration Jun 25 23:59:59 2022 GMT
+    fingerprint SHA256/8E:5A:22:B4:7A:D2:11:17:9F:62:CD:50:05:5E:AA:31:99:15:8C:C4:B0:02:9F:F6:19:40:81:1C:31:ED:C9:28
+    issuer CN=RapidSSL TLS DV RSA Mixed SHA256 2020 CA-1,O=DigiCert Inc,C=US
+    issuer-certificate
+    organization
+    ou
+    public-key-type RSA
+    state
+    subject-alternative-name DNS:xiaoniu51.com, DNS:*.xiaoniu51.com
+}
+sys crypto key 51rp-2022-02.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key 51zhangdan-2022-02.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key f5_api_com.key {
+    key-size 4096
+    key-type rsa-private
+    security-type password
+}
+sys crypto key h5.u51.com.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key nutcredit.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key qifuyun-2022-02.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key u51-2022-02.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key u51.com.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key u51.me-2022-02.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key xiaolanben2022.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key xiaolanben-1.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key xiaolanben.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys crypto key xiaoniu51-2022-02.key {
+    key-size 2048
+    key-type rsa-private
+    security-type normal
+}
+sys daemon-log-settings clusterd { }
+sys daemon-log-settings csyncd { }
+sys daemon-log-settings icr-eventd { }
+sys daemon-log-settings icrd { }
+sys daemon-log-settings lind { }
+sys daemon-log-settings mcpd { }
+sys daemon-log-settings tmm {
+    irule-log-level error
+    ssl-log-level alert
+}
+sys datastor { }
+sys diags ihealth {
+    expiration 30
+    options none
+    password none
+    user none
+}
+sys diags ihealth-request {
+    error-str none
+    ihealth-finish-time 0
+    ihealth-start-time 0
+    progress 0
+    qk-progress 0
+    qkview-date 0
+    qkview-filename none
+    qkview-size 0
+    qkview-user none
+    tcpdump-date 0
+    tcpdump-filename none
+    tcpdump-size 0
+}
+sys disk logical-disk HD1 {
+    mode mixed
+    size 476940
+    vg-free 378332
+    vg-in-use 97088
+    vg-reserved 30720
+}
+sys dns {
+    name-servers { 172.16.152.56 172.16.152.57 }
+}
+sys dynad key {
+    blob Q3Pxk9pcWgwIybnSnLDfaK9W9W1pjS4DtEUS0KnSL3+MB0kv+4oYdAWEKS/z/gmiAnoRIp36Ti20bBIZjlMyD/MCxpd/oQZEiPn0O6zuLV+4NybOOGtUiQLZGqbwyGzOV65WibmcdBOgsdneJisuxxygp9OOoiAz50CUM9LGhq8QqLxoLuj3K9/L7pOcDrPcE5+hkx+OiHLdKD8MM5pJ2F53cvb+gSvHqdpbDR1C+MrxbSmoYDg5CUgV3nQ9h4pkBoSJPJBGnMDWmq8yBCDGn5UdIqELGtNqQfZDn9c2LjWKSvxin1d+11e/doNFT+Nn0bA/7KSrKIJ8lFFqHHiOgUwKW5EJRTgSh83ab14ilpoPIfc38kFWM9ONn/gkU7lkulpc14xjC9pS3weDg2oB19Ak6CJvyA/A8lnn8HTCyX8S9jjMx86l4Rd4IbtbQMbJQdidD4G9Y4ELSLM54oWAbN/Dqeck/osw6VkCoY40bq7Onwn24D391gyUaNO9VKRiFxqdfPGpOgmsFDmK/9XcfFzjbMsxjXAWW2YzbFRO0uQlXjipoYwO9U7Ru62A47P00E4KxpWvtvwR0zU9VKQezHTNGfcSs802yzxE/urFTxktqqC8slSxxb68IigspeA+OdGfjD9dLerT1d/sB/tLnbA2YQOXRdPqqIhMze2o5ak=
+    key $M$3A$SPqADJv5yDb4QEbCZEqcYhcg5xZd2rbthTLlVOQrykW844ZiTsKpLwUZeSrcqAut
+}
+sys dynad settings {
+    development-mode false
+}
+sys ecm cloud-provider aws-ec2 {
+    description "The aws-ec2 parameters"
+    property-template {
+        account { }
+        availability-zone {
+            valid-values { a b c d }
+        }
+        instance-type {
+            valid-values { t2.micro t2.small t2.medium m3.medium m3.large m3.xlarge m3.2xlarge c3.large c3.xlarge c3.2xlarge c3.4xlarge c3.8xlarge r3.large r3.xlarge r3.2xlarge r3.4xlarge r3.8xlarge }
+        }
+        region {
+            valid-values { us-east-1 us-west-1 us-west-2 sa-east-1 eu-west-1 eu-central-1 ap-southeast-2 ap-southeast-1 ap-northeast-1 }
+        }
+    }
+}
+sys ecm cloud-provider dnet {
+    description "The dnet parameters"
+}
+sys ecm cloud-provider vsphere {
+    description "The vsphere parameters"
+    property-template {
+        cloud-host-ip { }
+        dhcp-network-name { }
+        end-point-url { }
+        node-name { }
+    }
+}
+sys ecm config { }
+sys feature-module cgnat {
+    disabled
+}
+sys file ssl-cert 51rp-2022-02.crt {
+    certificate-key-size 2048
+    checksum SHA1:4208:36132beeaa7b1aad0dfa9f9da095987c0eafff79
+    create-time 2022-02-15:16:48:05
+    created-by root
+    expiration-date 1674863999
+    expiration-string "Jan 27 23:59:59 2023 GMT"
+    fingerprint SHA256/A9:1A:B8:61:7B:7F:1B:E7:56:34:97:51:DB:D1:D6:3F:A9:1B:E0:AF:A5:6E:DC:2D:A9:D2:DA:5E:EA:20:E2:EB
+    is-bundle true
+    issuer "CN=GeoTrust CN RSA CA G1,OU=www.digicert.com,O=DigiCert Inc,C=US"
+    key-type rsa-public
+    last-update-time 2022-02-15:16:48:05
+    mode 33188
+    revision 1
+    serial-number 02:c1:95:4c:33:07:61:79:b9:85:6e:46:1b:b5:e0:92
+    size 4208
+    subject CN=*.51rp.com,O=杭州恩牛网络技术有限公司,L=杭州市,ST=浙江省,C=CN
+    subject-alternative-name "DNS:51rp.com, DNS:*.51rp.com"
+    updated-by root
+    version 3
+}
+sys file ssl-cert 51zhangdan-2022-02.crt {
+    certificate-key-size 2048
+    checksum SHA1:4005:4fe49e3b629d013e62ce93f1af7231239a8e314f
+    create-time 2022-02-15:16:20:05
+    created-by root
+    expiration-date 1653566400
+    expiration-string "May 26 12:00:00 2022 GMT"
+    fingerprint SHA256/5A:A7:04:8B:50:13:51:05:E4:CD:01:79:A3:BF:DD:DE:C6:BA:88:04:38:CA:D2:1C:49:C6:EA:CA:C6:29:9A:3D
+    is-bundle true
+    issuer "CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US"
+    key-type rsa-public
+    last-update-time 2022-02-15:16:20:05
+    mode 33188
+    revision 1
+    serial-number 04:19:10:ec:7f:b0:5b:1a:b5:a9:49:06:97:71:ab:20
+    size 4005
+    subject CN=*.51zhangdan.com,OU=IT,O=杭州恩牛网络技术有限公司,L=杭州市,ST=浙江省,C=CN
+    subject-alternative-name "DNS:51zhangdan.com, DNS:*.51zhangdan.com"
+    updated-by root
+    version 3
+}
+sys file ssl-cert h5.u51.com.crt {
+    certificate-key-size 2048
+    checksum SHA1:6150:736ee141c2d8b905a44b40debca6e04e2c7bd0fc
+    create-time 2017-01-14:10:21:13
+    created-by root
+    expiration-date 1529020799
+    expiration-string "Jun 14 23:59:59 2018 GMT"
+    fingerprint SHA256/9B:D7:0F:0D:07:39:69:41:39:BB:E9:89:FB:20:3F:D9:64:32:E7:02:10:51:C5:A3:E6:0F:58:DB:AE:75:76:EB
+    is-bundle true
+    issuer "CN=Symantec Class 3 EV SSL CA - G3,OU=Symantec Trust Network,O=Symantec Corporation,C=US"
+    key-type rsa-public
+    last-update-time 2017-01-14:10:21:13
+    mode 33188
+    revision 1
+    serial-number 7a:90:fd:f3:aa:46:0e:79:01:14:ac:0f:5c:50:90:73
+    size 6150
+    subject "CN=h5.u51.com,O=杭州恩牛网络技术有限公司,L=Hangzhou,ST=Zhejiang,C=CN,serialNumber=913301065995741739,businessCategory=Private Organization,1.3.6.1.4.1.311.60.2.1.1=#130848616E677A686F75,1.3.6.1.4.1.311.60.2.1.2=#13085A68656A69616E67,1.3.6.1.4.1.311.60.2.1.3=#1302434E"
+    subject-alternative-name DNS:h5.u51.com
+    updated-by root
+    version 3
+}
+sys file ssl-cert nutcredit.crt {
+    certificate-key-size 2048
+    checksum SHA1:5244:26a747801329e70556cca6ee9ee50ac2d62ba2fe
+    create-time 2017-01-14:10:26:04
+    created-by root
+    expiration-date 1530921599
+    expiration-string "Jul  6 23:59:59 2018 GMT"
+    fingerprint SHA256/15:3B:22:00:6C:32:C2:D1:81:A4:F2:54:2F:CF:3A:AB:F0:EB:C9:1C:E3:1D:B4:34:11:84:5B:FE:4C:7A:68:85
+    is-bundle true
+    issuer "CN=GeoTrust SSL CA - G3,O=GeoTrust Inc.,C=US"
+    key-type rsa-public
+    last-update-time 2017-01-14:10:26:04
+    mode 33188
+    revision 1
+    serial-number 42:78:5d:75:bd:4e:cc:38:63:fb:42:c7:dc:d1:59:56
+    size 5244
+    subject CN=*.nutcredit.com,OU=运维部,O=杭州恩牛网络技术有限公司,L=Hangzhou,ST=Zhejiang,C=CN
+    subject-alternative-name "DNS:nutcredit.com, DNS:*.nutcredit.com"
+    updated-by root
+    version 3
+}
+sys file ssl-cert qifuyun-2022-02.crt {
+    certificate-key-size 2048
+    checksum SHA1:3989:aa4a762114222c9075fc60792c66a5d3fefe3053
+    create-time 2022-02-15:16:20:59
+    created-by root
+    expiration-date 1644667200
+    expiration-string "Feb 12 12:00:00 2022 GMT"
+    fingerprint SHA256/04:F3:11:7C:D7:A4:E4:DA:B1:03:F5:D3:6A:7A:1B:A8:5C:D1:D6:F6:29:CD:24:8A:78:6B:C7:FE:D7:1A:91:11
+    is-bundle true
+    issuer "CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US"
+    key-type rsa-public
+    last-update-time 2022-02-15:16:20:59
+    mode 33188
+    revision 1
+    serial-number 06:c2:b3:2d:de:6d:cd:22:4c:98:60:8e:58:23:57:96
+    size 3989
+    subject CN=*.qifuyun.com,OU=IT,O=杭州企付云科技有限公司,L=杭州市,ST=浙江省,C=CN
+    subject-alternative-name "DNS:qifuyun.com, DNS:*.qifuyun.com"
+    updated-by root
+    version 3
+}
+sys file ssl-cert u51-2022-02.crt {
+    certificate-key-size 2048
+    checksum SHA1:4033:8819f21b30a8dacebb375480e4f5ef9048d6b431
+    create-time 2022-02-15:16:22:20
+    created-by root
+    expiration-date 1656331200
+    expiration-string "Jun 27 12:00:00 2022 GMT"
+    fingerprint SHA256/3C:54:FA:DA:7C:6B:5F:F0:6C:6F:CB:47:39:1D:29:74:E0:27:CF:8C:37:78:4F:4F:EC:90:B3:87:F5:F0:D3:52
+    is-bundle true
+    issuer "CN=DigiCert SHA2 Secure Server CA,O=DigiCert Inc,C=US"
+    key-type rsa-public
+    last-update-time 2022-02-15:16:22:20
+    mode 33188
+    revision 1
+    serial-number 05:3f:d3:06:0f:57:31:2c:08:63:63:3a:2d:f2:f9:4b
+    size 4033
+    subject CN=*.u51.com,OU=IT,O=杭州恩牛网络技术有限公司,L=杭州市,ST=浙江省,C=CN
+    subject-alternative-name "DNS:u51.com, DNS:*.u51.com"
+    updated-by root
+    version 3
+}
+sys file ssl-cert u51.com.crt {
+    certificate-key-size 2048
+    checksum SHA1:5460:6746c9963a6a4831ab5a1e79157d4b10b181f7f9
+    create-time 2017-01-13:21:16:14
+    created-by root
+    expiration-date 1523923199
+    expiration-string "Apr 16 23:59:59 2018 GMT"
+    fingerprint SHA256/99:81:A8:13:0A:28:34:2E:4B:73:0E:85:79:D5:DB:09:D2:2E:96:F1:F4:FF:13:7C:62:3D:8C:33:F0:52:29:D0
+    is-bundle true
+    issuer "CN=Symantec Class 3 Secure Server CA - G4,OU=Symantec Trust Network,O=Symantec Corporation,C=US"
+    key-type rsa-public
+    last-update-time 2017-01-13:21:16:14
+    mode 33188
+    revision 1
+    serial-number 5e:0a:44:b8:c8:7b:cc:0c:3e:f2:c5:05:80:2c:e0:52
+    size 5460
+    subject CN=*.u51.com,OU=运维部,O=杭州恩牛网络技术有限公司,L=hangzhou,ST=zhejiang,C=CN
+    subject-alternative-name "DNS:u51.com, DNS:*.u51.com"
+    updated-by root
+    version 3
+}
+sys file ssl-cert u51.me-2022-02.crt {
+    certificate-key-size 2048
+    checksum SHA1:4216:442638b553ec412e068aeecffd2e9c53a6a49b31
+    create-time 2022-02-15:16:23:09
+    created-by root
+    expiration-date 1674259199
+    expiration-string "Jan 20 23:59:59 2023 GMT"
+    fingerprint SHA256/AD:F0:11:33:F7:CC:AD:F2:99:0F:1E:D7:D2:8B:B8:EA:28:78:12:C0:F5:69:E1:FC:1C:DC:ED:53:96:84:0B:73
+    is-bundle true
+    issuer "CN=RapidSSL TLS DV RSA Mixed SHA256 2020 CA-1,O=DigiCert Inc,C=US"
+    key-type rsa-public
+    last-update-time 2022-02-15:16:23:09
+    mode 33188
+    revision 1
+    serial-number 02:49:b1:4e:b0:ea:d0:68:b2:d8:74:0e:d2:69:1a:39
+    size 4216
+    subject CN=*.u51.me
+    subject-alternative-name "DNS:u51.me, DNS:*.u51.me"
+    updated-by root
+    version 3
+}
+sys file ssl-cert xiaolanben2022.crt {
+    certificate-key-size 2048
+    checksum SHA1:1712:125d446cf2b1cd1cad61e46a498e894df91ba648
+    create-time 2022-02-18:14:39:07
+    created-by root
+    expiration-date 1657022400
+    expiration-string "Jul  5 12:00:00 2022 GMT"
+    fingerprint SHA256/40:B8:29:0D:6C:97:5C:C3:C5:D9:FB:42:99:CB:54:29:AC:40:D0:90:CB:5C:9C:B2:EB:06:D0:4C:8C:B0:99:FE
+    issuer "CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US"
+    key-type rsa-public
+    last-update-time 2022-02-18:14:39:07
+    mode 33188
+    revision 1
+    serial-number 04:67:1f:66:db:b5:62:c2:e2:86:67:ac:2f:0e:35:1d
+    size 1712
+    subject CN=*.xiaolanben.com,OU=IT,O=深圳小蓝本网络技术有限公司,L=深圳市,ST=广东省,C=CN
+    subject-alternative-name "DNS:xiaolanben.com, DNS:*.xiaolanben.com"
+    updated-by root
+    version 3
+}
+sys file ssl-cert xiaolanben-1.crt {
+    certificate-key-size 2048
+    checksum SHA1:4009:b345492fda4f26cdcf69872593caaef17feb110a
+    create-time 2022-01-18:13:49:05
+    created-by root
+    expiration-date 1657022400
+    expiration-string "Jul  5 12:00:00 2022 GMT"
+    fingerprint SHA256/40:B8:29:0D:6C:97:5C:C3:C5:D9:FB:42:99:CB:54:29:AC:40:D0:90:CB:5C:9C:B2:EB:06:D0:4C:8C:B0:99:FE
+    is-bundle true
+    issuer "CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US"
+    key-type rsa-public
+    last-update-time 2022-01-18:13:49:05
+    mode 33188
+    revision 1
+    serial-number 04:67:1f:66:db:b5:62:c2:e2:86:67:ac:2f:0e:35:1d
+    size 4009
+    subject CN=*.xiaolanben.com,OU=IT,O=深圳小蓝本网络技术有限公司,L=深圳市,ST=广东省,C=CN
+    subject-alternative-name "DNS:xiaolanben.com, DNS:*.xiaolanben.com"
+    updated-by root
+    version 3
+}
+sys file ssl-cert xiaolanben.crt {
+    certificate-key-size 2048
+    checksum SHA1:1712:125d446cf2b1cd1cad61e46a498e894df91ba648
+    create-time 2022-01-18:12:41:30
+    created-by root
+    expiration-date 1657022400
+    expiration-string "Jul  5 12:00:00 2022 GMT"
+    fingerprint SHA256/40:B8:29:0D:6C:97:5C:C3:C5:D9:FB:42:99:CB:54:29:AC:40:D0:90:CB:5C:9C:B2:EB:06:D0:4C:8C:B0:99:FE
+    issuer "CN=GeoTrust RSA CA 2018,OU=www.digicert.com,O=DigiCert Inc,C=US"
+    key-type rsa-public
+    last-update-time 2022-01-18:12:41:30
+    mode 33188
+    revision 1
+    serial-number 04:67:1f:66:db:b5:62:c2:e2:86:67:ac:2f:0e:35:1d
+    size 1712
+    subject CN=*.xiaolanben.com,OU=IT,O=深圳小蓝本网络技术有限公司,L=深圳市,ST=广东省,C=CN
+    subject-alternative-name "DNS:xiaolanben.com, DNS:*.xiaolanben.com"
+    updated-by root
+    version 3
+}
+sys file ssl-cert xiaoniu51-2022-02.crt {
+    certificate-key-size 2048
+    checksum SHA1:4025:72b3c64b4b484a412ddf9405028f928e2dafb502
+    create-time 2022-02-15:16:24:17
+    created-by root
+    expiration-date 1656201599
+    expiration-string "Jun 25 23:59:59 2022 GMT"
+    fingerprint SHA256/8E:5A:22:B4:7A:D2:11:17:9F:62:CD:50:05:5E:AA:31:99:15:8C:C4:B0:02:9F:F6:19:40:81:1C:31:ED:C9:28
+    is-bundle true
+    issuer "CN=RapidSSL TLS DV RSA Mixed SHA256 2020 CA-1,O=DigiCert Inc,C=US"
+    key-type rsa-public
+    last-update-time 2022-02-15:16:24:17
+    mode 33188
+    revision 1
+    serial-number 02:bc:ed:69:6a:bf:e7:b3:36:8f:44:22:b3:88:62:16
+    size 4025
+    subject CN=*.xiaoniu51.com
+    subject-alternative-name "DNS:xiaoniu51.com, DNS:*.xiaoniu51.com"
+    updated-by root
+    version 3
+}
+sys file ssl-key 51rp-2022-02.key {
+    checksum SHA1:1679:a98b938694650457b7601d057ff8d9bedbaebbfe
+    create-time 2022-02-15:16:48:22
+    created-by root
+    key-size 2048
+    last-update-time 2022-02-15:16:48:22
+    mode 33184
+    revision 1
+    size 1679
+    updated-by root
+}
+sys file ssl-key 51zhangdan-2022-02.key {
+    checksum SHA1:1704:adeb2add966c9aff0a235f73becb855344c9fb97
+    create-time 2022-02-15:16:20:27
+    created-by root
+    key-size 2048
+    last-update-time 2022-02-15:16:20:27
+    mode 33184
+    revision 1
+    size 1704
+    updated-by root
+}
+sys file ssl-key f5_api_com.key {
+    checksum SHA1:3306:02c1789e949ce43d3ebefa5841c5604e18ed0951
+    create-time 2023-11-07:11:26:04
+    created-by root
+    key-size 4096
+    last-update-time 2023-11-07:11:26:04
+    mode 33184
+    passphrase $M$xR$2qYDH1se3mz9ribbVr5rKdhXp/kfbtVvQs8Dy/4eT1TzL0rdC4Ky3RQ22pJa/ZyxzLmMvC4Qdy2l9Khie+9+u6+XI+lgNEsL3BTKWZ++xrM=
+    revision 1
+    security-type password
+    size 3306
+    source-path file:///config/ssl/ssl.key/f5_api_com.key
+    updated-by root
+}
+sys file ssl-key h5.u51.com.key {
+    checksum SHA1:1675:40848edc50724c4ec3f259d7242a6f2af7059398
+    create-time 2017-01-14:10:21:52
+    created-by root
+    key-size 2048
+    last-update-time 2017-01-14:10:21:52
+    mode 33184
+    revision 1
+    size 1675
+    updated-by root
+}
+sys file ssl-key nutcredit.key {
+    checksum SHA1:1679:a754074f5345067b160743f18d52b23f821b1aa5
+    create-time 2017-01-14:10:26:24
+    created-by root
+    key-size 2048
+    last-update-time 2017-01-14:10:26:24
+    mode 33184
+    revision 1
+    size 1679
+    updated-by root
+}
+sys file ssl-key qifuyun-2022-02.key {
+    checksum SHA1:1679:d2a135d3176fcfb2773c673e7f43f6dca99254fb
+    create-time 2022-02-15:16:21:16
+    created-by root
+    key-size 2048
+    last-update-time 2022-02-15:16:21:16
+    mode 33184
+    revision 1
+    size 1679
+    updated-by root
+}
+sys file ssl-key u51-2022-02.key {
+    checksum SHA1:1708:70524e7a2219834ea6b2bf791c71e01d65e0e0af
+    create-time 2022-02-15:16:22:37
+    created-by root
+    key-size 2048
+    last-update-time 2022-02-15:16:22:37
+    mode 33184
+    revision 1
+    size 1708
+    updated-by root
+}
+sys file ssl-key u51.com.key {
+    checksum SHA1:1704:ead6c7da8448ab858f3c92ba8a1a54f5722ffea4
+    create-time 2017-01-13:21:17:07
+    created-by root
+    key-size 2048
+    last-update-time 2017-01-13:21:17:07
+    mode 33184
+    revision 1
+    size 1704
+    updated-by root
+}
+sys file ssl-key u51.me-2022-02.key {
+    checksum SHA1:1675:3001d48180b6aa9f23388ca030db5d2c1c6ae4ba
+    create-time 2022-02-15:16:23:23
+    created-by root
+    key-size 2048
+    last-update-time 2022-02-15:16:23:23
+    mode 33184
+    revision 1
+    size 1675
+    updated-by root
+}
+sys file ssl-key xiaolanben2022.key {
+    checksum SHA1:1703:7797de365acdced6c1e8e6db7e43021593679840
+    create-time 2022-02-18:14:39:42
+    created-by root
+    key-size 2048
+    last-update-time 2022-02-18:14:39:42
+    mode 33184
+    revision 1
+    size 1703
+    updated-by root
+}
+sys file ssl-key xiaolanben-1.key {
+    checksum SHA1:1703:7797de365acdced6c1e8e6db7e43021593679840
+    create-time 2022-01-18:13:48:36
+    created-by root
+    key-size 2048
+    last-update-time 2022-01-18:13:48:36
+    mode 33184
+    revision 1
+    size 1703
+    updated-by root
+}
+sys file ssl-key xiaolanben.key {
+    checksum SHA1:1703:7797de365acdced6c1e8e6db7e43021593679840
+    create-time 2022-01-18:12:40:58
+    created-by root
+    key-size 2048
+    last-update-time 2022-01-18:12:40:58
+    mode 33184
+    revision 1
+    size 1703
+    updated-by root
+}
+sys file ssl-key xiaoniu51-2022-02.key {
+    checksum SHA1:1675:789a9a5f737c7668411e1e021bcb1b509c6b0f68
+    create-time 2022-02-15:16:24:30
+    created-by root
+    key-size 2048
+    last-update-time 2022-02-15:16:24:30
+    mode 33184
+    revision 1
+    size 1675
+    updated-by root
+}
+sys folder Drafts {
+    device-group none
+    inherited-devicegroup true
+    inherited-traffic-group true
+    traffic-group traffic-group-1
+}
+sys fpga firmware-config {
+    type standard-balanced-fpga
+}
+sys global-settings {
+    gui-setup disabled
+    hostname XY-2-F5.NB
+}
+sys httpd {
+    allow { all 172.16.193.2/32 10.0.52.36/32 192.168.0.0/16 172.16.128.1/30 any 12.16.193.2 }
+    include " 
+    <LocationMatch \";\"> 
+    Redirect 404 / 
+    </LocationMatch> 
+    <LocationMatch \"hsqldb\"> 
+    Redirect 404 / 
+    </LocationMatch> 
+    "
+    max-clients 20
+}
+sys icontrol-soap { }
+sys log-config filter f5-message {
+    level warn
+}
+sys log-rotate { }
+sys management-dhcp sys-mgmt-dhcp-config {
+    request-options { subnet-mask broadcast-address routers domain-name domain-name-servers host-name ntp-servers interface-mtu }
+}
+sys management-ip 172.16.193.13/24 {
+    description configured-statically
+}
+sys management-ovsdb {
+    bfd-disabled
+    bfd-route-domain none
+    ca-cert-file none
+    cert-file none
+    cert-key-file none
+    disabled
+    flooding-type replicator
+    log-level info
+    logical-routing-type none
+    tunnel-maintenance-mode active
+}
+sys management-route default {
+    description configured-statically
+    gateway 172.16.193.1
+    network default
+}
+sys management-route tftpServer {
+    gateway 172.16.128.1
+    network 172.16.37.60/32
+}
+sys ntp {
+    servers { 192.168.59.177 172.16.152.20 }
+    timezone Asia/Shanghai
+}
+sys outbound-smtp {
+    from-line-override disabled
+    mailhub localhost
+}
+sys provision ltm {
+    level nominal
+}
+sys scriptd { }
+sys sflow global-settings http { }
+sys sflow global-settings interface { }
+sys sflow global-settings system { }
+sys sflow global-settings vlan { }
+sys sflow receiver 10.247.23.58 {
+    address 10.247.23.58
+    state enabled
+}
+sys sflow receiver 172.16.154.178 {
+    address 172.16.183.143
+    state enabled
+}
+sys sflow receiver 192.168.23.4 {
+    address 192.168.23.4
+    state enabled
+}
+sys snmp {
+    agent-addresses { tcp6:161 udp6:161 }
+    allowed-addresses { 172.16.9.5 172.16.152.16 172.16.9.233 172.16.8.112 172.16.54.12 172.16.9.6 172.16.9.7 172.16.212.213 192.168.20.80 172.16.190.245 172.16.8.113 10.0.12.46 10.0.12.47 192.168.20.247 172.16.44.102 10.247.23.58 10.247.23.59 10.247.23.176 172.16.44.21 172.16.154.178 172.16.213.100 172.16.215.5 172.16.37.37 10.0.52.36 }
+    communities {
+        comm-public {
+            community-name public
+            source default
+        }
+        i51zhangdan_1 {
+            community-name 51zhangdan
+        }
+    }
+    disk-monitors {
+        root {
+            minspace 2000
+            path /
+        }
+        var {
+            minspace 10000
+            path /var
+        }
+    }
+    process-monitors {
+        bigd {
+            process bigd
+        }
+        chmand {
+            process chmand
+        }
+        httpd {
+            max-processes infinity
+            process httpd
+        }
+        mcpd {
+            process mcpd
+        }
+        sod {
+            process sod
+        }
+        tmm {
+            max-processes infinity
+            process tmm
+        }
+    }
+    traps {
+        i172_16_9_5_1 {
+            community 51zhangdan
+            host 172.16.9.5
+            port snmp
+        }
+    }
+    users {
+        i51zhangdan_1 {
+            auth-password-encrypted RQAMMm:h9-\?4YXAZ>TKHh7cff2NRd[l<J\\\\>KDf47DI8V`_
+            auth-protocol sha
+            oid-subset .1
+            privacy-password-encrypted "e1]d]197K<k;aPDQH]Us[=.37GW5<MhIZmgWd/]Ca=PGQUk"
+            privacy-protocol aes
+            security-level auth-privacy
+            username 51zhangdan
+        }
+    }
+}
+sys software hotfix Hotfix-BIGIP-11.5.4.2.0.291-HF2.iso {
+    build 2.0.291
+    checksum 6c2e8f7b4e38791661be2dab2bd55a2c
+    id HF2
+    product BIG-IP
+    title "Hotfix Version 2.0.291"
+    verified yes
+    version 11.5.4
+}
+sys software hotfix Hotfix-BIGIP-11.6.0.3.0.412-HF3.iso {
+    build 3.0.412
+    checksum 92da51c2b9dfd5b0422713f910791738
+    id HF3
+    product BIG-IP
+    title "Hotfix Version 3.0.412"
+    verified yes
+    version 11.6.0
+}
+sys software image BIGIP-11.5.3.0.0.163.iso {
+    build 0.0.163
+    build-date "Wed Apr 22 16 32 47 PDT 2015"
+    checksum e29d0f8efdedbff4396471cbdbcd44ed
+    file-size "1694 MB"
+    last-modified "Sat Jul 11 12:16:16 2015"
+    product BIG-IP
+    verified yes
+    version 11.5.3
+}
+sys software image BIGIP-11.5.4.0.0.256.iso {
+    build 0.0.256
+    build-date "Fri Jan 15 17 36 31 PST 2016"
+    checksum 5fb3ff54e75636ba155e7634c8bca992
+    file-size "1709 MB"
+    last-modified "Fri Nov 25 10:22:06 2016"
+    product BIG-IP
+    verified yes
+    version 11.5.4
+}
+sys software image BIGIP-11.6.0.0.0.401.iso {
+    build 0.0.401
+    build-date "Mon Aug 11 21 08 03 PDT 2014"
+    checksum 1e433c9b1d642d9a05f2b55798073e9f
+    file-size "1863 MB"
+    last-modified "Sat Jul 11 12:28:10 2015"
+    product BIG-IP
+    verified yes
+    version 11.6.0
+}
+sys software image BIGIP-13.1.5-0.0.32.iso {
+    build 0.0.32
+    build-date "Mon Apr 11 23 04 38 PDT 2022"
+    checksum 93d9831569a5249fdb517b4e795b8772
+    file-size "2176 MB"
+    last-modified "Mon Nov  6 17:25:06 2023"
+    product BIG-IP
+    verified yes
+    version 13.1.5
+}
+sys software update {
+    auto-check enabled
+    auto-phonehome enabled
+    check-status failure
+    errors 134
+    frequency weekly
+}
+sys software volume HD1.1 {
+    basebuild 0.0.256
+    build 2.0.291
+    media {
+        HD1.1 {
+            media hd
+            size default
+        }
+    }
+    product BIG-IP
+    status complete
+    version 11.5.4
+}
+sys software volume HD1.2 {
+    active
+    active-requested
+    basebuild 0.0.32
+    build 0.0.32
+    media {
+        HD1.2 {
+            default-boot-location
+            media hd
+            size default
+        }
+    }
+    product BIG-IP
+    status complete
+    version 13.1.5
+}
+sys software volume HD1.3 {
+    media {
+        HD1.3 {
+            media hd
+            size default
+        }
+    }
+    status complete
+}
+sys sshd {
+    allow { 10.0.52.36/32 192.168.178.116/32 172.16.37.35/32 }
+}
+sys state-mirroring { }
+sys syslog {
+    remote-servers {
+        remotesyslog1 {
+            host 172.16.37.38
+            local-ip 172.16.128.2
+        }
+        remotesyslog3 {
+            host 172.16.226.32
+            local-ip 172.16.193.13
+        }
+    }
+}
+sys url-db download-schedule urldb { }

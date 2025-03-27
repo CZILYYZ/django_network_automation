@@ -1,5 +1,4 @@
-"""django_network_automation URL Configuration
-
+"""
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
 Examples:
@@ -15,6 +14,7 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+
 
 urlpatterns = [
     path('login/', views.login_view, name='login'),
@@ -32,5 +32,11 @@ urlpatterns = [
     path('network_version/', views.network_version, name='network_version'),
     path('FD_SFTP_white/', views.FD_SFTP_white, name='FD_SFTP_white'),
     path('K8S_BGP/', views.K8S_BGP, name='K8S_BGP'),
+    path('DPVS/', views.DPVS, name='DPVS'),
+    path('api/device_info', views.get_device_info, name='get_device_info'),
+    path('XY_internet/', views.XY_internet, name='XY_internet'),
+    path('tasks/', views.task_list, name='task_list'),
+    path('tasks/add/', views.add_task, name='add_task'),
+    path('api/query_vip/', views.query_vip, name='query_vip'),
+    path('disk_replace/', views.disk_replace, name='disk_replace'),
 ]
-

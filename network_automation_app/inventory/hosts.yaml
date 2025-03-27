@@ -1,20 +1,17 @@
 FD-1F-A06-5720-bank:
     hostname: 172.16.63.65
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW5700
 
-FD-1F-A06-NE20-yun:
-    hostname: 51.51.51.36
-    platform: huawei
-    data:
-        level: JR
-        model: HWNE20
-
 FD-1F-B08-CE8860:
     hostname: 51.51.51.5
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HX
         model: HW8800
@@ -22,6 +19,8 @@ FD-1F-B08-CE8860:
 FD-1F-C17-K8S-6850-stack:
     hostname: 172.16.63.62
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HJ
         model: HW6800
@@ -29,6 +28,8 @@ FD-1F-C17-K8S-6850-stack:
 FD-1F-C17-CE8860:
     hostname: 51.51.51.6
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HX
         model: HW8800
@@ -36,6 +37,8 @@ FD-1F-C17-CE8860:
 FD-1F-C17-CE6850-test:
     hostname: 172.16.37.33
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: CS
         model: HW6800
@@ -43,6 +46,8 @@ FD-1F-C17-CE6850-test:
 FD-1F-D03-6850:
     hostname: 172.16.16.235
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -50,6 +55,8 @@ FD-1F-D03-6850:
 FD-1F-F10-CE8860-10.1:
     hostname: 10.247.10.1
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HJ
         model: HW8800
@@ -57,20 +64,8 @@ FD-1F-F10-CE8860-10.1:
 FD-1F-F16-CE5855:
     hostname: 10.247.10.8
     platform: huawei
-    data:
-        level: JR
-        model: HW5800
-
-FD-1F-G03-CE5855:
-    hostname: 10.247.10.2
-    platform: huawei
-    data:
-        level: JR
-        model: HW5800
-
-FD-1F-G08-CE5855:
-    hostname: 10.247.10.5
-    platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW5800
@@ -78,6 +73,8 @@ FD-1F-G08-CE5855:
 FD-1F-G12-CE5855:
     hostname: 10.247.10.6
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW5800
@@ -85,6 +82,8 @@ FD-1F-G12-CE5855:
 FD-1F-H45-S5720(105.2):
     hostname: 10.247.105.129
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW5700
@@ -92,6 +91,8 @@ FD-1F-H45-S5720(105.2):
 FD4-D01&D03-CE6850-1:
     hostname: 51.51.51.102
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -99,6 +100,8 @@ FD4-D01&D03-CE6850-1:
 FD4-D02&D04-CE6850-1:
     hostname: 51.51.51.108
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -106,6 +109,8 @@ FD4-D02&D04-CE6850-1:
 FD4-D05&D07-CE6850-1:
     hostname: 51.51.51.103
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -113,13 +118,8 @@ FD4-D05&D07-CE6850-1:
 FD4-D09&D11-CE6850-1:
     hostname: 51.51.51.104
     platform: huawei
-    data:
-        level: JR
-        model: HW6800
-
-FD4-D14&D16-CE6850-1:
-    hostname: 51.51.51.111
-    platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -127,6 +127,8 @@ FD4-D14&D16-CE6850-1:
 FD4-D17&D19-CE6850-1:
     hostname: 51.51.51.106
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -134,6 +136,8 @@ FD4-D17&D19-CE6850-1:
 FD4-D22-CE12812-DSJ-1:
     hostname: 51.51.51.100
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HJ
         model: HW12800
@@ -141,6 +145,8 @@ FD4-D22-CE12812-DSJ-1:
 FD4-D22-CE6850-1:
     hostname: 51.51.51.113
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -148,20 +154,17 @@ FD4-D22-CE6850-1:
 FD4-D24-CE12812-DSJ-1:
     hostname: 51.51.51.101
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HJ
         model: HW12800
 
-SQ-5F-I16-CE8860:
-    hostname: 51.51.51.2
-    platform: huawei
-    data:
-        level: HX
-        model: HW8800
-
 XY-2F-C01&C02-CE6850:
     hostname: 51.51.51.28
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -169,20 +172,17 @@ XY-2F-C01&C02-CE6850:
 XY-2F-C03&C04-CE6850:
     hostname: 51.51.51.29
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
-        model: HW6800
-
-XY-2F-C05&C06-CE6851:
-    hostname: 51.51.51.33
-    platform: huawei
-    data:
-        level: HJ-JR
         model: HW6800
 
 XY-2F-C07&C08-CE6851:
     hostname: 51.51.51.34
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -190,6 +190,8 @@ XY-2F-C07&C08-CE6851:
 XY-2F-D03&D04-CE6850:
     hostname: 51.51.51.22
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HJ-JR
         model: HW6800
@@ -197,13 +199,8 @@ XY-2F-D03&D04-CE6850:
 XY-2F-D06-CE6850:
     hostname: 51.51.51.23
     platform: huawei
-    data:
-        level: JR
-        model: HW6800
-
-XY-2F-D08-CE6850:
-    hostname: 51.51.51.24
-    platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -211,6 +208,8 @@ XY-2F-D08-CE6850:
 XY-2F-D09-CE8860:
     hostname: 51.51.51.30
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW8800
@@ -218,6 +217,8 @@ XY-2F-D09-CE8860:
 XY-2F-D10-CE8860:
     hostname: 51.51.51.31
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW8800
@@ -225,6 +226,8 @@ XY-2F-D10-CE8860:
 XY-2F-E01&E02-CE6850:
     hostname: 51.51.51.9
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -232,6 +235,8 @@ XY-2F-E01&E02-CE6850:
 XY-2F-E04-CE685:
     hostname: 51.51.51.10
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -239,6 +244,8 @@ XY-2F-E04-CE685:
 XY-2F-E05&E06-CE6810:
     hostname: 115.238.29.6
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -246,6 +253,8 @@ XY-2F-E05&E06-CE6810:
 XY-2F-E05-CE12812:
     hostname: 51.51.51.8
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HJ
         model: HW12800
@@ -253,6 +262,8 @@ XY-2F-E05-CE12812:
 XY-2F-E05-CE8860:
     hostname: 51.51.51.3
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HX
         model: HW8800
@@ -260,6 +271,8 @@ XY-2F-E05-CE8860:
 XY-2F-E06-CE12812:
     hostname: 51.51.51.13
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HJ
         model: HW12800
@@ -267,6 +280,8 @@ XY-2F-E06-CE12812:
 XY-2F-E06-CE8860:
     hostname: 51.51.51.4
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: HX
         model: HW8800
@@ -274,6 +289,8 @@ XY-2F-E06-CE8860:
 XY-2F-E07&E08-CE6850:
     hostname: 51.51.51.11
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -281,6 +298,8 @@ XY-2F-E07&E08-CE6850:
 XY-2F-E09&E10-CE6850:
     hostname: 51.51.51.12
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -288,6 +307,8 @@ XY-2F-E09&E10-CE6850:
 XY-2F-E11-S5720-255.249:
     hostname: 172.16.255.249
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW5700
@@ -295,6 +316,8 @@ XY-2F-E11-S5720-255.249:
 XY-2F-F01&F02-CE6850:
     hostname: 51.51.51.15
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -302,6 +325,8 @@ XY-2F-F01&F02-CE6850:
 XY-2F-F03&F04-CE6850:
     hostname: 51.51.51.16
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -309,6 +334,8 @@ XY-2F-F03&F04-CE6850:
 XY-2F-F05&F06-CE6850:
     hostname: 51.51.51.17
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -316,6 +343,8 @@ XY-2F-F05&F06-CE6850:
 XY-2F-F07&F08-CE6850:
     hostname: 51.51.51.18
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -323,6 +352,8 @@ XY-2F-F07&F08-CE6850:
 XY-2F-D09-CE6850:
     hostname: 51.51.51.19
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW6800
@@ -330,13 +361,8 @@ XY-2F-D09-CE6850:
 FD-1F-B08&C17-C4510:
     hostname: 172.16.8.1
     platform: cisco_ios_telnet
-    data:
-        level: HJ
-        model: CS45
-
-SQ-5F-I16-17-C4506E:
-    hostname: 172.16.128.1
-    platform: cisco_ios_telnet
+    groups:
+        - netdevice
     data:
         level: HJ
         model: CS45
@@ -344,6 +370,8 @@ SQ-5F-I16-17-C4506E:
 FD-1F-E01-rouji-3650:
     hostname: 10.253.253.1
     platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -351,13 +379,8 @@ FD-1F-E01-rouji-3650:
 FD-1F-B01-2960-8.29:
     hostname: 172.16.8.29
     platform: cisco_ios
-    data:
-        level: JR
-        model: CS
-
-FD-1F-C24-2960-8.25:
-    hostname: 172.16.8.25
-    platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -365,6 +388,8 @@ FD-1F-C24-2960-8.25:
 FD-1F-D29-2960-8.37:
     hostname: 172.16.8.37
     platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -372,20 +397,8 @@ FD-1F-D29-2960-8.37:
 FD-1F-E01-2960-rouji:
     hostname: 10.253.253.10
     platform: cisco_ios
-    data:
-        level: JR
-        model: CS
-
-FD-1F-E11-2960-8.26:
-    hostname: 172.16.8.26
-    platform: cisco_ios
-    data:
-        level: JR
-        model: CS
-
-FD-1F-E25-2960-8.21:
-    hostname: 172.16.8.21
-    platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -393,6 +406,8 @@ FD-1F-E25-2960-8.21:
 FD-1F-F10-2960X-split:
     hostname: 10.247.0.124
     platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -400,6 +415,8 @@ FD-1F-F10-2960X-split:
 FD-1F-G01-2960-99-252:
     hostname: 10.247.99.252
     platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -407,6 +424,8 @@ FD-1F-G01-2960-99-252:
 FD-1F-G01-3750-99-1:
     hostname: 10.247.99.1
     platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -414,13 +433,8 @@ FD-1F-G01-3750-99-1:
 FD-1F-G01-zhijian-2960:
     hostname: 10.247.99.251
     platform: cisco_ios
-    data:
-        level: JR
-        model: CS
-
-FD-1F-G16-2960-DSF:
-    hostname: 10.247.99.250
-    platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -428,6 +442,8 @@ FD-1F-G16-2960-DSF:
 FD-G14-2960-10.7:
     hostname: 10.247.10.7
     platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -435,6 +451,8 @@ FD-G14-2960-10.7:
 XY-2F-E11-3650:
     hostname: 51.51.51.14
     platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -442,6 +460,8 @@ XY-2F-E11-3650:
 FD-1F-A06-C3650-yun:
     hostname: 172.16.63.37
     platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
@@ -449,20 +469,17 @@ FD-1F-A06-C3650-yun:
 FD-1F-B29-2960-8.30:
     hostname: 172.16.8.30
     platform: cisco_ios
+    groups:
+        - netdevice
     data:
         level: JR
         model: CS
 
-SQ-F5:
-    hostname: 172.16.128.2
-    platform: f5_tmsh
-    data:
-        level: CK
-        model: F5
-
 FD-Fortigate:
     hostname: 172.16.63.1
     platform: fortinet
+    groups:
+        - netdevice
     data:
         level: CK
         model: FT
@@ -470,6 +487,8 @@ FD-Fortigate:
 XY-Netscaler:
     hostname: 172.16.193.2
     platform: netscaler
+    groups:
+        - netdevice
     data:
         level: CK
         model: NS
@@ -477,6 +496,8 @@ XY-Netscaler:
 FD-1F-E01-S5720-1:
     hostname: 10.253.224.254
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: JR
         model: HW5700
@@ -484,6 +505,8 @@ FD-1F-E01-S5720-1:
 172.16.63.19-office&stale:
     hostname: 172.16.63.19
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: FW
         model: USG
@@ -491,6 +514,8 @@ FD-1F-E01-S5720-1:
 172.16.63.12-FD-bank:
     hostname: 172.16.63.12
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: FW
         model: USG
@@ -498,7 +523,63 @@ FD-1F-E01-S5720-1:
 172.16.193.6-XY-bank:
     hostname: 172.16.193.6
     platform: huawei
+    groups:
+        - netdevice
     data:
         level: FW
         model: USG
+
+XY-F5-1:
+    hostname: 172.16.193.5
+    platform: f5_tmsh
+    groups:
+        - netdevice
+    data:
+        level: CK
+        model: F5
+
+XY-F5-2:
+    hostname: 172.16.193.13
+    platform: f5_tmsh
+    groups:
+        - netdevice
+    data:
+        level: CK
+        model: F5
+
+xy-financial-sftp-16-226-28:
+    hostname: 172.16.226.28
+    platform: linux
+    groups:
+        - linux
+    data:
+        level: FWQ
+        model: linux
+
+XX-2F-M07M08-CE6850-stable:
+    hostname: 172.17.0.84
+    platform: huawei
+    groups:
+        - netdevice
+    data:
+        level: JR
+        model: HW6800
+
+DPVS-1:
+    hostname: 172.18.14.4
+    platform: linux
+    groups:
+        - linux
+    data:
+        level: FWQ
+        model: linux
+
+DPVS-2:
+    hostname: 172.18.14.5
+    platform: linux
+    groups:
+        - linux
+    data:
+        level: FWQ
+        model: linux
 

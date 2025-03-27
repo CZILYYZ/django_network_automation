@@ -1,5 +1,5 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-04-24 09:05:12+00:00 by 51en
+!Last configuration was updated at 2023-11-21 09:17:52+00:00 by 51en
 !Last configuration was saved at 2023-04-24 09:15:40+00:00 by 51en
 #
 sysname FD-D14&D16-CE6850-1
@@ -158,7 +158,7 @@ interface Eth-Trunk19
  mode lacp-dynamic
 #
 interface Eth-Trunk20
- description dT:D14-818203083:bond0
+ description dT:D16-CMFJ762:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -333,7 +333,7 @@ interface 10GE1/0/35
  port default vlan 100
 #
 interface 10GE1/0/36
- description dT:D14-2102311QGK10HB000587-MGMT
+ description dT:D16-CMFJ762:MGMT
  port default vlan 100
 #
 interface 10GE1/0/37

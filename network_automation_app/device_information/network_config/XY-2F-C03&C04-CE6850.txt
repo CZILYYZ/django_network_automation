@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-09-01 11:42:29+08:00 by 51en
-!Last configuration was saved at 2023-03-01 01:05:35+08:00 by 51en
+!Last configuration was updated at 2024-03-14 14:37:55+08:00 by 51en
+!Last configuration was saved at 2024-03-14 14:38:10+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -24,7 +24,7 @@ ntp ipv6 server disable
 ntp unicast-server 172.16.152.20
 ntp unicast-server 172.16.152.21
 #
-vlan batch 100 197 to 198 204 to 224 226 229 248 to 250 252 to 254
+vlan batch 100 197 to 199 204 to 224 226 229 248 to 250 252 to 254
 #
 rsa peer-public-key 172.16.209.12
  public-key-code begin
@@ -88,6 +88,10 @@ bridge-domain 10198
  l2 binding vlan 198
  vxlan vni 10198
 #
+bridge-domain 10199
+ l2 binding vlan 199
+ vxlan vni 10199
+#
 bridge-domain 10204
  l2 binding vlan 204
  vxlan vni 10204
@@ -114,6 +118,7 @@ bridge-domain 10209
 #
 bridge-domain 10210
  l2 binding vlan 210
+ traffic-policy Mbike inbound 
  vxlan vni 10210
 #
 bridge-domain 10211
@@ -193,6 +198,37 @@ bridge-domain 10253
 #
 acl number 2000
  rule 5 permit source 172.16.255.29 0
+#
+acl number 3000
+ rule 5 permit tcp source 172.16.210.0 0.0.0.255 destination-port eq 8080
+ rule 10 permit tcp source 172.16.210.0 0.0.0.255 destination-port eq 22
+#
+acl number 3001
+ rule 5 permit ip
+#
+acl number 3002
+ rule 5 permit tcp source 172.16.210.0 0.0.0.255 destination 172.16.210.0 0.0.0.255
+#
+traffic classifier Mbike type or
+ if-match acl 3000
+#
+traffic classifier Mbike-1 type or
+ if-match acl 3001
+#
+traffic classifier Mbike-2 type or
+ if-match acl 3002
+#
+traffic behavior Mbike
+ deny
+#
+traffic behavior Mbike-1
+#
+traffic behavior Mbike-2
+#
+traffic policy Mbike
+ classifier Mbike-2 behavior Mbike-2 precedence 1
+ classifier Mbike behavior Mbike precedence 5
+ classifier Mbike-1 behavior Mbike-1 precedence 10
 #
 aaa
  undo local-user policy security-enhance
@@ -316,7 +352,7 @@ interface Eth-Trunk24
  mode lacp-dynamic
 #
 interface Eth-Trunk25
- description dT:H09H5K2-C03-193.84-bond0
+ description dT:C03-G1WCRH2-172.16.226.10-bond0
  port default vlan 226
  mode lacp-dynamic
 #
@@ -380,17 +416,17 @@ interface Eth-Trunk41
  mode lacp-dynamic
 #
 interface Eth-Trunk42
- description dT:C04-J0ML7J2-193.88-bond0
- port default vlan 226
+ description dT:C04-HZM6XJ2-172.16.199.25-bond0
+ port default vlan 199
  mode lacp-dynamic
 #
 interface Eth-Trunk43
- description dT:C04-H08M5K2-193.89-bond0
+ description dT:C04-G1Y7RH2-172.16.226.13:bond0
  port default vlan 226
  mode lacp-dynamic
 #
 interface Eth-Trunk44
- description C03-JOMYGJ2-193.152-bound
+ description dT:C03-266VVL2-172.16.197.120-bond0
  port default vlan 197
  mode lacp-dynamic
 #
@@ -409,12 +445,12 @@ interface Eth-Trunk47
  mode lacp-dynamic
 #
 interface Eth-Trunk48
- description dT:C03-DCLBJK2-194.33-bond0
- port default vlan 197
+ description dT:C03-CR67GM2-172.16.226.54-bond0
+ port default vlan 226
  mode lacp-dynamic
 #
 interface Eth-Trunk49
- description dT:C03-J0P2HJ2-194.34-bond0
+ description dT:C03-F2R4K82-172.16.197.85:bond0
  port default vlan 197
  mode lacp-dynamic
 #
@@ -429,7 +465,7 @@ interface Eth-Trunk51
  mode lacp-dynamic
 #
 interface Eth-Trunk52
- description dT:C03-J0P9XJ2-194.37-bond0
+ description dT:C04-2102311VKUN0J8000070-172.16.197.80:bond0
  port default vlan 197
  mode lacp-dynamic
 #
@@ -444,8 +480,8 @@ interface Eth-Trunk54
  mode lacp-dynamic
 #
 interface Eth-Trunk55
- description dT:C03-J0PB7J2-194.40-bond0
- port default vlan 197
+ description dT:C04-CR55GM2-172.16.226.55:bond0
+ port default vlan 226
  mode lacp-dynamic
 #
 interface Eth-Trunk56
@@ -895,6 +931,14 @@ interface Nve1
  vni 10198 head-end peer-list 51.51.51.17
  vni 10198 head-end peer-list 51.51.51.34
  vni 10198 head-end peer-list 51.51.51.250
+ vni 10199 head-end peer-list 51.51.51.11
+ vni 10199 head-end peer-list 51.51.51.12
+ vni 10199 head-end peer-list 51.51.51.15
+ vni 10199 head-end peer-list 51.51.51.16
+ vni 10199 head-end peer-list 51.51.51.17
+ vni 10199 head-end peer-list 51.51.51.28
+ vni 10199 head-end peer-list 51.51.51.34
+ vni 10199 head-end peer-list 51.51.51.250
  vni 10204 head-end peer-list 51.51.51.9
  vni 10204 head-end peer-list 51.51.51.10
  vni 10204 head-end peer-list 51.51.51.18
@@ -1075,6 +1119,7 @@ interface Nve1
  vni 10226 head-end peer-list 51.51.51.22
  vni 10226 head-end peer-list 51.51.51.23
  vni 10226 head-end peer-list 51.51.51.24
+ vni 10226 head-end peer-list 51.51.51.28
  vni 10226 head-end peer-list 51.51.51.250
  vni 10229 head-end peer-list 51.51.51.250
  vni 10248 head-end peer-list 51.51.51.9

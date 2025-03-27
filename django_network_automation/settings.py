@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,7 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'network_automation_app',
     'import_export',
+    'rest_framework',
+    'corsheaders',
+    'django_celery_beat',
+    'django_celery_results',
 ]
+
+REST_FRAMEWORK = { 
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', 
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,7 +61,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000', 
+    'http://localhost:8000',
+)
 
 ROOT_URLCONF = 'django_network_automation.urls'
 
@@ -137,3 +154,11 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#CELERY_RESULT_BACKEND = 'redis://172.16.37.36:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = 'redis://172.16.37.36:6379/0'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_RESULT_EXTENDED = True
+

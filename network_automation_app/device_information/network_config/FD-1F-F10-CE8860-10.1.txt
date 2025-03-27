@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-06-30 11:18:11+00:00 by 51en
-!Last configuration was saved at 2023-06-30 11:18:13+00:00 by 51en
+!Last configuration was updated at 2023-08-29 15:45:09+00:00 by 51en
+!Last configuration was saved at 2023-08-29 15:47:23+00:00 by 51en
 #
 clock timezone utc add 00:00:00
 #
@@ -122,6 +122,16 @@ vlan 51
 vlan 95
  description YZY-test
 #
+acl number 3000
+ rule 5 permit tcp destination-port eq 8080
+ rule 10 permit tcp destination-port eq 22
+#
+acl number 3001
+ rule 5 permit ip
+#
+acl number 3344
+ rule 5 permit tcp source-port eq www destination 10.247.17.33 0 destination-port eq 8888
+#
 acl name k8s-route-filter advance
  rule 5 permit ip source 10.247.60.0 0.0.0.255
  rule 10 permit ip source 10.247.61.0 0.0.0.255
@@ -152,12 +162,27 @@ acl name yuzhiyong-test advance
  rule 25 deny ip destination 10.247.0.0 0.0.255.255
  rule 100 permit ip
 #
+traffic classifier Mbike type or
+ if-match acl 3000
+#
+traffic classifier Mbike-1 type or
+ if-match acl 3001
+#
 traffic classifier linshi type or
  if-match acl linshi
+#
+traffic behavior Mbike
+ deny
+#
+traffic behavior Mbike-1
 #
 traffic behavior linshi
  statistics enable
  car cir 500 mbps green pass yellow discard red discard
+#
+traffic policy Mbike
+ classifier Mbike behavior Mbike precedence 5
+ classifier Mbike-1 behavior Mbike-1 precedence 10
 #
 traffic policy linshi
  classifier linshi behavior linshi precedence 5
@@ -308,6 +333,7 @@ interface Vlanif41
  dhcp select relay
  dhcp relay binding server ip 172.16.55.11
  dhcp relay gateway 11.247.41.1
+ traffic-policy Mbike outbound 
 #
 interface Vlanif42
  ip address 10.247.42.1 255.255.255.0
@@ -374,8 +400,9 @@ interface Vlanif91
  ip address 10.247.91.1 255.255.255.0
  ip address 11.247.91.1 255.255.255.0 sub
  dhcp select relay
- dhcp relay binding server ip 172.16.55.11
+ dhcp relay binding server ip 172.16.44.35
  dhcp relay gateway 11.247.91.1
+ traffic-policy Mbike inbound 
 #
 interface Vlanif92
  ip address 10.247.92.1 255.255.255.0
@@ -404,6 +431,8 @@ interface Vlanif95
  dhcp select relay
  dhcp relay binding server ip 172.16.55.11
  dhcp relay gateway 11.247.95.1
+#
+interface Vlanif99
 #
 interface Vlanif152
  ip address 10.247.152.1 255.255.255.0

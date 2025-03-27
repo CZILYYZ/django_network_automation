@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2022-05-09 16:34:47+08:00 by 51en
-!Last configuration was saved at 2023-03-01 01:08:49+08:00 by 51en
+!Last configuration was updated at 2023-12-14 14:49:18+08:00 by 51en
+!Last configuration was saved at 2023-12-14 14:49:59+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -101,6 +101,7 @@ bridge-domain 10209
 #
 bridge-domain 10210
  l2 binding vlan 210
+ traffic-policy Mbike inbound 
  vxlan vni 10210
 #
 bridge-domain 10211
@@ -180,6 +181,39 @@ acl number 2000
  rule 10 permit source 172.16.9.7 0
  rule 20 permit source 172.16.9.16 0
  rule 30 permit source 172.16.9.233 0
+#
+acl number 2999
+#
+acl number 3000
+ rule 5 permit tcp source 172.16.210.0 0.0.0.255 destination-port eq 8080
+ rule 10 permit tcp source 172.16.210.0 0.0.0.255 destination-port eq 22
+#
+acl number 3001
+ rule 5 permit ip
+#
+acl number 3002
+ rule 5 permit tcp source 172.16.210.0 0.0.0.255 destination 172.16.210.0 0.0.0.255
+#
+traffic classifier Mbike type or
+ if-match acl 3000
+#
+traffic classifier Mbike-1 type or
+ if-match acl 3001
+#
+traffic classifier Mbike-2 type or
+ if-match acl 3002
+#
+traffic behavior Mbike
+ deny
+#
+traffic behavior Mbike-1
+#
+traffic behavior Mbike-2
+#
+traffic policy Mbike
+ classifier Mbike-2 behavior Mbike-2 precedence 1
+ classifier Mbike behavior Mbike precedence 5
+ classifier Mbike-1 behavior Mbike-1 precedence 10
 #
 aaa
  undo local-user policy security-enhance
@@ -438,7 +472,6 @@ interface Eth-Trunk100
 interface Eth-Trunk115
  undo portswitch
  description uT:XY-2F-E06-CE12812:()Eth-trunk115
-
  ip address 172.16.255.38 255.255.255.252
  ospf network-type p2p
  ospf bfd enable
@@ -1018,6 +1051,7 @@ interface Nve1
  vni 10226 head-end peer-list 51.51.51.22
  vni 10226 head-end peer-list 51.51.51.23
  vni 10226 head-end peer-list 51.51.51.24
+ vni 10226 head-end peer-list 51.51.51.28
  vni 10226 head-end peer-list 51.51.51.29
  vni 10226 head-end peer-list 51.51.51.250
  vni 10248 head-end peer-list 51.51.51.9

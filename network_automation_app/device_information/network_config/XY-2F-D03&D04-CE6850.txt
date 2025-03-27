@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-07-13 18:00:38+00:00 by 51en
-!Last configuration was saved at 2023-03-23 15:53:35+00:00 by 51en
+!Last configuration was updated at 2024-02-22 12:38:45+00:00 by 51en
+!Last configuration was saved at 2024-02-22 12:38:47+00:00 by 51en
 #
 sysname XY-2F-D03&D04-CE6850
 #
@@ -305,7 +305,8 @@ interface Eth-Trunk38
  traffic-policy DSJ-Pod outbound 
 #
 interface Eth-Trunk39
- description to-D04-R630-k8s-192.10-bond
+ description dT:D04-CJW8GM2-172.16.240.100:bond0
+ undo enable snmp trap updown
  port default vlan 2404
  mode lacp-dynamic
  traffic-policy DSJ-Pod inbound 
@@ -556,6 +557,7 @@ interface 10GE1/0/17
 #
 interface 10GE1/0/18
  description to-D04-R630-k8s-192.10-eth0
+ undo enable snmp trap updown
  eth-trunk 39
 #
 interface 10GE1/0/19
@@ -727,6 +729,7 @@ interface 10GE2/0/17
 #
 interface 10GE2/0/18
  description to-D04-R630-k8s-192.10-eth1
+ undo enable snmp trap updown
  eth-trunk 39
 #
 interface 10GE2/0/19

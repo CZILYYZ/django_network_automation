@@ -1,6 +1,6 @@
 !Software Version V200R001C00SPC700
-!Last configuration was updated at 2022-04-27 17:05:50+08:00 by 51en
-!Last configuration was saved at 2023-03-01 01:12:38+08:00 by 51en
+!Last configuration was updated at 2024-03-14 12:01:59+08:00 by 51en
+!Last configuration was saved at 2024-03-14 12:02:02+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -105,6 +105,13 @@ acl number 2000
  rule 1 permit source 192.168.178.0 0.0.0.255
  rule 2 permit source 192.168.20.0 0.0.3.255
 #
+acl number 3000
+ rule 5 permit tcp destination-port eq 8080
+ rule 10 permit tcp destination-port eq 22
+#
+acl number 3001
+ rule 5 permit ip
+#
 acl name DSJ-Pod advance
  rule 5 permit ip source 172.27.0.0 0.0.31.255
  rule 10 permit ip source 172.16.28.0 0.0.3.255
@@ -112,12 +119,27 @@ acl name DSJ-Pod advance
 traffic classifier DSJ-Pod type or
  if-match acl DSJ-Pod
 #
+traffic classifier Mbike type or
+ if-match acl 3000
+#
+traffic classifier Mbike-1 type or
+ if-match acl 3001
+#
 traffic behavior DSJ-Pod
  statistics enable
  car cir 200 mbps green pass yellow discard red discard
 #
+traffic behavior Mbike
+ deny
+#
+traffic behavior Mbike-1
+#
 traffic policy DSJ-Pod
  classifier DSJ-Pod behavior DSJ-Pod precedence 5
+#
+traffic policy Mbike
+ classifier Mbike behavior Mbike precedence 5
+ classifier Mbike-1 behavior Mbike-1 precedence 10
 #
 aaa
  undo local-user policy security-enhance
@@ -368,7 +390,7 @@ interface Eth-Trunk47
 #
 interface Eth-Trunk48
  description to-F03-FX2S-879VF62-192.130-bond
- port default vlan 197
+ port default vlan 199
  mode lacp-dynamic
 #
 interface Eth-Trunk49
@@ -916,6 +938,7 @@ interface Nve1
  vni 10199 head-end peer-list 51.51.51.15
  vni 10199 head-end peer-list 51.51.51.17
  vni 10199 head-end peer-list 51.51.51.28
+ vni 10199 head-end peer-list 51.51.51.29
  vni 10199 head-end peer-list 51.51.51.34
  vni 10199 head-end peer-list 51.51.51.250
  vni 10200 head-end peer-list 51.51.51.11

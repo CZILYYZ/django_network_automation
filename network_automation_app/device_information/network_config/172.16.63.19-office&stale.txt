@@ -1,4 +1,4 @@
-2023-07-14 05:47:33.286 
+2024-03-17 08:11:44.725 
 !Software Version V500R001C60SPC500
 #
 sysname 172.16.63.19
@@ -5408,6 +5408,48 @@ ip address-set 10.247.15.153 type object
 ip address-set 172.16.60.17 type object
  address 0 172.16.60.17 mask 32
 #
+ip address-set 192.168.62.2 type object
+ address 0 192.168.62.2 mask 32
+#
+ip address-set 10.247.91.0 type object
+ address 0 10.247.91.0 mask 24
+#
+ip address-set 183.136.221.78 type object
+ address 0 183.136.221.78 mask 32
+#
+ip address-set 10.247.22.73 type object
+ address 0 10.247.22.73 mask 32
+#
+ip address-set 10.247.22.86 type object
+ address 0 10.247.22.86 mask 32
+#
+ip address-set 10.247.22.65 type object
+ address 0 10.247.22.65 mask 32
+#
+ip address-set 10.247.22.89 type object
+ address 0 10.247.22.89 mask 32
+#
+ip address-set 10.247.22.88 type object
+ address 0 10.247.22.88 mask 32
+#
+ip address-set 172.16.255.160 type object
+ address 0 172.16.255.160 mask 30
+#
+ip address-set 10.9.10.0/24 type object
+ address 0 10.9.10.0 mask 24
+#
+ip address-set 172.16.57.31 type object
+ address 0 172.16.57.31 mask 32
+#
+ip address-set 10.0.0.0 type object
+ address 0 10.0.0.0 mask 8
+#
+ip address-set 192.168.0.0 type object
+ address 0 192.168.0.0 mask 16
+#
+ip address-set 172.16.50.8 type object
+ address 0 172.16.50.8 mask 32
+#
 ip address-set ά type group
  address 4 address-set ֪-10.0.52.36
  address 5 address-set YYZ-192.168.200.53
@@ -5417,6 +5459,7 @@ ip address-set ά type group
  address 22 192.168.22.147 mask 32
 #
 ip address-set ȫ type group
+ address 0 192.168.20.43 mask 32
  address 2 address-set _192.168.21.95
  address 3 address-set _192.168.178.195
 #
@@ -5624,6 +5667,7 @@ ip address-set k8s-10.220 type group
 ip address-set л type group
  address 0 address-set 192.168.20.23
  address 1 address-set 192.168.178.118
+ address 2 10.0.52.33 mask 32
 #
 ip address-set 10.0.78.41-46 type group
  address 0 range 10.0.78.41 10.0.78.46
@@ -6532,6 +6576,15 @@ ip service-set 6144-8704 type object
 ip service-set TCP_8045 type object
  service 0 protocol tcp source-port 0 to 65535 destination-port 8045
 #
+ip service-set TCP_9761 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 9761
+#
+ip service-set tcp_20000-30000 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 20000 to 30000
+#
+ip service-set tcp_7861 type object
+ service 0 protocol tcp source-port 0 to 65535 destination-port 7861
+#
  time-range test
   absolute-range 00:00:00 2017/7/27 to 00:00:00 2017/8/28 
  time-range worktime
@@ -6544,8 +6597,17 @@ acl number 2000
 acl number 2001
  description route-map-to-ospf
  rule 5 permit source 10.242.0.0 0.0.255.255 
+acl number 2002
+ rule 5 permit source 10.0.52.36 0 
+ rule 10 permit source 172.16.255.160 0.0.0.3 
+ rule 15 permit source 192.168.22.79 0 
+ rule 16 permit source 172.16.37.35 0 
+ rule 20 deny 
 acl number 2003
  rule 5 permit source 0.0.0.0 0 description default-route-deny 
+acl number 2004
+ rule 5 permit source 10.0.52.36 0 
+ rule 10 deny 
 acl number 2019
  rule 5 permit source 10.228.0.0 0.0.255.255 
  rule 10 permit source 10.229.0.0 0.0.255.255 
@@ -6648,6 +6710,7 @@ aaa
   password cipher @%@%GSW;FiO/jTo{fu7@}@PW}XA<^VBnCeN.RE'&=)-h2aaAXA~}@%@%
   service-type web 
   level 15 
+  acl-number 2004 
   authentication-scheme admin_local 
 
  manager-user 51en 
@@ -6655,6 +6718,7 @@ aaa
   service-type web terminal telnet ssh 
   level 15 
   ftp-directory hda1: 
+  acl-number 2002 
   authentication-scheme admin_local 
 
  role system-admin
@@ -7335,6 +7399,16 @@ nat address-group Ǩ-direct 4
    source-nat interface-address
    rserver 0 rip 10.247.42.6 port 8081
    action optimize
+  group 19 zhangdancc-443
+   metric roundrobin
+   health-check type tcp port 443
+   rserver 0 rip 10.247.47.70 port 443
+   action optimize
+  group 20 A10.247.91.16_9761
+   metric roundrobin
+   health-check type tcp port 9761
+   rserver 0 rip 10.247.91.16 port 9761
+   action optimize
   vserver 0 kf_nginx
    vip 0 183.129.161.14
    protocol tcp
@@ -7415,6 +7489,21 @@ nat address-group Ǩ-direct 4
    protocol tcp
    vport 8081
    group tcp_10.247.42.6_8081
+  vserver 16 zhangdancc-80
+   vip 0 183.136.221.78
+   protocol tcp
+   vport 80
+   group zhangdancc134753
+  vserver 17 zhangdancc-443
+   vip 0 183.136.221.78
+   protocol tcp
+   vport 443
+   group zhangdancc-443
+  vserver 18 A183.136.221.78_9761
+   vip 0 183.136.221.78
+   protocol tcp
+   vport 9761
+   group A10.247.91.16_9761
 #
 multi-interface
  mode proportion-of-weight
@@ -7431,6 +7520,35 @@ device-classification
 user-manage server-sync tsm
 #
 security-policy
+ rule name T-Car
+  policy logging
+  source-zone office
+  destination-zone FDIDC
+  source-address address-set 10.9.10.0/24
+  source-address address-set 10.0.0.0
+  source-address address-set 192.168.0.0
+  destination-address address-set 172.16.57.31
+  service tcp_9000
+  service http
+  service https
+  action permit
+ rule name FD_GPU
+  policy logging
+  source-zone office
+  destination-zone FDIDC
+  source-address address-set 10.9.10.0/24
+  source-address address-set 10.0.0.0
+  source-address address-set 192.168.0.0
+  destination-address address-set 172.16.50.8
+  service tcp_20000-30000
+  service tcp_7861
+  action permit
+ rule name ZF-icmp
+  disable
+  policy logging
+  session logging
+  service icmp
+  action permit
  rule name ȫ
   policy logging
   session logging
@@ -7460,6 +7578,7 @@ security-policy
   source-address address-set 10.0.52.0/24
   source-address address-set 192.168.23.230
   destination-address address-set 192.168.62.3
+  destination-address address-set 192.168.62.2
   service TCP_8045
   service icmp
   action permit
@@ -7482,6 +7601,7 @@ security-policy
   service udp
   action permit
  rule name ͷ
+  disable
   policy logging
   source-zone office
   destination-zone Docker_test
@@ -7624,11 +7744,9 @@ security-policy
   action permit
  rule name 172.16.37.38-ssh
   source-zone FDIDC
+  source-zone office
   source-address address-set 172.16.37.38
   source-address address-set 172.16.37.32/27
-  service telnet
-  service icmp
-  service ssh
   action permit
  rule name 10.247.0.124
   policy logging
@@ -7669,6 +7787,7 @@ security-policy
   policy logging
   session logging
   source-zone FDIDC
+  source-zone office
   source-zone to_ZF_customer
   destination-zone Docker_test
   source-address address-set 192.168.1.0/24_
@@ -8079,6 +8198,8 @@ security-policy
   source-address address-set ݻ-
   action permit
  rule name FDIDC_Docker_test_6
+  policy logging
+  session logging
   source-zone FDIDC
   destination-zone Docker_test
   source-address address-set 172.16.13.21_
@@ -8097,6 +8218,7 @@ security-policy
   destination-address address-set 10.247.22.0/24_
   destination-address address-set 10.247.23.0/24_
   destination-address address-set 10.247.0.0/16_
+  destination-address address-set 10.247.91.0
   action permit
  rule name FDIDC_Docker_test_7
   source-zone FDIDC
@@ -8121,6 +8243,7 @@ security-policy
   destination-zone Docker_test
   action permit
  rule name Docker_test_office_1
+  policy logging
   source-zone Docker_test
   destination-zone office
   action permit
@@ -8711,6 +8834,7 @@ security-policy
   action permit
  rule name ZF_DSF_1
   source-zone FDIDC
+  source-zone office
   source-zone to_ZF_customer
   destination-zone DSF
   source-address address-set 192.168.1.0/24_
@@ -8732,6 +8856,7 @@ security-policy
   action permit
  rule name ZF_DSF_2
   source-zone FDIDC
+  source-zone office
   source-zone to_ZF_customer
   destination-zone DSF
   source-address address-set 192.168.1.0/24_
@@ -8818,6 +8943,7 @@ security-policy
   action permit
  rule name ZF_Docker_test_2
   source-zone FDIDC
+  source-zone office
   source-zone to_ZF_customer
   destination-zone Docker_test
   source-address address-set 192.168.1.0/24_
@@ -8836,6 +8962,7 @@ security-policy
   action permit
  rule name ZF_Docker_test_3
   source-zone FDIDC
+  source-zone office
   source-zone to_ZF_customer
   destination-zone Docker_test
   source-address address-set 192.168.1.0/24_
@@ -9298,6 +9425,8 @@ security-policy
   service tcp_3306
   action permit
  rule name stable_kvm_1
+  policy logging
+  session logging
   source-zone Docker_test
   destination-zone FDIDC
   source-address address-set 10.247.43.0/24_
@@ -9305,6 +9434,7 @@ security-policy
   source-address address-set 10.247.45.0/24_
   source-address address-set 10.247.46.0/24_
   source-address address-set 10.247.42.37_
+  source-address 10.247.91.0 mask 255.255.255.0
   destination-address address-set 172.16.204.0/24_
   destination-address address-set 172.16.205.0/24_
   destination-address address-set 172.16.206.0/24_
@@ -9322,6 +9452,7 @@ security-policy
   destination-address address-set 10.247.45.0/24_
   destination-address address-set 10.247.46.0/24_
   destination-address address-set 10.247.42.37_
+  destination-address 10.247.91.0 mask 255.255.255.0
   service tcp_5900_6900
   service ssh
   action permit
@@ -9716,6 +9847,7 @@ security-policy
  rule name stable_network_monitor
   source-zone Docker_test
   destination-zone FDIDC
+  destination-zone office
   destination-zone to_HF_customer
   destination-zone to_ZF_customer
   source-address address-set 10.247.255.251_
@@ -10867,11 +10999,6 @@ security-policy
   destination-address 10.221.0.0 mask 255.255.224.0
   service tcp_8080
   action permit
- rule name ZF-icmp
-  disable
-  policy logging
-  service icmp
-  action permit
  rule name IDC-TXY-dev
   policy logging
   session logging
@@ -10948,6 +11075,34 @@ security-policy
   service http
   service https
   action permit
+ rule name zhangdancc-443-80
+  policy logging
+  session logging
+  source-zone untrust
+  destination-zone Docker_test
+  destination-address address-set 183.136.221.78
+  service TCP_9761
+  service http
+  service icmp
+  service https
+  action permit
+ rule name lingshi_3306
+  policy logging
+  source-zone FDIDC
+  destination-zone DSF
+  source-address 172.16.28.0 mask 255.255.252.0
+  destination-address address-set 10.247.100.18_
+  destination-address address-set 10.247.100.27_
+  service tcp_3306
+  service tcp_53306
+  action permit
+ rule name XY_ipsecvpn
+  session logging
+  source-zone FDIDC
+  source-address address-set 172.16.255.160
+  destination-address address-set 10.0.80.0/24_
+  destination-address address-set 10.247.0.0/16_
+  action permit
 #
 auth-policy
 #
@@ -10959,6 +11114,11 @@ traffic-policy
   bandwidth maximum-bandwidth whole downstream 150000
   bandwidth maximum-bandwidth per-ip upstream 60000
   bandwidth maximum-bandwidth per-ip downstream 60000
+ profile 20M
+  bandwidth reference-mode rule-shared
+  bandwidth maximum-bandwidth whole upstream 20000
+  bandwidth maximum-bandwidth whole downstream 20000
+  bandwidth priority 3
  rule name 
   disable
   ingress-interface Vlanif103
@@ -10966,6 +11126,24 @@ traffic-policy
  rule name 1
   destination-zone untrust
   action no-qos
+ rule name Security_SaoMiao
+  source-zone Docker_test
+  source-address address-set 10.247.22.73
+  source-address address-set 10.247.22.86
+  source-address address-set 10.247.22.65
+  source-address address-set 10.247.22.89
+  source-address address-set 10.247.22.88
+  dscp default
+  action qos profile 20M
+ rule name Security_SaoMiao_1
+  destination-zone Docker_test
+  destination-address address-set 10.247.22.73
+  destination-address address-set 10.247.22.86
+  destination-address address-set 10.247.22.65
+  destination-address address-set 10.247.22.89
+  destination-address address-set 10.247.22.88
+  dscp default
+  action qos profile 20M
 #
 policy-based-route
 #

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>自动化网络设备割接流程图</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% endblock stylesheets %}
+    {% block body %}
+        <div class="container">
+            <h1>自动化网络设备割接流程图</h1>
+            <div id="flow_chart">
+                <!-- 在这里显示流程图 -->
+                <div class="flow_step" onclick="executeScript('Step 1')">Step 1</div>
+                <div class="flow_step" onclick="executeScript('Step 2')">Step 2</div>
+                <div class="flow_step" onclick="executeScript('Step 3')">Step 3</div>
+            </div>
+        </div>
+    {% endblock body %}
+    <script>
+        function executeScript(step) {
+            // 根据不同的步骤执行相应的脚本逻辑
+            switch (step) {
+                case 'Step 1':
+                    // 执行 Step 1 的脚本逻辑
+                    // ...
+                    break;
+                case 'Step 2':
+                    // 执行 Step 2 的脚本逻辑
+                    // ...
+                    break;
+                case 'Step 3':
+                    // 执行 Step 3 的脚本逻辑
+                    // ...
+                    break;
+                // 添加更多的步骤和对应的脚本逻辑
+                default:
+                    break;
+            }
+        }
+    </script>
+</html>
+

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mt-5 card-deck" style="margin:auto;"><!--使用bootstrap的卡片,mt-5代表margin top，所谓margin是CSS中的外边距的意思，margin top就是离上面导航栏的距离，改成mt-0看看？-->
+    <div class="card border-primary mb-3" style="max-width: 18rem;"><!--卡片边框颜色为primary，即蓝色，最大长度为18rem（rem在CSS中是一种字体大小单位，了解即可)-->
+        <div class="card-body text-primary"><!--卡片文字颜色为primary，即蓝色。-->
+        <h5 class="card-title">{{ all_device }}</h5><!--添加卡片标题，标题内容为我们从views.py中传递过来的all_device变量，即设备总数量。-->
+        </div>
+        <div class="card-footer bg-primary border-primary text-white">设备总数</div><!--卡片页脚，设置页脚背景和边框的颜色，两个都为primary，文字颜色为白色。-->
+    </div>
+
+    <div class="card border-success mb-3" style="max-width: 18rem;">
+        <div class="card-body text-success">
+        <h5 class="card-title">{{cisco_device}}</h5>
+        </div>
+        <div class="card-footer bg-success border-success text-white">思科</div>
+    </div>
+
+    <div class="card border-danger mb-3" style="max-width: 18rem;">
+        <div class="card-body text-danger">
+        <h5 class="card-title">{{huawei_device}}</h5>
+        </div>
+        <div class="card-footer bg-danger border-danger text-white">华为</div>
+    </div>
+
+        <div class="card border-danger mb-3" style="max-width: 18rem;">
+        <div class="card-body text-danger">
+        <h5 class="card-title">{{FT_device}}</h5>
+        </div>
+        <div class="card-footer bg-danger border-danger text-white">飞塔</div>
+    </div>
+
+    <div class="card border-danger mb-3" style="max-width: 18rem;">
+        <div class="card-body text-danger">
+        <h5 class="card-title">{{NS_device}}</h5>
+        </div>
+        <div class="card-footer bg-danger border-danger text-white">Netscaler</div>
+    </div>
+    <div class="card border-danger mb-3" style="max-width: 18rem;">
+        <div class="card-body text-danger">
+        <h5 class="card-title">{{F5_device}}</h5>
+        </div>
+        <div class="card-footer bg-danger border-danger text-white">F5</div>
+    </div>
+
+</div>
+
+<h3 class="mt-4">最近10个日志</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>目标设备IP</th>
+            <th>操作</th>
+            <th>状态</th>
+            <th>时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in last_10_event %}
+        <tr>
+            <td></td>
+            <td>{{log.target}}</td>
+            <td>{{log.action}}</td>
+            <td>{{log.status}}</td>
+            <td>{{log.time}}</td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+{% endblock content %}

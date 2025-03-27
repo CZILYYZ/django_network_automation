@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-06-14 14:21:43+00:00 by 51en
-!Last configuration was saved at 2023-03-01 01:20:41+00:00 by 51en
+!Last configuration was updated at 2023-08-28 16:09:52+00:00 by 51en
+!Last configuration was saved at 2023-08-28 16:09:55+00:00 by 51en
 #
 sysname XY-2F-E05-CE8860
 #
@@ -744,6 +744,7 @@ user-interface con 0
 user-interface vty 0 4
  authentication-mode aaa
  user privilege level 3
+ idle-timeout 5 0
  protocol inbound ssh
 #
 vm-manager

@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-03-15 09:05:33+00:00 by 51en
-!Last configuration was saved at 2023-03-15 08:05:53+00:00 by 51en
+!Last configuration was updated at 2023-11-27 12:01:55+00:00 by 51en
+!Last configuration was saved at 2023-11-27 23:39:58+00:00 by 51en
 #
 sysname FD4-D02&D04-CE6850-1
 #
@@ -78,7 +78,7 @@ interface Eth-Trunk3
  mode lacp-dynamic
 #
 interface Eth-Trunk4
- description dT:D23-CK75YM2-172.16.30.72-bound0
+ description dT:D02-D4L6YM2:bond0
  port default vlan 100
  mode lacp-dynamic
 #
@@ -400,6 +400,8 @@ interface 10GE1/0/47
  port default vlan 100
 #
 interface 10GE1/0/48
+ description pT:2/0/48-stack-test
+ dual-active detect mode direct
 #
 interface 10GE2/0/1
  description dT:D15-DZ24KL2-172.16.29.30-eth0
@@ -573,6 +575,8 @@ interface 10GE2/0/47
  port default vlan 100
 #
 interface 10GE2/0/48
+ description pT:1/0/48-stack-test
+ dual-active detect mode direct
 #
 interface 40GE1/0/1
  description uT:FD4-D22-12812-1:()40GE7/0/9

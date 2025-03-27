@@ -1,9 +1,9 @@
 Building configuration...
 
-Current configuration : 52733 bytes
+Current configuration : 52867 bytes
 !
-! Last configuration change at 15:13:44 GMT Wed Jul 5 2023 by 51en
-! NVRAM config last updated at 15:13:47 GMT Wed Jul 5 2023 by 51en
+! Last configuration change at 11:37:15 GMT Tue Jan 23 2024 by 51en
+! NVRAM config last updated at 15:45:14 GMT Thu Jul 20 2023 by 51en
 !
 version 15.2
 no service pad
@@ -369,6 +369,7 @@ interface Port-channel26
  description dT:FD-1F-C24-2960:(local)Po1                         
  switchport
  switchport mode trunk
+ shutdown
 !
 interface Port-channel35
  description dT:FD-1F-A17-2960:(local)Po2                         
@@ -891,6 +892,7 @@ interface TenGigabitEthernet1/7/6
 interface TenGigabitEthernet1/7/7
  description dT:FD-1F-C24-2960:()GE1/0/1                        
  switchport mode trunk
+ shutdown
  channel-group 26 mode active
 !
 interface TenGigabitEthernet1/7/8
@@ -1186,13 +1188,13 @@ interface GigabitEthernet2/2/39
  shutdown
 !
 interface GigabitEthernet2/2/40
- description to-QuanZhi-mgmt-50.3
+ description dT:172.16.50.3_mgmt
  switchport access vlan 50
  switchport mode access
  spanning-tree portfast
 !
 interface GigabitEthernet2/2/41
- description monitor-stable-to-IDC
+ description dT:172.16.50.3_monitor-stable-to-IDC
 !
 interface GigabitEthernet2/2/42
  switchport access vlan 100
@@ -1386,6 +1388,7 @@ interface TenGigabitEthernet2/7/6
 interface TenGigabitEthernet2/7/7
  description dT:FD-1F-C24-2960:()GE2/0/1                        
  switchport mode trunk
+ shutdown
  channel-group 26 mode active
 !
 interface TenGigabitEthernet2/7/8
@@ -1695,6 +1698,7 @@ ip route 10.0.52.0 255.255.255.0 172.16.63.18
 ip route 10.1.0.0 255.255.0.0 172.16.63.18
 ip route 10.6.0.0 255.255.0.0 172.16.63.18
 ip route 10.8.0.0 255.255.0.0 172.16.63.18
+ip route 10.9.10.0 255.255.255.0 172.16.63.18
 ip route 10.11.1.0 255.255.255.0 172.16.63.1
 ip route 10.220.0.0 255.255.0.0 172.16.63.18
 ip route 10.221.0.0 255.255.0.0 172.16.63.18
@@ -1987,6 +1991,7 @@ access-list 15 permit 10.232.0.0 0.0.255.255
 access-list 15 permit 10.234.0.0 0.0.255.255
 access-list 16 permit 10.228.0.0 0.0.255.255
 access-list 16 permit 10.229.0.0 0.0.255.255
+access-list 16 permit 10.9.10.0 0.0.0.255
 access-list 97 permit 192.168.20.80
 access-list 97 permit 172.16.9.233
 access-list 97 permit 192.168.20.252

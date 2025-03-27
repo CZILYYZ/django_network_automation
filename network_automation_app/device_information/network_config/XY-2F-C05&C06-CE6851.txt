@@ -1,5 +1,5 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-04-19 14:34:35+08:00 by 51en
+!Last configuration was updated at 2024-01-15 17:24:06+08:00 by 51en
 !Last configuration was saved at 2023-04-19 14:34:38+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
@@ -582,6 +582,7 @@ interface 10GE1/0/44
  eth-trunk 37
 #
 interface 10GE1/0/45
+ shutdown
  eth-trunk 39
 #
 interface 10GE1/0/46

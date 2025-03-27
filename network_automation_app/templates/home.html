@@ -1,46 +1,64 @@
 {% extends 'base.html' %}
 
+{% block title %}Home - My Website{% endblock %}
+
 {% block content %}
-<div class="mt-5 card-deck" style="margin:auto;"><!--使用bootstrap的卡片,mt-5代表margin top，所谓margin是CSS中的外边距的意思，margin top就是离上面导航栏的距离，改成mt-0看看？-->
-    <div class="card border-primary mb-3" style="max-width: 18rem;"><!--卡片边框颜色为primary，即蓝色，最大长度为18rem（rem在CSS中是一种字体大小单位，了解即可)-->
-        <div class="card-body text-primary"><!--卡片文字颜色为primary，即蓝色。-->
-        <h5 class="card-title">{{ all_device }}</h5><!--添加卡片标题，标题内容为我们从views.py中传递过来的all_device变量，即设备总数量。-->
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-network-wired"></i> <span id="all_device">{{ all_device }}</span></h5>
+            </div>
+            <div class="card-footer">设备总数</div>
         </div>
-        <div class="card-footer bg-primary border-primary text-white">设备总数</div><!--卡片页脚，设置页脚背景和边框的颜色，两个都为primary，文字颜色为白色。-->
     </div>
-
-    <div class="card border-success mb-3" style="max-width: 18rem;">
-        <div class="card-body text-success">
-        <h5 class="card-title">{{cisco_device}}</h5>
+    <div class="col-md-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-server"></i> {{ cisco_device }}</h5>
+            </div>
+            <div class="card-footer">思科</div>
         </div>
-        <div class="card-footer bg-success border-success text-white">思科</div>
     </div>
-
-    <div class="card border-danger mb-3" style="max-width: 18rem;">
-        <div class="card-body text-danger">
-        <h5 class="card-title">{{huawei_device}}</h5>
+    <div class="col-md-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-server"></i> {{ huawei_device }}</h5>
+            </div>
+            <div class="card-footer">华为</div>
         </div>
-        <div class="card-footer bg-danger border-danger text-white">华为</div>
     </div>
+</div>
 
-        <div class="card border-danger mb-3" style="max-width: 18rem;">
-        <div class="card-body text-danger">
-        <h5 class="card-title">{{FT_device}}</h5>
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-server"></i> {{ FT_device }}</h5>
+            </div>
+            <div class="card-footer">飞塔</div>
         </div>
-        <div class="card-footer bg-danger border-danger text-white">飞塔</div>
     </div>
-
-    <div class="card border-danger mb-3" style="max-width: 18rem;">
-        <div class="card-body text-danger">
-        <h5 class="card-title">{{NS_device}}</h5>
+    <div class="col-md-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-server"></i> {{ NS_device }}</h5>
+            </div>
+            <div class="card-footer">Netscaler</div>
         </div>
-        <div class="card-footer bg-danger border-danger text-white">Netscaler</div>
     </div>
-
+    <div class="col-md-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-server"></i> {{ F5_device }}</h5>
+            </div>
+            <div class="card-footer">F5</div>
+        </div>
+    </div>
 </div>
 
 <h3 class="mt-4">最近10个日志</h3>
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>#</th>
@@ -52,15 +70,58 @@
     </thead>
     <tbody>
         {% for log in last_10_event %}
-        <tr>
-            <td></td>
-            <td>{{log.target}}</td>
-            <td>{{log.action}}</td>
-            <td>{{log.status}}</td>
-            <td>{{log.time}}</td>
+        <tr data-toggle="modal" data-target="#logDetailModal" data-log="{{ log }}">
+            <td>{{ forloop.counter }}</td>
+            <td>{{ log.target }}</td>
+            <td>{{ log.action }}</td>
+            <td>{{ log.status }}</td>
+            <td>{{ log.time }}</td>
         </tr>
         {% endfor %}
-
     </tbody>
 </table>
-{% endblock content %}
+
+<!-- Modal -->
+<div class="modal fade" id="logDetailModal" tabindex="-1" role="dialog" aria-labelledby="logDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logDetailModalLabel">日志详情</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- 动态填充内容 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
+<script>
+    // CountUp for all_device
+    document.addEventListener('DOMContentLoaded', function() {
+        var countUp = new CountUp('all_device', {{ all_device }});
+        if (!countUp.error) {
+            countUp.start();
+        } else {
+            console.error(countUp.error);
+        }
+    });
+
+    // Modal event to display log details
+    $('#logDetailModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var log = button.data('log'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('.modal-body').html(
+            '<p>目标设备IP: ' + log.target + '</p>' +
+            '<p>操作: ' + log.action + '</p>' +
+            '<p>状态: ' + log.status + '</p>' +
+            '<p>时间: ' + log.time + '</p>'
+        );
+    });
+</script>
+{% endblock %}
+

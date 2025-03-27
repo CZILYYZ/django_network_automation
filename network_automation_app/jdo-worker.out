@@ -1,0 +1,7 @@
+nohup: 忽略输入
+Usage: celery [OPTIONS] COMMAND [ARGS]...
+Try 'celery --help' for help.
+
+Error: Invalid value for '-A' / '--app': 
+Unable to load celery application.
+The module django_network_automation was not found.

@@ -164,6 +164,7 @@ interface GigabitEthernet1/0/7
 #
 interface GigabitEthernet1/0/8
  description to-ICBC
+ shutdown
  port default vlan 2024
 #
 interface GigabitEthernet1/0/9

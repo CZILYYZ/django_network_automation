@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-06-14 13:57:09+08:00 by 51en
-!Last configuration was saved at 2023-03-01 00:51:28+08:00 by 51en
+!Last configuration was updated at 2024-03-14 11:35:33+08:00 by 51en
+!Last configuration was saved at 2024-03-14 11:35:35+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -50,7 +50,7 @@ dfs-group 1
  active-active-gateway
   peer 51.51.51.8
 #
-vlan batch 8 to 10 12 to 13 15 20 to 21 23 42 to 53 100 3000
+vlan batch 8 to 10 12 to 13 15 20 to 21 23 42 to 53 100 201 2006 to 2007 3000
 #
 dsa peer-public-key 172.16.255.26 encoding-type der
  public-key-code begin
@@ -92,6 +92,8 @@ telnet server disable
 telnet ipv6 server disable
 #
 observe-port 1 interface Eth-Trunk129  
+#
+qos group A1
 #
 diffserv domain default
 #
@@ -313,10 +315,17 @@ acl name static-import basic
  rule 15 permit source 172.16.255.29 0
  rule 20 permit source 172.16.255.30 0
  rule 25 permit source 172.16.229.128 0.0.0.127
+ rule 30 permit source 172.16.255.88 0.0.0.3
+ rule 35 permit source 172.16.255.24 0.0.0.3
+ rule 40 permit source 172.16.255.84 0.0.0.3
 #
 acl number 3333
  rule 0 permit ip destination 115.236.23.33 0
  rule 1 permit ip source 115.236.23.33 0
+#
+acl number 3344
+ rule 5 permit tcp source 172.16.248.200 0 source-port eq www destination 172.16.248.200 0 destination-port eq www
+ rule 10 permit ip
 #
 acl name gnh-limit advance
  rule 5 permit tcp source 172.21.0.0 0.0.15.255 destination-port eq 8080
@@ -364,6 +373,11 @@ acl name loginner-limit advance
  rule 90 deny tcp source 172.16.221.0 0.0.0.255 source-port eq 6020
  rule 200 permit ip source 172.16.221.0 0.0.0.255
 #
+acl name route-import advance
+#
+traffic classifier Mbike type or
+ if-match acl 3344
+#
 traffic classifier idc-not-pbr-1 type or
  if-match vxlan tag-format none inner-source-ip 172.16.0.0 mask 16 inner-destination-ip 172.16.0.0 mask 16
 #
@@ -397,6 +411,11 @@ traffic classifier xy-pbr-204 type or
 traffic classifier xy-pbr-all type or
  if-match vxlan tag-format none inner-source-ip 172.16.192.0 mask 18
 #
+traffic behavior MMbike
+#
+traffic behavior Mbike
+ deny
+#
 traffic behavior loginner-limit
 #
 traffic behavior pbr
@@ -406,6 +425,9 @@ traffic behavior pbr-to-netscaler
  redirect nexthop 172.16.255.62
 #
 traffic behavior xy-not-pbr
+#
+traffic policy Mbike
+ classifier Mbike behavior Mbike precedence 5
 #
 traffic policy loginner-limit
  classifier loginner-limit behavior loginner-limit precedence 5
@@ -836,6 +858,7 @@ interface Vlanif21
 #
 interface Vlanif23
  description link-to-NS-VPN
+ shutdown
  ip binding vpn-instance XYCMCC
  ip address 172.16.255.89 255.255.255.252
 #
@@ -893,6 +916,14 @@ interface Vlanif53
  description outside-to-9560-other3
  ip address 172.16.254.185 255.255.255.248
 #
+interface Vlanif2006
+ description uT:F5-2
+ ip address 172.16.191.6 255.255.255.252
+#
+interface Vlanif2007
+ shutdown
+ ip address 172.16.191.22 255.255.255.252
+#
 interface MEth0/0/0
 #
 interface Eth-Trunk1
@@ -906,6 +937,17 @@ interface Eth-Trunk2
  ospf network-type p2p
  ospf bfd enable
  ospf bfd min-tx-interval 100 min-rx-interval 100 detect-multiplier 4
+#
+interface Eth-Trunk3
+ description uT:F5-2
+ port link-type trunk
+ port trunk allow-pass vlan 2006
+ mode lacp-static
+#
+interface Eth-Trunk4
+ port link-type trunk
+ port trunk allow-pass vlan 2007
+ mode lacp-static
 #
 interface Eth-Trunk10
  description to-E06-8860
@@ -1089,13 +1131,17 @@ interface Eth-Trunk240
  mode lacp-dynamic
 #
 interface 10GE6/0/0
- shutdown
+ description uT:F5-2(193.13):10GE2/1
+ eth-trunk 3
  device transceiver 10GBASE-FIBER
 #
 interface 10GE6/0/1
+ description uT:F5-2(193.13):10GE2/2
+ eth-trunk 3
+ device transceiver 10GBASE-FIBER
 #
 interface 10GE6/0/2
- shutdown
+ eth-trunk 4
  device transceiver 10GBASE-FIBER
 #
 interface 10GE6/0/3
@@ -1108,7 +1154,7 @@ interface 10GE6/0/5
 #
 interface 10GE6/0/6
  shutdown
- device transceiver 10GBASE-FIBER
+ device transceiver 1000BASE-X
 #
 interface 10GE6/0/7
 #
@@ -1205,7 +1251,7 @@ interface 10GE6/0/44
  port trunk allow-pass vlan 2 to 4094
  port-mirroring observe-port 1 inbound
  port-mirroring observe-port 1 outbound
- device transceiver 1000BASE-X
+ device transceiver 10GBASE-FIBER
 #
 interface 10GE6/0/45
  description dT:Netscaler-8010-172.16.193.2:(local)GE10/1
@@ -1615,6 +1661,7 @@ interface Nve1
  vni 10199 head-end peer-list 51.51.51.16
  vni 10199 head-end peer-list 51.51.51.17
  vni 10199 head-end peer-list 51.51.51.28
+ vni 10199 head-end peer-list 51.51.51.29
  vni 10199 head-end peer-list 51.51.51.34
  vni 10200 head-end peer-list 51.51.51.11
  vni 10200 head-end peer-list 51.51.51.12
@@ -1836,6 +1883,7 @@ interface Nve1
  vni 10226 head-end peer-list 51.51.51.22
  vni 10226 head-end peer-list 51.51.51.23
  vni 10226 head-end peer-list 51.51.51.24
+ vni 10226 head-end peer-list 51.51.51.28
  vni 10226 head-end peer-list 51.51.51.29
  vni 10227 head-end peer-list 51.51.51.28
  vni 10228 head-end peer-list 51.51.51.28
@@ -1899,8 +1947,12 @@ ospf 100 router-id 51.51.51.13
  import-route static route-policy static-import
  import-route bgp permit-ibgp route-policy k8s-bgp-import
  silent-interface Eth-Trunk125
+ silent-interface Vlanif2006
+ silent-interface Vlanif2007
  area 0.0.0.0
   authentication-mode md5 1 cipher %^%#AD^JM!@GJVz"DIG')<GYDTb7FHB!@CAU>XTk\Ct9%^%#
+  network 172.16.191.4 0.0.0.3
+  network 172.16.191.20 0.0.0.3
   network 172.16.255.4 0.0.0.3
   network 172.16.255.92 0.0.0.3
   network 172.16.255.100 0.0.0.3
@@ -1970,13 +2022,18 @@ route-policy static-import deny node 20
 ip ip-prefix filter-default index 10 permit 0.0.0.0 0
 ip ip-prefix filter-ns index 10 permit 0.0.0.0 0
 #
-ip route-static 0.0.0.0 0.0.0.0 Vlanif12 172.16.255.62 track nqa xytest link_to_ns
 ip route-static 115.238.29.64 255.255.255.192 vpn-instance SQCTCC
+ip route-static 172.16.191.8 255.255.255.252 172.16.191.21
+ip route-static 172.16.191.12 255.255.255.252 172.16.191.5
 ip route-static 172.16.192.0 255.255.192.0 NULL0
 ip route-static 172.16.229.128 255.255.255.128 172.16.255.214
+ip route-static 172.16.255.24 255.255.255.252 172.16.255.62
 ip route-static 172.16.255.29 255.255.255.255 172.16.255.214
 ip route-static 172.16.255.30 255.255.255.255 172.16.255.214
 ip route-static 172.16.255.33 255.255.255.255 172.16.255.214
+ip route-static 172.16.255.84 255.255.255.252 172.16.255.62
+ip route-static 172.16.255.88 255.255.255.252 172.16.255.62
+ip route-static 172.16.255.160 255.255.255.252 172.16.255.142
 ip route-static 172.26.192.0 255.255.192.0 NULL0
 ip route-static vpn-instance SQCTCC 0.0.0.0 0.0.0.0 172.16.255.54 public
 ip route-static vpn-instance SQCTCC 115.238.29.64 255.255.255.192 172.16.255.73
@@ -2029,6 +2086,21 @@ nqa test-instance xytest link_to_ns
  timeout 1
  frequency 3
  start now
+#
+nqa test-instance 12812_F5_1_6810_ping icmp
+ test-type icmp
+ destination-address ipv4 172.16.191.10
+ interval seconds 3
+ timeout 1
+ frequency 12
+ start now
+#
+nqa test-instance 12812_F5_2_6810_ping icmp
+ test-type icmp
+ destination-address ipv4 172.16.191.14
+ interval seconds 3
+ timeout 1
+ frequency 12
 #
 user-interface maximum-vty 10
 #

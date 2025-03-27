@@ -1,7 +1,37 @@
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from nornir.core.task import Task, Result
+from ipaddress import ip_network, ip_address
+from django.contrib import messages
+from .models import ScheduledTask
+from .forms import ScheduledTaskForm
+from .tasks import schedule_task
+from .models import Device
+from django.utils.timezone import now, timedelta
+from django.utils import timezone
+from django.db.models import Sum
+from dateutil.relativedelta import relativedelta
+import random
+import plotly.graph_objects as go
+from django.core import serializers
+from django import forms
+from django.forms import DateInput
+from .permissions import IsAuthorOrReadOnly 
+import plotly.graph_objects as go
+import json
+from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .serializers import DeviceSerializer 
+import asyncio
+from puresnmp import Client, V2C, PyWrapper
+from django.http import JsonResponse
 from network_automation_app.models import Device, Log
 import datetime
+from datetime import datetime, timedelta
 import netmiko
+from pysnmp.hlapi import *
+from pysnmp.smi import builder, view
 from netmiko import ConnectHandler, SCPConn
 import os, re, openpyxl, time, pickle
 from datetime import datetime
@@ -11,6 +41,7 @@ from django.conf import global_settings
 from nornir_netmiko import netmiko_send_command, netmiko_send_config, netmiko_save_config
 from openpyxl import load_workbook
 from nornir.core.filter import F
+from django.shortcuts import get_object_or_404
 from openpyxl.styles import Border, Side, Alignment, PatternFill
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -18,6 +49,7 @@ from django.contrib.auth.decorators import login_required
 import ipaddress
 import logging
 logging.basicConfig(level=logging.DEBUG)
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -61,6 +93,13 @@ def nornir_hosts(request):
                 file.write(str(device.hostname) + ':\n')
                 file.write('    ' + 'hostname:' + ' ' + device.ip_address + '\n')
                 file.write('    ' + 'platform:' + ' ' + device.platform + '\n')
+                # 判断 platform 并添加相应的 group
+                if device.platform.lower() == 'linux':
+                    file.write("    groups:\n")
+                    file.write("        - linux\n")
+                else:
+                    file.write("    groups:\n")
+                    file.write("        - netdevice\n")
                 file.write('    ' + 'data:' + '\n')
                 file.write('        ' + 'level:' + ' ' + device.role + '\n')
                 file.write('        ' + 'model:' + ' ' + device.model + '\n')
@@ -1127,12 +1166,30 @@ def FD_SFTP_white(request):
         FD_SFTP_white1 = str(request.POST['FD_SFTP_white1'])
         FD_SFTP_white2 = str(request.POST['FD_SFTP_white2'])
         FD_SFTP_white3 = str(request.POST['FD_SFTP_white3'])
+        FD_SFTP_white4 = str(request.POST['FD_SFTP_white4'])
         Match = []
         Edit = []
         result = []
         if not FD_SFTP_white1 and not FD_SFTP_white2:
             if not FD_SFTP_white3:
-                result.append("输入地址为空，请核实后再次输入")
+                if FD_SFTP_white4:
+                    device = {
+                        'device_type': 'linux',
+                        'host': '172.16.226.28',
+                        'username': 'root',
+                        'password': '51nbops868#',
+                    }
+                    try:
+                        net_connect = ConnectHandler(**device)
+                        output = net_connect.send_command('sh /root/create-account.sh {}'.format(FD_SFTP_white4))  # 发送命令示例
+                        net_connect.disconnect()
+                        result = output.split('\n')
+                        result.insert(0, '添加账号为:{}'.format(FD_SFTP_white4))
+                        result = '\n'.join(result)
+                    except Exception as e:
+                        print(f"连接失败: {e}")
+                else:
+                    result.append("输入为空，请核实后再次输入")
             else:
                 os.chdir(f"{global_settings.inventory_path}")
                 nr = InitNornir(config_file="config.yaml")
@@ -1149,6 +1206,10 @@ def FD_SFTP_white(request):
                 Match = '\n'.join(Match)
                 a = re.search(fr'edit "(.*)"(\n.*set.comment.*?)?\n.*set subnet {FD_SFTP_white3}', Match)
                 if f"subnet {FD_SFTP_white3}" in Match:
+                    a = a.group(1)
+                    os.chdir(f"{global_settings.inventory_path}")
+                    nr = InitNornir(config_file="config.yaml")
+                    FT = nr.filter(F(platform='fortinet'))
                     Edit = ['config vdom', 'edit IDC_temp', 'config firewall addrgrp', 'edit sftp', 'unselect member {}'.format(a), 'end']
                     def List(task):
                         for cmd in Edit:
@@ -1182,9 +1243,12 @@ def FD_SFTP_white(request):
                     subnet_mask2 = str(ipaddress.IPv4Interface(ip2).netmask)
                     if f"subnet {FD_SFTP_white1}" in Match:
                         a = re.search(fr'edit "(.*)"(\n.*set.comment.*?)?\n.*set subnet {FD_SFTP_white1}', Match)
+                        a = a.group(1)
                         os.chdir(f"{global_settings.inventory_path}")
                         nr = InitNornir(config_file="config.yaml")
                         FT = nr.filter(F(platform='fortinet'))
+                        print(a)
+                        type(a)
                         Edit = ['config vdom', 'edit IDC_temp', 'config firewall address', 'edit {}'.format(a), 'set subnet {} {}'.format(FD_SFTP_white2, subnet_mask2), 'end']
                         def List(task):
                             for cmd in Edit:
@@ -1241,14 +1305,167 @@ def K8S_BGP(request):
         add_bgp_ip = str(request.POST['add_bgp'])
         DSJ_delete_bgp_ip = str(request.POST['DSJ_delete_bgp'])
         DSJ_add_bgp_ip = str(request.POST['DSJ_add_bgp'])
+        XX_stable_k8s_delete_bgp = str(request.POST['XX_stable_k8s_delete_bgp'])
+        XX_stable_k8s_add_bgp = str(request.POST['XX_stable_k8s_add_bgp'])
         D03D04_network = ['172.16.240.64/27', '172.16.240.96/27']
         C05C06_network = ['172.16.240.0/27', '172.16.240.32/27']
         DSJ_network = ['172.16.28.0/22']
         networks_all = ['172.16.240.64/27', '172.16.240.96/27', '172.16.240.0/27', '172.16.240.32/27']
-        if not delete_bgp_ip and not add_bgp_ip and not DSJ_delete_bgp_ip and not DSJ_add_bgp_ip:
+        if not delete_bgp_ip and not add_bgp_ip and not DSJ_delete_bgp_ip and not DSJ_add_bgp_ip and not XX_stable_k8s_delete_bgp and not XX_stable_k8s_add_bgp:
             result.append("输入地址为空，请核实后再次输入")
         else:
             try:
+                if XX_stable_k8s_delete_bgp:
+                    try:
+                        delete_address = ipaddress.ip_address(XX_stable_k8s_delete_bgp)
+                        os.chdir(f"{global_settings.inventory_path}")
+                        nr = InitNornir(config_file="config.yaml")
+                        FT = nr.filter(F(hostname='172.17.0.84'))
+                        commands = ['dis bgp peer']
+                        def List(task):
+                            task.run(netmiko_send_config, config_commands=commands)
+
+                        FT = FT.run(task=List)
+                        for sw in FT.keys():
+                            for i in range(1, (len(commands) + 1)):
+                                Match.append(FT[sw][i].result)
+                                Match.append("\n")
+                        Match = '\n'.join(Match)
+                        a = re.search(fr' +{XX_stable_k8s_delete_bgp} +\d +\d+ +\d+ +\d+ +\d+ +\S+ +(\S+) +\d+', Match)
+                        if a.group(1) == "Established":
+                            result.append("请先node删除bgp再在交换机侧删除bgp")
+                        else:
+                            os.chdir(f"{global_settings.inventory_path}")
+                            nr = InitNornir(config_file="config.yaml")
+                            username = nr.inventory.defaults.username
+                            password = nr.inventory.defaults.password
+                            connection_info = {
+                                'device_type': 'huawei',
+                                'ip': '172.17.0.84',
+                                'username': username,
+                                'password': password,
+                            }
+                            with ConnectHandler(**connection_info) as connect:
+                                connect.send_command(command_string='system-view', expect_string=r']')
+                                connect.send_command(command_string='bgp 65534', expect_string=r']')
+                                connect.send_command(command_string=f'undo peer {XX_stable_k8s_delete_bgp}',
+                                                     expect_string=r']|:')
+                                connect.send_command(command_string='Y\n', expect_string=r']')
+                                connect.send_command(command_string='commit', expect_string=r']')
+                            with ConnectHandler(**connection_info) as connect:
+                                output = connect.send_command(command_string=f'dis bgp peer | in {XX_stable_k8s_delete_bgp}')
+                                a = re.search(fr' +{XX_stable_k8s_delete_bgp} +\d +\d+ +\d+ +\d+ +\d+ +\S+ +(\S+) +\d+',
+                                              output)
+                                if a:
+                                    result.append(output)
+                                    result.append("未完成删除bgp邻居")
+                                else:
+                                    result.append("已完成删除,验证如下: ")
+                                    result.append(f'dis bgp peer | in {XX_stable_k8s_delete_bgp}')
+                                    result.append(output)
+                    except ValueError:
+                        result.append("地址不合法,请重新输入")   
+                else:
+                    pass
+                 
+                if XX_stable_k8s_add_bgp:
+                    try:
+                        add_address = ipaddress.ip_address(XX_stable_k8s_add_bgp)     
+                        network = ipaddress.ip_network('10.248.1.0/24') 
+                        network2 = ipaddress.ip_network('10.248.2.0/24')                            
+                        if add_address in network:
+                            os.chdir(f"{global_settings.inventory_path}")
+                            nr = InitNornir(config_file="config.yaml")
+                            FT = nr.filter(F(hostname='172.17.0.84'))
+                            commands = ['dis bgp peer']
+
+                            def List(task):
+                                for cmd in commands:
+                                    task.run(netmiko_send_config, config_commands=cmd)
+
+                            FT = FT.run(task=List)
+                            for sw in FT.keys():
+                                for i in range(1, (len(commands) + 1)):
+                                    Match.append(FT[sw][i].result)
+                                    Match.append("\n")
+                            Match = '\n'.join(Match)
+                            a = re.search(fr' +{XX_stable_k8s_add_bgp} +\d +\d+ +\d+ +\d+ +\d+ +\S+ ([a-zA-Z]+) +\d+', Match)
+                            if a:
+                                if a.group(1) == "Established":
+                                    result.append(f"{XX_stable_k8s_add_bgp}bgp邻居已存在且状态为Established")
+                                else:
+                                    result.append(f"{XX_stable_k8s_add_bgp}bgp配置已存在")
+                            else:
+                                os.chdir(f"{global_settings.inventory_path}")
+                                nr = InitNornir(config_file="config.yaml")
+                                FT = nr.filter(F(hostname='172.17.0.84'))
+                                commands = ['bgp 65534', f'peer {XX_stable_k8s_add_bgp} as-number 65538',  
+                                            f'peer {XX_stable_k8s_add_bgp} connect-interface Vlanif24',  
+                                            f'peer {XX_stable_k8s_add_bgp} group K8S',  
+                                            'ipv4-family unicast',  
+                                            f'peer {XX_stable_k8s_add_bgp} group K8S', 
+                                            f'peer {XX_stable_k8s_add_bgp} enable',
+                                            f'peer {XX_stable_k8s_add_bgp} route-policy Deny-all export', 'commit']            
+
+                                def List(task):
+                                    task.run(netmiko_send_config, config_commands=commands)
+                                    task.run(netmiko_save_config, cmd="save", confirm="True", confirm_response="y")
+
+                                HW = FT.run(task=List)
+                                for sw in HW.keys():
+                                    for i in range(1, (len(commands) + 1)):
+                                        result.append(HW[sw][i].result)
+                        elif add_address in network2:
+                            os.chdir(f"{global_settings.inventory_path}")
+                            nr = InitNornir(config_file="config.yaml")
+                            FT = nr.filter(F(hostname='172.17.0.84'))
+                            commands = ['dis bgp peer']
+
+                            def List(task):
+                                task.run(netmiko_send_config, config_commands=commands)
+
+                            FT = FT.run(task=List)
+                            for sw in FT.keys():
+                                for i in range(1, (len(commands) + 1)):
+                                    Match.append(FT[sw][i].result)
+                                    Match.append("\n")
+                            Match = '\n'.join(Match)
+                            a = re.search(fr' +{XX_stable_k8s_add_bgp} +\d +\d+ +\d+ +\d+ +\d+ +\S+ ([a-zA-Z]+) +\d+', Match)
+                            if a:
+                                if a.group(1) == "Established":
+                                    result.append(f"{XX_stable_k8s_add_bgp}bgp邻居已存在且状态为Established")
+                                else:
+                                    result.append(f"{XX_stable_k8s_add_bgp}bgp配置已存在")
+                            else:
+                                os.chdir(f"{global_settings.inventory_path}")
+                                nr = InitNornir(config_file="config.yaml")
+                                FT = nr.filter(F(hostname='172.17.0.84'))
+                                commands = ['bgp 65534', f'peer {XX_stable_k8s_add_bgp} as-number 65538',            
+                                            f'peer {XX_stable_k8s_add_bgp} connect-interface Vlanif100',              
+                                            f'peer {XX_stable_k8s_add_bgp} group K8S',                               
+                                            'ipv4-family unicast',                                                   
+                                            f'peer {XX_stable_k8s_add_bgp} group K8S',                               
+                                            f'peer {XX_stable_k8s_add_bgp} enable',                                  
+                                            f'peer {XX_stable_k8s_add_bgp} route-policy Deny-all export', 'commit']  
+
+                                def List(task):
+                                    a = task.run(netmiko_send_config, config_commands=commands,
+                                                 expect_string="Continue?")
+                                    a.connection.send_command_timing("Y")
+                                    task.run(netmiko_save_config, cmd="save", confirm="True", confirm_response="y")
+
+                                HW = FT.run(task=List)
+                                for sw in HW.keys():
+                                    for i in range(1, (len(commands) + 1)):
+                                        result.append(HW[sw][i].result)
+                        elif any(add_address not in ipaddress.ip_network(network) for network in networks_all):
+                            result.append("地址网段有误，请检查地址网段是否存在")
+                        else:
+                            pass
+                    except ValueError:
+                        result.append("地址不合法,请重新输入")
+                else:
+                    pass
                 if delete_bgp_ip:
                     try:
                         delete_address = ipaddress.ip_address(delete_bgp_ip)
@@ -1655,3 +1872,346 @@ def K8S_BGP(request):
                 log.save()
         result = '\n'.join(result)
         return render(request, 'verify_config.html', {'result': result})
+
+async def get_device_info(request):
+   client = PyWrapper(Client('172.16.37.33', V2C("51zhangdan")))
+   output = await client.get("1.3.6.1.2.1.1.1.0")
+   return output
+
+class List(generics.ListCreateAPIView): 
+    queryset = Device.objects.all() 
+    serializer_class = DeviceSerializer
+
+    
+class Detail(generics.RetrieveUpdateDestroyAPIView): 
+    permission_classes = (IsAuthorOrReadOnly,) 
+    queryset = Device.objects.all() 
+    serializer_class = DeviceSerializer
+
+
+class Current(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        username = request.user.username
+        return Response({'username': username}) 
+
+@login_required
+def XY_internet(request):
+    return render(request, 'XY_internet.html')
+
+
+
+def task_list(request):
+    tasks = ScheduledTask.objects.all()
+    return render(request, 'task_list.html', {'tasks': tasks})
+
+def add_task(request):
+    script_choices = [
+        (f, f) for f in os.listdir('/root/django_network_automation/network_automation_app') if f.endswith('.py')
+    ]
+
+    if request.method == 'POST':
+        form = ScheduledTaskForm(request.POST)
+        form.fields['script'].choices = script_choices
+        if form.is_valid():
+            script = form.cleaned_data['script']
+            cron_schedule = form.cleaned_data['cron_schedule']
+            ScheduledTask.objects.create(script_path=script, cron_schedule=cron_schedule, enabled=True)
+            return redirect('task_list')
+    else:
+        form = ScheduledTaskForm()
+        form.fields['script'].choices = script_choices
+
+    return render(request, 'add_task.html', {'form': form})
+
+def DPVS(request):
+    if request.method == 'GET':
+        # 如果是 GET 请求，渲染 DPVS.html 页面
+        return render(request, 'DPVS.html')
+    elif request.method == 'POST':
+        result = []
+        # 去除用户输入中的空格
+        vip = request.POST.get('vip', '').strip()
+        vip_port = request.POST.get('vip_port', '').strip()
+        real_servers = request.POST.get('real_servers', '').strip()
+        real_server_port = request.POST.get('real_server_port', '').strip()
+        config_filename = request.POST.get('config_filename', '').strip() 
+        if not vip or not vip_port or not real_servers:
+            messages.error(request, "输入不可为空")
+            return render(request, 'DPVS.html')
+
+        # 检查 VIP 地址是否在指定的网段内
+        try:
+            vip_address = ipaddress.ip_address(vip)           
+            network = ipaddress.ip_network('172.18.15.0/24', strict=False)
+            if vip_address not in network:
+                messages.error(request, "VIP地址必须在172.18.15.0/24网段内")
+                return render(request, 'DPVS.html')
+        except ValueError:
+            messages.error(request, "无效的VIP地址格式")
+            return render(request, 'DPVS.html')
+        real_servers_list = real_servers.split(',')
+        for server in real_servers_list:
+            server = server.strip()  # 去除多余的空格
+            try:
+                ip_address(server)
+            except ValueError:
+                messages.error(request, f"无效的Real Server地址格式: {server}")
+                return render(request, 'DPVS.html')
+        # Configuration file naming
+        if not config_filename:
+            config_filename = f"{vip.replace('.', '-')}-{vip_port}.conf"
+        else:
+            # 确保 config_filename 以 .conf 结尾
+            if not config_filename.endswith('.conf'):
+                config_filename += '.conf'
+             
+        config_path = f"/etc/keepalived/service/{config_filename}"
+
+        if os.path.exists(config_path):
+            messages.error(request, f"配置文件{config_filename}已存在,请排查!")
+            return render(request, 'DPVS.html')
+
+        # Create the configuration content
+        config_content = f"""
+virtual_server_group {vip}-{vip_port} {{
+    {vip} {vip_port}
+}}
+virtual_server group {vip}-{vip_port} {{
+    delay_loop 3
+    lb_algo rr
+    lb_kind FNAT
+    protocol TCP
+
+    laddr_group_name laddr_g1
+"""
+
+        for server in real_servers_list:
+            config_content += f"""
+    real_server {server.strip()} {real_server_port} {{
+        weight 100
+        inhibit_on_failure
+        TCP_CHECK {{
+            nb_sock_retry 2
+            connect_timeout 3
+            connect_port {real_server_port}
+        }}
+    }}
+"""
+        config_content += "}\n"
+        os.chdir(global_settings.inventory_path)
+        nr = InitNornir(config_file="config.yaml")
+        devices = nr.filter(F(hostname="172.18.14.4") | F(hostname="172.18.14.5"))
+
+        def configure_device(task):
+            ip_output = task.run(task=netmiko_send_command, command_string="ip addr").result
+            frr_config = task.run(task=netmiko_send_command, command_string="cat /etc/frr/frr.conf").result
+            start_sh_content = task.run(task=netmiko_send_command, command_string="cat /root/dpvs/bin/start.sh").result
+
+            if f"{vip}/32" in ip_output:
+                messages.error(request, f"VIP {vip}/32已经存在,请再次确认!")
+                return
+
+            commands = [
+                f"/root/dpvs/bin/dpip addr add {vip}/32 dev bond0",
+                f"ip addr add {vip}/32 dev bond0.kni"
+            ]
+            task.run(task=netmiko_send_config, config_commands=commands)
+            result.append(f"{task.host}: VIP已添加")
+            # Write config_content to config_path line by line
+            lines = config_content.splitlines()
+            if lines:
+                task.run(task=netmiko_send_command, command_string=f"echo '{lines[0]}' > {config_path}")
+                for line in lines[1:]:
+                    task.run(task=netmiko_send_command, command_string=f"echo '{line}' >> {config_path}")
+            result.append(f"{task.host}: keepalived配置文件已完成")
+
+            lines = frr_config.splitlines()
+            seq_numbers = [
+                int(line.split()[4]) for line in lines if line.strip().startswith("ip prefix-list ALLOWED seq") and line.split()[4].isdigit()
+            ]
+            max_seq = max(seq_numbers) if seq_numbers else 0
+            new_seq = max_seq + 5
+
+            new_lines = []
+            last_prefix_list_index = None
+
+            for index, line in enumerate(lines):
+                new_lines.append(line)
+                if line.strip() == "address-family ipv4 unicast":
+                    new_lines.append(f"  network {vip}/32")
+                if line.strip().startswith("ip prefix-list ALLOWED"):
+                    last_prefix_list_index = index
+
+            if last_prefix_list_index is not None:
+                new_lines.insert(last_prefix_list_index + 1, f"ip prefix-list ALLOWED seq {new_seq} permit {vip}/32")
+            else:
+                raise Exception("未能找到任何 'ip prefix-list ALLOWED' 行。")
+
+            new_frr_conf_content = "\n".join(new_lines)
+            new_frr_conf_lines = new_frr_conf_content.splitlines()
+
+            if new_frr_conf_lines:
+                task.run(task=netmiko_send_command, command_string=f"echo '{new_frr_conf_lines[0]}' > /etc/frr/frr.conf")
+                for line in new_frr_conf_lines[1:]:
+                    task.run(task=netmiko_send_command, command_string=f"echo '{line}' >> /etc/frr/frr.conf")
+            result.append(f"{task.host}: 完成bgp相关配置")
+
+            start_sh_lines = start_sh_content.splitlines()
+            insert_before_line = "/root/dpvs/bin/keepalived -f /etc/keepalived/keepalived.conf"
+            insert_index = next((i for i, line in enumerate(start_sh_lines) if insert_before_line in line), None)
+
+            if insert_index is not None:
+                start_sh_lines.insert(insert_index, f"/root/dpvs/bin/dpip addr add {vip}/32 dev bond0")
+                start_sh_lines.insert(insert_index + 1, f"ip addr add {vip}/32 dev bond0.kni")
+
+            new_start_sh_content = "\n".join(start_sh_lines)
+            start_sh_lines = new_start_sh_content.splitlines()
+
+            if start_sh_lines:
+                task.run(task=netmiko_send_command, command_string=f"echo '{start_sh_lines[0]}' > /root/dpvs/bin/start.sh")
+                for line in start_sh_lines[1:]:
+                    task.run(task=netmiko_send_command, command_string=f"echo '{line}' >> /root/dpvs/bin/start.sh")
+
+            result.append(f"{task.host}: 完成开机脚本start.sh的更新")
+
+            task.run(task=netmiko_send_command, command_string="vtysh -f /etc/frr/frr.conf")
+            task.run(task=netmiko_send_command, command_string="vtysh -c 'write'")
+            task.run(task=netmiko_send_command, command_string="systemctl reload keepalived")
+            result.append("验证信息如下:")
+            YZ1 = task.run(task=netmiko_send_command, command_string="ip addr | grep 172.18.15.").result
+            result.append(YZ1)
+            YZ2 = task.run(task=netmiko_send_command, command_string="vtysh -c 'show ip route | in 172.18.15.'").result
+            result.append(YZ2)
+
+        devices.run(task=configure_device)
+        result = '\n'.join(result)
+
+    return render(request, 'verify_config.html', {'result': result})
+
+
+def query_vip(request):
+    if request.method == 'GET':
+        try:
+            # 初始化 Nornir
+            os.chdir(global_settings.inventory_path)
+            nr = InitNornir(config_file="config.yaml")
+
+            # 过滤出特定的设备
+            device = nr.filter(hostname="172.18.14.4")
+
+            # 定义任务
+            def get_ip_addr(task: Task) -> Result:
+                result = task.run(task=netmiko_send_command, command_string="ip addr")
+                return Result(host=task.host, result=result.result)
+
+            # 执行任务
+            result = device.run(task=get_ip_addr)
+
+            # 提取结果
+            ip_output = list(result.values())[0][0].result
+
+            # 提取已占用的 VIP 地址
+            occupied_vips = set()
+            for line in ip_output.splitlines():
+                match = re.search(r'inet (172\.18\.15\.\d+)/\d+', line)
+                if match:
+                    occupied_vips.add(match.group(1))
+
+            # 定义可用的 VIP 地址范围
+            network = ip_network('172.18.15.0/24', strict=False)
+            available_vips = []
+
+            # 计算未被占用的 VIP 地址
+            for ip in network.hosts():
+                ip_str = str(ip)
+                if ip_str not in occupied_vips and ip_str != '172.18.15.0' and ip_str != '172.18.15.255' and ip_str != '172.18.15.1':
+                    available_vips.append(ip_str)
+
+            # 合并连续的 IP 地址为范围
+            def merge_ip_ranges(ip_list):
+                if not ip_list:
+                    return []
+
+                ip_list = sorted(ip_list, key=lambda x: int(x.split('.')[-1]))
+                ranges = []
+                start = ip_list[0]
+                end = ip_list[0]
+
+                for ip in ip_list[1:]:
+                    if int(ip.split('.')[-1]) == int(end.split('.')[-1]) + 1:
+                        end = ip
+                    else:
+                        if start == end:
+                            ranges.append(start)
+                        else:
+                            ranges.append(f"{start}-{end}")
+                        start = ip
+                        end = ip
+
+                if start == end:
+                    ranges.append(start)
+                else:
+                    ranges.append(f"{start}-{end}")
+
+                return ranges
+
+            ip_ranges = merge_ip_ranges(available_vips)
+            return JsonResponse({'success': True, 'vips': ip_ranges})
+
+        except Exception as e:
+            print(f"连接到设备失败: {e}")
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+def disk_replace(request):
+    if request.method == 'GET':
+        return render(request, 'disk_replace.html')
+    elif request.method == 'POST':
+        result = []
+        ip = request.POST.get('ip', '').strip()
+        # 初始化 Nornir
+        os.chdir(global_settings.inventory_path)
+        nr = InitNornir(config_file="config.yaml")
+
+        # 过滤出特定的设备
+        device = nr.filter(hostname=ip)
+
+        # 定义任务
+        def get_ip_addr(task: Task) -> Result:
+            result = task.run(task=netmiko_send_command, command_string="python  megaraid_status.py")
+            return Result(host=task.host, result=result.result)
+
+        # 执行任务
+        result = device.run(task=get_ip_addr)
+
+        # 提取结果
+        output = list(result.values())[0][0].result
+        lines = output.splitlines()
+        failed_disk_info = {}
+        array_info = {}
+        
+        for line in lines:
+            if "Failed" in line:
+                parts = line.split('|')
+                failed_disk_info = {
+                    'slot_id': parts[7].strip(),
+                    'size': parts[3].strip(),
+                    'status': parts[4].strip(),
+                    'id': parts[0].strip()
+                }
+        
+        # 查找对应的Array信息
+        for line in lines:
+            if failed_disk_info.get('id').replace('p', '') in line and "Offline" in line:
+                parts = line.split('|')
+                array_info = {
+                    'type': parts[1].strip(),
+                    'os_path': parts[7].strip()
+                }
+        return render(request, 'disk_replace.html', {
+            'form': form,
+            'failed_disk_info': failed_disk_info,
+            'array_info': array_info
+        })
+    return render(request, 'disk_replace.html', {'form': form})

@@ -1,6 +1,6 @@
 !Software Version V200R002C50SPC800
-!Last configuration was updated at 2023-06-30 17:48:27+08:00 by 51en
-!Last configuration was saved at 2023-06-30 10:52:58+08:00 by 51en
+!Last configuration was updated at 2023-12-06 01:45:37+08:00 by 51en
+!Last configuration was saved at 2023-11-15 16:04:09+08:00 by 51en
 #
 clock timezone GMT+8 add 08:00:00
 #
@@ -758,6 +758,7 @@ route-policy ospf-red permit node 20
 ip ip-prefix Huaweiyun-dev index 10 permit 10.228.0.0 16
 ip ip-prefix Huaweiyun-dev index 20 permit 10.229.0.0 16
 #
+ip route-static 0.0.0.0 0.0.0.0 172.16.63.34
 ip route-static vpn-instance XYCMCC 172.16.63.0 255.255.255.252 172.16.63.98
 #
 snmp-agent

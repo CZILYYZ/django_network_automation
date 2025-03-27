@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Device Data Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    {% for device in device_data %}
+        <h2>{{ device.device.name }}</h2>
+        <canvas id="{{ device.device.name }}Chart" width="400" height="200"></canvas>
+        <script>
+            var ctx = document.getElementById('{{ device.device.name }}Chart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [{% for data in device.data %}"{{ data.timestamp }}",{% endfor %}],
+                    datasets: [{
+                        label: 'CPU Usage',
+                        data: [{% for data in device.data %}{{ data.cpu_usage }},{% endfor %}],
+                        borderColor: 'red',
+                        fill: false
+                    }, {
+                        label: 'Memory Usage',
+                        data: [{% for data in device.data %}{{ data.memory_usage }},{% endfor %}],
+                        borderColor: 'blue',
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        </script>
+    {% endfor %}
+</body>
+</html>
+
